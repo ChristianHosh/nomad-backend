@@ -1,2 +1,4 @@
-package com.nomad.socialspring.security.dto;public record LoginRequest() {
+package com.nomad.socialspring.security.dto;
+
+public record LoginRequest() {
 }

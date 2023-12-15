@@ -1,2 +1,6 @@
-package com.nomad.socialspring.notification.model;public enum NotificationType {
+package com.nomad.socialspring.notification.model;
+
+public enum NotificationType {
+    POST,
+    MESSAGE
 }

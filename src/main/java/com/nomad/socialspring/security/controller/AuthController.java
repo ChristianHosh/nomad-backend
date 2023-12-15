@@ -1,2 +1,4 @@
-package com.nomad.socialspring.security.controller;public class AuthController {
+package com.nomad.socialspring.security.controller;
+
+public class AuthController {
 }
