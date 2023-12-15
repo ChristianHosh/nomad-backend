@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="IocStateComponent">
+    <option name="injectStrategy" value="via field" />
+  </component>
+  <component name="JpaPluginProjectSettings" dtoSerializableType="2">
+    <option name="entityNameTemplate" />
+    <option name="tableNameTemplate" value="T_${className.underscore().toUpperCase()}" />
+    <option name="columnNameTemplate" value="${fieldName.underscore().toUpperCase()}" />
+    <option name="isLombokBuilder" value="true" />
+    <option name="isLombokAllArgsConstructor" value="true" />
+    <option name="isLombokNoArgsConstructor" value="true" />
+    <option name="scaffoldingLanguage" />
+  </component>
+</project>
