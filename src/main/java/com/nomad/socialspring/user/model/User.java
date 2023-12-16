@@ -1,22 +1,29 @@
 package com.nomad.socialspring.user.model;
 
 import com.nomad.socialspring.post.model.Post;
+import com.nomad.socialspring.security.facade.AuthenticationFacade;
 import com.nomad.socialspring.trip.model.Trip;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
 @Table(name = "T_USER")
 public class User {
+
+    private static final BCryptPasswordEncoder encoder = AuthenticationFacade.getEncoder();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,9 +34,16 @@ public class User {
     @Size(min = 4, max = 30)
     private String username;
 
-    @Column(name = "PASSWORD", nullable = false, unique = true, length = 40)
-    @Size(min = 8, max = 40)
+    @Column(name = "PASSWORD", nullable = false, unique = true)
     private String password;
+
+    @Column(name = "EMAIL", nullable = false, unique = true, length = 50)
+    @Size(min = 4, max = 50)
+    @Email
+    private String email;
+
+    @Column(name = "IS_VERIFIED", nullable = false)
+    private Boolean isVerified = false;
 
     @Enumerated
     @Column(name = "ROLE", nullable = false)

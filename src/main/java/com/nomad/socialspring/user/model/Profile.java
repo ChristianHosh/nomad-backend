@@ -27,8 +27,8 @@ public class Profile {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @Column(name = "DISPLAY_NAME", nullable = false)
-    @Size(max = 255)
+    @Column(name = "DISPLAY_NAME", nullable = false, length = 50)
+    @Size(max = 50)
     private String displayName;
 
     @Column(name = "BIO", length = 600)
@@ -36,7 +36,7 @@ public class Profile {
     private String bio;
 
     @Enumerated
-    @Column(name = "GENDER", nullable = false)
+    @Column(name = "GENDER")
     private Gender gender;
 
     @Column(name = "BIRTH_DATE")
