@@ -1,6 +1,6 @@
 package com.nomad.socialspring.security.facade;
 
-import com.nomad.socialspring.error.exceptions.BException;
+import com.nomad.socialspring.error.exceptions.BxException;
 import com.nomad.socialspring.user.model.User;
 import com.nomad.socialspring.user.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class AuthenticationFacadeImpl implements AuthenticationFacade {
     public User getAuthenticatedUser() {
         String username = getAuthentication().getName();
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> BException.notFound(User.class, username));
+                .orElseThrow(() -> BxException.notFound(User.class, username));
     }
 
     @Override

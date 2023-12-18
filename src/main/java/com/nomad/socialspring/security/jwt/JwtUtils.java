@@ -1,7 +1,7 @@
 package com.nomad.socialspring.security.jwt;
 
 import com.nomad.socialspring.security.model.UserDetailsImpl;
-import com.nomad.socialspring.util.BDate;
+import com.nomad.socialspring.common.BDate;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

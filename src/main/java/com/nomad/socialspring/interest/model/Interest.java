@@ -1,5 +1,6 @@
 package com.nomad.socialspring.interest.model;
 
+import com.nomad.socialspring.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
@@ -13,7 +14,7 @@ import java.util.Objects;
 @Setter
 @Entity
 @Table(name = "T_INTEREST")
-public class Interest {
+public class Interest extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)

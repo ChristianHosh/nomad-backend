@@ -1,5 +1,6 @@
 package com.nomad.socialspring.user.model;
 
+import com.nomad.socialspring.common.BaseEntity;
 import com.nomad.socialspring.country.model.Country;
 import com.nomad.socialspring.image.model.Image;
 import com.nomad.socialspring.interest.model.Interest;
@@ -20,7 +21,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "T_PROFILE")
-public class Profile {
+public class Profile extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

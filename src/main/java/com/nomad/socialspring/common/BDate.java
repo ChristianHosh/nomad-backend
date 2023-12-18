@@ -1,7 +1,10 @@
-package com.nomad.socialspring.util;
+package com.nomad.socialspring.common;
+
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.Date;
-import java.time.Instant;
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -9,12 +12,34 @@ public class BDate extends Date {
 
     private final static Calendar calender = new GregorianCalendar();
 
-    public BDate(long date) {
-        super(date);
+    public BDate(long time) {
+        super(time);
     }
 
+    public BDate(@NotNull Date date) {
+        this(date.getTime());
+    }
+
+    public BDate(@NotNull Timestamp timestamp){
+        this(timestamp.getTime());
+    }
+
+    @NotNull
+    @Contract("_ -> new")
+    public static BDate valueOf(Date date) {
+        return new BDate(date);
+    }
+
+    @NotNull
+    @Contract("_ -> new")
+    public static BDate valueOf(Timestamp timestamp) {
+        return new BDate(timestamp);
+    }
+
+    @NotNull
+    @Contract(" -> new")
     public static BDate currentDate() {
-        return new BDate(Instant.now().toEpochMilli());
+        return new BDate(System.currentTimeMillis());
     }
 
     public BDate zeroTime() {
@@ -57,4 +82,21 @@ public class BDate extends Date {
         setTime(calender.getTimeInMillis());
         return this;
     }
+
+    public boolean before(Date when) {
+        return this.compareTo(when) < 0;
+    }
+
+    public boolean beforeEquals(Date when) {
+        return this.compareTo(when) <= 0;
+    }
+
+    public boolean after(Date when) {
+        return this.compareTo(when) > 0;
+    }
+
+    public boolean afterEquals(Date when) {
+        return this.compareTo(when) >= 0;
+    }
+
 }

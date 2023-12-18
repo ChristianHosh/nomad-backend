@@ -1,12 +1,12 @@
 package com.nomad.socialspring.comment.model;
 
+import com.nomad.socialspring.common.BaseEntity;
 import com.nomad.socialspring.post.model.Post;
 import com.nomad.socialspring.user.model.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
-import java.time.Instant;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -17,7 +17,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "T_COMMENT")
-public class Comment {
+public class Comment extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,9 +27,6 @@ public class Comment {
     @Column(name = "CONTENT", nullable = false)
     @Size(max = 255)
     private String content;
-
-    @Column(name = "CREATION_TIME", nullable = false)
-    private Instant creationTime;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false)
     @JoinColumn(name = "AUTHOR_ID", nullable = false)

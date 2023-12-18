@@ -1,6 +1,6 @@
 package com.nomad.socialspring.security.service;
 
-import com.nomad.socialspring.error.exceptions.BException;
+import com.nomad.socialspring.error.exceptions.BxException;
 import com.nomad.socialspring.security.model.VerificationToken;
 import com.nomad.socialspring.user.model.User;
 import com.sendgrid.Method;
@@ -37,7 +37,7 @@ public class MailService {
             request.setBody(mail.build());
             sendGrid.api(request);
         } catch (IOException e) {
-            throw BException.hardcoded("Something went wrong");
+            throw BxException.hardcoded("Something went wrong");
         }
     }
 

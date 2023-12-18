@@ -1,5 +1,6 @@
 package com.nomad.socialspring.review.model;
 
+import com.nomad.socialspring.common.BaseEntity;
 import com.nomad.socialspring.user.model.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -14,7 +15,7 @@ import lombok.*;
 @Setter
 @Entity
 @Table(name = "T_REVIEW")
-public class Review {
+public class Review extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

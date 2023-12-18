@@ -1,14 +1,13 @@
 package com.nomad.socialspring.user.model;
 
+import com.nomad.socialspring.common.BaseEntity;
 import com.nomad.socialspring.post.model.Post;
-import com.nomad.socialspring.security.facade.AuthenticationFacade;
 import com.nomad.socialspring.trip.model.Trip;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.LinkedHashSet;
 import java.util.Objects;
@@ -21,9 +20,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "T_USER")
-public class User {
-
-    private static final BCryptPasswordEncoder encoder = AuthenticationFacade.getEncoder();
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

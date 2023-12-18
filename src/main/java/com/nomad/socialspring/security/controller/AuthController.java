@@ -1,7 +1,9 @@
 package com.nomad.socialspring.security.controller;
 
 import com.nomad.socialspring.security.dto.RegisterRequest;
+import com.nomad.socialspring.security.dto.ResendEmailVerificationRequest;
 import com.nomad.socialspring.security.service.AuthService;
+import com.nomad.socialspring.user.dto.UserResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,7 +24,14 @@ public class AuthController {
         return authService.registerNewUser(registerRequest);
     }
 
-    @GetMapping("verify_email")
+    @PostMapping("/resend-verification")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.PROCESSING)
+    public UserResponse resendVerificationToken(@RequestBody @Valid ResendEmailVerificationRequest verificationRequest) {
+        return authService.resendEmailVerification(verificationRequest);
+    }
+
+    @GetMapping("/verify-email")
     @ResponseBody
     @ResponseStatus(HttpStatus.TEMPORARY_REDIRECT)
     public ResponseEntity<?> verifyEmail(@RequestParam(name = "token") String token) {

@@ -1,5 +1,6 @@
 package com.nomad.socialspring.notification.model;
 
+import com.nomad.socialspring.common.BaseEntity;
 import com.nomad.socialspring.user.model.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -14,13 +15,12 @@ import java.time.Instant;
 @Setter
 @Entity
 @Table(name = "T_NOTIFICATION")
-public class Notification {
+public class Notification extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
-
 
     @Enumerated
     @Column(name = "NOTIFICATION_TYPE", nullable = false)

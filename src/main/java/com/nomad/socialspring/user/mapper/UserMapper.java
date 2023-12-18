@@ -2,6 +2,7 @@ package com.nomad.socialspring.user.mapper;
 
 import com.nomad.socialspring.security.dto.RegisterRequest;
 import com.nomad.socialspring.security.facade.AuthenticationFacade;
+import com.nomad.socialspring.user.dto.UserResponse;
 import com.nomad.socialspring.user.model.Profile;
 import com.nomad.socialspring.user.model.Role;
 import com.nomad.socialspring.user.model.User;
@@ -13,7 +14,7 @@ public class UserMapper {
     private final static BCryptPasswordEncoder encoder = AuthenticationFacade.getEncoder();
 
     @NotNull
-    @Contract("_-> new")
+    @Contract("_ -> new")
     public static User requestToEntity(@NotNull RegisterRequest request) {
         User user = User.builder()
                 .username(request.username())
@@ -27,5 +28,23 @@ public class UserMapper {
                 .displayName(request.displayName())
                 .build());
         return user;
+    }
+
+    public static UserResponse entityToRequest(User user) {
+        return entityToRequest(user, null);
+    }
+
+    public static UserResponse entityToRequest(User user, String token) {
+        if (user == null)
+            return null;
+
+        return UserResponse.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .profile(ProfileMapper.entityToRequest(user.getProfile()))
+                .token(token)
+                .build();
     }
 }

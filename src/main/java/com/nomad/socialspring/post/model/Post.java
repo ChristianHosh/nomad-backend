@@ -1,6 +1,7 @@
 package com.nomad.socialspring.post.model;
 
 import com.nomad.socialspring.comment.model.Comment;
+import com.nomad.socialspring.common.BaseEntity;
 import com.nomad.socialspring.image.model.Image;
 import com.nomad.socialspring.interest.model.Interest;
 import com.nomad.socialspring.trip.model.Trip;
@@ -9,7 +10,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
-import java.time.Instant;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -20,7 +20,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "T_POST")
-public class Post {
+public class Post extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
@@ -32,9 +32,6 @@ public class Post {
 
     @Column(name = "IS_PRIVATE", nullable = false)
     private Boolean isPrivate = false;
-
-    @Column(name = "CREATION_TIME", nullable = false)
-    private Instant creationTime;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false)
     @JoinColumn(name = "AUTHOR_ID", nullable = false)

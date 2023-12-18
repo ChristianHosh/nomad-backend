@@ -1,5 +1,6 @@
 package com.nomad.socialspring.chat.model;
 
+import com.nomad.socialspring.common.BaseEntity;
 import com.nomad.socialspring.trip.model.Trip;
 import com.nomad.socialspring.user.model.User;
 import jakarta.persistence.*;
@@ -16,7 +17,7 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "T_CHAT_CHANNEL")
-public class ChatChannel {
+public class ChatChannel extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

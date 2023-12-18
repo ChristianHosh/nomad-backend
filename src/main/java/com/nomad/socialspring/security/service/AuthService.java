@@ -1,10 +1,13 @@
 package com.nomad.socialspring.security.service;
 
-import com.nomad.socialspring.error.exceptions.BException;
+import com.nomad.socialspring.common.BDate;
+import com.nomad.socialspring.error.exceptions.BxException;
 import com.nomad.socialspring.security.dto.RegisterRequest;
+import com.nomad.socialspring.security.dto.ResendEmailVerificationRequest;
 import com.nomad.socialspring.security.mapper.VerificationTokenMapper;
 import com.nomad.socialspring.security.model.VerificationToken;
 import com.nomad.socialspring.security.repo.VerificationTokenRepository;
+import com.nomad.socialspring.user.dto.UserResponse;
 import com.nomad.socialspring.user.mapper.UserMapper;
 import com.nomad.socialspring.user.model.User;
 import com.nomad.socialspring.user.repo.UserRepository;
@@ -28,11 +31,11 @@ public class AuthService {
 
 
     @Transactional
-    public Object registerNewUser(@NotNull RegisterRequest request) {
+    public UserResponse registerNewUser(@NotNull RegisterRequest request) {
         if (userRepository.existsByUsernameIgnoreCase(request.username()))
-            throw BException.conflict(User.class, "username", request.username());
+            throw BxException.conflict(User.class, "username", request.username());
         if (userRepository.existsByEmailIgnoreCase(request.email()))
-            throw BException.conflict(User.class, "email", request.email());
+            throw BxException.conflict(User.class, "email", request.email());
 
         User user = userRepository
                 .save(UserMapper.requestToEntity(request));
@@ -41,13 +44,34 @@ public class AuthService {
 
         mailService.sendVerificationEmail(user, verificationToken);
 
-        return null;
+        return UserMapper.entityToRequest(user);
+    }
+
+    @Transactional
+    public UserResponse resendEmailVerification(@NotNull ResendEmailVerificationRequest request) {
+        User user = userRepository.findByEmailIgnoreCase(request.email()).
+                orElseThrow(() -> BxException.notFound(User.class, request.email()));
+
+        VerificationToken verificationToken = verificationTokenRepository.findByUser(user)
+                .orElseThrow(() -> BxException.notFound(VerificationToken.class, user.getUsername()));
+
+        if (BDate.valueOf(verificationToken.getExpirationDate()).before(BDate.currentDate())) {
+            throw BxException.badRequest(VerificationToken.class, "still not expired, check your spam");
+        }
+
+        verificationTokenRepository.delete(verificationToken);
+        verificationToken = verificationTokenRepository
+                .save(VerificationTokenMapper.accountToken(user));
+
+        mailService.sendVerificationEmail(user, verificationToken);
+
+        return UserMapper.entityToRequest(user);
     }
 
     @Transactional
     public ResponseEntity<?> verifyEmail(String token) {
         VerificationToken verificationToken = verificationTokenRepository.findByToken(token)
-                .orElseThrow(() -> BException.notFound(VerificationToken.class, token));
+                .orElseThrow(() -> BxException.notFound(VerificationToken.class, token));
 
         User user = verificationToken.getUser();
         user.setIsVerified(true);

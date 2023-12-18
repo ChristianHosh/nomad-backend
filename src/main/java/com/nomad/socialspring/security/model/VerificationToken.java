@@ -1,5 +1,6 @@
 package com.nomad.socialspring.security.model;
 
+import com.nomad.socialspring.common.BaseEntity;
 import com.nomad.socialspring.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,7 +14,7 @@ import java.sql.Date;
 @Setter
 @Entity
 @Table(name = "T_VERIFICATION_TOKEN")
-public class VerificationToken {
+public class VerificationToken extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

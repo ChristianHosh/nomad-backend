@@ -1,11 +1,10 @@
 package com.nomad.socialspring.chat.model;
 
+import com.nomad.socialspring.common.BaseEntity;
 import com.nomad.socialspring.user.model.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-
-import java.time.Instant;
 
 @Builder
 @AllArgsConstructor
@@ -14,7 +13,8 @@ import java.time.Instant;
 @Setter
 @Entity
 @Table(name = "T_CHAT_MESSAGE")
-public class ChatMessage {
+public class ChatMessage extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
@@ -23,9 +23,6 @@ public class ChatMessage {
     @Column(name = "CONTENT", nullable = false)
     @Size(max = 255)
     private String content;
-
-    @Column(name = "TIME_SENT", nullable = false)
-    private Instant timeSent;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false)
     @JoinColumn(name = "CHAT_CHANNEL_ID", nullable = false)
