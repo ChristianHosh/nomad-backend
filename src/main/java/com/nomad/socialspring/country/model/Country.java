@@ -20,4 +20,8 @@ public class Country extends BaseEntity {
     @Column(name = "NAME", nullable = false, unique = true)
     private String name;
 
+    @Override
+    public String getExceptionString() {
+        return getId().toString();
+    }
 }

@@ -49,14 +49,14 @@ public class AuthService {
 
     @Transactional
     public UserResponse resendEmailVerification(@NotNull ResendEmailVerificationRequest request) {
-        User user = userRepository.findByEmailIgnoreCase(request.email()).
-                orElseThrow(() -> BxException.notFound(User.class, request.email()));
+        User user = userRepository.findByEmailIgnoreCase(request.email())
+                .orElseThrow(BxException.xNotFound(User.class, request.email()));
 
         VerificationToken verificationToken = verificationTokenRepository.findByUser(user)
-                .orElseThrow(() -> BxException.notFound(VerificationToken.class, user.getUsername()));
+                .orElseThrow(BxException.xNotFound(VerificationToken.class, user.getUsername()));
 
         if (BDate.valueOf(verificationToken.getExpirationDate()).before(BDate.currentDate())) {
-            throw BxException.badRequest(VerificationToken.class, "still not expired, check your spam");
+            throw BxException.badRequest(VerificationToken.class, "still not expired, check your spam inbox");
         }
 
         verificationTokenRepository.delete(verificationToken);
@@ -71,7 +71,7 @@ public class AuthService {
     @Transactional
     public ResponseEntity<?> verifyEmail(String token) {
         VerificationToken verificationToken = verificationTokenRepository.findByToken(token)
-                .orElseThrow(() -> BxException.notFound(VerificationToken.class, token));
+                .orElseThrow(BxException.xNotFound(VerificationToken.class, token));
 
         User user = verificationToken.getUser();
         user.setIsVerified(true);

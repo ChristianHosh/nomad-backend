@@ -1,5 +1,6 @@
 package com.nomad.socialspring.trip.model;
 
+import com.nomad.socialspring.common.BaseEntity;
 import com.nomad.socialspring.country.model.Country;
 import com.nomad.socialspring.post.model.Post;
 import com.nomad.socialspring.user.model.User;
@@ -17,7 +18,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "T_TRIP")
-public class Trip {
+public class Trip extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
@@ -42,4 +43,8 @@ public class Trip {
     @OneToOne(mappedBy = "trip", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false, orphanRemoval = true)
     private Post post;
 
+    @Override
+    public String getExceptionString() {
+        return getId().toString();
+    }
 }

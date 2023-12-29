@@ -61,4 +61,8 @@ public class Post extends BaseEntity {
     @JoinColumn(name = "TRIP_ID")
     private Trip trip;
 
+    @Override
+    public String getExceptionString() {
+        return getId().toString();
+    }
 }

@@ -21,4 +21,8 @@ public class Image extends BaseEntity {
     @Column(name = "URL", nullable = false, unique = true, length = 1000)
     private String url;
 
+    @Override
+    public String getExceptionString() {
+        return getId().toString();
+    }
 }

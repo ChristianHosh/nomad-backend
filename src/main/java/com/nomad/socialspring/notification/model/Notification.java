@@ -6,8 +6,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
-import java.time.Instant;
-
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,9 +31,6 @@ public class Notification extends BaseEntity {
     @Column(name = "IS_READ", nullable = false)
     private Boolean isRead = false;
 
-    @Column(name = "CREATION_DATE", nullable = false)
-    private Instant creationDate;
-
     @Column(name = "ENTITY_ID", nullable = false)
     private Long entityId;
 
@@ -47,4 +42,8 @@ public class Notification extends BaseEntity {
     @JoinColumn(name = "RECIPIENT_ID")
     private User recipient;
 
+    @Override
+    public String getExceptionString() {
+        return getId().toString();
+    }
 }

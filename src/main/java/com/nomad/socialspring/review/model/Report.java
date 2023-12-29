@@ -31,4 +31,9 @@ public class Report extends BaseEntity {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "RECIPIENT_ID")
     private User recipient;
+
+    @Override
+    public String getExceptionString() {
+        return getId().toString();
+    }
 }

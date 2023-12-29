@@ -32,4 +32,8 @@ public class ChatMessage extends BaseEntity {
     @JoinColumn(name = "SENDER_ID", unique = true)
     private User sender;
 
+    @Override
+    public String getExceptionString() {
+        return getId().toString();
+    }
 }

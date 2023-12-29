@@ -37,7 +37,7 @@ public class MailService {
             request.setBody(mail.build());
             sendGrid.api(request);
         } catch (IOException e) {
-            throw BxException.hardcoded("Something went wrong");
+            throw BxException.hardcoded(MailService.class, e);
         }
     }
 

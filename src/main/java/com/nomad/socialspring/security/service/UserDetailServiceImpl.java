@@ -1,5 +1,6 @@
 package com.nomad.socialspring.security.service;
 
+import com.nomad.socialspring.error.exceptions.BxException;
 import com.nomad.socialspring.security.model.UserDetailsImpl;
 import com.nomad.socialspring.user.model.User;
 import com.nomad.socialspring.user.repo.UserRepository;
@@ -22,7 +23,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username)
-                .orElseThrow( () -> new UsernameNotFoundException("User Not Found with username: " + username));
+                .orElseThrow(() -> new UsernameNotFoundException(BxException.notFound(User.class, username).getMessage()));
 
         return UserDetailsImpl.build(user);
     }

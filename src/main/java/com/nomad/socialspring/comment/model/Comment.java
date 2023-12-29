@@ -42,4 +42,8 @@ public class Comment extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "USER_ID"))
     private Set<User> users = new LinkedHashSet<>();
 
+    @Override
+    public String getExceptionString() {
+        return getId().toString();
+    }
 }

@@ -36,4 +36,8 @@ public class VerificationToken extends BaseEntity {
     private User user;
 
 
+    @Override
+    public String getExceptionString() {
+        return getId().toString();
+    }
 }

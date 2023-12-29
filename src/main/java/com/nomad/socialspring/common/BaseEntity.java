@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 
 @Getter
 @MappedSuperclass
-public class BaseEntity {
+public abstract class BaseEntity {
 
     @CreationTimestamp
     @Column(name = "CREATED_ON", updatable = false)
@@ -19,4 +19,10 @@ public class BaseEntity {
     @UpdateTimestamp
     @Column(name = "UPDATED_ON")
     private Timestamp updatedOn;
+
+    public Long getId() {
+        return null;
+    }
+
+    public abstract String getExceptionString();
 }
