@@ -30,11 +30,11 @@ public class UserMapper {
         return user;
     }
 
-    public static UserResponse entityToRequest(User user) {
-        return entityToRequest(user, null);
+    public static UserResponse entityToResponse(User user) {
+        return entityToResponse(user, null);
     }
 
-    public static UserResponse entityToRequest(User user, String token) {
+    public static UserResponse entityToResponse(User user, String token) {
         if (user == null)
             return null;
 
@@ -47,4 +47,5 @@ public class UserMapper {
                 .token(token)
                 .build();
     }
+
 }

@@ -93,6 +93,14 @@ public class BxException extends RuntimeException {
     }
 
     @NotNull
+    @Contract("null -> new")
+    public static BxException unauthorized(Object value) {
+        if (value instanceof BaseEntity)
+            value = ((BaseEntity) value).getExceptionString();
+        return new BxUnauthorizedException("unauthorized: " + value);
+    }
+
+    @NotNull
     @Contract("_ -> new")
     public static BxException hardcoded(String message) {
         BxException exception = new BxException(message);
@@ -100,13 +108,13 @@ public class BxException extends RuntimeException {
         return exception;
     }
 
-    public static BxException hardcoded(Throwable cause){
+    public static BxException hardcoded(Throwable cause) {
         BxException exception = new BxException(cause);
         LOGGER.error(exception.getMessage(), exception);
         return exception;
     }
 
-    public static BxException hardcoded(@NotNull Class<?> clazz, Throwable cause){
+    public static BxException hardcoded(@NotNull Class<?> clazz, Throwable cause) {
         BxException exception = new BxException(clazz.getSimpleName() + ": " + cause.getMessage());
         LOGGER.error(exception.getMessage(), exception);
         return exception;

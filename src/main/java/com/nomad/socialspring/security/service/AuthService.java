@@ -2,21 +2,26 @@ package com.nomad.socialspring.security.service;
 
 import com.nomad.socialspring.common.BDate;
 import com.nomad.socialspring.error.exceptions.BxException;
+import com.nomad.socialspring.security.dto.LoginRequest;
 import com.nomad.socialspring.security.dto.RegisterRequest;
 import com.nomad.socialspring.security.dto.ResendEmailVerificationRequest;
-import com.nomad.socialspring.security.mapper.VerificationTokenMapper;
+import com.nomad.socialspring.security.jwt.JwtUtils;
 import com.nomad.socialspring.security.model.VerificationToken;
-import com.nomad.socialspring.security.repo.VerificationTokenRepository;
+import com.nomad.socialspring.security.repo.VerificationTokenFacade;
 import com.nomad.socialspring.user.dto.UserResponse;
 import com.nomad.socialspring.user.mapper.UserMapper;
 import com.nomad.socialspring.user.model.User;
-import com.nomad.socialspring.user.repo.UserRepository;
+import com.nomad.socialspring.user.repo.UserFacade;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
@@ -25,63 +30,70 @@ import java.net.URI;
 @RequiredArgsConstructor
 public class AuthService {
 
-    private final UserRepository userRepository;
-    private final VerificationTokenRepository verificationTokenRepository;
+    private final UserFacade userFacade;
+    private final VerificationTokenFacade verificationTokenFacade;
     private final MailService mailService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtUtils jwtUtils;
 
 
     @Transactional
     public UserResponse registerNewUser(@NotNull RegisterRequest request) {
-        if (userRepository.existsByUsernameIgnoreCase(request.username()))
+        if (userFacade.existsByUsernameIgnoreCase(request.username()))
             throw BxException.conflict(User.class, "username", request.username());
-        if (userRepository.existsByEmailIgnoreCase(request.email()))
+        if (userFacade.existsByEmailIgnoreCase(request.email()))
             throw BxException.conflict(User.class, "email", request.email());
 
-        User user = userRepository
-                .save(UserMapper.requestToEntity(request));
-        VerificationToken verificationToken = verificationTokenRepository
-                .save(VerificationTokenMapper.accountToken(user));
+        User user = userFacade.save(request);
+        VerificationToken verificationToken = verificationTokenFacade.accountSave(user);
 
         mailService.sendVerificationEmail(user, verificationToken);
 
-        return UserMapper.entityToRequest(user);
+        return UserMapper.entityToResponse(user);
     }
 
     @Transactional
     public UserResponse resendEmailVerification(@NotNull ResendEmailVerificationRequest request) {
-        User user = userRepository.findByEmailIgnoreCase(request.email())
-                .orElseThrow(BxException.xNotFound(User.class, request.email()));
-
-        VerificationToken verificationToken = verificationTokenRepository.findByUser(user)
-                .orElseThrow(BxException.xNotFound(VerificationToken.class, user.getUsername()));
+        User user = userFacade.findByEmailIgnoreCase(request.email());
+        VerificationToken verificationToken = verificationTokenFacade.findByUser(user);
 
         if (BDate.valueOf(verificationToken.getExpirationDate()).before(BDate.currentDate())) {
-            throw BxException.badRequest(VerificationToken.class, "still not expired, check your spam inbox");
+            throw BxException.badRequest(VerificationToken.class, "date", "still not expired, check your spam inbox");
         }
 
-        verificationTokenRepository.delete(verificationToken);
-        verificationToken = verificationTokenRepository
-                .save(VerificationTokenMapper.accountToken(user));
+        verificationTokenFacade.delete(verificationToken);
+        verificationToken = verificationTokenFacade.accountSave(user);
 
         mailService.sendVerificationEmail(user, verificationToken);
 
-        return UserMapper.entityToRequest(user);
+        return UserMapper.entityToResponse(user);
     }
 
     @Transactional
     public ResponseEntity<?> verifyEmail(String token) {
-        VerificationToken verificationToken = verificationTokenRepository.findByToken(token)
-                .orElseThrow(BxException.xNotFound(VerificationToken.class, token));
+        VerificationToken verificationToken = verificationTokenFacade.findByToken(token);
 
-        User user = verificationToken.getUser();
-        user.setIsVerified(true);
-
-        userRepository.save(user);
-        verificationTokenRepository.delete(verificationToken);
+        userFacade.verify(verificationToken.getUser());
+        verificationTokenFacade.delete(verificationToken);
 
         HttpHeaders headers = new HttpHeaders();
 
         headers.setLocation(URI.create("https://localhost:5300"));
         return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
+    }
+
+    public UserResponse loginUser(@NotNull LoginRequest request) {
+        if (!userFacade.findByUsername(request.username()).getIsVerified())
+            throw BxException.unauthorized("your account is not verified");
+
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.username(), request.password()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
+
+        User user = userFacade.findByUsername(request.username());
+
+        return UserMapper.entityToResponse(user, jwt);
     }
 }
