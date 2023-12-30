@@ -2,7 +2,6 @@ package com.nomad.socialspring.chat.model;
 
 import com.nomad.socialspring.common.BaseEntity;
 import com.nomad.socialspring.trip.model.Trip;
-import com.nomad.socialspring.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,15 +23,13 @@ public class ChatChannel extends BaseEntity {
     @Column(name = "ID", nullable = false)
     private UUID id;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    @JoinTable(name = "T_CHAT_CHANNEL_USERS",
-            joinColumns = @JoinColumn(name = "CHAT_CHANNEL_ID"),
-            inverseJoinColumns = @JoinColumn(name = "USER_ID"))
-    private Set<User> users = new LinkedHashSet<>();
-
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
     @JoinColumn(name = "TRIP_ID")
     private Trip trip;
+
+    @OneToMany(mappedBy = "chatChannel", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
+    @Builder.Default
+    private Set<ChatChannelUser> chatChannelUsers = new LinkedHashSet<>();
 
     @Override
     public String getExceptionString() {

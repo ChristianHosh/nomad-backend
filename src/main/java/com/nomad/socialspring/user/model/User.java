@@ -1,5 +1,6 @@
 package com.nomad.socialspring.user.model;
 
+import com.nomad.socialspring.chat.model.ChatChannelUser;
 import com.nomad.socialspring.common.BaseEntity;
 import com.nomad.socialspring.post.model.Post;
 import com.nomad.socialspring.trip.model.Trip;
@@ -40,6 +41,7 @@ public class User extends BaseEntity {
     private String email;
 
     @Column(name = "IS_VERIFIED", nullable = false)
+    @Builder.Default
     private Boolean isVerified = false;
 
     @Enumerated
@@ -50,28 +52,37 @@ public class User extends BaseEntity {
     @JoinTable(name = "T_USER_FOLLOWERS",
             joinColumns = @JoinColumn(name = "USER_1_ID"),
             inverseJoinColumns = @JoinColumn(name = "USER_2_ID"))
+    @Builder.Default
     private Set<User> followers = new LinkedHashSet<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(name = "T_USER_FOLLOWERS",
             joinColumns = @JoinColumn(name = "USER_2_ID"),
             inverseJoinColumns = @JoinColumn(name = "USER_1_ID"))
+    @Builder.Default
     private Set<User> followings = new LinkedHashSet<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(name = "T_BLOCKED_USERS",
             joinColumns = @JoinColumn(name = "USER_1_ID"),
             inverseJoinColumns = @JoinColumn(name = "USER_2_ID"))
+    @Builder.Default
     private Set<User> blockedUsers = new LinkedHashSet<>();
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = false, orphanRemoval = true)
     private Profile profile;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private Set<Post> posts = new LinkedHashSet<>();
 
     @ManyToMany(mappedBy = "participants", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @Builder.Default
     private Set<Trip> trips = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
+    @Builder.Default
+    private Set<ChatChannelUser> userChatChannels = new LinkedHashSet<>();
 
     @Override
     public final boolean equals(Object object) {

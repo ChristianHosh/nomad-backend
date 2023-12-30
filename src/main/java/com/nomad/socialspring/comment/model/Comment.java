@@ -40,7 +40,8 @@ public class Comment extends BaseEntity {
     @JoinTable(name = "T_COMMENT_LIKES",
             joinColumns = @JoinColumn(name = "COMMENT_ID"),
             inverseJoinColumns = @JoinColumn(name = "USER_ID"))
-    private Set<User> users = new LinkedHashSet<>();
+    @Builder.Default
+    private Set<User> likes = new LinkedHashSet<>();
 
     @Override
     public String getExceptionString() {

@@ -38,6 +38,7 @@ public class Trip extends BaseEntity {
     @JoinTable(name = "T_TRIP_USERS",
             joinColumns = @JoinColumn(name = "TRIP_ID"),
             inverseJoinColumns = @JoinColumn(name = "USER_ID"))
+    @Builder.Default
     private Set<User> participants = new LinkedHashSet<>();
 
     @OneToOne(mappedBy = "trip", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false, orphanRemoval = true)

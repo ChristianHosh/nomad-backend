@@ -31,6 +31,7 @@ public class Post extends BaseEntity {
     private String content;
 
     @Column(name = "IS_PRIVATE", nullable = false)
+    @Builder.Default
     private Boolean isPrivate = false;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false)
@@ -45,16 +46,19 @@ public class Post extends BaseEntity {
     @JoinTable(name = "T_POST_INTERESTS",
             joinColumns = @JoinColumn(name = "POST_ID"),
             inverseJoinColumns = @JoinColumn(name = "INTEREST_ID"))
+    @Builder.Default
     private Set<Interest> interests = new LinkedHashSet<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(name = "T_POST_LIKES",
             joinColumns = @JoinColumn(name = "POST_ID"),
             inverseJoinColumns = @JoinColumn(name = "USER_ID"))
+    @Builder.Default
     private Set<User> likes = new LinkedHashSet<>();
 
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private Set<Comment> comments = new LinkedHashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)

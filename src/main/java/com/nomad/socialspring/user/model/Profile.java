@@ -59,6 +59,7 @@ public class Profile extends BaseEntity {
     @JoinTable(name = "T_PROFILE_INTERESTS",
             joinColumns = @JoinColumn(name = "PROFILE_ID"),
             inverseJoinColumns = @JoinColumn(name = "INTEREST_ID"))
+    @Builder.Default
     private Set<Interest> interests = new LinkedHashSet<>();
 
 
