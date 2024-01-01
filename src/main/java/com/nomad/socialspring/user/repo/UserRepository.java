@@ -1,6 +1,9 @@
 package com.nomad.socialspring.user.repo;
 
+import com.nomad.socialspring.chat.model.ChatChannel;
 import com.nomad.socialspring.user.model.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,4 +27,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select (count(u) > 0) from User u where upper(u.email) = upper(:email)")
     boolean existsByEmailIgnoreCase(@Param("email") String email);
 
+    @Query("""
+            select u from User u inner join u.userChatChannels userChatChannels
+            where userChatChannels.chatChannel = :chatChannel
+            """)
+    Page<User> findByUserChatChannels_ChatChannel(@Param("chatChannel") ChatChannel chatChannel, Pageable pageable);
 }

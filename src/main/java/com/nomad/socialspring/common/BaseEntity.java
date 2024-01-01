@@ -20,9 +20,7 @@ public abstract class BaseEntity {
     @Column(name = "UPDATED_ON")
     private Timestamp updatedOn;
 
-    public Object getId() {
-        return null;
-    }
+    public abstract Object getId();
 
     public abstract String getExceptionString();
 }

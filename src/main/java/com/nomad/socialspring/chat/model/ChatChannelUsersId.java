@@ -43,4 +43,8 @@ public class ChatChannelUsersId implements Serializable {
         return Objects.hash(userId, chatChannelId);
     }
 
+    @Override
+    public String toString() {
+        return chatChannelId + " | " + userId;
+    }
 }
