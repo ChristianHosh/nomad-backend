@@ -20,11 +20,11 @@ public class PostController {
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     public PostResponse createNewPost(
-            @RequestBody @Valid PostRequest request,
-            @RequestBody MultipartFile image
+            @ModelAttribute @Valid PostRequest request,
+            @RequestParam(name = "imageFile", required = false) MultipartFile imageFile
     ) {
         // should take multipart file as parameter as an image
-        return postService.createNewPost(request, image);
+        return postService.createNewPost(request, imageFile);
     }
 
 }

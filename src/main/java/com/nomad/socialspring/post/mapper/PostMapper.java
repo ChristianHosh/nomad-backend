@@ -1,6 +1,7 @@
 package com.nomad.socialspring.post.mapper;
 
 import com.nomad.socialspring.image.model.Image;
+import com.nomad.socialspring.image.model.ImageMapper;
 import com.nomad.socialspring.post.dto.PostRequest;
 import com.nomad.socialspring.post.dto.PostResponse;
 import com.nomad.socialspring.post.model.Post;
@@ -19,14 +20,10 @@ public class PostMapper {
                 .id(post.getId())
                 .content(post.getContent())
                 .isPrivate(post.getIsPrivate())
-                .imageUrl(post.getImage() == null ? null : post.getImage().getUrl())
+                .imageUrl(ImageMapper.entityToUrl(post.getImage()))
                 .author(UserMapper.entityToResponse(post.getAuthor()))
                 .numberOfLikes(post.getLikes().size())
                 .build();
-    }
-
-    public static Post requestToEntity(PostRequest request, User user) {
-        return requestToEntity(request, user, null);
     }
 
     public static Post requestToEntity(PostRequest request, User user, Image image) {
@@ -34,6 +31,7 @@ public class PostMapper {
                 .author(user)
                 .content(request.content())
                 .isPrivate(request.isPrivate())
+                .image(image)
                 .build();
     }
 }

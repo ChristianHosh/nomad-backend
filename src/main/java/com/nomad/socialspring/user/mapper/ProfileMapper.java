@@ -1,5 +1,6 @@
 package com.nomad.socialspring.user.mapper;
 
+import com.nomad.socialspring.image.model.ImageMapper;
 import com.nomad.socialspring.user.dto.ProfileResponse;
 import com.nomad.socialspring.user.model.Profile;
 import com.nomad.socialspring.country.mapper.CountryMapper;
@@ -14,7 +15,7 @@ public class ProfileMapper {
                 .bio(profile.getBio())
                 .gender(profile.getGender())
                 .birthDate(profile.getBirthDate())
-                .profileImageUrl(profile.getProfileImage() == null ? null : profile.getProfileImage().getUrl())
+                .profileImageUrl(ImageMapper.entityToUrl(profile.getProfileImage()))
                 .country(CountryMapper.entityToResponse(profile.getCountry()))
                 .build();
     }

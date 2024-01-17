@@ -18,8 +18,9 @@ public class Image extends BaseEntity {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @Column(name = "URL", nullable = false, unique = true, length = 1000)
-    private String url;
+    @Lob
+    @Column(name = "DATA", length = 1000)
+    private byte[] imageData;
 
     @Override
     public String getExceptionString() {
