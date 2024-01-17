@@ -1,7 +1,7 @@
 package com.nomad.socialspring.chat.service;
 
 import com.nomad.socialspring.chat.dto.ChatMessageRequest;
-import com.nomad.socialspring.chat.mapper.ChatMessageMapper;
+import com.nomad.socialspring.chat.model.ChatMessageMapper;
 import com.nomad.socialspring.chat.model.ChatChannel;
 import com.nomad.socialspring.chat.model.ChatMessage;
 import com.nomad.socialspring.chat.repo.ChatMessageRepository;

@@ -1,15 +1,15 @@
 package com.nomad.socialspring.chat.service;
 
 import com.nomad.socialspring.chat.dto.*;
-import com.nomad.socialspring.chat.mapper.ChatChannelMapper;
-import com.nomad.socialspring.chat.mapper.ChatMessageMapper;
+import com.nomad.socialspring.chat.model.ChatChannelMapper;
+import com.nomad.socialspring.chat.model.ChatMessageMapper;
 import com.nomad.socialspring.chat.model.ChatChannel;
 import com.nomad.socialspring.chat.model.ChatChannelUser;
 import com.nomad.socialspring.chat.model.ChatMessage;
 import com.nomad.socialspring.error.exceptions.BxException;
 import com.nomad.socialspring.security.jwt.JwtUtils;
 import com.nomad.socialspring.user.dto.UserResponse;
-import com.nomad.socialspring.user.mapper.UserMapper;
+import com.nomad.socialspring.user.model.UserMapper;
 import com.nomad.socialspring.user.model.User;
 import com.nomad.socialspring.user.service.UserFacade;
 import jakarta.transaction.Transactional;

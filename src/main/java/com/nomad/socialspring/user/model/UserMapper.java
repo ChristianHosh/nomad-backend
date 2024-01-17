@@ -1,11 +1,8 @@
-package com.nomad.socialspring.user.mapper;
+package com.nomad.socialspring.user.model;
 
 import com.nomad.socialspring.security.dto.RegisterRequest;
 import com.nomad.socialspring.security.facade.AuthenticationFacade;
 import com.nomad.socialspring.user.dto.UserResponse;
-import com.nomad.socialspring.user.model.Profile;
-import com.nomad.socialspring.user.model.Role;
-import com.nomad.socialspring.user.model.User;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

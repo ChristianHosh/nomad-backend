@@ -1,7 +1,5 @@
-package com.nomad.socialspring.security.mapper;
+package com.nomad.socialspring.security.model;
 
-import com.nomad.socialspring.security.model.VerificationToken;
-import com.nomad.socialspring.security.model.VerificationType;
 import com.nomad.socialspring.user.model.User;
 import com.nomad.socialspring.common.BDate;
 import org.jetbrains.annotations.Contract;

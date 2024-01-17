@@ -1,7 +1,6 @@
-package com.nomad.socialspring.country.mapper;
+package com.nomad.socialspring.country.model;
 
 import com.nomad.socialspring.country.dto.CountryResponse;
-import com.nomad.socialspring.country.model.Country;
 
 public class CountryMapper {
 

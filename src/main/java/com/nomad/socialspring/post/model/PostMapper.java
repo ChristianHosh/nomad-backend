@@ -1,11 +1,10 @@
-package com.nomad.socialspring.post.mapper;
+package com.nomad.socialspring.post.model;
 
 import com.nomad.socialspring.image.model.Image;
 import com.nomad.socialspring.image.model.ImageMapper;
 import com.nomad.socialspring.post.dto.PostRequest;
 import com.nomad.socialspring.post.dto.PostResponse;
-import com.nomad.socialspring.post.model.Post;
-import com.nomad.socialspring.user.mapper.UserMapper;
+import com.nomad.socialspring.user.model.UserMapper;
 import com.nomad.socialspring.user.model.User;
 
 public class PostMapper {

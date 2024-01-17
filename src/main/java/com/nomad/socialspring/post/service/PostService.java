@@ -4,7 +4,7 @@ import com.nomad.socialspring.image.model.Image;
 import com.nomad.socialspring.image.service.ImageFacade;
 import com.nomad.socialspring.post.dto.PostRequest;
 import com.nomad.socialspring.post.dto.PostResponse;
-import com.nomad.socialspring.post.mapper.PostMapper;
+import com.nomad.socialspring.post.model.PostMapper;
 import com.nomad.socialspring.post.model.Post;
 import com.nomad.socialspring.user.model.User;
 import com.nomad.socialspring.user.service.UserFacade;

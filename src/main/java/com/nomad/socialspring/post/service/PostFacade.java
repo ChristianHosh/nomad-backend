@@ -2,7 +2,7 @@ package com.nomad.socialspring.post.service;
 
 import com.nomad.socialspring.image.model.Image;
 import com.nomad.socialspring.post.dto.PostRequest;
-import com.nomad.socialspring.post.mapper.PostMapper;
+import com.nomad.socialspring.post.model.PostMapper;
 import com.nomad.socialspring.post.model.Post;
 import com.nomad.socialspring.post.repo.PostRepository;
 import com.nomad.socialspring.user.model.User;

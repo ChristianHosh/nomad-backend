@@ -1,9 +1,7 @@
-package com.nomad.socialspring.chat.mapper;
+package com.nomad.socialspring.chat.model;
 
 import com.nomad.socialspring.chat.dto.ChatMessageResponse;
-import com.nomad.socialspring.chat.model.ChatChannel;
-import com.nomad.socialspring.chat.model.ChatMessage;
-import com.nomad.socialspring.user.mapper.UserMapper;
+import com.nomad.socialspring.user.model.UserMapper;
 import com.nomad.socialspring.user.model.User;
 
 public class ChatMessageMapper {

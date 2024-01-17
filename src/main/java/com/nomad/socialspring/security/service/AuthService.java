@@ -8,7 +8,7 @@ import com.nomad.socialspring.security.dto.ResendEmailVerificationRequest;
 import com.nomad.socialspring.security.jwt.JwtUtils;
 import com.nomad.socialspring.security.model.VerificationToken;
 import com.nomad.socialspring.user.dto.UserResponse;
-import com.nomad.socialspring.user.mapper.UserMapper;
+import com.nomad.socialspring.user.model.UserMapper;
 import com.nomad.socialspring.user.model.User;
 import com.nomad.socialspring.user.service.UserFacade;
 import jakarta.transaction.Transactional;

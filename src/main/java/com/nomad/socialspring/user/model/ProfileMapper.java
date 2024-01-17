@@ -1,9 +1,8 @@
-package com.nomad.socialspring.user.mapper;
+package com.nomad.socialspring.user.model;
 
 import com.nomad.socialspring.image.model.ImageMapper;
 import com.nomad.socialspring.user.dto.ProfileResponse;
-import com.nomad.socialspring.user.model.Profile;
-import com.nomad.socialspring.country.mapper.CountryMapper;
+import com.nomad.socialspring.country.model.CountryMapper;
 
 public class ProfileMapper {
     public static ProfileResponse entityToRequest(Profile profile) {

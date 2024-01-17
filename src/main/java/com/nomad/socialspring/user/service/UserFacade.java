@@ -4,7 +4,7 @@ import com.nomad.socialspring.chat.model.ChatChannel;
 import com.nomad.socialspring.error.exceptions.BxException;
 import com.nomad.socialspring.security.dto.RegisterRequest;
 import com.nomad.socialspring.security.facade.AuthenticationFacade;
-import com.nomad.socialspring.user.mapper.UserMapper;
+import com.nomad.socialspring.user.model.UserMapper;
 import com.nomad.socialspring.user.model.User;
 import com.nomad.socialspring.user.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
