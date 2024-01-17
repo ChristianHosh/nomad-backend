@@ -1,0 +1,22 @@
+package com.nomad.socialspring.post.dto;
+
+import com.nomad.socialspring.user.dto.UserResponse;
+import lombok.Builder;
+
+import java.sql.Timestamp;
+
+/**
+ * Response DTO for {@link com.nomad.socialspring.post.model.Post}
+ */
+@Builder
+public record PostResponse(
+        Timestamp createdOn,
+        Timestamp updatedOn,
+        Long id,
+        String content,
+        Boolean isPrivate,
+        UserResponse author,
+        String imageUrl,
+        Integer numberOfLikes
+) {
+}

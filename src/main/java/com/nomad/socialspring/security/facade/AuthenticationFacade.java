@@ -10,6 +10,8 @@ public interface AuthenticationFacade {
     }
 
     Authentication getAuthentication();
+
     User getAuthenticatedUser();
+
     User getAuthenticatedUserOrNull();
 }

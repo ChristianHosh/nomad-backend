@@ -1,8 +1,9 @@
-package com.nomad.socialspring.chat.repo;
+package com.nomad.socialspring.chat.service;
 
 import com.nomad.socialspring.chat.model.ChatChannel;
 import com.nomad.socialspring.chat.model.ChatChannelUser;
 import com.nomad.socialspring.chat.model.ChatChannelUsersId;
+import com.nomad.socialspring.chat.repo.ChatChannelUserRepository;
 import com.nomad.socialspring.error.exceptions.BxException;
 import com.nomad.socialspring.user.model.User;
 import lombok.RequiredArgsConstructor;

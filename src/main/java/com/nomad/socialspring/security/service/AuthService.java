@@ -7,11 +7,10 @@ import com.nomad.socialspring.security.dto.RegisterRequest;
 import com.nomad.socialspring.security.dto.ResendEmailVerificationRequest;
 import com.nomad.socialspring.security.jwt.JwtUtils;
 import com.nomad.socialspring.security.model.VerificationToken;
-import com.nomad.socialspring.security.repo.VerificationTokenFacade;
 import com.nomad.socialspring.user.dto.UserResponse;
 import com.nomad.socialspring.user.mapper.UserMapper;
 import com.nomad.socialspring.user.model.User;
-import com.nomad.socialspring.user.repo.UserFacade;
+import com.nomad.socialspring.user.service.UserFacade;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -58,7 +57,7 @@ public class AuthService {
         VerificationToken verificationToken = verificationTokenFacade.findByUser(user);
 
         if (BDate.valueOf(verificationToken.getExpirationDate()).before(BDate.currentDate())) {
-            throw BxException.badRequest(VerificationToken.class, "date", "still not expired, check your spam inbox");
+            throw BxException.badRequest(VerificationToken.class, "date", BxException.X_DATE_NOT_EXPIRED);
         }
 
         verificationTokenFacade.delete(verificationToken);
@@ -84,7 +83,7 @@ public class AuthService {
 
     public UserResponse loginUser(@NotNull LoginRequest request) {
         if (!userFacade.findByUsername(request.username()).getIsVerified())
-            throw BxException.unauthorized("your account is not verified");
+            throw BxException.unauthorized(BxException.X_ACCOUNT_NOT_VERIFIED);
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.username(), request.password()));

@@ -27,13 +27,13 @@ public class BDate extends Date {
     @NotNull
     @Contract("_ -> new")
     public static BDate valueOf(Date date) {
-        return new BDate(date);
+        return new BDate(date.getTime());
     }
 
     @NotNull
     @Contract("_ -> new")
     public static BDate valueOf(Timestamp timestamp) {
-        return new BDate(timestamp);
+        return new BDate(timestamp.getTime());
     }
 
     @NotNull

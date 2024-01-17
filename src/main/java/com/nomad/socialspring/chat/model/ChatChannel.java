@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -40,7 +41,7 @@ public class ChatChannel extends BaseEntity {
     }
 
     public boolean containsUser(User user) {
-        return chatChannelUsers.contains(newChatChannelUser(user));
+        return chatChannelUsers.stream().anyMatch(chatChannelUser -> Objects.equals(chatChannelUser.getChatChannel(), this) && Objects.equals(chatChannelUser.getUser(), user));
     }
 
     public boolean addUser(User user) {

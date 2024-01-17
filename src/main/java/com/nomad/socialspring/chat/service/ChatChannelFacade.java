@@ -1,6 +1,7 @@
-package com.nomad.socialspring.chat.repo;
+package com.nomad.socialspring.chat.service;
 
 import com.nomad.socialspring.chat.model.ChatChannel;
+import com.nomad.socialspring.chat.repo.ChatChannelRepository;
 import com.nomad.socialspring.error.exceptions.BxException;
 import com.nomad.socialspring.user.model.User;
 import lombok.RequiredArgsConstructor;
@@ -42,16 +43,13 @@ public class ChatChannelFacade {
         return save(chatChannel);
     }
 
-    public ChatChannel addNewUsers(String channelId, @NotNull List<User> userList) {
-        ChatChannel chatChannel = findById(channelId);
+    public ChatChannel addNewUsers(@NotNull ChatChannel chatChannel, @NotNull List<User> userList) {
         userList.forEach(chatChannel::addUser);
 
         return save(chatChannel);
     }
 
-
-    public ChatChannel removeUsers(String channelId, @NotNull List<User> userList) {
-        ChatChannel chatChannel = findById(channelId);
+    public ChatChannel removeUsers(@NotNull ChatChannel chatChannel, @NotNull List<User> userList) {
         userList.forEach(chatChannel::removeUser);
 
         return save(chatChannel);

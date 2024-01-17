@@ -1,8 +1,9 @@
-package com.nomad.socialspring.security.repo;
+package com.nomad.socialspring.security.service;
 
 import com.nomad.socialspring.error.exceptions.BxException;
 import com.nomad.socialspring.security.mapper.VerificationTokenMapper;
 import com.nomad.socialspring.security.model.VerificationToken;
+import com.nomad.socialspring.security.repo.VerificationTokenRepository;
 import com.nomad.socialspring.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

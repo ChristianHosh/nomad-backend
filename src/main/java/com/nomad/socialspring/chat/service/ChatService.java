@@ -6,16 +6,13 @@ import com.nomad.socialspring.chat.mapper.ChatMessageMapper;
 import com.nomad.socialspring.chat.model.ChatChannel;
 import com.nomad.socialspring.chat.model.ChatChannelUser;
 import com.nomad.socialspring.chat.model.ChatMessage;
-import com.nomad.socialspring.chat.repo.ChatChannelFacade;
-import com.nomad.socialspring.chat.repo.ChatChannelUserFacade;
-import com.nomad.socialspring.chat.repo.ChatMessageFacade;
 import com.nomad.socialspring.error.exceptions.BxException;
-import com.nomad.socialspring.security.facade.AuthenticationFacade;
 import com.nomad.socialspring.security.jwt.JwtUtils;
 import com.nomad.socialspring.user.dto.UserResponse;
 import com.nomad.socialspring.user.mapper.UserMapper;
 import com.nomad.socialspring.user.model.User;
-import com.nomad.socialspring.user.repo.UserFacade;
+import com.nomad.socialspring.user.service.UserFacade;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
@@ -33,8 +30,8 @@ public class ChatService {
     private final ChatChannelFacade chatChannelFacade;
     private final ChatMessageFacade chatMessageFacade;
     private final ChatChannelUserFacade chatChannelUserFacade;
-    private final AuthenticationFacade authenticationFacade;
 
+    @Transactional
     public ChatMessageResponse chat(@NotNull ChatMessageRequest request) {
         if (!jwtUtils.validateJwtToken(request.jwtToken()))
             throw BxException.unauthorized("invalid token");
@@ -48,8 +45,9 @@ public class ChatService {
         return ChatMessageMapper.entityToResponse(chatMessage);
     }
 
+    @Transactional
     public ResponseEntity<?> updateMessageReadStatus(@NotNull ChatMessageReadRequest request) {
-        User user = authenticationFacade.getAuthenticatedUser();
+        User user = userFacade.getAuthenticatedUser();
         ChatChannel chatChannel = chatChannelFacade.findById(request.chatChannelId());
         ChatChannelUser chatChannelUser = chatChannelUserFacade.findById(chatChannel, user);
 
@@ -58,8 +56,9 @@ public class ChatService {
         return ResponseEntity.ok().build();
     }
 
+    @Transactional
     public ChatChannelResponse createNewChannel(@NotNull ChatChannelRequest request) {
-        User user = authenticationFacade.getAuthenticatedUser();
+        User user = userFacade.getAuthenticatedUser();
         List<User> userList = userFacade.findByUsernameList(request.usernames());
         userList.add(user);
 
@@ -68,33 +67,58 @@ public class ChatService {
         return ChatChannelMapper.entityToResponse(chatChannel, user);
     }
 
+    @Transactional
     public ChatChannelResponse addNewUsersToChannel(String channelId, @NotNull ChatChannelUsersRequest request) {
-        List<User> userList = userFacade.findByUsernameList(request.usernames());
-        userList.add(authenticationFacade.getAuthenticatedUser());
+        ChatChannel chatChannel = chatChannelFacade.findById(channelId);
+        User authenticatedUser = userFacade.getAuthenticatedUser();
 
-        ChatChannel chatChannel = chatChannelFacade.addNewUsers(channelId, userList);
+        // if current user is not in {chatChannel} throw unauthorized
+        if (!chatChannel.containsUser(authenticatedUser))
+            throw BxException.unauthorized(BxException.X_CURRENT_USER_NOT_IN_CHAT);
+
+        List<User> userList = userFacade.findByUsernameList(request.usernames());
+
+        chatChannel = chatChannelFacade.addNewUsers(chatChannel, userList);
 
         return ChatChannelMapper.entityToResponse(chatChannel);
     }
 
-
+    @Transactional
     public ChatChannelResponse removeUsersFromChannel(String channelId, @NotNull ChatChannelUsersRequest request) {
+        ChatChannel chatChannel = chatChannelFacade.findById(channelId);
+
+        // if current user is not in {chatChannel} throw unauthorized
+        if (!chatChannel.containsUser(userFacade.getAuthenticatedUser()))
+            throw BxException.unauthorized(BxException.X_CURRENT_USER_NOT_IN_CHAT);
+
         List<User> userList = userFacade.findByUsernameList(request.usernames());
 
-        ChatChannel chatChannel = chatChannelFacade.removeUsers(channelId, userList);
+        chatChannel = chatChannelFacade.removeUsers(chatChannel, userList);
 
         return ChatChannelMapper.entityToResponse(chatChannel);
     }
 
+    @Transactional
     public Page<ChatMessageResponse> getChannelMessages(String channelId, int page, int size) {
         ChatChannel chatChannel = chatChannelFacade.findById(channelId);
+
+        // if current user is not in {chatChannel} throw unauthorized
+        if (!chatChannel.containsUser(userFacade.getAuthenticatedUser()))
+            throw BxException.unauthorized(BxException.X_CURRENT_USER_NOT_IN_CHAT);
+
         Page<ChatMessage> chatMessagePage = chatMessageFacade.getMessagesByChatChannel(chatChannel, page, size);
 
         return chatMessagePage.map(ChatMessageMapper::entityToResponse);
     }
 
+    @Transactional
     public Page<UserResponse> getChannelUsers(String channelId, int page, int size) {
         ChatChannel chatChannel = chatChannelFacade.findById(channelId);
+
+        // if current user is not in {chatChannel} throw unauthorized
+        if (!chatChannel.containsUser(userFacade.getAuthenticatedUser()))
+            throw BxException.unauthorized(BxException.X_CURRENT_USER_NOT_IN_CHAT);
+
         Page<User> userPage = userFacade.getUsersByChatChannel(chatChannel, page, size);
 
         return userPage.map(UserMapper::entityToResponse);

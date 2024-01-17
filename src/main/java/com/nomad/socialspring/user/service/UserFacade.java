@@ -1,10 +1,12 @@
-package com.nomad.socialspring.user.repo;
+package com.nomad.socialspring.user.service;
 
 import com.nomad.socialspring.chat.model.ChatChannel;
 import com.nomad.socialspring.error.exceptions.BxException;
 import com.nomad.socialspring.security.dto.RegisterRequest;
+import com.nomad.socialspring.security.facade.AuthenticationFacade;
 import com.nomad.socialspring.user.mapper.UserMapper;
 import com.nomad.socialspring.user.model.User;
+import com.nomad.socialspring.user.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
@@ -20,10 +22,19 @@ import java.util.List;
 public class UserFacade {
 
     private final UserRepository repository;
+    private final AuthenticationFacade authenticationFacade;
 
     public User findById(Long id) {
         return repository.findById(id)
                 .orElseThrow(BxException.xNotFound(User.class, id));
+    }
+
+    public User getAuthenticatedUser() {
+        return authenticationFacade.getAuthenticatedUser();
+    }
+
+    public User getAuthenticatedUserOrNull() {
+        return authenticationFacade.getAuthenticatedUserOrNull();
     }
 
     public User findByUsername(String username) {
@@ -37,7 +48,7 @@ public class UserFacade {
     }
 
     public User findByEmailIgnoreCase(String email) {
-        return repository.findByEmailIgnoreCase(email)
+        return repository.findByEmail(email)
                 .orElseThrow(BxException.xNotFound(User.class, email));
     }
 
@@ -50,11 +61,11 @@ public class UserFacade {
     }
 
     public boolean existsByUsernameIgnoreCase(String username) {
-        return repository.existsByUsernameIgnoreCase(username);
+        return repository.existsByUsername(username);
     }
 
     public boolean existsByEmailIgnoreCase(String email) {
-        return repository.existsByEmailIgnoreCase(email);
+        return repository.existsByEmail(email);
     }
 
     public void verify(@NotNull User user) {

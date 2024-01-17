@@ -1,9 +1,10 @@
-package com.nomad.socialspring.chat.repo;
+package com.nomad.socialspring.chat.service;
 
 import com.nomad.socialspring.chat.dto.ChatMessageRequest;
 import com.nomad.socialspring.chat.mapper.ChatMessageMapper;
 import com.nomad.socialspring.chat.model.ChatChannel;
 import com.nomad.socialspring.chat.model.ChatMessage;
+import com.nomad.socialspring.chat.repo.ChatMessageRepository;
 import com.nomad.socialspring.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
