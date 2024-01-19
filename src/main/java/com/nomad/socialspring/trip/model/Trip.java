@@ -19,10 +19,6 @@ import java.util.Set;
 @Entity
 @Table(name = "T_TRIP")
 public class Trip extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
-    private Long id;
 
     @Column(name = "START_DATE", nullable = false)
     private Date startDate;

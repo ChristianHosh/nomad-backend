@@ -13,11 +13,6 @@ import lombok.*;
 @Table(name = "T_IMAGE")
 public class Image extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
-    private Long id;
-
     @Lob
     @Column(name = "DATA", length = 1000)
     private byte[] imageData;

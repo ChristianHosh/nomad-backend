@@ -15,11 +15,6 @@ import lombok.*;
 @Table(name = "T_REPORT")
 public class Report extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
-    private Long id;
-
     @Column(name = "CONTENT", nullable = false, length = 500)
     @Size(max = 500)
     private String content;

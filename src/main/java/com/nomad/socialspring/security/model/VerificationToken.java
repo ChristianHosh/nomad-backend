@@ -16,11 +16,6 @@ import java.sql.Date;
 @Table(name = "T_VERIFICATION_TOKEN")
 public class VerificationToken extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
-    private Long id;
-
     @Column(name = "TOKEN", nullable = false)
     private String token;
 

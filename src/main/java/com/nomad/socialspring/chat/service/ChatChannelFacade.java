@@ -17,12 +17,12 @@ public class ChatChannelFacade {
 
     private final ChatChannelRepository repository;
 
-    public ChatChannel findById(String id) {
-        return findById(UUID.fromString(id));
+    public ChatChannel findByUUID(String id) {
+        return findByUUID(UUID.fromString(id));
     }
 
-    public ChatChannel findById(UUID id) {
-        return repository.findById(id)
+    public ChatChannel findByUUID(UUID id) {
+        return repository.findByUuid(id)
                 .orElseThrow(BxException.xNotFound(ChatChannel.class, id));
     }
 

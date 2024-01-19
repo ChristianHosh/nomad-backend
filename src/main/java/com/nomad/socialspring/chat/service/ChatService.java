@@ -37,7 +37,7 @@ public class ChatService {
             throw BxException.unauthorized("invalid token");
 
         User sender = userFacade.findByUsername(jwtUtils.getUsernameFromJwtToken(request.jwtToken()));
-        ChatChannel chatChannel = chatChannelFacade.findById(request.chatChannelId());
+        ChatChannel chatChannel = chatChannelFacade.findByUUID(request.chatChannelId());
 
         ChatMessage chatMessage = chatMessageFacade.newChatMessageFrom(request, sender, chatChannel);
         chatChannelUserFacade.setNewMessageOn(chatChannel);
@@ -48,7 +48,7 @@ public class ChatService {
     @Transactional
     public ResponseEntity<?> updateMessageReadStatus(@NotNull ChatMessageReadRequest request) {
         User user = userFacade.getAuthenticatedUser();
-        ChatChannel chatChannel = chatChannelFacade.findById(request.chatChannelId());
+        ChatChannel chatChannel = chatChannelFacade.findByUUID(request.chatChannelId());
         ChatChannelUser chatChannelUser = chatChannelUserFacade.findById(chatChannel, user);
 
         chatChannelUserFacade.setReadMessage(chatChannelUser);
@@ -69,7 +69,7 @@ public class ChatService {
 
     @Transactional
     public ChatChannelResponse addNewUsersToChannel(String channelId, @NotNull ChatChannelUsersRequest request) {
-        ChatChannel chatChannel = chatChannelFacade.findById(channelId);
+        ChatChannel chatChannel = chatChannelFacade.findByUUID(channelId);
         User authenticatedUser = userFacade.getAuthenticatedUser();
 
         // if current user is not in {chatChannel} throw unauthorized
@@ -85,7 +85,7 @@ public class ChatService {
 
     @Transactional
     public ChatChannelResponse removeUsersFromChannel(String channelId, @NotNull ChatChannelUsersRequest request) {
-        ChatChannel chatChannel = chatChannelFacade.findById(channelId);
+        ChatChannel chatChannel = chatChannelFacade.findByUUID(channelId);
 
         // if current user is not in {chatChannel} throw unauthorized
         if (!chatChannel.containsUser(userFacade.getAuthenticatedUser()))
@@ -100,7 +100,7 @@ public class ChatService {
 
     @Transactional
     public Page<ChatMessageResponse> getChannelMessages(String channelId, int page, int size) {
-        ChatChannel chatChannel = chatChannelFacade.findById(channelId);
+        ChatChannel chatChannel = chatChannelFacade.findByUUID(channelId);
 
         // if current user is not in {chatChannel} throw unauthorized
         if (!chatChannel.containsUser(userFacade.getAuthenticatedUser()))
@@ -113,7 +113,7 @@ public class ChatService {
 
     @Transactional
     public Page<UserResponse> getChannelUsers(String channelId, int page, int size) {
-        ChatChannel chatChannel = chatChannelFacade.findById(channelId);
+        ChatChannel chatChannel = chatChannelFacade.findByUUID(channelId);
 
         // if current user is not in {chatChannel} throw unauthorized
         if (!chatChannel.containsUser(userFacade.getAuthenticatedUser()))

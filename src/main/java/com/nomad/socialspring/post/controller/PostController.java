@@ -27,4 +27,15 @@ public class PostController {
         return postService.createNewPost(request, imageFile);
     }
 
+    @PutMapping("/{id}")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public PostResponse updatePost(
+            @PathVariable(name = "id") Long postId,
+            @ModelAttribute @Valid PostRequest request,
+            @RequestParam(name = "imageFile", required = false) MultipartFile imageFile
+    ) {
+        return postService.updatePost(postId, request, imageFile);
+    }
+
 }

@@ -21,10 +21,6 @@ import java.util.Set;
 @Entity
 @Table(name = "T_POST")
 public class Post extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
-    private Long id;
 
     @Column(name = "CONTENT", nullable = false, length = 1200)
     @Size(max = 1200)

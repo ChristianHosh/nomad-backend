@@ -15,11 +15,6 @@ import lombok.*;
 @Table(name = "T_CHAT_MESSAGE")
 public class ChatMessage extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
-    private Long id;
-
     @Column(name = "CONTENT", nullable = false)
     @Size(max = 255)
     private String content;

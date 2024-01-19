@@ -1,5 +1,6 @@
 package com.nomad.socialspring.post.service;
 
+import com.nomad.socialspring.error.exceptions.BxException;
 import com.nomad.socialspring.image.model.Image;
 import com.nomad.socialspring.post.dto.PostRequest;
 import com.nomad.socialspring.post.model.PostMapper;
@@ -28,4 +29,8 @@ public class PostFacade {
         repository.delete(post);
     }
 
+    public Post findById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(BxException.xNotFound(Post.class, id));
+    }
 }

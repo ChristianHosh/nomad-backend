@@ -15,11 +15,6 @@ import lombok.*;
 @Table(name = "T_NOTIFICATION")
 public class Notification extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
-    private Long id;
-
     @Enumerated
     @Column(name = "NOTIFICATION_TYPE", nullable = false)
     private NotificationType notificationType;

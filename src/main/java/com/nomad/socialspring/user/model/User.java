@@ -23,11 +23,6 @@ import java.util.Set;
 @Table(name = "T_USER")
 public class User extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
-    private Long id;
-
     @Column(name = "USERNAME", nullable = false, unique = true, length = 30)
     @Size(min = 4, max = 30)
     private String username;

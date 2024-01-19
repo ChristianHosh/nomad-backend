@@ -15,10 +15,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "T_INTEREST")
 public class Interest extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
-    private Long id;
 
     @Column(name = "NAME", nullable = false, unique = true)
     private String name;

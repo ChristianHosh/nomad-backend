@@ -1,5 +1,7 @@
 package com.nomad.socialspring.image.model;
 
+import com.nomad.socialspring.error.exceptions.BxException;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
@@ -9,6 +11,7 @@ import java.util.zip.Inflater;
 
 public class ImageMapper {
 
+    @NotNull
     private static byte[] compressImage(byte[] data) {
 
         Deflater deflater = new Deflater();
@@ -24,11 +27,13 @@ public class ImageMapper {
         }
         try {
             outputStream.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            throw BxException.unexpected(e);
         }
         return outputStream.toByteArray();
     }
 
+    @NotNull
     private static byte[] decompressImage(byte[] data) {
         Inflater inflater = new Inflater();
         inflater.setInput(data);
@@ -40,7 +45,8 @@ public class ImageMapper {
                 outputStream.write(tmp, 0, count);
             }
             outputStream.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            throw BxException.unexpected(e);
         }
         return outputStream.toByteArray();
     }
@@ -53,11 +59,12 @@ public class ImageMapper {
         return "http://something.fl0/api/images/" + image.getId();
     }
 
-    public static byte[] entityToResponse(Image image) {
+    @NotNull
+    public static byte[] entityToResponse(@NotNull Image image) {
         return decompressImage(image.getImageData());
     }
 
-    public static Image requestToEntity(MultipartFile imageFile) throws IOException {
+    public static Image requestToEntity(@NotNull MultipartFile imageFile) throws IOException {
         return Image.builder()
                 .imageData(compressImage(imageFile.getBytes()))
                 .build();

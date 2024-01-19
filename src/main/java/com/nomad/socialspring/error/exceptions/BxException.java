@@ -26,7 +26,7 @@ public class BxException extends RuntimeException {
 
     @NotNull
     @Contract("_, _ -> new")
-    public static BxException notFound(@NotNull Class<? extends BaseEntity> clazz, @NotNull Object value) {
+    public static BxException notFound(@NotNull Class<?> clazz, @NotNull Object value) {
         if (value instanceof BaseEntity)
             value = value.getClass().getSimpleName() + ": " + ((BaseEntity) value).getExceptionString();
         BxNotFoundException exception = new BxNotFoundException(clazz.getSimpleName() + ": not found for '" + value + "'");
@@ -36,7 +36,7 @@ public class BxException extends RuntimeException {
 
     @NotNull
     @Contract(pure = true)
-    public static Supplier<? extends RuntimeException> xNotFound(Class<? extends BaseEntity> clazz, Object value) {
+    public static Supplier<? extends RuntimeException> xNotFound(Class<?> clazz, Object value) {
         return () -> {
             throw BxException.notFound(clazz, value);
         };
@@ -44,7 +44,7 @@ public class BxException extends RuntimeException {
 
     @NotNull
     @Contract("_, _, _ -> new")
-    public static BxException conflict(@NotNull Class<? extends BaseEntity> clazz, @NotNull Object field, @NotNull Object value) {
+    public static BxException conflict(@NotNull Class<?> clazz, @NotNull Object field, @NotNull Object value) {
         if (value instanceof BaseEntity)
             value = value.getClass().getSimpleName() + ": " + ((BaseEntity) value).getExceptionString();
         BxConflictException exception = new BxConflictException(clazz.getSimpleName() + ": " + field + " already exists for '" + value + "'");
@@ -54,7 +54,7 @@ public class BxException extends RuntimeException {
 
     @NotNull
     @Contract(pure = true)
-    public static Supplier<? extends RuntimeException> xConflict(Class<? extends BaseEntity> clazz, @NotNull Object field, @NotNull Object value) {
+    public static Supplier<? extends RuntimeException> xConflict(Class<?> clazz, @NotNull Object field, @NotNull Object value) {
         return () -> {
             throw BxException.conflict(clazz, field, value);
         };
@@ -62,7 +62,7 @@ public class BxException extends RuntimeException {
 
     @NotNull
     @Contract("_, _, _ -> new")
-    public static BxException badRequest(@NotNull Class<? extends BaseEntity> clazz, @NotNull Object field, @NotNull Object value) {
+    public static BxException badRequest(@NotNull Class<?> clazz, @NotNull Object field, @NotNull Object value) {
         if (value instanceof BaseEntity)
             value = value.getClass().getSimpleName() + ": " + ((BaseEntity) value).getExceptionString();
         BxBadRequestException exception = new BxBadRequestException(clazz.getSimpleName() + ": " + field + " " + value);
@@ -72,7 +72,7 @@ public class BxException extends RuntimeException {
 
     @NotNull
     @Contract("_, _ -> new")
-    public static BxException badRequest(@NotNull Class<? extends BaseEntity> clazz, @NotNull Object value) {
+    public static BxException badRequest(@NotNull Class<?> clazz, @NotNull Object value) {
         if (value instanceof BaseEntity)
             value = value.getClass().getSimpleName() + ": " + ((BaseEntity) value).getExceptionString();
         BxBadRequestException exception = new BxBadRequestException(clazz.getSimpleName() + ": " + value);
@@ -82,7 +82,7 @@ public class BxException extends RuntimeException {
 
     @NotNull
     @Contract(pure = true)
-    public static Supplier<? extends RuntimeException> xBadRequest(Class<? extends BaseEntity> clazz, @NotNull Object field, @NotNull Object value) {
+    public static Supplier<? extends RuntimeException> xBadRequest(Class<?> clazz, @NotNull Object field, @NotNull Object value) {
         return () -> {
             throw BxException.badRequest(clazz, field, value);
         };
@@ -90,7 +90,7 @@ public class BxException extends RuntimeException {
 
     @NotNull
     @Contract(pure = true)
-    public static Supplier<? extends RuntimeException> xBadRequest(Class<? extends BaseEntity> clazz, @NotNull Object value) {
+    public static Supplier<? extends RuntimeException> xBadRequest(Class<?> clazz, @NotNull Object value) {
         return () -> {
             throw BxException.badRequest(clazz, value);
         };
@@ -101,36 +101,14 @@ public class BxException extends RuntimeException {
     public static BxException unauthorized(Object value) {
         if (value instanceof BaseEntity)
             value = ((BaseEntity) value).getExceptionString();
-        return new BxUnauthorizedException("unauthorized: " + value);
+        return new BxUnauthorizedException("you are unauthorized to do this action: " + value);
     }
 
     @NotNull
     @Contract("_ -> new")
     public static BxException hardcoded(String message) {
         BxException exception = new BxException(message);
-        log.info(exception.getMessage(), exception);
-        return exception;
-    }
-
-    public static BxException hardcoded(@NotNull Class<?> clazz, Throwable cause) {
-        BxException exception = new BxException(clazz.getSimpleName() + ": " + cause.getMessage());
-        log.info(exception.getMessage(), exception);
-        return exception;
-    }
-
-    @NotNull
-    @Contract("_, _ -> new")
-    public static BxException hardcoded(@NotNull Class<?> clazz, String message) {
-        BxException exception = new BxException(clazz.getSimpleName() + ": " + message);
-        log.info(exception.getMessage(), exception);
-        return exception;
-    }
-
-    @NotNull
-    @Contract("_, _ -> new")
-    public static BxException hardcoded(@NotNull BaseEntity entity, String message) {
-        BxException exception = new BxException(entity.getClass().getSimpleName() + ": " + entity.getExceptionString() + ": " + message);
-        log.info(exception.getMessage(), exception);
+        log.warn(exception.getMessage(), exception);
         return exception;
     }
 

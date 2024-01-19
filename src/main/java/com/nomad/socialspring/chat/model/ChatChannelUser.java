@@ -16,7 +16,7 @@ import java.util.Objects;
 @Setter
 @Entity
 @Table(name = "t_chat_channel_users")
-public class ChatChannelUser extends BaseEntity {
+public class ChatChannelUser {
 
     @EmbeddedId
     private ChatChannelUsersId id;
@@ -36,7 +36,6 @@ public class ChatChannelUser extends BaseEntity {
     @Builder.Default
     private Boolean readMessages = false;
 
-    @Override
     public String getExceptionString() {
         return chatChannel.getExceptionString() + " | " + user.getExceptionString();
     }

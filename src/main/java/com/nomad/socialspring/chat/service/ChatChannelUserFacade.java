@@ -23,7 +23,7 @@ public class ChatChannelUserFacade {
     }
 
     public ChatChannelUser findById(@NotNull ChatChannel chatChannel, @NotNull User user) {
-        return findById(chatChannel.getId(), user.getId());
+        return findById(chatChannel.getUuid(), user.getId());
     }
 
     public ChatChannelUser findById(UUID chatChannelId, Long userId) {

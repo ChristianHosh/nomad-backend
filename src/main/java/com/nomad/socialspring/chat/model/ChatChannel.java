@@ -20,10 +20,9 @@ import java.util.UUID;
 @Table(name = "T_CHAT_CHANNEL")
 public class ChatChannel extends BaseEntity {
 
-    @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "ID", nullable = false)
-    private UUID id;
+    @Column(name = "UUID", nullable = false)
+    private UUID uuid;
 
     private String name;
 

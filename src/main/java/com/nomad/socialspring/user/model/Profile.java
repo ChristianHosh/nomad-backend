@@ -23,11 +23,6 @@ import java.util.Set;
 @Table(name = "T_PROFILE")
 public class Profile extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
-    private Long id;
-
     @Column(name = "DISPLAY_NAME", nullable = false, length = 50)
     @Size(max = 50)
     private String displayName;
