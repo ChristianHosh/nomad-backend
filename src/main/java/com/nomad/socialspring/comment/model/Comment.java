@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Builder
@@ -38,4 +39,15 @@ public class Comment extends BaseEntity {
     @Builder.Default
     private Set<User> likes = new LinkedHashSet<>();
 
+    public int getNumberOfLikes() {
+        return likes == null ? 0 : likes.size();
+    }
+
+    public boolean canBeModifiedBy(User user) {
+        return Objects.equals(getAuthor(), user);
+    }
+
+    public boolean canBeDeletedBy(User user) {
+        return Objects.equals(getAuthor(), user) || Objects.equals(getPost().getAuthor(), user);
+    }
 }

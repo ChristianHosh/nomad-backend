@@ -1,6 +1,7 @@
 package com.nomad.socialspring.user.model;
 
 import com.nomad.socialspring.chat.model.ChatChannelUser;
+import com.nomad.socialspring.comment.model.Comment;
 import com.nomad.socialspring.common.BaseEntity;
 import com.nomad.socialspring.post.model.Post;
 import com.nomad.socialspring.trip.model.Trip;
@@ -83,6 +84,12 @@ public class User extends BaseEntity {
     @Builder.Default
     private Set<FollowRequest> followRequests = new LinkedHashSet<>();
 
+    @ManyToMany(mappedBy = "likes", cascade = {CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY)
+    private Set<Post> likedPosts = new LinkedHashSet<>();
+
+    @ManyToMany(mappedBy = "likes", cascade = {CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY)
+    private Set<Comment> likedComments = new LinkedHashSet<>();
+
     @Override
     public final boolean equals(Object object) {
         if (this == object) return true;
@@ -107,12 +114,12 @@ public class User extends BaseEntity {
         return followers.contains(user);
     }
 
-    public boolean addFollower(User user) {
+    public boolean addFollowing(User user) {
         return followings.add(user);
     }
 
 
-    public boolean removeFollower(User user) {
+    public boolean removeFollowing(User user) {
         return followings.removeIf(following -> following.equals(user));
     }
 

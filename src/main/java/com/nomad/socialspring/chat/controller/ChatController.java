@@ -58,7 +58,7 @@ public class ChatController {
     @PutMapping("/api/chat/channel/{id}/users")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public ChatChannelResponse addUsersToChannel(
+    public ChatChannelResponse addNewUsersToChannel(
             @PathVariable(name = "id") String channelId,
             @RequestBody @Valid ChatChannelUsersRequest request
     ) {

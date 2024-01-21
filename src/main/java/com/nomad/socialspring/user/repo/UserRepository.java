@@ -38,4 +38,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select u from User u inner join u.followers followers where followers.id = :id")
     Page<User> findByFollowers_Id(@Param("id") Long id, Pageable pageable);
 
+    @Query("select u from User u inner join u.likedPosts likedPosts where likedPosts.id = :id")
+    Page<User> findByLikedPosts_Id(@Param("id") Long id, Pageable pageable);
+
+    @Query("select u from User u inner join u.likedComments likedComments where likedComments.id = :id")
+    Page<User> findByLikedComments_Id(@Param("id") Long id, Pageable pageable);
 }

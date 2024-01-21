@@ -2,6 +2,7 @@ package com.nomad.socialspring.post.model;
 
 import com.nomad.socialspring.comment.model.Comment;
 import com.nomad.socialspring.common.BaseEntity;
+import com.nomad.socialspring.error.exceptions.BxException;
 import com.nomad.socialspring.image.model.Image;
 import com.nomad.socialspring.interest.model.Interest;
 import com.nomad.socialspring.trip.model.Trip;
@@ -10,8 +11,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 @Builder
 @AllArgsConstructor
@@ -67,5 +67,18 @@ public class Post extends BaseEntity {
 
     public boolean canBeModifiedBy(User user) {
         return user.equals(author);
+    }
+
+    public int getNumberOfLikes() {
+        return likes == null ? 0 : likes.size();
+    }
+
+    public Comment getTopComment() {
+        Set<Comment> comments = getComments();
+        if (comments == null || comments.isEmpty())
+            return null;
+        return comments.stream()
+                .max(Comparator.comparingInt(Comment::getNumberOfLikes))
+                .orElseThrow(BxException.xHardcoded("should not happen"));
     }
 }

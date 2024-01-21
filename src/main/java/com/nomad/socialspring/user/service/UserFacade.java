@@ -4,8 +4,8 @@ import com.nomad.socialspring.chat.model.ChatChannel;
 import com.nomad.socialspring.error.exceptions.BxException;
 import com.nomad.socialspring.security.dto.RegisterRequest;
 import com.nomad.socialspring.security.facade.AuthenticationFacade;
-import com.nomad.socialspring.user.model.UserMapper;
 import com.nomad.socialspring.user.model.User;
+import com.nomad.socialspring.user.model.UserMapper;
 import com.nomad.socialspring.user.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -100,5 +100,13 @@ public class UserFacade {
 
     public Page<User> getFollowingsByUser(Long userId, int page, int size) {
         return repository.findByFollowers_Id(userId, PageRequest.of(page, size));
+    }
+
+    public Page<User> findAllByPostLiked(Long postId, int page, int size) {
+        return repository.findByLikedPosts_Id(postId, PageRequest.of(page, size));
+    }
+
+    public Page<User> findAllByCommentLiked(Long id, int page, int size) {
+        return repository.findByLikedComments_Id(id, PageRequest.of(page, size));
     }
 }

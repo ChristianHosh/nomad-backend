@@ -1,5 +1,6 @@
 package com.nomad.socialspring.post.dto;
 
+import com.nomad.socialspring.comment.dto.CommentResponse;
 import com.nomad.socialspring.image.dto.ImageResponse;
 import com.nomad.socialspring.user.dto.UserResponse;
 import lombok.Builder;
@@ -19,6 +20,7 @@ public record PostResponse(
         Boolean isPrivate,
         UserResponse author,
         List<ImageResponse> images,
-        Integer numberOfLikes
+        Integer numberOfLikes,
+        CommentResponse topComment
 ) {
 }

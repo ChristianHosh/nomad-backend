@@ -116,6 +116,12 @@ public class BxException extends RuntimeException {
         return exception;
     }
 
+    public static Supplier<? extends RuntimeException> xHardcoded(String message) {
+        return () -> {
+            throw BxException.hardcoded(message);
+        };
+    }
+
     @NotNull
     @Contract("_ -> new")
     public static BxException unexpected(Exception e) {

@@ -6,6 +6,7 @@ import com.nomad.socialspring.error.exceptions.BxException;
 import com.nomad.socialspring.image.service.ImageFacade;
 import com.nomad.socialspring.interest.model.Interest;
 import com.nomad.socialspring.interest.service.InterestFacade;
+import com.nomad.socialspring.notification.NotificationFacade;
 import com.nomad.socialspring.user.dto.FollowRequestResponse;
 import com.nomad.socialspring.user.dto.ProfileRequest;
 import com.nomad.socialspring.user.dto.UserResponse;
@@ -30,6 +31,7 @@ public class UserService {
     private final InterestFacade interestFacade;
     private final ImageFacade imageFacade;
     private final CountryFacade countryFacade;
+    private final NotificationFacade notificationFacade;
 
     public UserResponse getUser(Long userId) {
         User currentUser = userFacade.getAuthenticatedUserOrNull();
@@ -47,7 +49,7 @@ public class UserService {
             throw BxException.badRequest(User.class, BxException.X_CURRENT_USER_ALREADY_FOLLOWS);
 
         FollowRequest followRequest = followRequestFacade.save(new FollowRequest(currentUser, otherUser));
-        // todo: send follow request notification to otherUser
+        notificationFacade.notifyFollowRequest(followRequest);
 
 
         return UserMapper.entityToResponse(otherUser);
@@ -60,7 +62,7 @@ public class UserService {
         if (!currentUser.follows(otherUser))
             throw BxException.badRequest(User.class, BxException.X_CURRENT_USER_ALREADY_UNFOLLOWS);
 
-        otherUser.removeFollower(currentUser);
+        otherUser.removeFollowing(currentUser);
         return UserMapper.entityToResponse(userFacade.save(otherUser), currentUser);
     }
 
@@ -79,7 +81,7 @@ public class UserService {
         FollowRequest followRequest = followRequestFacade.findById(followRequestId);
 
         if (followRequest.isForUser(currentUser)) {
-            followRequest.getFromUser().addFollower(currentUser);
+            followRequest.getFromUser().addFollowing(currentUser);
             followRequestFacade.delete(followRequest);
         }
 
@@ -99,15 +101,15 @@ public class UserService {
     }
 
     public Page<UserResponse> getUserFollowers(Long userId, int page, int size) {
-        Page<User> followersPage = userFacade.getFollowersByUser(userId, page, size);
+        User user = userFacade.findById(userId);
 
-        return followersPage.map(UserMapper::entityToResponse);
+        return userFacade.getFollowersByUser(user.getId(), page, size).map(UserMapper::entityToResponse);
     }
 
     public Page<UserResponse> getUserFollowings(Long userId, int page, int size) {
-        Page<User> followingsPage = userFacade.getFollowingsByUser(userId, page, size);
+        User user = userFacade.findById(userId);
 
-        return followingsPage.map(UserMapper::entityToResponse);
+        return userFacade.getFollowingsByUser(user.getId(), page, size).map(UserMapper::entityToResponse);
     }
 
     public UserResponse updateProfileInfo(ProfileRequest profileRequest) {

@@ -1,5 +1,6 @@
 package com.nomad.socialspring.post.model;
 
+import com.nomad.socialspring.comment.model.CommentMapper;
 import com.nomad.socialspring.image.model.Image;
 import com.nomad.socialspring.image.model.ImageMapper;
 import com.nomad.socialspring.interest.model.Interest;
@@ -24,7 +25,8 @@ public class PostMapper {
                 .isPrivate(post.getIsPrivate())
                 .images(post.getImages().stream().map(ImageMapper::entityToResponse).toList())
                 .author(UserMapper.entityToResponse(post.getAuthor()))
-                .numberOfLikes(post.getLikes().size())
+                .numberOfLikes(post.getNumberOfLikes())
+                .topComment(CommentMapper.entityToResponse(post.getTopComment()))
                 .build();
     }
 
