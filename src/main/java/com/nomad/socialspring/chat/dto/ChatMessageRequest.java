@@ -14,6 +14,6 @@ public record ChatMessageRequest(
         String content,
         @NotNull(message = "chat channel id is null")
         @NotBlank(message = "chat channel id is blank")
-        String chatChannelId
+        String chatChannelUUID
 ) {
 }

@@ -5,7 +5,7 @@ import com.nomad.socialspring.comment.dto.CommentResponse;
 import com.nomad.socialspring.comment.model.Comment;
 import com.nomad.socialspring.comment.model.CommentMapper;
 import com.nomad.socialspring.error.exceptions.BxException;
-import com.nomad.socialspring.notification.NotificationFacade;
+import com.nomad.socialspring.notification.service.NotificationFacade;
 import com.nomad.socialspring.user.dto.UserResponse;
 import com.nomad.socialspring.user.model.User;
 import com.nomad.socialspring.user.model.UserMapper;

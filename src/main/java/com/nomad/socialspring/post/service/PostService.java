@@ -10,7 +10,7 @@ import com.nomad.socialspring.image.model.Image;
 import com.nomad.socialspring.image.service.ImageFacade;
 import com.nomad.socialspring.interest.model.Interest;
 import com.nomad.socialspring.interest.service.InterestFacade;
-import com.nomad.socialspring.notification.NotificationFacade;
+import com.nomad.socialspring.notification.service.NotificationFacade;
 import com.nomad.socialspring.post.dto.PostRequest;
 import com.nomad.socialspring.post.dto.PostResponse;
 import com.nomad.socialspring.post.model.PostMapper;

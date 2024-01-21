@@ -1,4 +1,4 @@
-package com.nomad.socialspring.notification;
+package com.nomad.socialspring.notification.service;
 
 import com.nomad.socialspring.comment.model.Comment;
 import com.nomad.socialspring.notification.model.Notification;
@@ -35,7 +35,7 @@ public class NotificationFacade {
         );
     }
 
-    public void notifyPostLike(Post post, User user) {
+    public void notifyPostLike(@NotNull Post post, User user) {
         notify(
                 user,
                 post.getAuthor(),
@@ -45,7 +45,7 @@ public class NotificationFacade {
         );
     }
 
-    public void notifyCommentLike(Post post, User user) {
+    public void notifyCommentLike(@NotNull Post post, User user) {
         notify(
                 user,
                 post.getAuthor(),

@@ -6,7 +6,7 @@ import com.nomad.socialspring.error.exceptions.BxException;
 import com.nomad.socialspring.image.service.ImageFacade;
 import com.nomad.socialspring.interest.model.Interest;
 import com.nomad.socialspring.interest.service.InterestFacade;
-import com.nomad.socialspring.notification.NotificationFacade;
+import com.nomad.socialspring.notification.service.NotificationFacade;
 import com.nomad.socialspring.user.dto.FollowRequestResponse;
 import com.nomad.socialspring.user.dto.ProfileRequest;
 import com.nomad.socialspring.user.dto.UserResponse;

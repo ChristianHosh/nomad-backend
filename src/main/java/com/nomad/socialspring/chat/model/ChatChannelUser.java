@@ -35,10 +35,6 @@ public class ChatChannelUser {
     @Builder.Default
     private Boolean readMessages = false;
 
-    public String getExceptionString() {
-        return chatChannel.getExceptionString() + " | " + user.getExceptionString();
-    }
-
     @Override
     public final boolean equals(Object object) {
         if (this == object) return true;

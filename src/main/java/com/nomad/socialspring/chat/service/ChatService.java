@@ -37,7 +37,7 @@ public class ChatService {
             throw BxException.unauthorized("invalid token");
 
         User sender = userFacade.findByUsername(jwtUtils.getUsernameFromJwtToken(request.jwtToken()));
-        ChatChannel chatChannel = chatChannelFacade.findByUUID(request.chatChannelId());
+        ChatChannel chatChannel = chatChannelFacade.findByUUID(request.chatChannelUUID());
 
         ChatMessage chatMessage = chatMessageFacade.newChatMessageFrom(request, sender, chatChannel);
         chatChannelUserFacade.setNewMessageOn(chatChannel);
@@ -48,7 +48,7 @@ public class ChatService {
     @Transactional
     public ResponseEntity<?> updateMessageReadStatus(@NotNull ChatMessageReadRequest request) {
         User user = userFacade.getAuthenticatedUser();
-        ChatChannel chatChannel = chatChannelFacade.findByUUID(request.chatChannelId());
+        ChatChannel chatChannel = chatChannelFacade.findByUUID(request.chatChannelUUID());
         ChatChannelUser chatChannelUser = chatChannelUserFacade.findById(chatChannel, user);
 
         chatChannelUserFacade.setReadMessage(chatChannelUser);
