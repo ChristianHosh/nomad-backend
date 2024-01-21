@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -17,9 +20,20 @@ public class ImageFacade {
 
     private final ImageRepository repository;
 
-    public Image save(@NotNull MultipartFile imageFile) {
+    public Set<Image> saveAll(@NotNull List<MultipartFile> imageFiles) {
+        return imageFiles.stream()
+                .map(file -> {
+                    try {
+                        return save(ImageMapper.requestToEntity(file));
+                    } catch (IOException e) {
+                        throw BxException.unexpected(e);
+                    }
+                }).collect(Collectors.toSet());
+    }
+
+    public Image save(@NotNull MultipartFile file) {
         try {
-            return save(ImageMapper.requestToEntity(imageFile));
+            return save(ImageMapper.requestToEntity(file));
         } catch (IOException e) {
             throw BxException.unexpected(e);
         }

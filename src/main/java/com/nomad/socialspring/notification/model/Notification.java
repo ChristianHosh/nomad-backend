@@ -1,6 +1,9 @@
 package com.nomad.socialspring.notification.model;
 
+import com.nomad.socialspring.chat.model.ChatChannel;
 import com.nomad.socialspring.common.BaseEntity;
+import com.nomad.socialspring.post.model.Post;
+import com.nomad.socialspring.user.model.FollowRequest;
 import com.nomad.socialspring.user.model.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -38,8 +41,11 @@ public class Notification extends BaseEntity {
     @JoinColumn(name = "RECIPIENT_ID")
     private User recipient;
 
-    @Override
-    public String getExceptionString() {
-        return getId().toString();
+    public Class<? extends BaseEntity> getEntityClass() {
+        return switch (getNotificationType()) {
+            case POST -> Post.class;
+            case FOLLOW -> FollowRequest.class;
+            case MESSAGE -> ChatChannel.class;
+        };
     }
 }

@@ -1,9 +1,11 @@
 package com.nomad.socialspring.post.dto;
 
+import com.nomad.socialspring.image.dto.ImageResponse;
 import com.nomad.socialspring.user.dto.UserResponse;
 import lombok.Builder;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Response DTO for {@link com.nomad.socialspring.post.model.Post}
@@ -16,7 +18,7 @@ public record PostResponse(
         String content,
         Boolean isPrivate,
         UserResponse author,
-        String imageUrl,
+        List<ImageResponse> images,
         Integer numberOfLikes
 ) {
 }

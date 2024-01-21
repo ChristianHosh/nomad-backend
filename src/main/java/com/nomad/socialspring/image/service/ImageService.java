@@ -10,6 +10,6 @@ public class ImageService {
 
     private final ImageFacade imageFacade;
     public byte[] getImageById(Long id){
-        return ImageMapper.entityToResponse(imageFacade.findById(id));
+        return ImageMapper.entityToBytes(imageFacade.findById(id));
     }
 }

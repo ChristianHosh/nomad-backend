@@ -50,13 +50,20 @@ public class MailService {
         String verificationLink = "localhost:8080/api/auth/verify_email?token=" + verificationToken.getToken();
         Content content = new Content(
                 "text/html",
-                "<html>" +
-                        "   <body>" +
-                        "       <a href='" + verificationLink + "' target='_blank'>" +
-                        "           Click here to confirm your email" +
-                        "       </a>" +
-                        "   </body>" +
-                        "</html>"
+                //language=HTML
+                String.format("""
+                        <body>
+                            <a href='%s' target='_blank'>
+                                Click here to verify your account
+                            </a>
+                            <p>
+                                or go to the following link if above doesn't work
+                            </p>
+                            <p>
+                                %s
+                            </p>
+                        </body>
+                        """, verificationLink, verificationLink)
         );
 
         return new Mail(from, "Confirm your email", to, content);

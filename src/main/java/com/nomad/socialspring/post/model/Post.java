@@ -34,9 +34,9 @@ public class Post extends BaseEntity {
     @JoinColumn(name = "AUTHOR_ID", nullable = false)
     private User author;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "IMAGE_ID")
-    private Image image;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private Set<Image> images = new LinkedHashSet<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(name = "T_POST_INTERESTS",
@@ -61,8 +61,11 @@ public class Post extends BaseEntity {
     @JoinColumn(name = "TRIP_ID")
     private Trip trip;
 
-    @Override
-    public String getExceptionString() {
-        return getId().toString();
+    public boolean canBeSeenBy(User user) {
+        return !isPrivate || user.follows(author);
+    }
+
+    public boolean canBeModifiedBy(User user) {
+        return user.equals(author);
     }
 }

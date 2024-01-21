@@ -28,5 +28,7 @@ public abstract class BaseEntity {
     private Timestamp updatedOn;
 
 
-    public abstract String getExceptionString();
+    public String getExceptionString() {
+        return getId().toString();
+    }
 }

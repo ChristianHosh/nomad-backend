@@ -12,7 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.util.Date;
 
 @Component
 public class JwtUtils {
@@ -21,7 +20,7 @@ public class JwtUtils {
     @Value("${nomad.jwt.secret}")
     private String jwtSecret;
 
-    @Value("${nomad.jwt.expirationMs}")
+    @Value("${nomad.jwt.expirationDays}")
     private int jwtExpirationDays;
 
     public String generateJwtToken(Authentication authentication) {
@@ -30,7 +29,7 @@ public class JwtUtils {
 
         return Jwts.builder()
                 .setSubject((userPrincipal.getUsername()))
-                .setIssuedAt(new Date())
+                .setIssuedAt(BDate.currentDate())
                 .setExpiration(BDate.currentDate().addDay(jwtExpirationDays))
                 .signWith(key(), SignatureAlgorithm.HS256)
                 .compact();

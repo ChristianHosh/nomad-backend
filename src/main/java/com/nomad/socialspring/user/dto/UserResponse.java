@@ -13,6 +13,7 @@ public record UserResponse(
         String email,
         Role role,
         String token,
+        Boolean canFollow,
         ProfileResponse profile
 ) {
 }

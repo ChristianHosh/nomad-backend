@@ -79,6 +79,10 @@ public class User extends BaseEntity {
     @Builder.Default
     private Set<ChatChannelUser> userChatChannels = new LinkedHashSet<>();
 
+    @OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private Set<FollowRequest> followRequests = new LinkedHashSet<>();
+
     @Override
     public final boolean equals(Object object) {
         if (this == object) return true;
@@ -95,8 +99,32 @@ public class User extends BaseEntity {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
     }
 
+    public boolean follows(User user) {
+        return followings.contains(user);
+    }
+
+    public boolean isFollowedBy(User user) {
+        return followers.contains(user);
+    }
+
+    public boolean addFollower(User user) {
+        return followings.add(user);
+    }
+
+
+    public boolean removeFollower(User user) {
+        return followings.removeIf(following -> following.equals(user));
+    }
+
+    public boolean hasPendingRequestFrom(User user) {
+        return followRequests.stream().anyMatch(
+                followRequest -> followRequest.getFromUser().equals(user)
+        );
+    }
+
     @Override
     public String getExceptionString() {
         return getUsername();
     }
+
 }

@@ -1,6 +1,5 @@
 package com.nomad.socialspring.chat.model;
 
-import com.nomad.socialspring.common.BaseEntity;
 import com.nomad.socialspring.user.model.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -15,7 +14,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Table(name = "t_chat_channel_users")
+@Table(name = "t_chat_channel_user")
 public class ChatChannelUser {
 
     @EmbeddedId

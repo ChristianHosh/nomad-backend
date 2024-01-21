@@ -9,7 +9,6 @@ import org.hibernate.Hibernate;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.UUID;
 
 @Builder
 @AllArgsConstructor
@@ -23,7 +22,7 @@ public class ChatChannelUsersId implements Serializable {
 
     @NotNull
     @Column(name = "chat_channel_id", nullable = false)
-    private UUID chatChannelId;
+    private Long chatChannelId;
 
     @NotNull
     @Column(name = "user_id", nullable = false)

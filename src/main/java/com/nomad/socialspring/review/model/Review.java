@@ -34,8 +34,4 @@ public class Review extends BaseEntity {
     @JoinColumn(name = "RECIPIENT_ID")
     private User recipient;
 
-    @Override
-    public String getExceptionString() {
-        return getId().toString();
-    }
 }

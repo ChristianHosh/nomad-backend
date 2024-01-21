@@ -31,4 +31,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
             where userChatChannels.chatChannel = :chatChannel
             """)
     Page<User> findByUserChatChannels_ChatChannel(@Param("chatChannel") ChatChannel chatChannel, Pageable pageable);
+
+    @Query("select u from User u inner join u.followings followings where followings.id = :id")
+    Page<User> findByFollowings_Id(@Param("id") Long id, Pageable pageable);
+
+    @Query("select u from User u inner join u.followers followers where followers.id = :id")
+    Page<User> findByFollowers_Id(@Param("id") Long id, Pageable pageable);
+
 }

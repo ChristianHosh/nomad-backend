@@ -4,6 +4,7 @@ import com.nomad.socialspring.common.BaseEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.http.HttpStatus;
 
 import java.util.function.Supplier;
 
@@ -13,6 +14,9 @@ public class BxException extends RuntimeException {
     public static final String X_CURRENT_USER_NOT_IN_CHAT = "You are not in this chat";
     public static final String X_ACCOUNT_NOT_VERIFIED = "Your account is not verified";
     public static final String X_DATE_NOT_EXPIRED = "Still not expired, check spam inbox";
+    public static final String X_CURRENT_USER_ALREADY_FOLLOWS = "You are already following this user";
+    public static final String X_CURRENT_USER_ALREADY_UNFOLLOWS = "You are already not following this user";
+    public static final String X_NOT_LOGGED_IN = "You are not logged in";
 //    public static final String X_
 
 
@@ -117,5 +121,9 @@ public class BxException extends RuntimeException {
     public static BxException unexpected(Exception e) {
         log.error(e.getMessage(), e);
         return new BxException("Internal Server Error: " + e.getMessage());
+    }
+
+    public HttpStatus getStatus() {
+        return HttpStatus.INTERNAL_SERVER_ERROR;
     }
 }

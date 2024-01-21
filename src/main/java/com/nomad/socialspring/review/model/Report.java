@@ -27,8 +27,4 @@ public class Report extends BaseEntity {
     @JoinColumn(name = "RECIPIENT_ID")
     private User recipient;
 
-    @Override
-    public String getExceptionString() {
-        return getId().toString();
-    }
 }

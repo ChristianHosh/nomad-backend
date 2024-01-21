@@ -23,7 +23,7 @@ public class AuthenticationFacadeImpl implements AuthenticationFacade {
     public User getAuthenticatedUser() {
         String username = getAuthentication().getName();
         return userRepository.findByUsername(username)
-                .orElseThrow(BxException.xNotFound(User.class, username));
+                .orElseThrow(() -> BxException.unauthorized(BxException.X_NOT_LOGGED_IN));
     }
 
     @Override

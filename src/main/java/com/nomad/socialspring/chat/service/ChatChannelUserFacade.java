@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -23,10 +22,10 @@ public class ChatChannelUserFacade {
     }
 
     public ChatChannelUser findById(@NotNull ChatChannel chatChannel, @NotNull User user) {
-        return findById(chatChannel.getUuid(), user.getId());
+        return findById(chatChannel.getId(), user.getId());
     }
 
-    public ChatChannelUser findById(UUID chatChannelId, Long userId) {
+    public ChatChannelUser findById(Long chatChannelId, Long userId) {
         return findById(new ChatChannelUsersId(chatChannelId, userId));
     }
 

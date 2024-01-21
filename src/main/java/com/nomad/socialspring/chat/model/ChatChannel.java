@@ -24,6 +24,7 @@ public class ChatChannel extends BaseEntity {
     @Column(name = "UUID", nullable = false)
     private UUID uuid;
 
+    @Column(name = "NAME")
     private String name;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
@@ -33,11 +34,6 @@ public class ChatChannel extends BaseEntity {
     @OneToMany(mappedBy = "chatChannel", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
     @Builder.Default
     private Set<ChatChannelUser> chatChannelUsers = new LinkedHashSet<>();
-
-    @Override
-    public String getExceptionString() {
-        return getId().toString();
-    }
 
     public boolean containsUser(User user) {
         return chatChannelUsers.stream().anyMatch(chatChannelUser -> Objects.equals(chatChannelUser.getChatChannel(), this) && Objects.equals(chatChannelUser.getUser(), user));

@@ -15,7 +15,7 @@ public record PostRequest(
         @NotNull
         Boolean isPrivate,
 
-        Set<Long> interestIds
+        Set<String> interestsTags
 
 ) {
 }

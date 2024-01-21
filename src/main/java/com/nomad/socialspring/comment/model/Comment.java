@@ -38,8 +38,4 @@ public class Comment extends BaseEntity {
     @Builder.Default
     private Set<User> likes = new LinkedHashSet<>();
 
-    @Override
-    public String getExceptionString() {
-        return getId().toString();
-    }
 }
