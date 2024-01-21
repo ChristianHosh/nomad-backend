@@ -51,7 +51,6 @@ public class UserService {
         FollowRequest followRequest = followRequestFacade.save(new FollowRequest(currentUser, otherUser));
         notificationFacade.notifyFollowRequest(followRequest);
 
-
         return UserMapper.entityToResponse(otherUser);
     }
 
@@ -70,9 +69,7 @@ public class UserService {
     public Page<FollowRequestResponse> getUserFollowRequests(int page, int size) {
         User currentUser = userFacade.getAuthenticatedUser();
 
-        Page<FollowRequest> followRequestPage = followRequestFacade.findByUser(currentUser, page, size);
-
-        return followRequestPage.map(FollowRequestMapper::entityToResponse);
+        return followRequestFacade.findByUser(currentUser, page, size).map(FollowRequestMapper::entityToResponse);
     }
 
     @Transactional
