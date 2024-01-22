@@ -18,6 +18,7 @@ public record PostResponse(
         Long id,
         String content,
         Boolean isPrivate,
+        Boolean canLike,
         UserResponse author,
         List<ImageResponse> images,
         Integer numberOfLikes,

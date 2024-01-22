@@ -1,7 +1,6 @@
 package com.nomad.socialspring.comment.dto;
 
 import com.nomad.socialspring.user.dto.UserResponse;
-import jakarta.validation.constraints.Size;
 import lombok.Builder;
 
 import java.sql.Timestamp;
@@ -14,8 +13,8 @@ public record CommentResponse(
         Long id,
         Timestamp createdOn,
         Timestamp updatedOn,
-        @Size(max = 255)
         String content,
+        Boolean canLike,
         UserResponse author,
         Integer numberOfLikes
 ) {

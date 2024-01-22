@@ -13,7 +13,11 @@ import java.util.Set;
 
 public class PostMapper {
 
-    public static PostResponse entityToResponse(Post post) {
+    public static PostResponse entityToResponse(Post post){
+        return entityToResponse(post, null);
+    }
+
+    public static PostResponse entityToResponse(Post post, User user) {
         if (post == null)
             return null;
 
@@ -23,10 +27,11 @@ public class PostMapper {
                 .id(post.getId())
                 .content(post.getContent())
                 .isPrivate(post.getIsPrivate())
+                .canLike(user != null && post.getLikes().contains(user))
                 .images(post.getImages().stream().map(ImageMapper::entityToResponse).toList())
                 .author(UserMapper.entityToResponse(post.getAuthor()))
                 .numberOfLikes(post.getNumberOfLikes())
-                .topComment(CommentMapper.entityToResponse(post.getTopComment()))
+                .topComment(CommentMapper.entityToResponse(post.getTopComment(), user))
                 .build();
     }
 

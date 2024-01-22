@@ -17,6 +17,10 @@ public class CommentMapper {
     }
 
     public static CommentResponse entityToResponse(Comment comment) {
+        return entityToResponse(comment, null);
+    }
+
+    public static CommentResponse entityToResponse(Comment comment, User user) {
         if (comment == null)
             return null;
 
@@ -25,6 +29,7 @@ public class CommentMapper {
                 .createdOn(comment.getCreatedOn())
                 .updatedOn(comment.getUpdatedOn())
                 .content(comment.getContent())
+                .canLike(user != null && comment.getLikes().contains(user))
                 .author(UserMapper.entityToResponse(comment.getAuthor()))
                 .numberOfLikes(comment.getNumberOfLikes())
                 .build();

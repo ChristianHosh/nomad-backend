@@ -50,12 +50,11 @@ public class PostService {
         Set<Interest> interestSet = interestFacade.getInterestFromTags(request.interestsTags());
 
         Post post = postFacade.save(request, currentUser, interestSet, images);
-        return PostMapper.entityToResponse(post);
+        return PostMapper.entityToResponse(post, currentUser);
     }
 
     public PostResponse updatePost(Long postId, @NotNull PostRequest request) {
         User currentUser = userFacade.getAuthenticatedUser();
-
         Post post = postFacade.findById(postId);
 
         Set<Interest> interestSet = interestFacade.getInterestFromTags(request.interestsTags());
@@ -65,25 +64,23 @@ public class PostService {
             post.setIsPrivate(request.isPrivate());
             post.setInterests(interestSet);
             post = postFacade.save(post);
-            return PostMapper.entityToResponse(post);
+            return PostMapper.entityToResponse(post, currentUser);
         }
         throw BxException.unauthorized(currentUser);
     }
 
     public PostResponse getPost(Long postId) {
-        User currentUser = userFacade.getAuthenticatedUser();
-
+        User currentUser = userFacade.getAuthenticatedUserOrNull();
         Post post = postFacade.findById(postId);
 
         // only return if post is public or current user follows post author
         if (post.canBeSeenBy(currentUser))
-            return PostMapper.entityToResponse(post);
+            return PostMapper.entityToResponse(post, currentUser);
         throw BxException.unauthorized(currentUser);
     }
 
     public PostResponse deletePost(Long postId) {
         User currentUser = userFacade.getAuthenticatedUser();
-
         Post post = postFacade.findById(postId);
 
         if (post.canBeModifiedBy(currentUser)) {
@@ -94,14 +91,15 @@ public class PostService {
     }
 
     public Page<CommentResponse> getPostComments(Long postId, int page, int size) {
+        User currentUser = userFacade.getAuthenticatedUserOrNull();
         Post post = postFacade.findById(postId);
 
-        return commentFacade.findAllByPost(post, page, size).map(CommentMapper::entityToResponse);
+        return commentFacade.findAllByPost(post, page, size).map(comment -> CommentMapper.entityToResponse(comment, currentUser));
     }
 
     public CommentResponse createComment(Long postId, CommentRequest commentRequest) {
-        Post post = postFacade.findById(postId);
         User currentUser = userFacade.getAuthenticatedUser();
+        Post post = postFacade.findById(postId);
 
         if (post.canBeSeenBy(currentUser)) {
             Comment comment = commentFacade.save(commentRequest, currentUser, post);
@@ -110,7 +108,7 @@ public class PostService {
             if (!Objects.equals(currentUser, post.getAuthor()))
                 notificationFacade.notifyPostComment(post, comment);
 
-            return CommentMapper.entityToResponse(comment);
+            return CommentMapper.entityToResponse(comment, currentUser);
         }
 
         throw BxException.unauthorized(currentUser);
@@ -131,7 +129,7 @@ public class PostService {
             post.getLikes().add(currentUser);
             notificationFacade.notifyPostLike(post, currentUser);
 
-            return PostMapper.entityToResponse(postFacade.save(post));
+            return PostMapper.entityToResponse(postFacade.save(post), currentUser);
         }
 
         throw BxException.unauthorized(currentUser);
@@ -144,7 +142,7 @@ public class PostService {
         if (post.canBeSeenBy(currentUser)) {
             post.getLikes().remove(currentUser);
 
-            return PostMapper.entityToResponse(postFacade.save(post));
+            return PostMapper.entityToResponse(postFacade.save(post), currentUser);
         }
 
         throw BxException.unauthorized(currentUser);
