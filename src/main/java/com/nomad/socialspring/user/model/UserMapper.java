@@ -43,13 +43,7 @@ public class UserMapper {
         if (user == null)
             return null;
 
-        boolean canFollow = true;
-        if (currentUser == null)
-            canFollow = false;
-        else if (currentUser.follows(user))
-            canFollow = false;
-        else if (user.hasPendingRequestFrom(currentUser))
-            canFollow = false;
+        boolean canFollow = currentUser != null && !currentUser.follows(user) && !user.hasPendingRequestFrom(currentUser);
 
         return UserResponse.builder()
                 .id(user.getId())

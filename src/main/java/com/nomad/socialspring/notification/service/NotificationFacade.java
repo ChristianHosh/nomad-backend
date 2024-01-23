@@ -9,6 +9,9 @@ import com.nomad.socialspring.user.model.FollowRequest;
 import com.nomad.socialspring.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -69,12 +72,31 @@ public class NotificationFacade {
         if (Objects.equals(author, recipient))
             return;
 
-        repository.save(Notification.builder()
+        save(Notification.builder()
                 .author(author)
                 .recipient(recipient)
                 .content(content)
                 .entityId(entityId)
                 .notificationType(type)
                 .build());
+    }
+
+    public Notification save(Notification notification) {
+        return repository.save(notification);
+    }
+
+    public Page<Notification> getNotifications(User user, int page, int size) {
+        Page<Notification> notifcationPage = repository.findByRecipient(user, PageRequest.of(page, size, Sort.by(Sort.Order.desc("createdOn"))));
+        notifcationPage.forEach(this::readAndSave);
+        return notifcationPage;
+    }
+
+    private void readAndSave(@NotNull Notification notification) {
+        notification.setIsRead(true);
+        save(notification);
+    }
+
+    public void deleteFollowNotification(@NotNull FollowRequest followRequest) {
+        repository.deleteByFollowRequestId(followRequest.getId());
     }
 }

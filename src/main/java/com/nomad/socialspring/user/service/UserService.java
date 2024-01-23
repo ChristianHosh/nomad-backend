@@ -80,7 +80,7 @@ public class UserService {
 
         if (followRequest.isForUser(currentUser)) {
             followRequest.getFromUser().addFollowing(currentUser);
-            followRequestFacade.delete(followRequest);
+            deleteFollowRequestAndNotification(followRequest);
         }
 
         return UserMapper.entityToResponse(userFacade.save(followRequest.getFromUser()));
@@ -92,10 +92,15 @@ public class UserService {
         User currentUser = userFacade.getCurrentUser();
 
         if (followRequest.isForUser(currentUser)) {
-            followRequestFacade.delete(followRequest);
+            deleteFollowRequestAndNotification(followRequest);
         }
 
         return UserMapper.entityToResponse(followRequest.getFromUser());
+    }
+
+    private void deleteFollowRequestAndNotification(FollowRequest followRequest) {
+        followRequestFacade.delete(followRequest);
+        notificationFacade.deleteFollowNotification(followRequest);
     }
 
     public Page<UserResponse> getUserFollowers(Long userId, int page, int size) {
