@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
@@ -117,5 +119,11 @@ public class UserController {
     @ResponseOk
     public UserResponse deleteProfileImage() {
         return userService.deleteProfileImage();
+    }
+
+    @GetMapping("/suggested")
+    @ResponseOk
+    public List<UserResponse> getSuggestedUsers() {
+        return userService.getSuggestedUsers();
     }
 }

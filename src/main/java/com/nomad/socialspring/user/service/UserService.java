@@ -21,6 +21,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -150,5 +151,15 @@ public class UserService {
         return userFacade
                 .getMutualFollowings(user, currentUser, page, size)
                 .map(u -> UserMapper.entityToResponse(u, currentUser));
+    }
+
+    public List<UserResponse> getSuggestedUsers() {
+        User currentUser = userFacade.getCurrentUser();
+
+        return userFacade
+                .getSuggestedUsers(currentUser)
+                .stream()
+                .map(u -> UserMapper.entityToResponse(u, currentUser))
+                .toList();
     }
 }

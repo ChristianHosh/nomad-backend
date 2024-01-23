@@ -18,9 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -143,5 +141,45 @@ public class UserFacade {
         user.getProfile().setInterests(interestSet);
         user.getProfile().setCountry(country);
         return save(user);
+    }
+
+    public List<User> getSuggestedUsers(@NotNull User currentUser) {
+        List<User> suggestedUsers = new ArrayList<>(suggestUsers(currentUser));
+        suggestedUsers.sort((user1, user2) -> {
+            int sharedInterests1 = countSharedInterests(currentUser, user1);
+            int sharedInterests2 = countSharedInterests(currentUser, user2);
+            if (sharedInterests1 == sharedInterests2)
+                return Integer.compare(user1.getDepth(), user2.getDepth());
+            else
+                return Integer.compare(sharedInterests2, sharedInterests1);
+        });
+
+        return suggestedUsers;
+    }
+
+    @NotNull
+    private static List<User> suggestUsers(@NotNull User currentUser) {
+        Set<User> potentialUsers = new HashSet<>();
+        Set<User> currentUserFollowings = currentUser.getFollowings();
+
+        Queue<User> frontier = new LinkedList<>(currentUserFollowings);
+        while (!frontier.isEmpty()) {
+            User user = frontier.poll();
+            if (user.getDepth() < 3) {
+                potentialUsers.add(user);
+                user.getFollowings().forEach(userFollowing -> {
+                    userFollowing.incrementDepth(user.getDepth());
+                    if (userFollowing.getDepth() < 3)
+                        frontier.add(userFollowing);
+                });
+            }
+        }
+        return potentialUsers.stream().filter(user -> !user.isFollowedBy(currentUser)).toList();
+    }
+
+    private static int countSharedInterests(@NotNull User user1, @NotNull User user2) {
+        Set<Interest> interests1 = user1.getProfile().getInterests();
+        Set<Interest> interests2 = user2.getProfile().getInterests();
+        return (int) interests1.stream().filter(interests2::contains).count();
     }
 }

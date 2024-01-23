@@ -25,6 +25,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(BxException.notFound(User.class, username).getMessage()));
 
+        if (!user.getIsVerified())
+            throw BxException.unauthorized(BxException.X_ACCOUNT_NOT_VERIFIED);
+
         return UserDetailsImpl.build(user);
     }
 }

@@ -90,6 +90,9 @@ public class User extends BaseEntity {
     @ManyToMany(mappedBy = "likes", cascade = {CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY)
     private Set<Comment> likedComments = new LinkedHashSet<>();
 
+    @Transient
+    private Integer depth = 0;
+
     @Override
     public final boolean equals(Object object) {
         if (this == object) return true;
@@ -134,4 +137,7 @@ public class User extends BaseEntity {
         return getUsername();
     }
 
+    public void incrementDepth(Integer depth) {
+        this.depth = depth + 1;
+    }
 }
