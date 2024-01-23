@@ -174,7 +174,7 @@ public class UserFacade {
                 });
             }
         }
-        return potentialUsers.stream().filter(user -> !user.isFollowedBy(currentUser)).toList();
+        return potentialUsers.stream().filter(user -> !user.isFollowedBy(currentUser)).limit(25).toList();
     }
 
     private static int countSharedInterests(@NotNull User user1, @NotNull User user2) {
