@@ -1,5 +1,6 @@
 package com.nomad.socialspring.security.controller;
 
+import com.nomad.socialspring.common.ResponseOk;
 import com.nomad.socialspring.security.dto.LoginRequest;
 import com.nomad.socialspring.security.dto.RegisterRequest;
 import com.nomad.socialspring.security.dto.ResendEmailVerificationRequest;
@@ -26,8 +27,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseOk
     public UserResponse loginUser(@RequestBody @Valid LoginRequest loginRequest) {
         return authService.loginUser(loginRequest);
     }

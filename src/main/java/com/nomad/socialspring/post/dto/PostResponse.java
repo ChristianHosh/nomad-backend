@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 /**
- * Response DTO for {@link com.nomad.socialspring.post.model.Post}
+ * ResponseOk DTO for {@link com.nomad.socialspring.post.model.Post}
  */
 @Builder
 public record PostResponse(

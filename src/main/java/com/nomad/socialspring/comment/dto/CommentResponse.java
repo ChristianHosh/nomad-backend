@@ -6,7 +6,7 @@ import lombok.Builder;
 import java.sql.Timestamp;
 
 /**
- * Response DTO for {@link com.nomad.socialspring.comment.model.Comment}
+ * ResponseOk DTO for {@link com.nomad.socialspring.comment.model.Comment}
  */
 @Builder
 public record CommentResponse(

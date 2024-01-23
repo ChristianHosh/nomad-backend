@@ -47,7 +47,7 @@ public class ChatService {
 
     @Transactional
     public ResponseEntity<?> updateMessageReadStatus(@NotNull ChatMessageReadRequest request) {
-        User user = userFacade.getAuthenticatedUser();
+        User user = userFacade.getCurrentUser();
         ChatChannel chatChannel = chatChannelFacade.findByUUID(request.chatChannelUUID());
         ChatChannelUser chatChannelUser = chatChannelUserFacade.findById(chatChannel, user);
 
@@ -58,7 +58,7 @@ public class ChatService {
 
     @Transactional
     public ChatChannelResponse createNewChannel(@NotNull ChatChannelRequest request) {
-        User user = userFacade.getAuthenticatedUser();
+        User user = userFacade.getCurrentUser();
         List<User> userList = userFacade.findByUsernameList(request.usernames());
         userList.add(user);
 
@@ -70,7 +70,7 @@ public class ChatService {
     @Transactional
     public ChatChannelResponse addNewUsersToChannel(String channelId, @NotNull ChatChannelUsersRequest request) {
         ChatChannel chatChannel = chatChannelFacade.findByUUID(channelId);
-        User authenticatedUser = userFacade.getAuthenticatedUser();
+        User authenticatedUser = userFacade.getCurrentUser();
 
         // if current user is not in {chatChannel} throw unauthorized
         if (!chatChannel.containsUser(authenticatedUser))
@@ -88,7 +88,7 @@ public class ChatService {
         ChatChannel chatChannel = chatChannelFacade.findByUUID(channelId);
 
         // if current user is not in {chatChannel} throw unauthorized
-        if (!chatChannel.containsUser(userFacade.getAuthenticatedUser()))
+        if (!chatChannel.containsUser(userFacade.getCurrentUser()))
             throw BxException.unauthorized(BxException.X_CURRENT_USER_NOT_IN_CHAT);
 
         List<User> userList = userFacade.findByUsernameList(request.usernames());
@@ -103,7 +103,7 @@ public class ChatService {
         ChatChannel chatChannel = chatChannelFacade.findByUUID(channelId);
 
         // if current user is not in {chatChannel} throw unauthorized
-        if (!chatChannel.containsUser(userFacade.getAuthenticatedUser()))
+        if (!chatChannel.containsUser(userFacade.getCurrentUser()))
             throw BxException.unauthorized(BxException.X_CURRENT_USER_NOT_IN_CHAT);
 
         Page<ChatMessage> chatMessagePage = chatMessageFacade.getMessagesByChatChannel(chatChannel, page, size);
@@ -116,7 +116,7 @@ public class ChatService {
         ChatChannel chatChannel = chatChannelFacade.findByUUID(channelId);
 
         // if current user is not in {chatChannel} throw unauthorized
-        if (!chatChannel.containsUser(userFacade.getAuthenticatedUser()))
+        if (!chatChannel.containsUser(userFacade.getCurrentUser()))
             throw BxException.unauthorized(BxException.X_CURRENT_USER_NOT_IN_CHAT);
 
         Page<User> userPage = userFacade.getUsersByChatChannel(chatChannel, page, size);

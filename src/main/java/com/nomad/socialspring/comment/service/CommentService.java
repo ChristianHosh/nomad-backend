@@ -24,7 +24,7 @@ public class CommentService {
 
     public CommentResponse deleteComment(Long commentId) {
         Comment comment = commentFacade.findById(commentId);
-        User currentUser = userFacade.getAuthenticatedUser();
+        User currentUser = userFacade.getCurrentUser();
         if (comment.canBeDeletedBy(currentUser)) {
             commentFacade.delete(comment);
             return CommentMapper.entityToResponse(comment);
@@ -35,7 +35,7 @@ public class CommentService {
 
     public CommentResponse updateComment(Long commentId, CommentRequest commentRequest) {
         Comment comment = commentFacade.findById(commentId);
-        User currentUser = userFacade.getAuthenticatedUser();
+        User currentUser = userFacade.getCurrentUser();
         if (comment.canBeModifiedBy(currentUser)) {
             comment.setContent(commentRequest.content());
             return CommentMapper.entityToResponse(commentFacade.save(comment));
@@ -52,7 +52,7 @@ public class CommentService {
 
     public CommentResponse likeComment(Long commentId) {
         Comment comment = commentFacade.findById(commentId);
-        User currentUser = userFacade.getAuthenticatedUser();
+        User currentUser = userFacade.getCurrentUser();
 
         if (comment.getLikes().add(currentUser))
             notificationFacade.notifyCommentLike(comment.getPost(), currentUser);
@@ -62,7 +62,7 @@ public class CommentService {
 
     public CommentResponse unlikeComment(Long commentId) {
         Comment comment = commentFacade.findById(commentId);
-        User currentUser = userFacade.getAuthenticatedUser();
+        User currentUser = userFacade.getCurrentUser();
 
         comment.getLikes().remove(currentUser);
 

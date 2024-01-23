@@ -1,14 +1,12 @@
 package com.nomad.socialspring.error.exceptions;
 
 import com.nomad.socialspring.common.BaseEntity;
-import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 
 import java.util.function.Supplier;
 
-@Slf4j
 public class BxException extends RuntimeException {
 
     public static final String X_CURRENT_USER_NOT_IN_CHAT = "You are not in this chat";
@@ -33,9 +31,7 @@ public class BxException extends RuntimeException {
     public static BxException notFound(@NotNull Class<?> clazz, @NotNull Object value) {
         if (value instanceof BaseEntity)
             value = value.getClass().getSimpleName() + ": " + ((BaseEntity) value).getExceptionString();
-        BxNotFoundException exception = new BxNotFoundException(clazz.getSimpleName() + ": not found for '" + value + "'");
-        log.info(exception.getMessage(), exception);
-        return exception;
+        return new BxNotFoundException(clazz.getSimpleName() + ": not found for '" + value + "'");
     }
 
     @NotNull
@@ -51,9 +47,7 @@ public class BxException extends RuntimeException {
     public static BxException conflict(@NotNull Class<?> clazz, @NotNull Object field, @NotNull Object value) {
         if (value instanceof BaseEntity)
             value = value.getClass().getSimpleName() + ": " + ((BaseEntity) value).getExceptionString();
-        BxConflictException exception = new BxConflictException(clazz.getSimpleName() + ": " + field + " already exists for '" + value + "'");
-        log.info(exception.getMessage(), exception);
-        return exception;
+        return new BxConflictException(clazz.getSimpleName() + ": " + field + " already exists for '" + value + "'");
     }
 
     @NotNull
@@ -69,9 +63,7 @@ public class BxException extends RuntimeException {
     public static BxException badRequest(@NotNull Class<?> clazz, @NotNull Object field, @NotNull Object value) {
         if (value instanceof BaseEntity)
             value = value.getClass().getSimpleName() + ": " + ((BaseEntity) value).getExceptionString();
-        BxBadRequestException exception = new BxBadRequestException(clazz.getSimpleName() + ": " + field + " " + value);
-        log.info(exception.getMessage(), exception);
-        return exception;
+        return new BxBadRequestException(clazz.getSimpleName() + ": " + field + " " + value);
     }
 
     @NotNull
@@ -79,9 +71,7 @@ public class BxException extends RuntimeException {
     public static BxException badRequest(@NotNull Class<?> clazz, @NotNull Object value) {
         if (value instanceof BaseEntity)
             value = value.getClass().getSimpleName() + ": " + ((BaseEntity) value).getExceptionString();
-        BxBadRequestException exception = new BxBadRequestException(clazz.getSimpleName() + ": " + value);
-        log.info(exception.getMessage(), exception);
-        return exception;
+        return new BxBadRequestException(clazz.getSimpleName() + ": " + value);
     }
 
     @NotNull
@@ -110,23 +100,20 @@ public class BxException extends RuntimeException {
 
     @NotNull
     @Contract("_ -> new")
-    public static BxException hardcoded(String message) {
-        BxException exception = new BxException(message);
-        log.warn(exception.getMessage(), exception);
-        return exception;
+    public static BxSevereException hardcoded(String message) {
+        return new BxSevereException(message);
     }
 
     public static Supplier<? extends RuntimeException> xHardcoded(String message) {
         return () -> {
-            throw BxException.hardcoded(message);
+            throw BxSevereException.hardcoded(message);
         };
     }
 
     @NotNull
     @Contract("_ -> new")
-    public static BxException unexpected(Exception e) {
-        log.error(e.getMessage(), e);
-        return new BxException("Internal Server Error: " + e.getMessage());
+    public static BxSevereException unexpected(Exception e) {
+        return new BxSevereException("Internal Server Error: " + e.getMessage());
     }
 
     public HttpStatus getStatus() {

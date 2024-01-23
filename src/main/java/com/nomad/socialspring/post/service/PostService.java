@@ -41,7 +41,7 @@ public class PostService {
     private final NotificationFacade notificationFacade;
 
     public PostResponse createPost(PostRequest request, List<MultipartFile> imageFiles) {
-        User currentUser = userFacade.getAuthenticatedUser();
+        User currentUser = userFacade.getCurrentUser();
 
         Set<Image> images = null;
         if (imageFiles != null && !imageFiles.isEmpty())
@@ -54,7 +54,7 @@ public class PostService {
     }
 
     public PostResponse updatePost(Long postId, @NotNull PostRequest request) {
-        User currentUser = userFacade.getAuthenticatedUser();
+        User currentUser = userFacade.getCurrentUser();
         Post post = postFacade.findById(postId);
 
         Set<Interest> interestSet = interestFacade.getInterestFromTags(request.interestsTags());
@@ -70,7 +70,7 @@ public class PostService {
     }
 
     public PostResponse getPost(Long postId) {
-        User currentUser = userFacade.getAuthenticatedUserOrNull();
+        User currentUser = userFacade.getCurrentUserOrNull();
         Post post = postFacade.findById(postId);
 
         // only return if post is public or current user follows post author
@@ -80,7 +80,7 @@ public class PostService {
     }
 
     public PostResponse deletePost(Long postId) {
-        User currentUser = userFacade.getAuthenticatedUser();
+        User currentUser = userFacade.getCurrentUser();
         Post post = postFacade.findById(postId);
 
         if (post.canBeModifiedBy(currentUser)) {
@@ -91,14 +91,14 @@ public class PostService {
     }
 
     public Page<CommentResponse> getPostComments(Long postId, int page, int size) {
-        User currentUser = userFacade.getAuthenticatedUserOrNull();
+        User currentUser = userFacade.getCurrentUserOrNull();
         Post post = postFacade.findById(postId);
 
         return commentFacade.findAllByPost(post, page, size).map(comment -> CommentMapper.entityToResponse(comment, currentUser));
     }
 
     public CommentResponse createComment(Long postId, CommentRequest commentRequest) {
-        User currentUser = userFacade.getAuthenticatedUser();
+        User currentUser = userFacade.getCurrentUser();
         Post post = postFacade.findById(postId);
 
         if (post.canBeSeenBy(currentUser)) {
@@ -123,7 +123,7 @@ public class PostService {
 
     public PostResponse likePost(Long postId) {
         Post post = postFacade.findById(postId);
-        User currentUser = userFacade.getAuthenticatedUser();
+        User currentUser = userFacade.getCurrentUser();
 
         if (post.canBeSeenBy(currentUser)) {
             post.getLikes().add(currentUser);
@@ -137,7 +137,7 @@ public class PostService {
 
     public PostResponse unlikePost(Long postId) {
         Post post = postFacade.findById(postId);
-        User currentUser = userFacade.getAuthenticatedUser();
+        User currentUser = userFacade.getCurrentUser();
 
         if (post.canBeSeenBy(currentUser)) {
             post.getLikes().remove(currentUser);

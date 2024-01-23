@@ -4,7 +4,7 @@ import com.nomad.socialspring.user.model.Role;
 import lombok.Builder;
 
 /**
- * Response DTO for {@link com.nomad.socialspring.user.model.User}
+ * ResponseOk DTO for {@link com.nomad.socialspring.user.model.User}
  */
 @Builder
 public record UserResponse(

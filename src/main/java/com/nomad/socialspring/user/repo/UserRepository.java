@@ -32,10 +32,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
             """)
     Page<User> findByUserChatChannels_ChatChannel(@Param("chatChannel") ChatChannel chatChannel, Pageable pageable);
 
-    @Query("select u from User u inner join u.followings followings where followings.id = :id")
+    @Query(value = """
+        SELECT * FROM T_USER U INNER JOIN T_USER_FOLLOWERS UF ON U.id = UF.user_1_id
+        WHERE UF.user_2_id = :id
+    """, nativeQuery = true)
     Page<User> findByFollowings_Id(@Param("id") Long id, Pageable pageable);
 
-    @Query("select u from User u inner join u.followers followers where followers.id = :id")
+    @Query(value = """
+        SELECT * FROM T_USER U INNER JOIN T_USER_FOLLOWERS UF ON U.id = UF.user_2_id
+        WHERE UF.user_1_id = :id
+    """, nativeQuery = true)
     Page<User> findByFollowers_Id(@Param("id") Long id, Pageable pageable);
 
     @Query("select u from User u inner join u.likedPosts likedPosts where likedPosts.id = :id")
@@ -43,4 +49,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("select u from User u inner join u.likedComments likedComments where likedComments.id = :id")
     Page<User> findByLikedComments_Id(@Param("id") Long id, Pageable pageable);
+
 }

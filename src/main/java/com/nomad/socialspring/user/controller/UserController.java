@@ -1,5 +1,6 @@
 package com.nomad.socialspring.user.controller;
 
+import com.nomad.socialspring.common.ResponseOk;
 import com.nomad.socialspring.user.dto.FollowRequestResponse;
 import com.nomad.socialspring.user.dto.ProfileRequest;
 import com.nomad.socialspring.user.dto.UserResponse;
@@ -7,7 +8,6 @@ import com.nomad.socialspring.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,8 +19,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/{id}")
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseOk
     public UserResponse getUser(
             @PathVariable(name = "id") Long userId
     ) {
@@ -28,8 +27,7 @@ public class UserController {
     }
 
     @PostMapping("/{id}/follow")
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseOk
     public UserResponse followUser(
             @PathVariable(name = "id") Long userId
     ) {
@@ -37,8 +35,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}/follow")
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseOk
     public UserResponse unfollowUser(
             @PathVariable(name = "id") Long userId
     ) {
@@ -46,8 +43,7 @@ public class UserController {
     }
 
     @GetMapping("/follow-requests")
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseOk
     public Page<FollowRequestResponse> getFollowRequests(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "25") int size
@@ -56,8 +52,7 @@ public class UserController {
     }
 
     @PostMapping("/follow-requests/{id}")
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseOk
     public UserResponse acceptFollow(
             @PathVariable(name = "id") Long followRequestId
     ) {
@@ -65,8 +60,7 @@ public class UserController {
     }
 
     @DeleteMapping("/follow-requests/{id}")
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseOk
     public UserResponse declineFollow(
             @PathVariable(name = "id") Long followRequestId
     ) {
@@ -74,8 +68,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}/followers")
-    @ResponseBody
-    @ResponseStatus
+    @ResponseOk
     public Page<UserResponse> getUserFollowers(
             @PathVariable(name = "id") Long userId,
             @RequestParam(name = "page", defaultValue = "0") int page,
@@ -84,9 +77,18 @@ public class UserController {
         return userService.getUserFollowers(userId, page, size);
     }
 
+    @GetMapping("/{id}/mutual")
+    @ResponseOk
+    public Page<UserResponse> getUserMutual(
+            @PathVariable(name = "id") Long userId,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "25") int size
+    ) {
+        return userService.getUserMutualFollowings(userId, page, size);
+    }
+
     @GetMapping("/{id}/followings")
-    @ResponseBody
-    @ResponseStatus
+    @ResponseOk
     public Page<UserResponse> getUserFollowings(
             @PathVariable(name = "id") Long userId,
             @RequestParam(name = "page", defaultValue = "0") int page,
@@ -96,8 +98,7 @@ public class UserController {
     }
 
     @PutMapping("/profile")
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseOk
     public UserResponse updateProfileInfo(
             @RequestBody @Valid ProfileRequest profileRequest
     ) {
@@ -105,8 +106,7 @@ public class UserController {
     }
 
     @PutMapping("/profile-image")
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseOk
     public UserResponse updateProfileImage(
             @RequestParam MultipartFile imageFile
     ) {
@@ -114,8 +114,7 @@ public class UserController {
     }
 
     @DeleteMapping("/profile-image")
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseOk
     public UserResponse deleteProfileImage() {
         return userService.deleteProfileImage();
     }

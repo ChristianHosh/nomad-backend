@@ -18,7 +18,7 @@ public class Image extends BaseEntity {
     @Column(name = "DATA", length = 1000)
     private byte[] imageData;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "POST_ID")
     private Post post;
 

@@ -7,7 +7,7 @@ import lombok.Builder;
 import java.sql.Date;
 
 /**
- * Response DTO for {@link com.nomad.socialspring.user.model.Profile}
+ * ResponseOk DTO for {@link com.nomad.socialspring.user.model.Profile}
  */
 @Builder
 public record ProfileResponse(

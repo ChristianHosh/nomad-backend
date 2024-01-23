@@ -16,6 +16,7 @@ import com.nomad.socialspring.user.model.User;
 import com.nomad.socialspring.user.model.UserMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,48 +35,47 @@ public class UserService {
     private final NotificationFacade notificationFacade;
 
     public UserResponse getUser(Long userId) {
-        User currentUser = userFacade.getAuthenticatedUserOrNull();
-        User otherUser = userFacade.findById(userId);
+        User user = userFacade.findById(userId);
 
-        return UserMapper.entityToResponse(otherUser, currentUser);
+        return UserMapper.entityToResponse(user, userFacade.getCurrentUserOrNull());
     }
 
     @Transactional
     public UserResponse followUser(Long userId) {
-        User currentUser = userFacade.getAuthenticatedUser();
-        User otherUser = userFacade.findById(userId);
+        User user = userFacade.findById(userId);
+        User currentUser = userFacade.getCurrentUser();
 
-        if (currentUser.follows(otherUser))
+        if (currentUser.follows(user))
             throw BxException.badRequest(User.class, BxException.X_CURRENT_USER_ALREADY_FOLLOWS);
 
-        FollowRequest followRequest = followRequestFacade.save(new FollowRequest(currentUser, otherUser));
+        FollowRequest followRequest = followRequestFacade.save(new FollowRequest(currentUser, user));
         notificationFacade.notifyFollowRequest(followRequest);
 
-        return UserMapper.entityToResponse(otherUser);
+        return UserMapper.entityToResponse(user);
     }
 
     public UserResponse unfollowUser(Long userId) {
-        User currentUser = userFacade.getAuthenticatedUser();
-        User otherUser = userFacade.findById(userId);
+        User user = userFacade.findById(userId);
+        User currentUser = userFacade.getCurrentUser();
 
-        if (!currentUser.follows(otherUser))
+        if (!currentUser.follows(user))
             throw BxException.badRequest(User.class, BxException.X_CURRENT_USER_ALREADY_UNFOLLOWS);
 
-        otherUser.removeFollowing(currentUser);
-        return UserMapper.entityToResponse(userFacade.save(otherUser), currentUser);
+        user.removeFollowing(currentUser);
+        return UserMapper.entityToResponse(userFacade.save(user), currentUser);
     }
 
 
     public Page<FollowRequestResponse> getUserFollowRequests(int page, int size) {
-        User currentUser = userFacade.getAuthenticatedUser();
+        User currentUser = userFacade.getCurrentUser();
 
         return followRequestFacade.findByUser(currentUser, page, size).map(FollowRequestMapper::entityToResponse);
     }
 
     @Transactional
     public UserResponse acceptFollowRequest(Long followRequestId) {
-        User currentUser = userFacade.getAuthenticatedUser();
         FollowRequest followRequest = followRequestFacade.findById(followRequestId);
+        User currentUser = userFacade.getCurrentUser();
 
         if (followRequest.isForUser(currentUser)) {
             followRequest.getFromUser().addFollowing(currentUser);
@@ -87,8 +87,8 @@ public class UserService {
 
     @Transactional
     public UserResponse declineFollowRequest(Long followRequestId) {
-        User currentUser = userFacade.getAuthenticatedUser();
         FollowRequest followRequest = followRequestFacade.findById(followRequestId);
+        User currentUser = userFacade.getCurrentUser();
 
         if (followRequest.isForUser(currentUser)) {
             followRequestFacade.delete(followRequest);
@@ -100,17 +100,21 @@ public class UserService {
     public Page<UserResponse> getUserFollowers(Long userId, int page, int size) {
         User user = userFacade.findById(userId);
 
-        return userFacade.getFollowersByUser(user.getId(), page, size).map(UserMapper::entityToResponse);
+        return userFacade
+                .getFollowersByUser(user.getId(), page, size)
+                .map(u -> UserMapper.entityToResponse(u, userFacade.getCurrentUserOrNull()));
     }
 
     public Page<UserResponse> getUserFollowings(Long userId, int page, int size) {
         User user = userFacade.findById(userId);
 
-        return userFacade.getFollowingsByUser(user.getId(), page, size).map(UserMapper::entityToResponse);
+        return userFacade
+                .getFollowingsByUser(user.getId(), page, size)
+                .map(u -> UserMapper.entityToResponse(u, userFacade.getCurrentUserOrNull()));
     }
 
-    public UserResponse updateProfileInfo(ProfileRequest profileRequest) {
-        User currentUser = userFacade.getAuthenticatedUser();
+    public UserResponse updateProfileInfo(@NotNull ProfileRequest profileRequest) {
+        User currentUser = userFacade.getCurrentUser();
 
         Set<Interest> interestSet = interestFacade.getInterestFromTags(profileRequest.interestsTags());
 
@@ -118,17 +122,13 @@ public class UserService {
         if (profileRequest.countryId() != null)
             country = countryFacade.findById(profileRequest.countryId());
 
-        currentUser.getProfile().setBio(profileRequest.bio());
-        currentUser.getProfile().setDisplayName(profileRequest.displayName());
-        currentUser.getProfile().setGender(profileRequest.gender());
-        currentUser.getProfile().setInterests(interestSet);
-        currentUser.getProfile().setCountry(country);
+        currentUser = userFacade.updateProfile(currentUser, profileRequest, interestSet, country);
 
-        return UserMapper.entityToResponse(userFacade.save(currentUser));
+        return UserMapper.entityToResponse(currentUser);
     }
 
     public UserResponse updateProfileImage(MultipartFile imageFile) {
-        User currentUser = userFacade.getAuthenticatedUser();
+        User currentUser = userFacade.getCurrentUser();
 
         currentUser.getProfile().setProfileImage(imageFacade.save(imageFile));
 
@@ -136,10 +136,19 @@ public class UserService {
     }
 
     public UserResponse deleteProfileImage() {
-        User currentUser = userFacade.getAuthenticatedUser();
+        User currentUser = userFacade.getCurrentUser();
 
         currentUser.getProfile().setProfileImage(null);
 
         return UserMapper.entityToResponse(userFacade.save(currentUser));
+    }
+
+    public Page<UserResponse> getUserMutualFollowings(Long userId, int page, int size) {
+        User user = userFacade.findById(userId);
+        User currentUser = userFacade.getCurrentUser();
+
+        return userFacade
+                .getMutualFollowings(user, currentUser, page, size)
+                .map(u -> UserMapper.entityToResponse(u, currentUser));
     }
 }
