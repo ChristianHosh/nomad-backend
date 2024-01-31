@@ -1,6 +1,7 @@
 package com.nomad.socialspring.user.controller;
 
-import com.nomad.socialspring.common.ResponseOk;
+import com.nomad.socialspring.common.annotations.ResponseOk;
+import com.nomad.socialspring.review.dto.ReviewRequest;
 import com.nomad.socialspring.user.dto.FollowRequestResponse;
 import com.nomad.socialspring.user.dto.ProfileRequest;
 import com.nomad.socialspring.user.dto.UserResponse;
@@ -8,6 +9,7 @@ import com.nomad.socialspring.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -125,5 +127,34 @@ public class UserController {
     @ResponseOk
     public List<UserResponse> getSuggestedUsers() {
         return userService.getSuggestedUsers();
+    }
+
+    //todo get user reviews
+
+    @PostMapping("/{id}/reviews")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserResponse createUserReview(
+            @PathVariable(name = "id") Long userId,
+            @RequestBody @Valid ReviewRequest reviewRequest
+    ) {
+        return userService.createUserReview(userId, reviewRequest);
+    }
+
+    @PostMapping("/{id}/block")
+    @ResponseOk
+    public UserResponse blockUser(
+            @PathVariable(name = "id") Long userId
+    ) {
+        return userService.blockUser(userId);
+    }
+
+
+    @DeleteMapping("/{id}/block")
+    @ResponseOk
+    public UserResponse unblockUser(
+            @PathVariable(name = "id") Long userId
+    ) {
+        return userService.unblockUser(userId);
     }
 }

@@ -74,8 +74,12 @@ public class Profile extends BaseEntity {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
     }
 
-    @Override
-    public String getExceptionString() {
-        return getId().toString();
+    public int getNumberOfFollowers() {
+        return user.getFollowers().size();
     }
+
+    public int getNumberOfFollowings() {
+        return user.getFollowings().size();
+    }
+
 }

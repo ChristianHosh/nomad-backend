@@ -1,6 +1,6 @@
 package com.nomad.socialspring.security.controller;
 
-import com.nomad.socialspring.common.ResponseOk;
+import com.nomad.socialspring.common.annotations.ResponseOk;
 import com.nomad.socialspring.security.dto.LoginRequest;
 import com.nomad.socialspring.security.dto.RegisterRequest;
 import com.nomad.socialspring.security.dto.ResendEmailVerificationRequest;

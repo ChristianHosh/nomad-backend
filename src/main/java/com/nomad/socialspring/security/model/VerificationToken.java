@@ -30,9 +30,4 @@ public class VerificationToken extends BaseEntity {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-
-    @Override
-    public String getExceptionString() {
-        return getId().toString();
-    }
 }

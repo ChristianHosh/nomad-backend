@@ -2,7 +2,7 @@ package com.nomad.socialspring.chat.controller;
 
 import com.nomad.socialspring.chat.dto.*;
 import com.nomad.socialspring.chat.service.ChatService;
-import com.nomad.socialspring.common.ResponseOk;
+import com.nomad.socialspring.common.annotations.ResponseOk;
 import com.nomad.socialspring.user.dto.UserResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

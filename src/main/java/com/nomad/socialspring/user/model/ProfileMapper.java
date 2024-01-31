@@ -5,7 +5,7 @@ import com.nomad.socialspring.user.dto.ProfileResponse;
 import com.nomad.socialspring.country.model.CountryMapper;
 
 public class ProfileMapper {
-    public static ProfileResponse entityToRequest(Profile profile) {
+    public static ProfileResponse entityToRequest(Profile profile, boolean detailedProfile) {
         if (profile == null)
             return null;
 
@@ -16,6 +16,8 @@ public class ProfileMapper {
                 .birthDate(profile.getBirthDate())
                 .profileImageUrl(ImageMapper.entityToUrl(profile.getProfileImage()))
                 .country(CountryMapper.entityToResponse(profile.getCountry()))
+                .numberOfFollowers(detailedProfile ? profile.getNumberOfFollowers() : null)
+                .numberOfFollowings(detailedProfile ? profile.getNumberOfFollowings() : null)
                 .build();
     }
 }

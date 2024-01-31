@@ -62,7 +62,7 @@ public class Post extends BaseEntity {
     private Trip trip;
 
     public boolean canBeSeenBy(User user) {
-        return !isPrivate || user.follows(author);
+        return (!isPrivate || user.follows(author)) && (author.canBeSeenBy(user));
     }
 
     public boolean canBeModifiedBy(User user) {

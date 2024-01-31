@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,7 +21,9 @@ public class ImageFacade {
 
     private final ImageRepository repository;
 
-    public Set<Image> saveAll(@NotNull List<MultipartFile> imageFiles) {
+    public Set<Image> saveAll(List<MultipartFile> imageFiles) {
+        if (imageFiles == null || imageFiles.isEmpty())
+            return new HashSet<>();
         return imageFiles.stream()
                 .map(file -> {
                     try {

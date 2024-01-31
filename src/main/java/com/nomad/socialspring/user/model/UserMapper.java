@@ -2,6 +2,7 @@ package com.nomad.socialspring.user.model;
 
 import com.nomad.socialspring.security.dto.RegisterRequest;
 import com.nomad.socialspring.security.facade.AuthenticationFacade;
+import com.nomad.socialspring.user.dto.FollowStatus;
 import com.nomad.socialspring.user.dto.UserResponse;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -28,32 +29,53 @@ public class UserMapper {
     }
 
     public static UserResponse entityToResponse(User user) {
-        return entityToResponse(user, null, null);
+        return entityToResponse(user, null, null, false);
     }
 
     public static UserResponse entityToResponse(User user, User currentUser) {
-        return entityToResponse(user, null, currentUser);
+        return entityToResponse(user, null, currentUser, false);
     }
 
     public static UserResponse entityToResponse(User user, String token) {
-        return entityToResponse(user, token, null);
+        return entityToResponse(user, token, null, false);
     }
 
-    public static UserResponse entityToResponse(User user, String token, User currentUser) {
+    public static UserResponse entityToResponse(User user, User currentUser, boolean detailedProfile) {
+        return entityToResponse(user, null, currentUser, detailedProfile);
+    }
+
+    public static UserResponse entityToResponse(User user, String token, User currentUser, boolean detailedProfile) {
         if (user == null)
             return null;
 
-        boolean canFollow = currentUser != null && !currentUser.follows(user) && !user.hasPendingRequestFrom(currentUser);
+        FollowStatus followStatus = getFollowStatus(user, currentUser);
 
         return UserResponse.builder()
                 .id(user.getId())
+                .createdOn(user.getCreatedOn())
+                .updatedOn(user.getUpdatedOn())
                 .username(user.getUsername())
                 .email(user.getEmail())
                 .role(user.getRole())
-                .canFollow(canFollow)
-                .profile(ProfileMapper.entityToRequest(user.getProfile()))
+                .followStatus(followStatus)
+                .rating(detailedProfile ? user.getRating() : null)
+                .profile(ProfileMapper.entityToRequest(user.getProfile(), detailedProfile))
                 .token(token)
                 .build();
+    }
+
+    private static FollowStatus getFollowStatus(User user, User currentUser) {
+        FollowStatus followStatus = FollowStatus.UNKNOWN;
+        if (currentUser != null) {
+            if (currentUser.follows(user))
+                followStatus = FollowStatus.FOLLOWING;
+            else
+                if (user.hasPendingRequestFrom(currentUser))
+                    followStatus = FollowStatus.PENDING;
+                else
+                    followStatus = FollowStatus.CAN_FOLLOW;
+        }
+        return followStatus;
     }
 
 }

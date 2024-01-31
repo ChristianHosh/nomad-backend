@@ -16,6 +16,8 @@ public record ProfileResponse(
         Gender gender,
         Date birthDate,
         String profileImageUrl,
-        CountryResponse country
+        CountryResponse country,
+        Integer numberOfFollowers,
+        Integer numberOfFollowings
 ) {
 }

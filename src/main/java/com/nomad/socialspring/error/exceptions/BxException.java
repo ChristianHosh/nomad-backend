@@ -15,6 +15,19 @@ public class BxException extends RuntimeException {
     public static final String X_CURRENT_USER_ALREADY_FOLLOWS = "You are already following this user";
     public static final String X_CURRENT_USER_ALREADY_UNFOLLOWS = "You are already not following this user";
     public static final String X_NOT_LOGGED_IN = "You are not logged in";
+    public static final String X_COULD_NOT_ADD_USER_TO_TRIP = "Could not add user to trip";
+    public static final String X_COULD_NOT_ADD_FOLLOWER = "Could not add follower";
+    public static final String X_COULD_NOT_REMOVE_FOLLOWER = "Could not remove follower";
+    public static final String X_COULD_NOT_LIKE_POST = "Could not like post";
+    public static final String X_COULD_NOT_UNLIKE_POST = "Could not unlike post";
+    public static final String X_COULD_NOT_ADD_USER_TO_CHANNEL = "Could not add user to chat channel";
+    public static final String X_COULD_NOT_REMOVE_USER_FROM_CHANNEL = "Could not remove user from chat channel";
+    public static final String X_COULD_NOT_REMOVE_USER_FROM_TRIP = "Could not remove user from trip";
+    public static final String X_COULD_NOT_LIKE_COMMENT = "Could not like comment";
+    public static final String X_COULD_NOT_UNLIKE_COMMENT = "Could not unlike comment";
+    public static final String X_COULD_NOT_REMOVE_FOLLOW_REQUEST = "Could not remove follow request";
+    public static final String X_COULD_NOT_BLOCK_USER = "Could not block user";
+    public static final String X_COULD_NOT_UNBLOCK_USER = "Could not unblock user";
 //    public static final String X_
 
 
@@ -26,11 +39,15 @@ public class BxException extends RuntimeException {
         super(cause);
     }
 
+    private static String getBaseEntityValue(BaseEntity value) {
+        return value.getClass().getSimpleName() + ": " + value.getExceptionString();
+    }
+
     @NotNull
     @Contract("_, _ -> new")
     public static BxException notFound(@NotNull Class<?> clazz, @NotNull Object value) {
         if (value instanceof BaseEntity)
-            value = value.getClass().getSimpleName() + ": " + ((BaseEntity) value).getExceptionString();
+            value = getBaseEntityValue((BaseEntity) value);
         return new BxNotFoundException(clazz.getSimpleName() + ": not found for '" + value + "'");
     }
 
@@ -45,8 +62,8 @@ public class BxException extends RuntimeException {
     @NotNull
     @Contract("_, _, _ -> new")
     public static BxException conflict(@NotNull Class<?> clazz, @NotNull Object field, @NotNull Object value) {
-        if (value instanceof BaseEntity)
-            value = value.getClass().getSimpleName() + ": " + ((BaseEntity) value).getExceptionString();
+        if (value instanceof BaseEntity e)
+            value = getBaseEntityValue(e);
         return new BxConflictException(clazz.getSimpleName() + ": " + field + " already exists for '" + value + "'");
     }
 
@@ -61,16 +78,16 @@ public class BxException extends RuntimeException {
     @NotNull
     @Contract("_, _, _ -> new")
     public static BxException badRequest(@NotNull Class<?> clazz, @NotNull Object field, @NotNull Object value) {
-        if (value instanceof BaseEntity)
-            value = value.getClass().getSimpleName() + ": " + ((BaseEntity) value).getExceptionString();
-        return new BxBadRequestException(clazz.getSimpleName() + ": " + field + " " + value);
+        if (value instanceof BaseEntity e)
+            value = getBaseEntityValue(e);
+        return new BxBadRequestException(clazz.getSimpleName() + ": " + field + " '" + value + "'");
     }
 
     @NotNull
     @Contract("_, _ -> new")
     public static BxException badRequest(@NotNull Class<?> clazz, @NotNull Object value) {
-        if (value instanceof BaseEntity)
-            value = value.getClass().getSimpleName() + ": " + ((BaseEntity) value).getExceptionString();
+        if (value instanceof BaseEntity e)
+            value = getBaseEntityValue(e);
         return new BxBadRequestException(clazz.getSimpleName() + ": " + value);
     }
 
@@ -93,8 +110,8 @@ public class BxException extends RuntimeException {
     @NotNull
     @Contract("null -> new")
     public static BxException unauthorized(Object value) {
-        if (value instanceof BaseEntity)
-            value = ((BaseEntity) value).getExceptionString();
+        if (value instanceof BaseEntity e)
+            value = getBaseEntityValue(e);
         return new BxUnauthorizedException("you are unauthorized to do this action: " + value);
     }
 
@@ -104,6 +121,16 @@ public class BxException extends RuntimeException {
         return new BxSevereException(message);
     }
 
+    @NotNull
+    @Contract("_, _ -> new")
+    public static BxSevereException hardcoded(String message, Object value) {
+        if (value instanceof BaseEntity e)
+            value = getBaseEntityValue(e);
+        return new BxSevereException(message + ": " + value);
+    }
+
+    @NotNull
+    @Contract(pure = true)
     public static Supplier<? extends RuntimeException> xHardcoded(String message) {
         return () -> {
             throw BxSevereException.hardcoded(message);
@@ -112,7 +139,7 @@ public class BxException extends RuntimeException {
 
     @NotNull
     @Contract("_ -> new")
-    public static BxSevereException unexpected(Exception e) {
+    public static BxSevereException unexpected(@NotNull Exception e) {
         return new BxSevereException("Internal Server Error: " + e.getMessage());
     }
 

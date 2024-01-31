@@ -9,11 +9,16 @@ public record ApiError (
         Timestamp timestamp,
         String error,
         String message,
-        Integer status
+        Integer status,
+        Boolean isSevere
 
 ) {
 
     public ApiError(HttpStatus status, String message){
-        this(Timestamp.from(Instant.now()), status.getReasonPhrase(), message, status.value());
+        this(status, message, false);
+    }
+
+    public ApiError(HttpStatus status, String message, Boolean isSevere) {
+        this(Timestamp.from(Instant.now()), status.getReasonPhrase(), message, status.value(), isSevere);
     }
 }

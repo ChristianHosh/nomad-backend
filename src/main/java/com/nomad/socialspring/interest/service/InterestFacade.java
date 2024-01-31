@@ -3,6 +3,8 @@ package com.nomad.socialspring.interest.service;
 import com.nomad.socialspring.interest.model.Interest;
 import com.nomad.socialspring.interest.repo.InterestRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -29,5 +31,9 @@ public class InterestFacade {
         }
 
         return interestList;
+    }
+
+    public Page<Interest> getInterests(int page, int size, String name) {
+        return repository.findByNameContains(name, PageRequest.of(page, size));
     }
 }

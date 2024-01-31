@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -87,7 +88,25 @@ public class WebSecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/users/**").permitAll()
+
+                        // HttpMethod access
+                        .requestMatchers(HttpMethod.POST).access(userAuth)
+                        .requestMatchers(HttpMethod.PUT).access(userAuth)
+                        .requestMatchers(HttpMethod.DELETE).access(userAuth)
+
+                        // '/users' access
+                        .requestMatchers("/api/users/{id}/mutual").access(userAuth)
+                        .requestMatchers("/api/users/follow-requests").access(userAuth)
+                        .requestMatchers("/api/users/suggested").access(userAuth)
+
+                        // '/notifications' access
+                        .requestMatchers("/api/notifications").access(userAuth)
+
+                        //
+
+
+
+
                         .requestMatchers("/error").permitAll()
                         .anyRequest().permitAll()
                 );

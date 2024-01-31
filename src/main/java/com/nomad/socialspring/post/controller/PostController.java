@@ -2,7 +2,7 @@ package com.nomad.socialspring.post.controller;
 
 import com.nomad.socialspring.comment.dto.CommentRequest;
 import com.nomad.socialspring.comment.dto.CommentResponse;
-import com.nomad.socialspring.common.ResponseOk;
+import com.nomad.socialspring.common.annotations.ResponseOk;
 import com.nomad.socialspring.post.dto.PostRequest;
 import com.nomad.socialspring.post.dto.PostResponse;
 import com.nomad.socialspring.post.service.PostService;
@@ -30,7 +30,6 @@ public class PostController {
             @ModelAttribute @Valid PostRequest request,
             @RequestParam(name = "imageFiles", required = false) MultipartFile[] imageFiles
     ) {
-        // should take multipart file as parameter as an image
         return postService.createPost(request, Arrays.asList(imageFiles));
     }
 

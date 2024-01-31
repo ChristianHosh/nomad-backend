@@ -3,6 +3,7 @@ package com.nomad.socialspring.notification.model;
 import com.nomad.socialspring.chat.model.ChatChannel;
 import com.nomad.socialspring.common.BaseEntity;
 import com.nomad.socialspring.post.model.Post;
+import com.nomad.socialspring.review.model.Review;
 import com.nomad.socialspring.user.model.FollowRequest;
 import com.nomad.socialspring.user.model.User;
 import jakarta.persistence.*;
@@ -41,11 +42,15 @@ public class Notification extends BaseEntity {
     @JoinColumn(name = "RECIPIENT_ID")
     private User recipient;
 
+    @Transient
+    private Boolean isOld = true;
+
     public Class<? extends BaseEntity> getEntityClass() {
         return switch (getNotificationType()) {
             case POST -> Post.class;
             case FOLLOW -> FollowRequest.class;
             case MESSAGE -> ChatChannel.class;
+            case REVIEW -> Review.class;
         };
     }
 }

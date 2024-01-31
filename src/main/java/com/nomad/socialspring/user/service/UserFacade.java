@@ -4,8 +4,10 @@ import com.nomad.socialspring.chat.model.ChatChannel;
 import com.nomad.socialspring.country.model.Country;
 import com.nomad.socialspring.error.exceptions.BxException;
 import com.nomad.socialspring.interest.model.Interest;
+import com.nomad.socialspring.post.model.Post;
 import com.nomad.socialspring.security.dto.RegisterRequest;
 import com.nomad.socialspring.security.facade.AuthenticationFacade;
+import com.nomad.socialspring.trip.model.Trip;
 import com.nomad.socialspring.user.dto.ProfileRequest;
 import com.nomad.socialspring.user.model.User;
 import com.nomad.socialspring.user.model.UserMapper;
@@ -105,8 +107,8 @@ public class UserFacade {
         return repository.findByFollowings_Id(userId, PageRequest.of(page, size));
     }
 
-    public Page<User> findAllByPostLiked(Long postId, int page, int size) {
-        return repository.findByLikedPosts_Id(postId, PageRequest.of(page, size));
+    public Page<User> findAllByPostLiked(Post post, int page, int size) {
+        return repository.findByLikedPosts_Id(post.getId(), PageRequest.of(page, size));
     }
 
     public Page<User> findAllByCommentLiked(Long id, int page, int size) {
@@ -174,12 +176,20 @@ public class UserFacade {
                 });
             }
         }
-        return potentialUsers.stream().filter(user -> !user.isFollowedBy(currentUser)).limit(25).toList();
+        return potentialUsers.stream()
+                .filter(user -> !user.isFollowedBy(currentUser))
+                .filter(user -> user.canBeSeenBy(currentUser))
+                .limit(25)
+                .toList();
     }
 
     private static int countSharedInterests(@NotNull User user1, @NotNull User user2) {
         Set<Interest> interests1 = user1.getProfile().getInterests();
         Set<Interest> interests2 = user2.getProfile().getInterests();
         return (int) interests1.stream().filter(interests2::contains).count();
+    }
+
+    public Page<User> getUsersInTrip(Trip trip, int page, int size) {
+        return repository.findByTrips_Id(trip.getId(), PageRequest.of(page, size));
     }
 }

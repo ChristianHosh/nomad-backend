@@ -56,6 +56,8 @@ public class CommentService {
 
         if (comment.getLikes().add(currentUser))
             notificationFacade.notifyCommentLike(comment.getPost(), currentUser);
+        else
+            throw BxException.hardcoded(BxException.X_COULD_NOT_LIKE_COMMENT, currentUser);
 
         return CommentMapper.entityToResponse(commentFacade.save(comment));
     }
@@ -64,7 +66,8 @@ public class CommentService {
         Comment comment = commentFacade.findById(commentId);
         User currentUser = userFacade.getCurrentUser();
 
-        comment.getLikes().remove(currentUser);
+        if (!comment.getLikes().remove(currentUser))
+            throw BxException.hardcoded(BxException.X_COULD_NOT_UNLIKE_COMMENT, currentUser);
 
         return CommentMapper.entityToResponse(commentFacade.save(comment));
     }

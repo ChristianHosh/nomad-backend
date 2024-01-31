@@ -3,7 +3,7 @@ package com.nomad.socialspring.comment.controller;
 import com.nomad.socialspring.comment.dto.CommentRequest;
 import com.nomad.socialspring.comment.dto.CommentResponse;
 import com.nomad.socialspring.comment.service.CommentService;
-import com.nomad.socialspring.common.ResponseOk;
+import com.nomad.socialspring.common.annotations.ResponseOk;
 import com.nomad.socialspring.user.dto.UserResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

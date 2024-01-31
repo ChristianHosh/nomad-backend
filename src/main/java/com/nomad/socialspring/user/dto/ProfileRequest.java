@@ -7,7 +7,7 @@ import java.sql.Date;
 import java.util.Set;
 
 /**
- * DTO for {@link com.nomad.socialspring.user.model.Profile}
+ * Request DTO for {@link com.nomad.socialspring.user.model.Profile}
  */
 public record ProfileRequest(
         @Size(max = 50)

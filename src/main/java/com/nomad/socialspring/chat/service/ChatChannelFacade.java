@@ -3,6 +3,7 @@ package com.nomad.socialspring.chat.service;
 import com.nomad.socialspring.chat.model.ChatChannel;
 import com.nomad.socialspring.chat.repo.ChatChannelRepository;
 import com.nomad.socialspring.error.exceptions.BxException;
+import com.nomad.socialspring.trip.model.Trip;
 import com.nomad.socialspring.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -38,20 +39,34 @@ public class ChatChannelFacade {
         ChatChannel chatChannel = newChannel();
         chatChannel.setName(name);
 
-        userList.forEach(chatChannel::addUser);
+        userList.forEach(u -> {
+            if (!chatChannel.addUser(u))
+                throw BxException.hardcoded(BxException.X_COULD_NOT_ADD_USER_TO_CHANNEL, u);
+        });
 
         return save(chatChannel);
     }
 
     public ChatChannel addNewUsers(@NotNull ChatChannel chatChannel, @NotNull List<User> userList) {
-        userList.forEach(chatChannel::addUser);
+        userList.forEach(u -> {
+            if (!chatChannel.addUser(u))
+                throw BxException.hardcoded(BxException.X_COULD_NOT_ADD_USER_TO_CHANNEL, u);
+        });
 
         return save(chatChannel);
     }
 
     public ChatChannel removeUsers(@NotNull ChatChannel chatChannel, @NotNull List<User> userList) {
-        userList.forEach(chatChannel::removeUser);
+        userList.forEach(u -> {
+            if (!chatChannel.removeUser(u))
+                throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_USER_FROM_CHANNEL, u);
+        });
 
         return save(chatChannel);
+    }
+
+    public ChatChannel findByTrip(Trip trip) {
+        return repository.findByTrip(trip)
+                .orElseThrow(BxException.xNotFound(ChatChannel.class, trip));
     }
 }

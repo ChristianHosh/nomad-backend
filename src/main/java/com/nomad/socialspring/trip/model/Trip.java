@@ -40,8 +40,20 @@ public class Trip extends BaseEntity {
     @OneToOne(mappedBy = "trip", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false, orphanRemoval = true)
     private Post post;
 
-    @Override
-    public String getExceptionString() {
-        return getId().toString();
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    public boolean addParticipant(User user) {
+        if (user == null)
+            return false;
+        return participants.add(user);
+    }
+
+    public boolean removeParticipant(User user) {
+        if (user == null)
+            return false;
+        return participants.remove(user);
+    }
+
+    public int getNumberOfParticipants() {
+        return participants.size();
     }
 }

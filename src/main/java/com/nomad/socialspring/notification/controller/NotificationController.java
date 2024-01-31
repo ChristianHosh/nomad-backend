@@ -1,6 +1,6 @@
 package com.nomad.socialspring.notification.controller;
 
-import com.nomad.socialspring.common.ResponseOk;
+import com.nomad.socialspring.common.annotations.ResponseOk;
 import com.nomad.socialspring.notification.dto.NotificationResponse;
 import com.nomad.socialspring.notification.service.NotificationService;
 import lombok.RequiredArgsConstructor;

@@ -4,12 +4,14 @@ import com.nomad.socialspring.chat.model.ChatChannelUser;
 import com.nomad.socialspring.comment.model.Comment;
 import com.nomad.socialspring.common.BaseEntity;
 import com.nomad.socialspring.post.model.Post;
+import com.nomad.socialspring.review.model.Review;
 import com.nomad.socialspring.trip.model.Trip;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedHashSet;
 import java.util.Objects;
@@ -93,6 +95,9 @@ public class User extends BaseEntity {
     @Transient
     private Integer depth = 0;
 
+    @OneToMany(mappedBy = "recipient", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
+    private Set<Review> reviews = new LinkedHashSet<>();
+
     @Override
     public final boolean equals(Object object) {
         if (this == object) return true;
@@ -109,24 +114,42 @@ public class User extends BaseEntity {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
     }
 
+    public boolean canBeSeenBy(User user) {
+        return user == null || (isNotBlockedBy(user) && user.isNotBlockedBy(this));
+    }
+
+    public boolean isNotBlockedBy(@NotNull User user) {
+        return !user.getBlockedUsers().contains(this);
+    }
+
     public boolean follows(User user) {
+        if (user == null)
+            return false;
         return followings.contains(user);
     }
 
     public boolean isFollowedBy(User user) {
+        if (user == null)
+            return false;
         return followers.contains(user);
     }
 
     public boolean addFollowing(User user) {
+        if (user == null)
+            return false;
         return followings.add(user);
     }
 
 
     public boolean removeFollowing(User user) {
-        return followings.removeIf(following -> following.equals(user));
+        if (user == null)
+            return false;
+        return followings.remove(user);
     }
 
     public boolean hasPendingRequestFrom(User user) {
+        if (user == null)
+            return false;
         return followRequests.stream().anyMatch(
                 followRequest -> followRequest.getFromUser().equals(user)
         );
@@ -139,5 +162,18 @@ public class User extends BaseEntity {
 
     public void incrementDepth(Integer depth) {
         this.depth = depth + 1;
+    }
+
+    public Integer getRating() {
+        return (int) reviews.stream()
+                .mapToInt(Review::getRating)
+                .average().orElse(0.0);
+    }
+
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    public boolean removeFollowRequestFrom(User user) {
+        if (user == null)
+            return false;
+        return followRequests.removeIf(followRequest -> Objects.equals(followRequest.getFromUser(), user));
     }
 }

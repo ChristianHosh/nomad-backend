@@ -35,10 +35,12 @@ public class ChatChannel extends BaseEntity {
     @Builder.Default
     private Set<ChatChannelUser> chatChannelUsers = new LinkedHashSet<>();
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean containsUser(User user) {
         return chatChannelUsers.stream().anyMatch(chatChannelUser -> Objects.equals(chatChannelUser.getChatChannel(), this) && Objects.equals(chatChannelUser.getUser(), user));
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean addUser(User user) {
         return chatChannelUsers.add(newChatChannelUser(user));
     }
@@ -52,6 +54,7 @@ public class ChatChannel extends BaseEntity {
         );
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean removeUser(User user) {
         return chatChannelUsers.removeIf(channelUser -> channelUser.getUser().equals(user));
     }
