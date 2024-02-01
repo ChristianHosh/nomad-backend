@@ -8,9 +8,6 @@ public class CountryMapper {
         if (country == null)
             return null;
 
-        return CountryResponse.builder()
-                .id(country.getId())
-                .name(country.getName())
-                .build();
+        return new CountryResponse(country);
     }
 }

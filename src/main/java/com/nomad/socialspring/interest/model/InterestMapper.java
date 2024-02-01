@@ -8,9 +8,6 @@ public class InterestMapper {
         if (interest == null)
             return null;
 
-        return InterestResponse.builder()
-                .id(interest.getId())
-                .name(interest.getName())
-                .build();
+        return new InterestResponse(interest);
     }
 }

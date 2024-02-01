@@ -1,10 +1,21 @@
 package com.nomad.socialspring.interest.dto;
 
-import lombok.Builder;
+import com.nomad.socialspring.common.BaseResponse;
+import com.nomad.socialspring.interest.model.Interest;
+import lombok.Getter;
 
 /**
- * DTO for {@link com.nomad.socialspring.interest.model.Interest}
+ * Response DTO for {@link com.nomad.socialspring.interest.model.Interest}
  */
-@Builder
-public record InterestResponse(Long id, String name) {
+@Getter
+public class InterestResponse extends BaseResponse {
+  private final String name;
+  public InterestResponse(Interest interest) {
+    super(interest);
+    this.name = interest.getName();
+  }
+  
+  public static InterestResponse fromEntity(Interest interest) {
+    return interest == null ? null : new InterestResponse(interest);
+  }
 }

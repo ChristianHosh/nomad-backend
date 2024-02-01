@@ -1,13 +1,18 @@
 package com.nomad.socialspring.country.dto;
 
-import lombok.Builder;
+import com.nomad.socialspring.common.BaseResponse;
+import com.nomad.socialspring.country.model.Country;
+import lombok.Getter;
 
-/**
- * ResponseOk DTO for {@link com.nomad.socialspring.country.model.Country}
- */
-@Builder
-public record CountryResponse(
-        Long id,
-        String name
-) {
+@Getter
+public class CountryResponse extends BaseResponse {
+  private final String name;
+  public CountryResponse(Country country) {
+    super(country);
+    this.name = country.getName();
+  }
+  
+  public static CountryResponse fromEntity(Country country) {
+    return country == null ? null : new CountryResponse(country);
+  }
 }

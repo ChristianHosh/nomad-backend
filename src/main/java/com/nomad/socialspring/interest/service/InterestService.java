@@ -1,7 +1,6 @@
 package com.nomad.socialspring.interest.service;
 
 import com.nomad.socialspring.interest.dto.InterestResponse;
-import com.nomad.socialspring.interest.model.InterestMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -12,6 +11,6 @@ public class InterestService {
 
     private final InterestFacade interestFacade;
     public Page<InterestResponse> getInterests(int page, int size, String name) {
-        return interestFacade.getInterests(page, size, name).map(InterestMapper::entityToResponse);
+        return interestFacade.getInterests(page, size, name).map(InterestResponse::fromEntity);
     }
 }
