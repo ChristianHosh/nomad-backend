@@ -33,8 +33,7 @@ public class ChatService {
 
     @Transactional
     public ChatMessageResponse chat(@NotNull ChatMessageRequest request) {
-        if (!jwtUtils.validateJwtToken(request.jwtToken()))
-            throw BxException.unauthorized("invalid token");
+        jwtUtils.validateJwtToken(request.jwtToken());
 
         User sender = userFacade.findByUsername(jwtUtils.getUsernameFromJwtToken(request.jwtToken()));
         ChatChannel chatChannel = chatChannelFacade.findByUUID(request.chatChannelUUID());

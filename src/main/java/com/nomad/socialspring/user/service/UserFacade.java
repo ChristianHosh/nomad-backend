@@ -9,6 +9,7 @@ import com.nomad.socialspring.security.dto.RegisterRequest;
 import com.nomad.socialspring.security.facade.AuthenticationFacade;
 import com.nomad.socialspring.trip.model.Trip;
 import com.nomad.socialspring.user.dto.ProfileRequest;
+import com.nomad.socialspring.user.dto.UserResponse;
 import com.nomad.socialspring.user.model.User;
 import com.nomad.socialspring.user.model.UserMapper;
 import com.nomad.socialspring.user.repo.UserRepository;
@@ -191,5 +192,9 @@ public class UserFacade {
 
     public Page<User> getUsersInTrip(Trip trip, int page, int size) {
         return repository.findByTrips_Id(trip.getId(), PageRequest.of(page, size));
+    }
+
+    public Page<User> getBlockedUsers(User user, int page, int size) {
+        return repository.findByBlockedUsersById(user.getId(), PageRequest.of(page, size));
     }
 }

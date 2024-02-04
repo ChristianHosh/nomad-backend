@@ -30,7 +30,7 @@ public class CommentMapper {
                 .updatedOn(comment.getUpdatedOn())
                 .content(comment.getContent())
                 .canLike(user != null && comment.getLikes().contains(user))
-                .author(UserMapper.entityToResponse(comment.getAuthor()))
+                .author(UserMapper.entityToResponse(comment.getAuthor(), user))
                 .numberOfLikes(comment.getNumberOfLikes())
                 .build();
     }

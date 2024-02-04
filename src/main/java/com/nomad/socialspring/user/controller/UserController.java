@@ -157,4 +157,13 @@ public class UserController {
     ) {
         return userService.unblockUser(userId);
     }
+
+    @GetMapping("/blocked")
+    @ResponseOk
+    public Page<UserResponse> getBlockedUsers(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "25") int size
+    ) {
+        return userService.getBlockedUsers(page, size);
+    }
 }

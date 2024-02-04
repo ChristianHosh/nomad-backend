@@ -87,16 +87,20 @@ public class User extends BaseEntity {
     private Set<FollowRequest> followRequests = new LinkedHashSet<>();
 
     @ManyToMany(mappedBy = "likes", cascade = {CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY)
+    @Builder.Default
     private Set<Post> likedPosts = new LinkedHashSet<>();
 
     @ManyToMany(mappedBy = "likes", cascade = {CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY)
+    @Builder.Default
     private Set<Comment> likedComments = new LinkedHashSet<>();
 
-    @Transient
-    private Integer depth = 0;
-
     @OneToMany(mappedBy = "recipient", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
+    @Builder.Default
     private Set<Review> reviews = new LinkedHashSet<>();
+
+    @Transient
+    @Builder.Default
+    private Integer depth = 0;
 
     @Override
     public final boolean equals(Object object) {

@@ -228,4 +228,11 @@ public class UserService {
         throw BxException.hardcoded(BxException.X_COULD_NOT_UNBLOCK_USER, user);
     }
 
+    public Page<UserResponse> getBlockedUsers(int page, int size) {
+        User currentUser = userFacade.getCurrentUser();
+
+        return userFacade
+                .getBlockedUsers(currentUser, page, size)
+                .map(u -> UserMapper.entityToResponse(u, currentUser));
+    }
 }

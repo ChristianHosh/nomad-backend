@@ -183,4 +183,11 @@ public class PostService {
         throw BxException.unauthorized(currentUser);
     }
 
+    public Page<PostResponse> getGlobalPosts(int page, int size) {
+        User currentUser = userFacade.getCurrentUserOrNull();
+
+        return postFacade
+                .getGlobalPosts(currentUser, page, size)
+                .map(post -> PostMapper.entityToResponse(post, currentUser));
+    }
 }

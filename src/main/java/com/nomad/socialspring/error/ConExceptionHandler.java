@@ -17,9 +17,7 @@ import java.util.StringJoiner;
 public class ConExceptionHandler {
 
     public ResponseEntity<ApiError> buildErrorResponse(HttpStatus status, String message, Boolean isSevere) {
-        return ResponseEntity
-                .status(status)
-                .body(new ApiError(status, message, isSevere));
+        return ResponseEntity.status(status).body(new ApiError(status, message, isSevere));
     }
 
     public ResponseEntity<ApiError> buildErrorResponse(@NotNull BxException exception) {
@@ -32,7 +30,7 @@ public class ConExceptionHandler {
 
     public ResponseEntity<ApiError> buildErrorResponse(@NotNull BxException exception, HttpStatus status, Boolean isSevere) {
         if (exception instanceof BxSevereException) {
-            log.error(exception.getMessage(), exception);
+            log.error(exception.getMessage(), exception.getException() != null ? exception.getException() : exception);
         } else {
             log.info(exception.getMessage(), exception);
         }
@@ -51,7 +49,7 @@ public class ConExceptionHandler {
 
     private String getFieldErrors(@NotNull MethodArgumentNotValidException exception) {
         StringJoiner stringJoiner = new StringJoiner("\n");
-        exception.getFieldErrors().forEach( fieldError -> stringJoiner.add(fieldError.getDefaultMessage()));
+        exception.getFieldErrors().forEach(fieldError -> stringJoiner.add(fieldError.getDefaultMessage()));
         return stringJoiner.toString();
     }
 
