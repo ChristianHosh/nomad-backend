@@ -43,6 +43,7 @@ public class Notification extends BaseEntity {
     private User recipient;
 
     @Transient
+    @Builder.Default
     private Boolean isOld = true;
 
     public Class<? extends BaseEntity> getEntityClass() {
