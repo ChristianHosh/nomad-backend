@@ -2,7 +2,6 @@ package com.nomad.socialspring.post.controller;
 
 import com.nomad.socialspring.comment.dto.CommentRequest;
 import com.nomad.socialspring.comment.dto.CommentResponse;
-import com.nomad.socialspring.common.annotations.ResponseOk;
 import com.nomad.socialspring.post.dto.PostRequest;
 import com.nomad.socialspring.post.dto.PostResponse;
 import com.nomad.socialspring.post.service.PostService;
@@ -34,7 +33,7 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public PostResponse getPost(
             @PathVariable(name = "id") Long postId
     ) {
@@ -42,7 +41,7 @@ public class PostController {
     }
 
     @PutMapping("/{id}")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public PostResponse updatePost(
             @PathVariable(name = "id") Long postId,
             @ModelAttribute @Valid PostRequest request
@@ -51,7 +50,7 @@ public class PostController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public PostResponse deletePost(
             @PathVariable(name = "id") Long postId
     ) {
@@ -59,7 +58,7 @@ public class PostController {
     }
 
     @GetMapping("/{id}/comments")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public Page<CommentResponse> getPostComments(
             @PathVariable(name = "id") Long postId,
             @RequestParam(name = "page", defaultValue = "0") int page,
@@ -79,7 +78,7 @@ public class PostController {
     }
 
     @GetMapping("/{id}/likes")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public Page<UserResponse> getPostLikes(
             @PathVariable(name = "id") Long postId,
             @RequestParam(name = "page", defaultValue = "0") int page,
@@ -107,7 +106,7 @@ public class PostController {
     }
 
     @GetMapping("/global")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public Page<PostResponse> getGlobalPosts(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size

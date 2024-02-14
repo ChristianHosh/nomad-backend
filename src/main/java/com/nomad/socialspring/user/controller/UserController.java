@@ -1,6 +1,5 @@
 package com.nomad.socialspring.user.controller;
 
-import com.nomad.socialspring.common.annotations.ResponseOk;
 import com.nomad.socialspring.review.dto.ReviewRequest;
 import com.nomad.socialspring.user.dto.FollowRequestResponse;
 import com.nomad.socialspring.user.dto.ProfileRequest;
@@ -23,7 +22,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/{id}")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public UserResponse getUser(
             @PathVariable(name = "id") Long userId
     ) {
@@ -31,7 +30,7 @@ public class UserController {
     }
 
     @PostMapping("/{id}/follow")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public UserResponse followUser(
             @PathVariable(name = "id") Long userId
     ) {
@@ -39,7 +38,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}/follow")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public UserResponse unfollowUser(
             @PathVariable(name = "id") Long userId
     ) {
@@ -47,7 +46,7 @@ public class UserController {
     }
 
     @GetMapping("/follow-requests")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public Page<FollowRequestResponse> getFollowRequests(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "25") int size
@@ -56,7 +55,7 @@ public class UserController {
     }
 
     @PostMapping("/follow-requests/{id}")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public UserResponse acceptFollow(
             @PathVariable(name = "id") Long followRequestId
     ) {
@@ -64,7 +63,7 @@ public class UserController {
     }
 
     @DeleteMapping("/follow-requests/{id}")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public UserResponse declineFollow(
             @PathVariable(name = "id") Long followRequestId
     ) {
@@ -72,7 +71,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}/followers")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public Page<UserResponse> getUserFollowers(
             @PathVariable(name = "id") Long userId,
             @RequestParam(name = "page", defaultValue = "0") int page,
@@ -82,7 +81,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}/mutual")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public Page<UserResponse> getUserMutual(
             @PathVariable(name = "id") Long userId,
             @RequestParam(name = "page", defaultValue = "0") int page,
@@ -92,7 +91,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}/followings")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public Page<UserResponse> getUserFollowings(
             @PathVariable(name = "id") Long userId,
             @RequestParam(name = "page", defaultValue = "0") int page,
@@ -102,7 +101,7 @@ public class UserController {
     }
 
     @PutMapping("/profile")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public UserResponse updateProfileInfo(
             @RequestBody @Valid ProfileRequest profileRequest
     ) {
@@ -110,7 +109,7 @@ public class UserController {
     }
 
     @PutMapping("/profile-image")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public UserResponse updateProfileImage(
             @RequestParam MultipartFile imageFile
     ) {
@@ -118,13 +117,13 @@ public class UserController {
     }
 
     @DeleteMapping("/profile-image")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public UserResponse deleteProfileImage() {
         return userService.deleteProfileImage();
     }
 
     @GetMapping("/suggested")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public List<UserResponse> getSuggestedUsers() {
         return userService.getSuggestedUsers();
     }
@@ -142,7 +141,7 @@ public class UserController {
     }
 
     @PostMapping("/{id}/block")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public UserResponse blockUser(
             @PathVariable(name = "id") Long userId
     ) {
@@ -151,7 +150,7 @@ public class UserController {
 
 
     @DeleteMapping("/{id}/block")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public UserResponse unblockUser(
             @PathVariable(name = "id") Long userId
     ) {
@@ -159,7 +158,7 @@ public class UserController {
     }
 
     @GetMapping("/blocked")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public Page<UserResponse> getBlockedUsers(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "25") int size

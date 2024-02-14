@@ -1,6 +1,7 @@
 package com.nomad.socialspring.notification.service;
 
 import com.nomad.socialspring.comment.model.Comment;
+import com.nomad.socialspring.common.BaseEntity;
 import com.nomad.socialspring.notification.model.Notification;
 import com.nomad.socialspring.notification.model.NotificationType;
 import com.nomad.socialspring.notification.repo.NotificationRepository;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -91,16 +93,14 @@ public class NotificationFacade {
 
     public Page<Notification> getNotifications(User user, int page, int size) {
         Page<Notification> notifcationPage = repository.findByRecipient(user, PageRequest.of(page, size, Sort.by(Sort.Order.desc("createdOn"))));
-        notifcationPage.forEach(this::readAndSave);
+        readAndSave(notifcationPage.toList());
         return notifcationPage;
     }
 
-    private void readAndSave(@NotNull Notification notification) {
-        if (!notification.getIsRead()) {
-            notification.setIsRead(true);
-            notification.setIsOld(false);
-            save(notification);
-        }
+    private void readAndSave(@NotNull List<Notification> notificationList) {
+        repository.updateIsReadByIdInAndIsReadFalse(notificationList.stream()
+                .mapToLong(BaseEntity::getId)
+                .boxed().toList());
     }
 
     public void deleteFollowNotification(@NotNull FollowRequest followRequest) {

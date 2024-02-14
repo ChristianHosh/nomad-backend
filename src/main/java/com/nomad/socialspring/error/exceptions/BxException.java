@@ -7,8 +7,8 @@ import lombok.experimental.Accessors;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 
 @Getter
@@ -41,6 +41,7 @@ public class BxException extends RuntimeException {
 
     protected BxException(String message) {
         super(message);
+        this.exception = null;
     }
 
     protected BxException(Throwable cause) {
@@ -49,6 +50,10 @@ public class BxException extends RuntimeException {
             this.exception = e;
         else
             this.exception = null;
+    }
+
+    public Exception getException() {
+      return Objects.requireNonNullElse(exception, this);
     }
 
 

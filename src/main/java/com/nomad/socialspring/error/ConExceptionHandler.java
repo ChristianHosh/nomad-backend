@@ -29,11 +29,11 @@ public class ConExceptionHandler {
     }
 
     public ResponseEntity<ApiError> buildErrorResponse(@NotNull BxException exception, HttpStatus status, Boolean isSevere) {
-        if (exception instanceof BxSevereException) {
-            log.error(exception.getMessage(), exception.getException() != null ? exception.getException() : exception);
-        } else {
-            log.info(exception.getMessage(), exception);
-        }
+        if (isSevere)
+            log.error(exception.getMessage(), exception.getException());
+        else
+            log.warn(exception.getMessage(), exception.getException());
+
         return buildErrorResponse(status, exception.getMessage(), isSevere);
     }
 
