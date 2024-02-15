@@ -2,6 +2,7 @@ package com.nomad.socialspring.comment;
 
 import com.nomad.socialspring.error.BxException;
 import com.nomad.socialspring.notification.NotificationFacade;
+import com.nomad.socialspring.recommender.PostEventHandler;
 import com.nomad.socialspring.user.UserResponse;
 import com.nomad.socialspring.user.User;
 import com.nomad.socialspring.user.UserMapper;
@@ -17,12 +18,14 @@ public class CommentService {
     private final CommentFacade commentFacade;
     private final UserFacade userFacade;
     private final NotificationFacade notificationFacade;
+    private final PostEventHandler postEventHandler;
 
     public CommentResponse deleteComment(Long commentId) {
         Comment comment = commentFacade.findById(commentId);
         User currentUser = userFacade.getCurrentUser();
         if (comment.canBeDeletedBy(currentUser)) {
             commentFacade.delete(comment);
+            postEventHandler.deleteComment(currentUser, comment.getPost());
             return CommentMapper.entityToResponse(comment);
         }
 
@@ -55,6 +58,7 @@ public class CommentService {
         else
             throw BxException.hardcoded(BxException.X_COULD_NOT_LIKE_COMMENT, currentUser);
 
+        postEventHandler.likeComment(currentUser, comment.getPost());
         return CommentMapper.entityToResponse(commentFacade.save(comment));
     }
 
@@ -65,6 +69,7 @@ public class CommentService {
         if (!comment.getLikes().remove(currentUser))
             throw BxException.hardcoded(BxException.X_COULD_NOT_UNLIKE_COMMENT, currentUser);
 
+        postEventHandler.unlikeComment(currentUser, comment.getPost());
         return CommentMapper.entityToResponse(commentFacade.save(comment));
     }
 }

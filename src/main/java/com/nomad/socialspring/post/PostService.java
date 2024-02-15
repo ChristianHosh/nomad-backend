@@ -14,6 +14,7 @@ import com.nomad.socialspring.image.ImageFacade;
 import com.nomad.socialspring.interest.Interest;
 import com.nomad.socialspring.interest.InterestFacade;
 import com.nomad.socialspring.notification.NotificationFacade;
+import com.nomad.socialspring.recommender.PostEventHandler;
 import com.nomad.socialspring.trip.Trip;
 import com.nomad.socialspring.trip.TripFacade;
 import com.nomad.socialspring.user.UserResponse;
@@ -44,6 +45,7 @@ public class PostService {
     private final CountryFacade countryFacade;
     private final TripFacade tripFacade;
     private final ChatChannelFacade chatChannelFacade;
+    private final PostEventHandler postEventHandler;
 
     @Transactional
     public PostResponse createPost(@NotNull PostRequest request, List<MultipartFile> imageFiles) {
@@ -93,8 +95,10 @@ public class PostService {
         Post post = postFacade.findById(postId);
 
         // only return if post is public or current user follows post author
-        if (post.canBeSeenBy(currentUser))
+        if (post.canBeSeenBy(currentUser)) {
+            postEventHandler.viewPost(currentUser, post);
             return PostMapper.entityToResponse(post, currentUser);
+        }
         throw BxException.unauthorized(currentUser);
     }
 
@@ -133,6 +137,7 @@ public class PostService {
             if (!Objects.equals(currentUser, post.getAuthor()))
                 notificationFacade.notifyPostComment(post, comment);
 
+            postEventHandler.commentOnPost(currentUser, post);
             return CommentMapper.entityToResponse(comment, currentUser);
         }
         throw BxException.unauthorized(currentUser);
@@ -158,8 +163,10 @@ public class PostService {
             if (!post.getLikes().add(currentUser))
                 throw BxException.hardcoded(BxException.X_COULD_NOT_LIKE_POST, currentUser);
 
-            notificationFacade.notifyPostLike(post, currentUser);
+            if (!Objects.equals(currentUser, post.getAuthor()))
+                notificationFacade.notifyPostLike(post, currentUser);
 
+            postEventHandler.likePost(currentUser, post);
             return PostMapper.entityToResponse(postFacade.save(post), currentUser);
         }
         throw BxException.unauthorized(currentUser);
@@ -174,16 +181,10 @@ public class PostService {
             if (!post.getLikes().remove(currentUser))
                 throw BxException.hardcoded(BxException.X_COULD_NOT_UNLIKE_POST, currentUser);
 
+            postEventHandler.unlikePost(currentUser, post);
             return PostMapper.entityToResponse(postFacade.save(post), currentUser);
         }
         throw BxException.unauthorized(currentUser);
     }
 
-    public Page<PostResponse> getGlobalPosts(int page, int size) {
-        User currentUser = userFacade.getCurrentUserOrNull();
-
-        return postFacade
-                .getGlobalPosts(currentUser, page, size)
-                .map(post -> PostMapper.entityToResponse(post, currentUser));
-    }
 }

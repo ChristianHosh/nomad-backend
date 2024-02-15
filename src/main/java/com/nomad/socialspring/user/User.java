@@ -13,7 +13,7 @@ import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -51,52 +51,52 @@ public class User extends BaseEntity {
             joinColumns = @JoinColumn(name = "USER_1_ID"),
             inverseJoinColumns = @JoinColumn(name = "USER_2_ID"))
     @Builder.Default
-    private Set<User> followers = new LinkedHashSet<>();
+    private Set<User> followers = new HashSet<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(name = "T_USER_FOLLOWERS",
             joinColumns = @JoinColumn(name = "USER_2_ID"),
             inverseJoinColumns = @JoinColumn(name = "USER_1_ID"))
     @Builder.Default
-    private Set<User> followings = new LinkedHashSet<>();
+    private Set<User> followings = new HashSet<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(name = "T_BLOCKED_USERS",
             joinColumns = @JoinColumn(name = "USER_1_ID"),
             inverseJoinColumns = @JoinColumn(name = "USER_2_ID"))
     @Builder.Default
-    private Set<User> blockedUsers = new LinkedHashSet<>();
+    private Set<User> blockedUsers = new HashSet<>();
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = false, orphanRemoval = true)
     private Profile profile;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
-    private Set<Post> posts = new LinkedHashSet<>();
+    private Set<Post> posts = new HashSet<>();
 
     @ManyToMany(mappedBy = "participants", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @Builder.Default
-    private Set<Trip> trips = new LinkedHashSet<>();
+    private Set<Trip> trips = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
     @Builder.Default
-    private Set<ChatChannelUser> userChatChannels = new LinkedHashSet<>();
+    private Set<ChatChannelUser> userChatChannels = new HashSet<>();
 
     @OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
-    private Set<FollowRequest> followRequests = new LinkedHashSet<>();
+    private Set<FollowRequest> followRequests = new HashSet<>();
 
     @ManyToMany(mappedBy = "likes", cascade = {CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY)
     @Builder.Default
-    private Set<Post> likedPosts = new LinkedHashSet<>();
+    private Set<Post> likedPosts = new HashSet<>();
 
     @ManyToMany(mappedBy = "likes", cascade = {CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY)
     @Builder.Default
-    private Set<Comment> likedComments = new LinkedHashSet<>();
+    private Set<Comment> likedComments = new HashSet<>();
 
     @OneToMany(mappedBy = "recipient", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
     @Builder.Default
-    private Set<Review> reviews = new LinkedHashSet<>();
+    private Set<Review> reviews = new HashSet<>();
 
     @Transient
     @Builder.Default

@@ -102,12 +102,4 @@ public class PostController {
         return postService.unlikePost(postId);
     }
 
-    @GetMapping("/global")
-    @ResponseStatus(HttpStatus.OK)
-    public Page<PostResponse> getGlobalPosts(
-            @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "size", defaultValue = "10") int size
-    ) {
-        return postService.getGlobalPosts(page, size);
-    }
 }

@@ -17,8 +17,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "T_USER_POST_INTERACTION", indexes = {
     @Index(name = "idx_userpostinteraction_postid", columnList = "POST_ID")
-}, uniqueConstraints = {
-    @UniqueConstraint(name = "uc_userpostinteraction_user_post_event", columnNames = {"USER_ID", "EVENT", "POST_ID"})
 })
 public class UserPostInteraction extends BaseEntity {
   

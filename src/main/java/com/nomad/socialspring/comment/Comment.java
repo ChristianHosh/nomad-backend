@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -37,7 +37,7 @@ public class Comment extends BaseEntity {
             joinColumns = @JoinColumn(name = "COMMENT_ID"),
             inverseJoinColumns = @JoinColumn(name = "USER_ID"))
     @Builder.Default
-    private Set<User> likes = new LinkedHashSet<>();
+    private Set<User> likes = new HashSet<>();
 
     public int getNumberOfLikes() {
         return likes == null ? 0 : likes.size();

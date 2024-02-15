@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.Set;
 
 @Builder
@@ -35,7 +35,7 @@ public class Trip extends BaseEntity {
             joinColumns = @JoinColumn(name = "TRIP_ID"),
             inverseJoinColumns = @JoinColumn(name = "USER_ID"))
     @Builder.Default
-    private Set<User> participants = new LinkedHashSet<>();
+    private Set<User> participants = new HashSet<>();
 
     @OneToOne(mappedBy = "trip", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false, orphanRemoval = true)
     private Post post;

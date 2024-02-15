@@ -10,7 +10,7 @@ import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.sql.Date;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -55,7 +55,7 @@ public class Profile extends BaseEntity {
             joinColumns = @JoinColumn(name = "PROFILE_ID"),
             inverseJoinColumns = @JoinColumn(name = "INTEREST_ID"))
     @Builder.Default
-    private Set<Interest> interests = new LinkedHashSet<>();
+    private Set<Interest> interests = new HashSet<>();
 
 
     @Override

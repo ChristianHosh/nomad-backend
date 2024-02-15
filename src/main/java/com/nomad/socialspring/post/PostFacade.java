@@ -38,12 +38,4 @@ public class PostFacade {
                 .orElseThrow(BxException.xNotFound(Post.class, id));
     }
 
-    public Page<Post> getGlobalPosts(User user, int page, int size) {
-        return new PageImpl<>(repository
-                .findGlobalPosts(user == null ? null : user.getId(), PageRequest.of(page, size))
-                .stream().sorted(Comparator.comparingInt(Post::getGlobalScore))
-                .toList(),
-                PageRequest.of(page, size),
-                repository.countGlobal(user == null ? null : user.getId()));
-    }
 }

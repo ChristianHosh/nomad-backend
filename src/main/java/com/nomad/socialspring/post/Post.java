@@ -23,11 +23,6 @@ import java.util.*;
 @Table(name = "T_POST")
 public class Post extends BaseEntity {
 
-    private static final float LIKE_MULTIPLIER = 1f;
-    private static final float COMMENT_MULTIPLIER = 1.5f;
-    private static final float RECENT_MULTIPLIER = 0.25f;
-
-
     @Column(name = "CONTENT", nullable = false, length = 1200)
     @Size(max = 1200)
     private String content;
@@ -42,26 +37,26 @@ public class Post extends BaseEntity {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
-    private Set<Image> images = new LinkedHashSet<>();
+    private Set<Image> images = new HashSet<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(name = "T_POST_INTERESTS",
             joinColumns = @JoinColumn(name = "POST_ID"),
             inverseJoinColumns = @JoinColumn(name = "INTEREST_ID"))
     @Builder.Default
-    private Set<Interest> interests = new LinkedHashSet<>();
+    private Set<Interest> interests = new HashSet<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(name = "T_POST_LIKES",
             joinColumns = @JoinColumn(name = "POST_ID"),
             inverseJoinColumns = @JoinColumn(name = "USER_ID"))
     @Builder.Default
-    private Set<User> likes = new LinkedHashSet<>();
+    private Set<User> likes = new HashSet<>();
 
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
-    private Set<Comment> comments = new LinkedHashSet<>();
+    private Set<Comment> comments = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "TRIP_ID")
@@ -88,10 +83,4 @@ public class Post extends BaseEntity {
                 .orElseThrow(BxException.xHardcoded("should not happen"));
     }
 
-    public int getGlobalScore() {
-        float recentScore = (BDate.valueOf(getCreatedOn()).differenceInMinutes(BDate.currentDate()) * RECENT_MULTIPLIER);
-        return (int) (comments.size() * COMMENT_MULTIPLIER +
-                        likes.size() * LIKE_MULTIPLIER +
-                        recentScore);
-    }
 }
