@@ -1,6 +1,10 @@
 package com.nomad.socialspring.recommender;
 
+import com.nomad.socialspring.common.BDate;
 import com.nomad.socialspring.country.Country;
+import com.nomad.socialspring.error.BxException;
+import com.nomad.socialspring.interest.Interest;
+import com.nomad.socialspring.interest.UserInterest;
 import com.nomad.socialspring.post.Post;
 import com.nomad.socialspring.user.User;
 import lombok.RequiredArgsConstructor;
@@ -11,36 +15,86 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
 public class PostRecommendationFacade {
-  
+
   private final UserPostInteractionRepository postRepository;
 
   private static final Function<Object[], Post> toPost = objects -> (Post) objects[0];
 
   public Page<Post> findPosts(User currentUser, int page, int size) {
-    return postRepository.findPosts(currentUser, PageRequest.of(page, size))
+    return postRepository.findPosts(currentUser,
+                    currentUser == null ? null : currentUser.getFollowings(),
+                    PageRequest.of(page, size))
             .map(toPost);
   }
 
   public Page<Post> findPostsByCountry(User currentUser, Country country, int page, int size) {
-    return postRepository.findPostsByCountry(currentUser, country, PageRequest.of(page, size))
+    return postRepository.findPostsByCountry(currentUser,
+                    currentUser == null ? null : currentUser.getFollowings(),
+                    country,
+                    PageRequest.of(page, size))
+            .map(toPost);
+  }
+
+  public Page<Post> findPostsByTrendingThisWeek(User currentUser, int page, int size) {
+    return postRepository.findPostsByTrendingAfter(currentUser,
+                    currentUser == null ? null : currentUser.getFollowings(),
+                    BDate.currentDate().addDay(-7),
+                    PageRequest.of(page, size))
             .map(toPost);
   }
 
   public Page<Post> findPostsByRelevance(@NotNull User currentUser, int page, int size) {
     List<Post> generalPostList = findPosts(currentUser, page, size).toList();
 
-    //todo: implement user-interest scores then sort accordingly
+    Set<UserInterest> userInterests = currentUser.getInterests();
+    generalPostList.sort((p1, p2) -> {
+      Set<Interest> p1Interests = p1.getInterests();
+      Set<Interest> p2Interests = p2.getInterests();
+
+      AtomicReference<Double> p1Score = new AtomicReference<>((double) 0);
+      double p2Score = 0;
+      Thread p1ScorerThread = Thread.ofVirtual().start(() -> {
+        for (Interest interest : p1Interests) {
+          for (UserInterest userInterest : userInterests) {
+            if (Objects.equals(userInterest.getInterest(), interest)) {
+              if (userInterest.getIsSetFromProfile())
+                p1Score.updateAndGet(oldValue -> oldValue + userInterest.getScore() * 2);
+              else
+                p1Score.updateAndGet(oldValue -> oldValue + userInterest.getScore());
+            }
+          }
+        }
+      });
+      for (Interest interest : p2Interests) {
+        for (UserInterest userInterest : userInterests) {
+          if (Objects.equals(userInterest.getInterest(), interest)) {
+            if (userInterest.getIsSetFromProfile())
+              p2Score += userInterest.getScore() * 2;
+            else
+              p2Score += userInterest.getScore();
+          }
+        }
+      }
+
+      try {
+        p1ScorerThread.join();
+      } catch (InterruptedException e) {
+        throw BxException.unexpected(e);
+      }
+
+      return Double.compare(p1Score.get(), p2Score);
+    });
 
     return new PageImpl<>(generalPostList, PageRequest.of(page, size), postRepository.countDistinct());
   }
 
 
-
-
-  
 }

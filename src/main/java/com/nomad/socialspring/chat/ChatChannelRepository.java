@@ -10,9 +10,9 @@ import java.util.UUID;
 
 public interface ChatChannelRepository extends JpaRepository<ChatChannel, Long> {
 
-    @Query("select c from ChatChannel c where c.uuid = :uuid")
-    Optional<ChatChannel> findByUuid(@Param("uuid") UUID uuid);
+  @Query("select c from ChatChannel c where c.uuid = :uuid")
+  Optional<ChatChannel> findByUuid(@Param("uuid") UUID uuid);
 
-    @Query("select c from ChatChannel c where c.trip = :trip")
-    Optional<ChatChannel> findByTrip(@Param("trip") Trip trip);
+  @Query("select c from ChatChannel c where c.trip = :trip")
+  Optional<ChatChannel> findByTrip(@Param("trip") Trip trip);
 }

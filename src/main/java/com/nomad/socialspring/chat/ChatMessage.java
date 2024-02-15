@@ -15,16 +15,16 @@ import lombok.*;
 @Table(name = "T_CHAT_MESSAGE")
 public class ChatMessage extends BaseEntity {
 
-    @Column(name = "CONTENT", nullable = false)
-    @Size(max = 255)
-    private String content;
+  @Column(name = "CONTENT", nullable = false)
+  @Size(max = 255)
+  private String content;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false)
-    @JoinColumn(name = "CHAT_CHANNEL_ID", nullable = false)
-    private ChatChannel chatChannel;
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false)
+  @JoinColumn(name = "CHAT_CHANNEL_ID", nullable = false)
+  private ChatChannel chatChannel;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    @JoinColumn(name = "SENDER_ID", unique = true)
-    private User sender;
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+  @JoinColumn(name = "SENDER_ID", unique = true)
+  private User sender;
 
 }

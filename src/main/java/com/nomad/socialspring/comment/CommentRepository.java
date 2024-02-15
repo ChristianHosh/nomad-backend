@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    @Query("select c from Comment c where c.post = :post order by c.createdOn desc ")
-    Page<Comment> findByPost(@Param("post") Post post, Pageable pageable);
+  @Query("select c from Comment c where c.post = :post order by c.createdOn desc ")
+  Page<Comment> findByPost(@Param("post") Post post, Pageable pageable);
 }

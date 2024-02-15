@@ -14,12 +14,12 @@ import lombok.*;
 @Table(name = "T_IMAGE")
 public class Image extends BaseEntity {
 
-    @Lob
-    @Column(name = "DATA", length = 1000)
-    private byte[] imageData;
+  @Lob
+  @Column(name = "DATA", length = 1000)
+  private byte[] imageData;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "POST_ID")
-    private Post post;
+  @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY)
+  @JoinColumn(name = "POST_ID")
+  private Post post;
 
 }

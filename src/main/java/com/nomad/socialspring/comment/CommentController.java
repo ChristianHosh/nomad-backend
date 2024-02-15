@@ -12,48 +12,48 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CommentController {
 
-    private final CommentService commentService;
+  private final CommentService commentService;
 
-    @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public CommentResponse updateComment(
-            @PathVariable(name = "id") Long commentId,
-            @RequestBody @Valid CommentRequest commentRequest
-    ) {
-        return commentService.updateComment(commentId, commentRequest);
-    }
+  @PutMapping("/{id}")
+  @ResponseStatus(HttpStatus.OK)
+  public CommentResponse updateComment(
+          @PathVariable(name = "id") Long commentId,
+          @RequestBody @Valid CommentRequest commentRequest
+  ) {
+    return commentService.updateComment(commentId, commentRequest);
+  }
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public CommentResponse deleteComment(
-            @PathVariable(name = "id") Long commentId
-    ) {
-        return commentService.deleteComment(commentId);
-    }
+  @DeleteMapping("/{id}")
+  @ResponseStatus(HttpStatus.OK)
+  public CommentResponse deleteComment(
+          @PathVariable(name = "id") Long commentId
+  ) {
+    return commentService.deleteComment(commentId);
+  }
 
-    @GetMapping("/{id}/likes")
-    @ResponseStatus(HttpStatus.OK)
-    public Page<UserResponse> getCommentLikes(
-            @PathVariable(name = "id") Long commentId,
-            @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "size", defaultValue = "50") int size
-    ) {
-        return commentService.getCommentLikes(commentId, page, size);
-    }
+  @GetMapping("/{id}/likes")
+  @ResponseStatus(HttpStatus.OK)
+  public Page<UserResponse> getCommentLikes(
+          @PathVariable(name = "id") Long commentId,
+          @RequestParam(name = "page", defaultValue = "0") int page,
+          @RequestParam(name = "size", defaultValue = "50") int size
+  ) {
+    return commentService.getCommentLikes(commentId, page, size);
+  }
 
-    @PostMapping("/{id}/likes")
-    @ResponseStatus(HttpStatus.OK)
-    public CommentResponse likeComment(
-            @PathVariable(name = "id") Long commentId
-    ) {
-        return commentService.likeComment(commentId);
-    }
+  @PostMapping("/{id}/likes")
+  @ResponseStatus(HttpStatus.OK)
+  public CommentResponse likeComment(
+          @PathVariable(name = "id") Long commentId
+  ) {
+    return commentService.likeComment(commentId);
+  }
 
-    @DeleteMapping("/{id}/likes")
-    @ResponseStatus(HttpStatus.OK)
-    public CommentResponse unlikeComment(
-            @PathVariable(name = "id") Long commentId
-    ) {
-        return commentService.unlikeComment(commentId);
-    }
+  @DeleteMapping("/{id}/likes")
+  @ResponseStatus(HttpStatus.OK)
+  public CommentResponse unlikeComment(
+          @PathVariable(name = "id") Long commentId
+  ) {
+    return commentService.unlikeComment(commentId);
+  }
 }

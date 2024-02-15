@@ -12,29 +12,29 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthService authService;
+  private final AuthService authService;
 
-    @PostMapping("/register")
-    @ResponseStatus(HttpStatus.CREATED)
-    public UserResponse registerNewUser(@RequestBody @Valid RegisterRequest registerRequest) {
-        return authService.registerNewUser(registerRequest);
-    }
+  @PostMapping("/register")
+  @ResponseStatus(HttpStatus.CREATED)
+  public UserResponse registerNewUser(@RequestBody @Valid RegisterRequest registerRequest) {
+    return authService.registerNewUser(registerRequest);
+  }
 
-    @PostMapping("/login")
-    @ResponseStatus(HttpStatus.OK)
-    public UserResponse loginUser(@RequestBody @Valid LoginRequest loginRequest) {
-        return authService.loginUser(loginRequest);
-    }
+  @PostMapping("/login")
+  @ResponseStatus(HttpStatus.OK)
+  public UserResponse loginUser(@RequestBody @Valid LoginRequest loginRequest) {
+    return authService.loginUser(loginRequest);
+  }
 
-    @PostMapping("/resend-verification")
-    @ResponseStatus(HttpStatus.PROCESSING)
-    public UserResponse resendVerificationToken(@RequestBody @Valid ResendEmailVerificationRequest verificationRequest) {
-        return authService.resendEmailVerification(verificationRequest);
-    }
+  @PostMapping("/resend-verification")
+  @ResponseStatus(HttpStatus.PROCESSING)
+  public UserResponse resendVerificationToken(@RequestBody @Valid ResendEmailVerificationRequest verificationRequest) {
+    return authService.resendEmailVerification(verificationRequest);
+  }
 
-    @GetMapping("/verify-email")
-    @ResponseStatus(HttpStatus.TEMPORARY_REDIRECT)
-    public ResponseEntity<?> verifyEmail(@RequestParam(name = "token") String token) {
-        return authService.verifyEmail(token);
-    }
+  @GetMapping("/verify-email")
+  @ResponseStatus(HttpStatus.TEMPORARY_REDIRECT)
+  public ResponseEntity<?> verifyEmail(@RequestParam(name = "token") String token) {
+    return authService.verifyEmail(token);
+  }
 }

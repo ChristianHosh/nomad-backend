@@ -7,9 +7,9 @@ import com.nomad.socialspring.image.ImageFacade;
 import com.nomad.socialspring.interest.Interest;
 import com.nomad.socialspring.interest.InterestFacade;
 import com.nomad.socialspring.notification.NotificationFacade;
-import com.nomad.socialspring.review.ReviewRequest;
 import com.nomad.socialspring.review.Review;
 import com.nomad.socialspring.review.ReviewFacade;
+import com.nomad.socialspring.review.ReviewRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -24,207 +24,208 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserFacade userFacade;
-    private final FollowRequestFacade followRequestFacade;
-    private final InterestFacade interestFacade;
-    private final ImageFacade imageFacade;
-    private final CountryFacade countryFacade;
-    private final NotificationFacade notificationFacade;
-    private final ReviewFacade reviewFacade;
-    private final UserRepository userRepository;
+  private final UserFacade userFacade;
+  private final FollowRequestFacade followRequestFacade;
+  private final InterestFacade interestFacade;
+  private final ImageFacade imageFacade;
+  private final CountryFacade countryFacade;
+  private final NotificationFacade notificationFacade;
+  private final ReviewFacade reviewFacade;
+  private final UserRepository userRepository;
 
-    public UserResponse getUser(Long userId) {
-        User currentUser = userFacade.getCurrentUserOrNull();
-        User user = userFacade.findById(userId);
+  public UserResponse getUser(Long userId) {
+    User currentUser = userFacade.getCurrentUserOrNull();
+    User user = userFacade.findById(userId);
 
-        if (user.canBeSeenBy(currentUser))
-            return UserMapper.entityToResponse(user, currentUser, true);
-        throw BxException.unauthorized(currentUser);
+    if (user.canBeSeenBy(currentUser))
+      return UserMapper.entityToResponse(user, currentUser, true);
+    throw BxException.unauthorized(currentUser);
+  }
+
+  @Transactional
+  public UserResponse followUser(Long userId) {
+    User user = userFacade.findById(userId);
+    User currentUser = userFacade.getCurrentUser();
+
+    if (user.canBeSeenBy(currentUser)) {
+      if (currentUser.follows(user))
+        throw BxException.badRequest(User.class, BxException.X_CURRENT_USER_ALREADY_FOLLOWS);
+
+      FollowRequest followRequest = followRequestFacade.save(new FollowRequest(currentUser, user));
+      notificationFacade.notifyFollowRequest(followRequest);
+
+      return UserMapper.entityToResponse(user);
+    }
+    throw BxException.unauthorized(currentUser);
+  }
+
+  public UserResponse unfollowUser(Long userId) {
+    User user = userFacade.findById(userId);
+    User currentUser = userFacade.getCurrentUser();
+
+    if (user.canBeSeenBy(currentUser)) {
+      if (!currentUser.follows(user))
+        throw BxException.badRequest(User.class, BxException.X_CURRENT_USER_ALREADY_UNFOLLOWS);
+
+      if (user.removeFollowing(currentUser))
+        return UserMapper.entityToResponse(userFacade.save(user), currentUser);
+      throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOWER, currentUser);
+    }
+    throw BxException.unauthorized(currentUser);
+  }
+
+
+  public Page<FollowRequestResponse> getUserFollowRequests(int page, int size) {
+    User currentUser = userFacade.getCurrentUser();
+
+    return followRequestFacade.findByUser(currentUser, page, size).map(FollowRequestMapper::entityToResponse);
+  }
+
+  @Transactional
+  public UserResponse acceptFollowRequest(Long followRequestId) {
+    FollowRequest followRequest = followRequestFacade.findById(followRequestId);
+    User currentUser = userFacade.getCurrentUser();
+
+    if (followRequest.isForUser(currentUser)) {
+      if (!followRequest.getFromUser().addFollowing(currentUser))
+        throw BxException.hardcoded(BxException.X_COULD_NOT_ADD_FOLLOWER, currentUser);
+      deleteFollowRequestAndNotification(followRequest);
     }
 
-    @Transactional
-    public UserResponse followUser(Long userId) {
-        User user = userFacade.findById(userId);
-        User currentUser = userFacade.getCurrentUser();
+    return UserMapper.entityToResponse(userFacade.save(followRequest.getFromUser()));
+  }
 
-        if (user.canBeSeenBy(currentUser)) {
-            if (currentUser.follows(user))
-                throw BxException.badRequest(User.class, BxException.X_CURRENT_USER_ALREADY_FOLLOWS);
+  @Transactional
+  public UserResponse declineFollowRequest(Long followRequestId) {
+    FollowRequest followRequest = followRequestFacade.findById(followRequestId);
+    User currentUser = userFacade.getCurrentUser();
 
-            FollowRequest followRequest = followRequestFacade.save(new FollowRequest(currentUser, user));
-            notificationFacade.notifyFollowRequest(followRequest);
-
-            return UserMapper.entityToResponse(user);
-        }
-        throw BxException.unauthorized(currentUser);
+    if (followRequest.isForUser(currentUser)) {
+      deleteFollowRequestAndNotification(followRequest);
     }
 
-    public UserResponse unfollowUser(Long userId) {
-        User user = userFacade.findById(userId);
-        User currentUser = userFacade.getCurrentUser();
+    return UserMapper.entityToResponse(followRequest.getFromUser());
+  }
 
-        if (user.canBeSeenBy(currentUser)) {
-            if (!currentUser.follows(user))
-                throw BxException.badRequest(User.class, BxException.X_CURRENT_USER_ALREADY_UNFOLLOWS);
+  private void deleteFollowRequestAndNotification(FollowRequest followRequest) {
+    followRequestFacade.delete(followRequest);
+    notificationFacade.deleteFollowNotification(followRequest);
+  }
 
-            if (user.removeFollowing(currentUser))
-                return UserMapper.entityToResponse(userFacade.save(user), currentUser);
-            throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOWER, currentUser);
-        }
-        throw BxException.unauthorized(currentUser);    }
+  public Page<UserResponse> getUserFollowers(Long userId, int page, int size) {
+    User user = userFacade.findById(userId);
 
+    return userFacade
+            .getFollowersByUser(user.getId(), page, size)
+            .map(u -> UserMapper.entityToResponse(u, userFacade.getCurrentUserOrNull()));
+  }
 
-    public Page<FollowRequestResponse> getUserFollowRequests(int page, int size) {
-        User currentUser = userFacade.getCurrentUser();
+  public Page<UserResponse> getUserFollowings(Long userId, int page, int size) {
+    User user = userFacade.findById(userId);
 
-        return followRequestFacade.findByUser(currentUser, page, size).map(FollowRequestMapper::entityToResponse);
+    return userFacade
+            .getFollowingsByUser(user.getId(), page, size)
+            .map(u -> UserMapper.entityToResponse(u, userFacade.getCurrentUserOrNull()));
+  }
+
+  public UserResponse updateProfileInfo(@NotNull ProfileRequest profileRequest) {
+    User currentUser = userFacade.getCurrentUser();
+
+    Set<Interest> interestSet = interestFacade.getInterestFromTags(profileRequest.interestsTags());
+
+    Country country = null;
+    if (profileRequest.countryId() != null)
+      country = countryFacade.findById(profileRequest.countryId());
+
+    currentUser = userFacade.updateProfile(currentUser, profileRequest, interestSet, country);
+
+    return UserMapper.entityToResponse(currentUser);
+  }
+
+  public UserResponse updateProfileImage(MultipartFile imageFile) {
+    User currentUser = userFacade.getCurrentUser();
+
+    currentUser.getProfile().setProfileImage(imageFacade.save(imageFile));
+
+    return UserMapper.entityToResponse(userFacade.save(currentUser));
+  }
+
+  public UserResponse deleteProfileImage() {
+    User currentUser = userFacade.getCurrentUser();
+
+    currentUser.getProfile().setProfileImage(null);
+
+    return UserMapper.entityToResponse(userFacade.save(currentUser));
+  }
+
+  public Page<UserResponse> getUserMutualFollowings(Long userId, int page, int size) {
+    User user = userFacade.findById(userId);
+    User currentUser = userFacade.getCurrentUser();
+
+    return userFacade
+            .getMutualFollowings(user, currentUser, page, size)
+            .map(u -> UserMapper.entityToResponse(u, currentUser));
+  }
+
+  public List<UserResponse> getSuggestedUsers() {
+    User currentUser = userFacade.getCurrentUser();
+
+    return userFacade
+            .getSuggestedUsers(currentUser)
+            .stream()
+            .map(u -> UserMapper.entityToResponse(u, currentUser))
+            .toList();
+  }
+
+  public UserResponse createUserReview(Long userId, ReviewRequest reviewRequest) {
+    User currentUser = userFacade.getCurrentUser();
+    User user = userFacade.findById(userId);
+
+    Review review = reviewFacade.save(reviewRequest, currentUser, user);
+    notificationFacade.notifyUserReview(review);
+
+    return UserMapper.entityToResponse(user, currentUser, true);
+  }
+
+  public UserResponse blockUser(Long userId) {
+    User currentUser = userFacade.getCurrentUser();
+    User user = userFacade.findById(userId);
+
+    if (user.follows(currentUser))
+      if (!user.removeFollowing(currentUser))
+        throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOWER, currentUser);
+    if (currentUser.follows(user))
+      if (!currentUser.removeFollowing(user))
+        throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOWER, user);
+    if (user.hasPendingRequestFrom(currentUser))
+      if (!user.removeFollowRequestFrom(currentUser))
+        throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOW_REQUEST, currentUser);
+    if (currentUser.hasPendingRequestFrom(user))
+      if (!currentUser.removeFollowRequestFrom(user))
+        throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOW_REQUEST, user);
+    if (currentUser.getBlockedUsers().add(user)) {
+      userRepository.save(currentUser);
+      return UserMapper.entityToResponse(user, currentUser);
     }
+    throw BxException.hardcoded(BxException.X_COULD_NOT_BLOCK_USER, user);
+  }
 
-    @Transactional
-    public UserResponse acceptFollowRequest(Long followRequestId) {
-        FollowRequest followRequest = followRequestFacade.findById(followRequestId);
-        User currentUser = userFacade.getCurrentUser();
+  public UserResponse unblockUser(Long userId) {
+    User currentUser = userFacade.getCurrentUser();
+    User user = userFacade.findById(userId);
 
-        if (followRequest.isForUser(currentUser)) {
-            if (!followRequest.getFromUser().addFollowing(currentUser))
-                throw BxException.hardcoded(BxException.X_COULD_NOT_ADD_FOLLOWER, currentUser);
-            deleteFollowRequestAndNotification(followRequest);
-        }
-
-        return UserMapper.entityToResponse(userFacade.save(followRequest.getFromUser()));
+    if (currentUser.getBlockedUsers().remove(user)) {
+      userRepository.save(currentUser);
+      return UserMapper.entityToResponse(user, currentUser);
     }
+    throw BxException.hardcoded(BxException.X_COULD_NOT_UNBLOCK_USER, user);
+  }
 
-    @Transactional
-    public UserResponse declineFollowRequest(Long followRequestId) {
-        FollowRequest followRequest = followRequestFacade.findById(followRequestId);
-        User currentUser = userFacade.getCurrentUser();
+  public Page<UserResponse> getBlockedUsers(int page, int size) {
+    User currentUser = userFacade.getCurrentUser();
 
-        if (followRequest.isForUser(currentUser)) {
-            deleteFollowRequestAndNotification(followRequest);
-        }
-
-        return UserMapper.entityToResponse(followRequest.getFromUser());
-    }
-
-    private void deleteFollowRequestAndNotification(FollowRequest followRequest) {
-        followRequestFacade.delete(followRequest);
-        notificationFacade.deleteFollowNotification(followRequest);
-    }
-
-    public Page<UserResponse> getUserFollowers(Long userId, int page, int size) {
-        User user = userFacade.findById(userId);
-
-        return userFacade
-                .getFollowersByUser(user.getId(), page, size)
-                .map(u -> UserMapper.entityToResponse(u, userFacade.getCurrentUserOrNull()));
-    }
-
-    public Page<UserResponse> getUserFollowings(Long userId, int page, int size) {
-        User user = userFacade.findById(userId);
-
-        return userFacade
-                .getFollowingsByUser(user.getId(), page, size)
-                .map(u -> UserMapper.entityToResponse(u, userFacade.getCurrentUserOrNull()));
-    }
-
-    public UserResponse updateProfileInfo(@NotNull ProfileRequest profileRequest) {
-        User currentUser = userFacade.getCurrentUser();
-
-        Set<Interest> interestSet = interestFacade.getInterestFromTags(profileRequest.interestsTags());
-
-        Country country = null;
-        if (profileRequest.countryId() != null)
-            country = countryFacade.findById(profileRequest.countryId());
-
-        currentUser = userFacade.updateProfile(currentUser, profileRequest, interestSet, country);
-
-        return UserMapper.entityToResponse(currentUser);
-    }
-
-    public UserResponse updateProfileImage(MultipartFile imageFile) {
-        User currentUser = userFacade.getCurrentUser();
-
-        currentUser.getProfile().setProfileImage(imageFacade.save(imageFile));
-
-        return UserMapper.entityToResponse(userFacade.save(currentUser));
-    }
-
-    public UserResponse deleteProfileImage() {
-        User currentUser = userFacade.getCurrentUser();
-
-        currentUser.getProfile().setProfileImage(null);
-
-        return UserMapper.entityToResponse(userFacade.save(currentUser));
-    }
-
-    public Page<UserResponse> getUserMutualFollowings(Long userId, int page, int size) {
-        User user = userFacade.findById(userId);
-        User currentUser = userFacade.getCurrentUser();
-
-        return userFacade
-                .getMutualFollowings(user, currentUser, page, size)
-                .map(u -> UserMapper.entityToResponse(u, currentUser));
-    }
-
-    public List<UserResponse> getSuggestedUsers() {
-        User currentUser = userFacade.getCurrentUser();
-
-        return userFacade
-                .getSuggestedUsers(currentUser)
-                .stream()
-                .map(u -> UserMapper.entityToResponse(u, currentUser))
-                .toList();
-    }
-
-    public UserResponse createUserReview(Long userId, ReviewRequest reviewRequest) {
-        User currentUser = userFacade.getCurrentUser();
-        User user = userFacade.findById(userId);
-
-        Review review = reviewFacade.save(reviewRequest, currentUser, user);
-        notificationFacade.notifyUserReview(review);
-
-        return UserMapper.entityToResponse(user, currentUser, true);
-    }
-
-    public UserResponse blockUser(Long userId) {
-        User currentUser = userFacade.getCurrentUser();
-        User user = userFacade.findById(userId);
-
-        if (user.follows(currentUser))
-            if (!user.removeFollowing(currentUser))
-                throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOWER, currentUser);
-        if (currentUser.follows(user))
-            if (!currentUser.removeFollowing(user))
-                throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOWER, user);
-        if (user.hasPendingRequestFrom(currentUser))
-            if (!user.removeFollowRequestFrom(currentUser))
-                throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOW_REQUEST, currentUser);
-        if (currentUser.hasPendingRequestFrom(user))
-            if (!currentUser.removeFollowRequestFrom(user))
-                throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOW_REQUEST, user);
-        if (currentUser.getBlockedUsers().add(user)) {
-            userRepository.save(currentUser);
-            return UserMapper.entityToResponse(user, currentUser);
-        }
-        throw BxException.hardcoded(BxException.X_COULD_NOT_BLOCK_USER, user);
-    }
-
-    public UserResponse unblockUser(Long userId) {
-        User currentUser = userFacade.getCurrentUser();
-        User user = userFacade.findById(userId);
-
-        if (currentUser.getBlockedUsers().remove(user)) {
-            userRepository.save(currentUser);
-            return UserMapper.entityToResponse(user, currentUser);
-        }
-        throw BxException.hardcoded(BxException.X_COULD_NOT_UNBLOCK_USER, user);
-    }
-
-    public Page<UserResponse> getBlockedUsers(int page, int size) {
-        User currentUser = userFacade.getCurrentUser();
-
-        return userFacade
-                .getBlockedUsers(currentUser, page, size)
-                .map(u -> UserMapper.entityToResponse(u, currentUser));
-    }
+    return userFacade
+            .getBlockedUsers(currentUser, page, size)
+            .map(u -> UserMapper.entityToResponse(u, currentUser));
+  }
 }

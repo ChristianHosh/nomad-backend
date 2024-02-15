@@ -16,35 +16,35 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ImageFacade {
 
-    private final ImageRepository repository;
+  private final ImageRepository repository;
 
-    public Set<Image> saveAll(List<MultipartFile> imageFiles) {
-        if (imageFiles == null || imageFiles.isEmpty())
-            return new HashSet<>();
-        return imageFiles.stream()
-                .map(file -> {
-                    try {
-                        return save(ImageMapper.requestToEntity(file));
-                    } catch (IOException e) {
-                        throw BxException.unexpected(e);
-                    }
-                }).collect(Collectors.toSet());
-    }
+  public Set<Image> saveAll(List<MultipartFile> imageFiles) {
+    if (imageFiles == null || imageFiles.isEmpty())
+      return new HashSet<>();
+    return imageFiles.stream()
+            .map(file -> {
+              try {
+                return save(ImageMapper.requestToEntity(file));
+              } catch (IOException e) {
+                throw BxException.unexpected(e);
+              }
+            }).collect(Collectors.toSet());
+  }
 
-    public Image save(@NotNull MultipartFile file) {
-        try {
-            return save(ImageMapper.requestToEntity(file));
-        } catch (IOException e) {
-            throw BxException.unexpected(e);
-        }
+  public Image save(@NotNull MultipartFile file) {
+    try {
+      return save(ImageMapper.requestToEntity(file));
+    } catch (IOException e) {
+      throw BxException.unexpected(e);
     }
+  }
 
-    public Image save(Image image) {
-        return repository.save(image);
-    }
+  public Image save(Image image) {
+    return repository.save(image);
+  }
 
-    public Image findById(Long id){
-        return repository.findById(id)
-                .orElseThrow(BxException.xNotFound(Image.class, id));
-    }
+  public Image findById(Long id) {
+    return repository.findById(id)
+            .orElseThrow(BxException.xNotFound(Image.class, id));
+  }
 }

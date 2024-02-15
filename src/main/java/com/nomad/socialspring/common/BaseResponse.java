@@ -10,7 +10,7 @@ public abstract class BaseResponse {
   private final Long id;
   private final Timestamp createdOn;
   private final Timestamp updatedOn;
-  
+
   protected BaseResponse(@NotNull BaseEntity entity) {
     this.id = entity.getId();
     this.createdOn = entity.getCreatedOn();

@@ -14,53 +14,53 @@ import java.sql.Timestamp;
 @MappedSuperclass
 public abstract class BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "ID", nullable = false)
+  private Long id;
 
-    @CreationTimestamp
-    @Column(name = "CREATED_ON", updatable = false)
-    private Timestamp createdOn;
+  @CreationTimestamp
+  @Column(name = "CREATED_ON", updatable = false)
+  private Timestamp createdOn;
 
-    @UpdateTimestamp
-    @Column(name = "UPDATED_ON")
-    private Timestamp updatedOn;
+  @UpdateTimestamp
+  @Column(name = "UPDATED_ON")
+  private Timestamp updatedOn;
 
-    @Transient
-    private boolean isNew = true;
+  @Transient
+  private boolean isNew = true;
 
-    public boolean isNew() {
-        return isNew;
+  public boolean isNew() {
+    return isNew;
+  }
+
+  @PrePersist
+  @PreUpdate
+  protected void preSave() {
+    this.markNotNew();
+  }
+
+  @PostLoad
+  private void markNotNew() {
+    this.isNew = false;
+  }
+
+  public String getExceptionString() {
+    Long id = getId();
+    if (id == null) {
+      return toString();
     }
-    
-    @PrePersist
-    @PreUpdate
-    protected void preSave() {
-        this.markNotNew();
-    }
+    return getId().toString();
+  }
 
-    @PostLoad
-    private void markNotNew() {
-        this.isNew = false;
-    }
-    
-    public String getExceptionString() {
-        Long id = getId();
-        if (id == null) {
-            return toString();
-        }
-        return getId().toString();
-    }
-
-    @Override
-    public String toString() {
-        return "%s | ID:%d | CREATED ON:%s | UPDATED ON:%s | IS NEW:%s".formatted(
+  @Override
+  public String toString() {
+    return "%s | ID:%d | CREATED ON:%s | UPDATED ON:%s | IS NEW:%s".formatted(
             getClass().getSimpleName(),
             getId(),
             getCreatedOn(),
             getUpdatedOn(),
             String.valueOf(isNew)
-        );
-    }
+    );
+  }
 }

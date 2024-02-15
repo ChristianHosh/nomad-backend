@@ -7,8 +7,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ImageService {
 
-    private final ImageFacade imageFacade;
-    public byte[] getImageById(Long id){
-        return ImageMapper.entityToBytes(imageFacade.findById(id));
-    }
+  private final ImageFacade imageFacade;
+
+  public byte[] getImageById(Long id) {
+    return ImageMapper.entityToBytes(imageFacade.findById(id));
+  }
 }

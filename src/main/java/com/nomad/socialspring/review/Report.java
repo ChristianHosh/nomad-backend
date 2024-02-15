@@ -15,16 +15,16 @@ import lombok.*;
 @Table(name = "T_REPORT")
 public class Report extends BaseEntity {
 
-    @Column(name = "CONTENT", nullable = false, length = 500)
-    @Size(max = 500)
-    private String content;
+  @Column(name = "CONTENT", nullable = false, length = 500)
+  @Size(max = 500)
+  private String content;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    @JoinColumn(name = "AUTHOR_ID")
-    private User author;
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+  @JoinColumn(name = "AUTHOR_ID")
+  private User author;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    @JoinColumn(name = "RECIPIENT_ID")
-    private User recipient;
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+  @JoinColumn(name = "RECIPIENT_ID")
+  private User recipient;
 
 }

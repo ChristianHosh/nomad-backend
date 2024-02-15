@@ -26,89 +26,87 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 public class WebSecurityConfig {
 
-    private final UserDetailServiceImpl userDetailsService;
+  private final UserDetailServiceImpl userDetailsService;
 
-    private final AuthEntryPointJwt unauthorizedHandler;
+  private final AuthEntryPointJwt unauthorizedHandler;
 
-    @Autowired
-    public WebSecurityConfig(UserDetailServiceImpl userDetailsService, AuthEntryPointJwt unauthorizedHandler) {
-        this.userDetailsService = userDetailsService;
-        this.unauthorizedHandler = unauthorizedHandler;
-    }
+  @Autowired
+  public WebSecurityConfig(UserDetailServiceImpl userDetailsService, AuthEntryPointJwt unauthorizedHandler) {
+    this.userDetailsService = userDetailsService;
+    this.unauthorizedHandler = unauthorizedHandler;
+  }
 
-    @Bean
-    public AuthTokenFilter authenticationJwtTokenFilter() {
-        return new AuthTokenFilter();
-    }
+  @Bean
+  public AuthTokenFilter authenticationJwtTokenFilter() {
+    return new AuthTokenFilter();
+  }
 
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+  @Bean
+  public DaoAuthenticationProvider authenticationProvider() {
+    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
+    authProvider.setUserDetailsService(userDetailsService);
+    authProvider.setPasswordEncoder(passwordEncoder());
 
-        return authProvider;
-    }
+    return authProvider;
+  }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-        return authConfig.getAuthenticationManager();
-    }
+  @Bean
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+    return authConfig.getAuthenticationManager();
+  }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-    @Bean
-    public RoleHierarchy roleHierarchy() {
-        RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-        String hierarchy = "ADMIN > USER";
-        roleHierarchy.setHierarchy(hierarchy);
-        return roleHierarchy;
-    }
+  @Bean
+  public RoleHierarchy roleHierarchy() {
+    RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+    String hierarchy = "ADMIN > USER";
+    roleHierarchy.setHierarchy(hierarchy);
+    return roleHierarchy;
+  }
 
-    @Bean
-    public SecurityFilterChain filterChain(@NotNull HttpSecurity http) throws Exception {
-        var adminAuth = AuthorityAuthorizationManager.<RequestAuthorizationContext>hasRole("ADMIN");
-        adminAuth.setRoleHierarchy(roleHierarchy());
-        var userAuth = AuthorityAuthorizationManager.<RequestAuthorizationContext>hasRole("USER");
-        userAuth.setRoleHierarchy(roleHierarchy());
+  @Bean
+  public SecurityFilterChain filterChain(@NotNull HttpSecurity http) throws Exception {
+    var adminAuth = AuthorityAuthorizationManager.<RequestAuthorizationContext>hasRole("ADMIN");
+    adminAuth.setRoleHierarchy(roleHierarchy());
+    var userAuth = AuthorityAuthorizationManager.<RequestAuthorizationContext>hasRole("USER");
+    userAuth.setRoleHierarchy(roleHierarchy());
 
-        http
-                .cors(Customizer.withDefaults())
-                .csrf(AbstractHttpConfigurer::disable)
-                .authenticationProvider(authenticationProvider())
-                .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()
+    http
+            .cors(Customizer.withDefaults())
+            .csrf(AbstractHttpConfigurer::disable)
+            .authenticationProvider(authenticationProvider())
+            .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+            .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(auth -> auth
+                    .requestMatchers("/api/auth/**").permitAll()
 
-                        // HttpMethod access
-                        .requestMatchers(HttpMethod.POST).access(userAuth)
-                        .requestMatchers(HttpMethod.PUT).access(userAuth)
-                        .requestMatchers(HttpMethod.DELETE).access(userAuth)
+                    // HttpMethod access
+                    .requestMatchers(HttpMethod.POST).access(userAuth)
+                    .requestMatchers(HttpMethod.PUT).access(userAuth)
+                    .requestMatchers(HttpMethod.DELETE).access(userAuth)
 
-                        // '/users' access
-                        .requestMatchers("/api/users/{id}/mutual").access(userAuth)
-                        .requestMatchers("/api/users/follow-requests").access(userAuth)
-                        .requestMatchers("/api/users/suggested").access(userAuth)
+                    // '/users' access
+                    .requestMatchers("/api/users/{id}/mutual").access(userAuth)
+                    .requestMatchers("/api/users/follow-requests").access(userAuth)
+                    .requestMatchers("/api/users/suggested").access(userAuth)
 
-                        // '/notifications' access
-                        .requestMatchers("/api/notifications").access(userAuth)
+                    // '/notifications' access
+                    .requestMatchers("/api/notifications").access(userAuth)
 
-                        //
-
-
+                    //
 
 
-                        .requestMatchers("/error").permitAll()
-                        .anyRequest().permitAll()
-                );
+                    .requestMatchers("/error").permitAll()
+                    .anyRequest().permitAll()
+            );
 
-        return http.build();
-    }
+    return http.build();
+  }
 
 }

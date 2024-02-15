@@ -17,21 +17,21 @@ import lombok.*;
 @Table(name = "T_REVIEW")
 public class Review extends BaseEntity {
 
-    @Column(name = "CONTENT", nullable = false, length = 500)
-    @Size(max = 500)
-    private String content;
+  @Column(name = "CONTENT", nullable = false, length = 500)
+  @Size(max = 500)
+  private String content;
 
-    @Column(name = "RATING", nullable = false)
-    @Min(0)
-    @Max(5)
-    private Integer rating;
+  @Column(name = "RATING", nullable = false)
+  @Min(0)
+  @Max(5)
+  private Integer rating;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false)
-    @JoinColumn(name = "AUTHOR_ID")
-    private User author;
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false)
+  @JoinColumn(name = "AUTHOR_ID")
+  private User author;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false)
-    @JoinColumn(name = "RECIPIENT_ID")
-    private User recipient;
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false)
+  @JoinColumn(name = "RECIPIENT_ID")
+  private User recipient;
 
 }

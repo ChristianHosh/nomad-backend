@@ -9,8 +9,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface InterestRepository extends JpaRepository<Interest, Long> {
-    Optional<Interest> findByNameIgnoreCase(String name);
+  Optional<Interest> findByNameIgnoreCase(String name);
 
-    @Query("select i from Interest i where :name is null or i.name like concat('%', :name, '%')")
-    Page<Interest> findByNameContains(@Param("name") String name, Pageable pageable);
+  @Query("select i from Interest i where :name is null or i.name like concat('%', :name, '%')")
+  Page<Interest> findByNameContains(@Param("name") String name, Pageable pageable);
 }

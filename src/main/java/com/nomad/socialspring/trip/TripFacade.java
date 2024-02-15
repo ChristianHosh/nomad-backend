@@ -11,23 +11,23 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TripFacade {
 
-    private final TripRepository repository;
+  private final TripRepository repository;
 
-    public Trip save(@NotNull TripRequest tripRequest, Country country) {
-        BDate startDate = BDate.valueOf(tripRequest.startDate());
-        BDate endDate = BDate.valueOf(tripRequest.endDate());
-        if (startDate.after(endDate))
-            throw BxException.badRequest(Trip.class, "end date", "can't be before start date");
+  public Trip save(@NotNull TripRequest tripRequest, Country country) {
+    BDate startDate = BDate.valueOf(tripRequest.startDate());
+    BDate endDate = BDate.valueOf(tripRequest.endDate());
+    if (startDate.after(endDate))
+      throw BxException.badRequest(Trip.class, "end date", "can't be before start date");
 
-        return save(TripMapper.requestToEntity(tripRequest, country));
-    }
+    return save(TripMapper.requestToEntity(tripRequest, country));
+  }
 
-    public Trip save(Trip trip) {
-        return repository.save(trip);
-    }
+  public Trip save(Trip trip) {
+    return repository.save(trip);
+  }
 
-    public Trip findById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(BxException.xNotFound(Trip.class, id));
-    }
+  public Trip findById(Long id) {
+    return repository.findById(id)
+            .orElseThrow(BxException.xNotFound(Trip.class, id));
+  }
 }

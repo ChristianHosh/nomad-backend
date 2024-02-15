@@ -12,27 +12,27 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CommentFacade {
 
-    private final CommentRepository repository;
+  private final CommentRepository repository;
 
 
-    public Comment save(CommentRequest commentRequest, User user, Post post) {
-        return save(CommentMapper.requestToEntity(commentRequest, user, post));
-    }
+  public Comment save(CommentRequest commentRequest, User user, Post post) {
+    return save(CommentMapper.requestToEntity(commentRequest, user, post));
+  }
 
-    public Comment save(Comment comment) {
-        return repository.save(comment);
-    }
+  public Comment save(Comment comment) {
+    return repository.save(comment);
+  }
 
-    public Page<Comment> findAllByPost(Post post, int page, int size) {
-        return repository.findByPost(post, PageRequest.of(page, size));
-    }
+  public Page<Comment> findAllByPost(Post post, int page, int size) {
+    return repository.findByPost(post, PageRequest.of(page, size));
+  }
 
-    public Comment findById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(BxException.xNotFound(Comment.class, id));
-    }
+  public Comment findById(Long id) {
+    return repository.findById(id)
+            .orElseThrow(BxException.xNotFound(Comment.class, id));
+  }
 
-    public void delete(Comment comment) {
-        repository.delete(comment);
-    }
+  public void delete(Comment comment) {
+    repository.delete(comment);
+  }
 }

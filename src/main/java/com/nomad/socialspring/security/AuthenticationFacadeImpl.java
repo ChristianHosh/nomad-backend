@@ -12,23 +12,23 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AuthenticationFacadeImpl implements AuthenticationFacade {
 
-    private final UserRepository userRepository;
+  private final UserRepository userRepository;
 
-    @Override
-    public Authentication getAuthentication() {
-        return SecurityContextHolder.getContext().getAuthentication();
-    }
+  @Override
+  public Authentication getAuthentication() {
+    return SecurityContextHolder.getContext().getAuthentication();
+  }
 
-    @Override
-    public User getAuthenticatedUser() {
-        String username = getAuthentication().getName();
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> BxException.unauthorized(BxException.X_NOT_LOGGED_IN));
-    }
+  @Override
+  public User getAuthenticatedUser() {
+    String username = getAuthentication().getName();
+    return userRepository.findByUsername(username)
+            .orElseThrow(() -> BxException.unauthorized(BxException.X_NOT_LOGGED_IN));
+  }
 
-    @Override
-    public User getAuthenticatedUserOrNull() {
-        return userRepository.findByUsername(getAuthentication().getName())
-                .orElse(null);
-    }
+  @Override
+  public User getAuthenticatedUserOrNull() {
+    return userRepository.findByUsername(getAuthentication().getName())
+            .orElse(null);
+  }
 }

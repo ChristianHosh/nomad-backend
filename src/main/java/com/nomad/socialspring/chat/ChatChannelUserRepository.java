@@ -7,17 +7,17 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface ChatChannelUserRepository extends JpaRepository<ChatChannelUser, ChatChannelUsersId> {
-    @Transactional
-    @Modifying
-    @Query("UPDATE ChatChannelUser c " +
-            "SET c.readMessages = FALSE " +
-            "WHERE c.chatChannel = :chatChannel")
-    void updateReadMessagesFalseByChatChannel(@Param("chatChannel") ChatChannel chatChannel);
+  @Transactional
+  @Modifying
+  @Query("UPDATE ChatChannelUser c " +
+          "SET c.readMessages = FALSE " +
+          "WHERE c.chatChannel = :chatChannel")
+  void updateReadMessagesFalseByChatChannel(@Param("chatChannel") ChatChannel chatChannel);
 
-    @Transactional
-    @Modifying
-    @Query("UPDATE ChatChannelUser c " +
-            "SET c.readMessages = TRUE " +
-            "WHERE c.id = :id")
-    void updateReadMessagesTrueById(@Param("id") ChatChannelUsersId id);
+  @Transactional
+  @Modifying
+  @Query("UPDATE ChatChannelUser c " +
+          "SET c.readMessages = TRUE " +
+          "WHERE c.id = :id")
+  void updateReadMessagesTrueById(@Param("id") ChatChannelUsersId id);
 }

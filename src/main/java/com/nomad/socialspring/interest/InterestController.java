@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class InterestController {
 
-    private final InterestService interestService;
+  private final InterestService interestService;
 
-    @GetMapping("")
-    @ResponseStatus(HttpStatus.OK)
-    public Page<InterestResponse> getInterests(
-            @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "size", defaultValue = "50") int size,
-            @RequestParam(name = "name", required = false) String name
-    ) {
-        return interestService.getInterests(page, size, name);
-    }
+  @GetMapping("")
+  @ResponseStatus(HttpStatus.OK)
+  public Page<InterestResponse> getInterests(
+          @RequestParam(name = "page", defaultValue = "0") int page,
+          @RequestParam(name = "size", defaultValue = "50") int size,
+          @RequestParam(name = "name", required = false) String name
+  ) {
+    return interestService.getInterests(page, size, name);
+  }
 }

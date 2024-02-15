@@ -10,14 +10,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 public class WebCorsConfig implements WebMvcConfigurer {
 
-    @Override
-    public void addCorsMappings(@NotNull CorsRegistry corsRegistry) {
-        corsRegistry.addMapping("/**")
-                .allowedOrigins("*")
-                .allowedMethods("*")
-                .maxAge(3600L)
-                .allowedHeaders("*")
-                .allowCredentials(false);
+  @Override
+  public void addCorsMappings(@NotNull CorsRegistry corsRegistry) {
+    corsRegistry.addMapping("/**")
+            .allowedOrigins("*")
+            .allowedMethods("*")
+            .maxAge(3600L)
+            .allowedHeaders("*")
+            .allowCredentials(false);
 
-    }
+  }
 }

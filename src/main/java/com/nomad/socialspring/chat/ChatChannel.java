@@ -20,55 +20,55 @@ import java.util.UUID;
 @Table(name = "T_CHAT_CHANNEL")
 public class ChatChannel extends BaseEntity {
 
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "UUID", nullable = false)
-    private UUID uuid;
+  @GeneratedValue(strategy = GenerationType.UUID)
+  @Column(name = "UUID", nullable = false)
+  private UUID uuid;
 
-    @Column(name = "NAME")
-    private String name;
+  @Column(name = "NAME")
+  private String name;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
-    @JoinColumn(name = "TRIP_ID")
-    private Trip trip;
+  @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
+  @JoinColumn(name = "TRIP_ID")
+  private Trip trip;
 
-    @OneToMany(mappedBy = "chatChannel", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
-    @Builder.Default
-    private Set<ChatChannelUser> chatChannelUsers = new HashSet<>();
+  @OneToMany(mappedBy = "chatChannel", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
+  @Builder.Default
+  private Set<ChatChannelUser> chatChannelUsers = new HashSet<>();
 
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    public boolean containsUser(User user) {
-        return chatChannelUsers.stream().anyMatch(chatChannelUser -> Objects.equals(chatChannelUser.getChatChannel(), this) && Objects.equals(chatChannelUser.getUser(), user));
-    }
+  @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+  public boolean containsUser(User user) {
+    return chatChannelUsers.stream().anyMatch(chatChannelUser -> Objects.equals(chatChannelUser.getChatChannel(), this) && Objects.equals(chatChannelUser.getUser(), user));
+  }
 
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    public boolean addUser(User user) {
-        return chatChannelUsers.add(newChatChannelUser(user));
-    }
+  @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+  public boolean addUser(User user) {
+    return chatChannelUsers.add(newChatChannelUser(user));
+  }
 
-    public ChatChannelUser newChatChannelUser(User user) {
-        return new ChatChannelUser(
-                new ChatChannelUsersId(getId(), user.getId()),
-                this,
-                user,
-                false
-        );
-    }
+  public ChatChannelUser newChatChannelUser(User user) {
+    return new ChatChannelUser(
+            new ChatChannelUsersId(getId(), user.getId()),
+            this,
+            user,
+            false
+    );
+  }
 
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    public boolean removeUser(User user) {
-        return chatChannelUsers.removeIf(channelUser -> channelUser.getUser().equals(user));
-    }
+  @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+  public boolean removeUser(User user) {
+    return chatChannelUsers.removeIf(channelUser -> channelUser.getUser().equals(user));
+  }
 
-    public String getOtherName(User currentUser) {
-        if (getChatChannelUsers().size() > 2 || currentUser == null)
-            return getName();
-        ChatChannelUser otherChannelUser = getChatChannelUsers()
-                .stream()
-                .filter(chatChannelUser -> !chatChannelUser.getUser().equals(currentUser))
-                .findAny().orElse(null);
-        if (otherChannelUser == null)
-            return getName();
-        return otherChannelUser.getUser().getProfile().getDisplayName();
-    }
+  public String getOtherName(User currentUser) {
+    if (getChatChannelUsers().size() > 2 || currentUser == null)
+      return getName();
+    ChatChannelUser otherChannelUser = getChatChannelUsers()
+            .stream()
+            .filter(chatChannelUser -> !chatChannelUser.getUser().equals(currentUser))
+            .findAny().orElse(null);
+    if (otherChannelUser == null)
+      return getName();
+    return otherChannelUser.getUser().getProfile().getDisplayName();
+  }
 
 }

@@ -4,13 +4,15 @@ import lombok.Getter;
 
 @Getter
 public enum Event {
-  VIEW(5),
-  LIKE(1),
+  FAVORITE(10),
+  VIEW(2),
+  JOIN(5),
   COMMENT(3),
-  LIKE_COMMENT(1),
-  JOIN(5);
-  
+  LIKE(2),
+  LIKE_COMMENT(1);
+
   private final int strength;
+
   Event(int strength) {
     this.strength = strength;
   }

@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CountryFacade {
 
-    private final CountryRepository repository;
+  private final CountryRepository repository;
 
-    public Country findById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(BxException.xNotFound(Country.class, id));
-    }
+  public Country findById(Long id) {
+    return repository.findById(id)
+            .orElseThrow(BxException.xNotFound(Country.class, id));
+  }
 }

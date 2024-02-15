@@ -14,57 +14,57 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ChatChannelFacade {
 
-    private final ChatChannelRepository repository;
+  private final ChatChannelRepository repository;
 
-    public ChatChannel findByUUID(String id) {
-        return findByUUID(UUID.fromString(id));
-    }
+  public ChatChannel findByUUID(String id) {
+    return findByUUID(UUID.fromString(id));
+  }
 
-    public ChatChannel findByUUID(UUID id) {
-        return repository.findByUuid(id)
-                .orElseThrow(BxException.xNotFound(ChatChannel.class, id));
-    }
+  public ChatChannel findByUUID(UUID id) {
+    return repository.findByUuid(id)
+            .orElseThrow(BxException.xNotFound(ChatChannel.class, id));
+  }
 
-    public ChatChannel newChannel() {
-        return repository.save(new ChatChannel());
-    }
+  public ChatChannel newChannel() {
+    return repository.save(new ChatChannel());
+  }
 
-    public ChatChannel save(ChatChannel chatChannel) {
-        return repository.save(chatChannel);
-    }
+  public ChatChannel save(ChatChannel chatChannel) {
+    return repository.save(chatChannel);
+  }
 
-    public ChatChannel newChannel(String name, @NotNull List<User> userList) {
-        ChatChannel chatChannel = newChannel();
-        chatChannel.setName(name);
+  public ChatChannel newChannel(String name, @NotNull List<User> userList) {
+    ChatChannel chatChannel = newChannel();
+    chatChannel.setName(name);
 
-        userList.forEach(u -> {
-            if (!chatChannel.addUser(u))
-                throw BxException.hardcoded(BxException.X_COULD_NOT_ADD_USER_TO_CHANNEL, u);
-        });
+    userList.forEach(u -> {
+      if (!chatChannel.addUser(u))
+        throw BxException.hardcoded(BxException.X_COULD_NOT_ADD_USER_TO_CHANNEL, u);
+    });
 
-        return save(chatChannel);
-    }
+    return save(chatChannel);
+  }
 
-    public ChatChannel addNewUsers(@NotNull ChatChannel chatChannel, @NotNull List<User> userList) {
-        userList.forEach(u -> {
-            if (!chatChannel.addUser(u))
-                throw BxException.hardcoded(BxException.X_COULD_NOT_ADD_USER_TO_CHANNEL, u);
-        });
+  public ChatChannel addNewUsers(@NotNull ChatChannel chatChannel, @NotNull List<User> userList) {
+    userList.forEach(u -> {
+      if (!chatChannel.addUser(u))
+        throw BxException.hardcoded(BxException.X_COULD_NOT_ADD_USER_TO_CHANNEL, u);
+    });
 
-        return save(chatChannel);
-    }
+    return save(chatChannel);
+  }
 
-    public ChatChannel removeUsers(@NotNull ChatChannel chatChannel, @NotNull List<User> userList) {
-        userList.forEach(u -> {
-            if (!chatChannel.removeUser(u))
-                throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_USER_FROM_CHANNEL, u);
-        });
+  public ChatChannel removeUsers(@NotNull ChatChannel chatChannel, @NotNull List<User> userList) {
+    userList.forEach(u -> {
+      if (!chatChannel.removeUser(u))
+        throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_USER_FROM_CHANNEL, u);
+    });
 
-        return save(chatChannel);
-    }
+    return save(chatChannel);
+  }
 
-    public ChatChannel findByTrip(Trip trip) {
-        return repository.findByTrip(trip)
-                .orElseThrow(BxException.xNotFound(ChatChannel.class, trip));
-    }
+  public ChatChannel findByTrip(Trip trip) {
+    return repository.findByTrip(trip)
+            .orElseThrow(BxException.xNotFound(ChatChannel.class, trip));
+  }
 }

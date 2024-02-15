@@ -6,11 +6,12 @@ import lombok.Getter;
 @Getter
 public class CountryResponse extends BaseResponse {
   private final String name;
+
   public CountryResponse(Country country) {
     super(country);
     this.name = country.getName();
   }
-  
+
   public static CountryResponse fromEntity(Country country) {
     return country == null ? null : new CountryResponse(country);
   }

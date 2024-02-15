@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class NotificationController {
 
-    private final NotificationService notificationService;
+  private final NotificationService notificationService;
 
-    @GetMapping("")
-    @ResponseStatus(HttpStatus.OK)
-    public Page<NotificationResponse> getNotifications(
-            @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "size", defaultValue = "25") int size
-    ) {
-        return notificationService.getNotifications(page, size);
-    }
+  @GetMapping("")
+  @ResponseStatus(HttpStatus.OK)
+  public Page<NotificationResponse> getNotifications(
+          @RequestParam(name = "page", defaultValue = "0") int page,
+          @RequestParam(name = "size", defaultValue = "25") int size
+  ) {
+    return notificationService.getNotifications(page, size);
+  }
 }

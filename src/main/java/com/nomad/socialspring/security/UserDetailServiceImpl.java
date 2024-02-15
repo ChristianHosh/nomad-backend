@@ -12,21 +12,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
 
-    private final UserRepository userRepository;
+  private final UserRepository userRepository;
 
-    @Autowired
-    public UserDetailServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+  @Autowired
+  public UserDetailServiceImpl(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException(BxException.notFound(User.class, username).getMessage()));
+  @Override
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    User user = userRepository.findByUsername(username)
+            .orElseThrow(() -> new UsernameNotFoundException(BxException.notFound(User.class, username).getMessage()));
 
-        if (!user.getIsVerified())
-            throw BxException.unauthorized(BxException.X_ACCOUNT_NOT_VERIFIED);
+    if (!user.getIsVerified())
+      throw BxException.unauthorized(BxException.X_ACCOUNT_NOT_VERIFIED);
 
-        return UserDetailsImpl.build(user);
-    }
+    return UserDetailsImpl.build(user);
+  }
 }

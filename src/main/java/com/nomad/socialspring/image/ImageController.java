@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ImageController {
 
-    private final ImageService imageService;
+  private final ImageService imageService;
 
 
-    @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> getImageById(@PathVariable Long id) {
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .contentType(MediaType.IMAGE_PNG)
-                .body(imageService.getImageById(id));
-    }
+  @GetMapping("/{id}")
+  @ResponseStatus(HttpStatus.OK)
+  public ResponseEntity<?> getImageById(@PathVariable Long id) {
+    return ResponseEntity
+            .status(HttpStatus.OK)
+            .contentType(MediaType.IMAGE_PNG)
+            .body(imageService.getImageById(id));
+  }
 
 }

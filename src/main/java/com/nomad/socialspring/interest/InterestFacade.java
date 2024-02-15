@@ -13,25 +13,25 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class InterestFacade {
 
-    private final InterestRepository repository;
+  private final InterestRepository repository;
 
-    public Set<Interest> getInterestFromTags(Set<String> interestNames) {
-        if (interestNames == null || interestNames.isEmpty())
-            return null;
+  public Set<Interest> getInterestFromTags(Set<String> interestNames) {
+    if (interestNames == null || interestNames.isEmpty())
+      return null;
 
-        Set<Interest> interestList = new HashSet<>(interestNames.size());
+    Set<Interest> interestList = new HashSet<>(interestNames.size());
 
-        for (String name : interestNames) {
-            Optional<Interest> interestOptional = repository.findByNameIgnoreCase(name.toLowerCase());
-            Interest interest = interestOptional
-                    .orElseGet(() -> repository.save(new Interest(name.toLowerCase())));
-            interestList.add(interest);
-        }
-
-        return interestList;
+    for (String name : interestNames) {
+      Optional<Interest> interestOptional = repository.findByNameIgnoreCase(name.toLowerCase());
+      Interest interest = interestOptional
+              .orElseGet(() -> repository.save(new Interest(name.toLowerCase())));
+      interestList.add(interest);
     }
 
-    public Page<Interest> getInterests(int page, int size, String name) {
-        return repository.findByNameContains(name, PageRequest.of(page, size));
-    }
+    return interestList;
+  }
+
+  public Page<Interest> getInterests(int page, int size, String name) {
+    return repository.findByNameContains(name, PageRequest.of(page, size));
+  }
 }

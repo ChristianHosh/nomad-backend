@@ -16,10 +16,10 @@ import java.util.Objects;
 @Setter
 @Entity
 @Table(name = "T_USER_POST_INTERACTION", indexes = {
-    @Index(name = "idx_userpostinteraction_postid", columnList = "POST_ID")
+        @Index(name = "idx_userpostinteraction_postid", columnList = "POST_ID")
 })
 public class UserPostInteraction extends BaseEntity {
-  
+
   @ManyToOne(optional = false)
   @JoinColumn(name = "USER_ID", nullable = false)
   private User user;
@@ -34,8 +34,7 @@ public class UserPostInteraction extends BaseEntity {
 
   @Column(name = "STRENGTH", nullable = false)
   private Integer strength;
-  
-  
+
 
   @Override
   public final boolean equals(Object o) {
