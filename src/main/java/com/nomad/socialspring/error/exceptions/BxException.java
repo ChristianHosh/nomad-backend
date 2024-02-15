@@ -66,7 +66,7 @@ public class BxException extends RuntimeException {
     public static BxException notFound(@NotNull Class<?> clazz, @NotNull Object value) {
         if (value instanceof BaseEntity)
             value = getBaseEntityValue((BaseEntity) value);
-        return new BxNotFoundException(clazz.getSimpleName() + ": not found for '" + value + "'");
+        return new BxNotFoundException(clazz.getSimpleName() + ": not found for [" + value + "]");
     }
 
     @NotNull
@@ -82,7 +82,7 @@ public class BxException extends RuntimeException {
     public static BxException conflict(@NotNull Class<?> clazz, @NotNull Object field, @NotNull Object value) {
         if (value instanceof BaseEntity e)
             value = getBaseEntityValue(e);
-        return new BxConflictException(clazz.getSimpleName() + ": " + field + " already exists for '" + value + "'");
+        return new BxConflictException(clazz.getSimpleName() + ": " + field + " already exists for [" + value + "]");
     }
 
     @NotNull
@@ -98,7 +98,7 @@ public class BxException extends RuntimeException {
     public static BxException badRequest(@NotNull Class<?> clazz, @NotNull Object field, @NotNull Object value) {
         if (value instanceof BaseEntity e)
             value = getBaseEntityValue(e);
-        return new BxBadRequestException(clazz.getSimpleName() + ": " + field + " '" + value + "'");
+        return new BxBadRequestException(clazz.getSimpleName() + ": " + field + " [" + value + "]");
     }
 
     @NotNull
@@ -106,7 +106,7 @@ public class BxException extends RuntimeException {
     public static BxException badRequest(@NotNull Class<?> clazz, @NotNull Object value) {
         if (value instanceof BaseEntity e)
             value = getBaseEntityValue(e);
-        return new BxBadRequestException(clazz.getSimpleName() + ": " + value);
+        return new BxBadRequestException(clazz.getSimpleName() + ": [" + value + "]");
     }
 
     @NotNull
@@ -130,7 +130,7 @@ public class BxException extends RuntimeException {
     public static BxException unauthorized(Object value) {
         if (value instanceof BaseEntity e)
             value = getBaseEntityValue(e);
-        return new BxUnauthorizedException("you are unauthorized to do this action: " + value);
+        return new BxUnauthorizedException("you are unauthorized to do this action: [" + value + "]");
     }
 
     @NotNull
@@ -144,7 +144,7 @@ public class BxException extends RuntimeException {
     public static BxSevereException hardcoded(String message, Object value) {
         if (value instanceof BaseEntity e)
             value = getBaseEntityValue(e);
-        return new BxSevereException(message + ": " + value);
+        return new BxSevereException(message + ": [" + value + "]");
     }
 
     @NotNull
