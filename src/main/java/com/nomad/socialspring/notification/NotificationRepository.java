@@ -15,7 +15,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     Page<Notification> findByRecipient(@Param("recipient") User recipient, Pageable pageable);
 
     @Modifying
-    @Query("delete from Notification n where n.entityId = :entityId and n.notificationType = com.nomad.socialspring.notification.model.NotificationType.FOLLOW")
+    @Query("delete from Notification n where n.entityId = :entityId and n.notificationType = com.nomad.socialspring.notification.NotificationType.FOLLOW")
     void deleteByFollowRequestId(@Param("entityId") Long entityId);
 
     @Modifying

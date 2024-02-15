@@ -1,6 +1,7 @@
 package com.nomad.socialspring.recommender;
 
 import com.nomad.socialspring.common.BaseEntity;
+import com.nomad.socialspring.post.Post;
 import com.nomad.socialspring.user.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,12 +15,12 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Table(name = "T_USER_EVENT", indexes = {
-    @Index(name = "idx_userevent_content_id", columnList = "CONTENT_ID")
+@Table(name = "T_USER_POST_INTERACTION", indexes = {
+    @Index(name = "idx_userpostinteraction_postid", columnList = "POST_ID")
 }, uniqueConstraints = {
-    @UniqueConstraint(name = "uc_userevent_user_id_event", columnNames = {"USER_ID", "EVENT", "CONTENT_ID"})
+    @UniqueConstraint(name = "uc_userpostinteraction_user_post_event", columnNames = {"USER_ID", "EVENT", "POST_ID"})
 })
-public class UserEvent extends BaseEntity {
+public class UserPostInteraction extends BaseEntity {
   
   @ManyToOne(optional = false)
   @JoinColumn(name = "USER_ID", nullable = false)
@@ -29,8 +30,14 @@ public class UserEvent extends BaseEntity {
   @Column(name = "EVENT", nullable = false)
   private Event event;
 
-  @Column(name = "CONTENT_ID", nullable = false)
-  private Long contentId;
+  @ManyToOne
+  @JoinColumn(name = "POST_ID")
+  private Post post;
+
+  @Column(name = "STRENGTH", nullable = false)
+  private Integer strength;
+  
+  
 
   @Override
   public final boolean equals(Object o) {
@@ -39,12 +46,18 @@ public class UserEvent extends BaseEntity {
     Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
     Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
     if (thisEffectiveClass != oEffectiveClass) return false;
-    UserEvent userEvent = (UserEvent) o;
-    return getId() != null && Objects.equals(getId(), userEvent.getId());
+    UserPostInteraction userPostInteraction = (UserPostInteraction) o;
+    return getId() != null && Objects.equals(getId(), userPostInteraction.getId());
   }
 
   @Override
   public final int hashCode() {
     return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+  }
+
+  @Override
+  public void preSave() {
+    super.preSave();
+    strength = event.getStrength();
   }
 }

@@ -33,10 +33,15 @@ public abstract class BaseEntity {
     public boolean isNew() {
         return isNew;
     }
-
+    
     @PrePersist
+    @PreUpdate
+    protected void preSave() {
+        this.markNotNew();
+    }
+
     @PostLoad
-    void markNotNew() {
+    private void markNotNew() {
         this.isNew = false;
     }
     
