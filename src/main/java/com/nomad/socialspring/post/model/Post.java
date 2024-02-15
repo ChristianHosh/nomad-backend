@@ -1,6 +1,7 @@
 package com.nomad.socialspring.post.model;
 
 import com.nomad.socialspring.comment.model.Comment;
+import com.nomad.socialspring.common.BDate;
 import com.nomad.socialspring.common.BaseEntity;
 import com.nomad.socialspring.error.exceptions.BxException;
 import com.nomad.socialspring.image.model.Image;
@@ -21,6 +22,11 @@ import java.util.*;
 @Entity
 @Table(name = "T_POST")
 public class Post extends BaseEntity {
+
+    private static final float LIKE_MULTIPLIER = 1f;
+    private static final float COMMENT_MULTIPLIER = 1.5f;
+    private static final float RECENT_MULTIPLIER = 0.25f;
+
 
     @Column(name = "CONTENT", nullable = false, length = 1200)
     @Size(max = 1200)
@@ -80,5 +86,12 @@ public class Post extends BaseEntity {
         return comments.stream()
                 .max(Comparator.comparingInt(Comment::getNumberOfLikes))
                 .orElseThrow(BxException.xHardcoded("should not happen"));
+    }
+
+    public int getGlobalScore() {
+        float recentScore = (BDate.valueOf(getCreatedOn()).differenceInMinutes(BDate.currentDate()) * RECENT_MULTIPLIER);
+        return (int) (comments.size() * COMMENT_MULTIPLIER +
+                        likes.size() * LIKE_MULTIPLIER +
+                        recentScore);
     }
 }

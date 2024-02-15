@@ -3,11 +3,11 @@ package com.nomad.socialspring.comment.controller;
 import com.nomad.socialspring.comment.dto.CommentRequest;
 import com.nomad.socialspring.comment.dto.CommentResponse;
 import com.nomad.socialspring.comment.service.CommentService;
-import com.nomad.socialspring.common.annotations.ResponseOk;
 import com.nomad.socialspring.user.dto.UserResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,7 +18,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @PutMapping("/{id}")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public CommentResponse updateComment(
             @PathVariable(name = "id") Long commentId,
             @RequestBody @Valid CommentRequest commentRequest
@@ -27,7 +27,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public CommentResponse deleteComment(
             @PathVariable(name = "id") Long commentId
     ) {
@@ -35,7 +35,7 @@ public class CommentController {
     }
 
     @GetMapping("/{id}/likes")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public Page<UserResponse> getCommentLikes(
             @PathVariable(name = "id") Long commentId,
             @RequestParam(name = "page", defaultValue = "0") int page,
@@ -45,7 +45,7 @@ public class CommentController {
     }
 
     @PostMapping("/{id}/likes")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public CommentResponse likeComment(
             @PathVariable(name = "id") Long commentId
     ) {
@@ -53,7 +53,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/{id}/likes")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public CommentResponse unlikeComment(
             @PathVariable(name = "id") Long commentId
     ) {

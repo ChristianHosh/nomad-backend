@@ -2,11 +2,11 @@ package com.nomad.socialspring.chat.controller;
 
 import com.nomad.socialspring.chat.dto.*;
 import com.nomad.socialspring.chat.service.ChatService;
-import com.nomad.socialspring.common.annotations.ResponseOk;
 import com.nomad.socialspring.user.dto.UserResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -28,7 +28,7 @@ public class ChatController {
     }
 
     @PutMapping("/api/chat/read")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> updateMessageReadStatus(
             @RequestBody @Valid ChatMessageReadRequest request
     ) {
@@ -36,7 +36,7 @@ public class ChatController {
     }
 
     @PostMapping("/api/chat/channel")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public ChatChannelResponse createNewChannel(
             @RequestBody @Valid ChatChannelRequest request
     ) {
@@ -44,7 +44,7 @@ public class ChatController {
     }
 
     @GetMapping("/api/chat/channel/{id}/users")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public Page<UserResponse> getChannelUsers(
             @PathVariable(name = "id") String channelId,
             @RequestParam(name = "page", defaultValue = "0") int page,
@@ -53,7 +53,7 @@ public class ChatController {
         return chatService.getChannelUsers(channelId, page, size);
     }
     @PutMapping("/api/chat/channel/{id}/users")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public ChatChannelResponse addNewUsersToChannel(
             @PathVariable(name = "id") String channelId,
             @RequestBody @Valid ChatChannelUsersRequest request
@@ -62,7 +62,7 @@ public class ChatController {
     }
 
     @DeleteMapping("/api/chat/channel/{id}/users")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public ChatChannelResponse removeUsersFromChannel(
             @PathVariable(name = "id") String channelId,
             @RequestBody @Valid ChatChannelUsersRequest request
@@ -72,7 +72,7 @@ public class ChatController {
 
 
     @GetMapping("/api/chat/channel/{id}/messages")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public Page<ChatMessageResponse> getChannelMessages(
             @PathVariable(name = "id") String channelId,
             @RequestParam(name = "page", defaultValue = "0") int page,

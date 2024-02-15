@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Collection;
+
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
     @Query("select n from Notification n where n.recipient = :recipient")
     Page<Notification> findByRecipient(@Param("recipient") User recipient, Pageable pageable);
@@ -16,4 +18,8 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     @Modifying
     @Query("delete from Notification n where n.entityId = :entityId and n.notificationType = com.nomad.socialspring.notification.model.NotificationType.FOLLOW")
     void deleteByFollowRequestId(@Param("entityId") Long entityId);
+
+    @Modifying
+    @Query("update Notification n set n.isRead = true where n.id in :id and n.isRead = false")
+    void updateIsReadByIdInAndIsReadFalse(@Param("ids") Collection<Long> ids);
 }

@@ -6,4 +6,8 @@ public class BxSevereException extends BxException {
         super(message);
     }
 
+    protected BxSevereException(Exception cause) {
+        super(cause);
+    }
+
 }

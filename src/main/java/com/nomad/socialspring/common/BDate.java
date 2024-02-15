@@ -99,4 +99,9 @@ public class BDate extends Date {
         return this.compareTo(when) >= 0;
     }
 
+    public int differenceInMinutes(@NotNull BDate date) {
+        long milliseconds1 = getTime();
+        long milliseconds2 = date.getTime();
+        return (int) ((milliseconds2 - milliseconds1) / (60 * 1000));
+    }
 }

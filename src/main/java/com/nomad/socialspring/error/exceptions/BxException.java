@@ -1,12 +1,19 @@
 package com.nomad.socialspring.error.exceptions;
 
 import com.nomad.socialspring.common.BaseEntity;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 
+@Getter
+@Setter
+@Accessors(chain = true)
 public class BxException extends RuntimeException {
 
     public static final String X_CURRENT_USER_NOT_IN_CHAT = "You are not in this chat";
@@ -28,16 +35,27 @@ public class BxException extends RuntimeException {
     public static final String X_COULD_NOT_REMOVE_FOLLOW_REQUEST = "Could not remove follow request";
     public static final String X_COULD_NOT_BLOCK_USER = "Could not block user";
     public static final String X_COULD_NOT_UNBLOCK_USER = "Could not unblock user";
-//    public static final String X_
+    public static final String X_INVALID_TOKEN = "Invalid Token";
 
+    private Exception exception;
 
     protected BxException(String message) {
         super(message);
+        this.exception = null;
     }
 
     protected BxException(Throwable cause) {
         super(cause);
+        if (cause instanceof Exception e)
+            this.exception = e;
+        else
+            this.exception = null;
     }
+
+    public Exception getException() {
+      return Objects.requireNonNullElse(exception, this);
+    }
+
 
     private static String getBaseEntityValue(BaseEntity value) {
         return value.getClass().getSimpleName() + ": " + value.getExceptionString();
@@ -140,7 +158,7 @@ public class BxException extends RuntimeException {
     @NotNull
     @Contract("_ -> new")
     public static BxSevereException unexpected(@NotNull Exception e) {
-        return new BxSevereException("Internal Server Error: " + e.getMessage());
+        return new BxSevereException(e);
     }
 
     public HttpStatus getStatus() {

@@ -1,14 +1,11 @@
 package com.nomad.socialspring.interest.controller;
 
-import com.nomad.socialspring.common.annotations.ResponseOk;
 import com.nomad.socialspring.interest.dto.InterestResponse;
 import com.nomad.socialspring.interest.service.InterestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/interests")
@@ -18,7 +15,7 @@ public class InterestController {
     private final InterestService interestService;
 
     @GetMapping("")
-    @ResponseOk
+    @ResponseStatus(HttpStatus.OK)
     public Page<InterestResponse> getInterests(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "50") int size,

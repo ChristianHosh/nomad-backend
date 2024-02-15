@@ -31,9 +31,9 @@ public class PostMapper {
                 .isPrivate(post.getIsPrivate())
                 .canLike(user != null && post.getLikes().contains(user))
                 .images(post.getImages().stream().map(ImageMapper::entityToResponse).toList())
-                .author(UserMapper.entityToResponse(post.getAuthor()))
+                .author(UserMapper.entityToResponse(post.getAuthor(), user))
                 .numberOfLikes(post.getNumberOfLikes())
-                .topComment(CommentMapper.entityToResponse(post.getTopComment(), user))
+                .topComment(CommentMapper.entityToResponse(post.getTopComment()))
                 .build();
     }
 

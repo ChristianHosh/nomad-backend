@@ -38,7 +38,7 @@ public class AuthService {
 
     @Transactional
     public UserResponse registerNewUser(@NotNull RegisterRequest request) {
-        if (userFacade.existsByUsernameIgnoreCase(request.username()))
+        if (request.username().equalsIgnoreCase("anonymousUser") || userFacade.existsByUsernameIgnoreCase(request.username()))
             throw BxException.conflict(User.class, "username", request.username());
         if (userFacade.existsByEmailIgnoreCase(request.email()))
             throw BxException.conflict(User.class, "email", request.email());
