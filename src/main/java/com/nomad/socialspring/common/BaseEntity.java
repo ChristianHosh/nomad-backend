@@ -6,14 +6,13 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.domain.Persistable;
 
 import java.sql.Timestamp;
 
 @Getter
 @Setter(AccessLevel.PRIVATE)
 @MappedSuperclass
-public abstract class BaseEntity implements Persistable<Long> {
+public abstract class BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +30,6 @@ public abstract class BaseEntity implements Persistable<Long> {
     @Transient
     private boolean isNew = true;
 
-    @Override
     public boolean isNew() {
         return isNew;
     }

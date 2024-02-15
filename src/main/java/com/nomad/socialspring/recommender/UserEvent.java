@@ -14,7 +14,11 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Table(name = "T_USER_EVENT")
+@Table(name = "T_USER_EVENT", indexes = {
+    @Index(name = "idx_userevent_content_id", columnList = "CONTENT_ID")
+}, uniqueConstraints = {
+    @UniqueConstraint(name = "uc_userevent_user_id_event", columnNames = {"USER_ID", "EVENT", "CONTENT_ID"})
+})
 public class UserEvent extends BaseEntity {
   
   @ManyToOne(optional = false)
