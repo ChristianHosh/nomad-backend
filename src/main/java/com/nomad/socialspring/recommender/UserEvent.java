@@ -1,7 +1,7 @@
 package com.nomad.socialspring.recommender;
 
 import com.nomad.socialspring.common.BaseEntity;
-import com.nomad.socialspring.user.model.User;
+import com.nomad.socialspring.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;

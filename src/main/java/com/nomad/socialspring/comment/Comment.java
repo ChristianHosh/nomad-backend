@@ -1,0 +1,53 @@
+package com.nomad.socialspring.comment;
+
+import com.nomad.socialspring.common.BaseEntity;
+import com.nomad.socialspring.post.Post;
+import com.nomad.socialspring.user.User;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+import lombok.*;
+
+import java.util.LinkedHashSet;
+import java.util.Objects;
+import java.util.Set;
+
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Entity
+@Table(name = "T_COMMENT")
+public class Comment extends BaseEntity {
+
+    @Column(name = "CONTENT", nullable = false)
+    @Size(max = 255)
+    private String content;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false)
+    @JoinColumn(name = "AUTHOR_ID", nullable = false)
+    private User author;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @JoinColumn(name = "POST_ID")
+    private Post post;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @JoinTable(name = "T_COMMENT_LIKES",
+            joinColumns = @JoinColumn(name = "COMMENT_ID"),
+            inverseJoinColumns = @JoinColumn(name = "USER_ID"))
+    @Builder.Default
+    private Set<User> likes = new LinkedHashSet<>();
+
+    public int getNumberOfLikes() {
+        return likes == null ? 0 : likes.size();
+    }
+
+    public boolean canBeModifiedBy(User user) {
+        return Objects.equals(getAuthor(), user);
+    }
+
+    public boolean canBeDeletedBy(User user) {
+        return Objects.equals(getAuthor(), user) || Objects.equals(getPost().getAuthor(), user);
+    }
+}
