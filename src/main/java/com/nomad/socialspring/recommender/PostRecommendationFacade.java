@@ -29,25 +29,17 @@ public class PostRecommendationFacade {
   private static final Function<Object[], Post> toPost = objects -> (Post) objects[0];
 
   public Page<Post> findPosts(User currentUser, int page, int size) {
-    return postRepository.findPosts(currentUser,
-                    currentUser == null ? null : currentUser.getFollowings(),
-                    PageRequest.of(page, size))
+    return postRepository.findPosts(currentUser, PageRequest.of(page, size))
             .map(toPost);
   }
 
   public Page<Post> findPostsByCountry(User currentUser, Country country, int page, int size) {
-    return postRepository.findPostsByCountry(currentUser,
-                    currentUser == null ? null : currentUser.getFollowings(),
-                    country,
-                    PageRequest.of(page, size))
+    return postRepository.findPostsByCountry(currentUser, country, PageRequest.of(page, size))
             .map(toPost);
   }
 
   public Page<Post> findPostsByTrendingThisWeek(User currentUser, int page, int size) {
-    return postRepository.findPostsByTrendingAfter(currentUser,
-                    currentUser == null ? null : currentUser.getFollowings(),
-                    BDate.currentDate().addDay(-7),
-                    PageRequest.of(page, size))
+    return postRepository.findPostsByTrendingAfter(currentUser, BDate.currentDate().addDay(-7), PageRequest.of(page, size))
             .map(toPost);
   }
 

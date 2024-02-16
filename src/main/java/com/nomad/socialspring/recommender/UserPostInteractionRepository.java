@@ -16,25 +16,22 @@ import java.util.List;
 
 public interface UserPostInteractionRepository extends JpaRepository<UserPostInteraction, Long> {
 
-  @SuppressWarnings("All")
-  double recencyFactor = 0.05;
-
   @Query("""
             select e.post from UserPostInteraction e
-            where e.post.isPrivate = false or (:user is not null and e.post.author in :followings)
+            where e.post.isPrivate = false or (:user is not null and :user in elements(e.post.author.followers))
             group by e.post
             order by (sum(e.strength) + (e.post.recencyScore)) desc
           """)
-  Page<Object[]> findPosts(@Param("user") User user, @Param("followings") Collection<User> followings, Pageable pageable);
+  Page<Object[]> findPosts(@Param("user") User user, Pageable pageable);
 
   @Query("""
             select e.post from UserPostInteraction e
-            where (e.post.isPrivate = false or (:user is not null and e.post.author in :followings)) and
+            where (e.post.isPrivate = false or (:user is not null and :user in elements(e.post.author.followers))) and
                   (e.post.trip is not null and e.post.trip.country = :country)
             group by e.post
             order by (sum(e.strength) + (e.post.recencyScore)) desc
           """)
-  Page<Object[]> findPostsByCountry(@Param("user") User user, @Param("followings") Collection<User> followings, Country country, Pageable pageable);
+  Page<Object[]> findPostsByCountry(@Param("user") User user, Country country, Pageable pageable);
 
   @Query("select count(distinct u) from UserPostInteraction u")
   long countDistinct();
@@ -47,10 +44,10 @@ public interface UserPostInteractionRepository extends JpaRepository<UserPostInt
 
   @Query("""
             select e.post from UserPostInteraction e
-            where (e.post.isPrivate = false or (:user is not null and e.post.author in :followings)) and
+            where (e.post.isPrivate = false or (:user is not null and :user in elements(e.post.author.followers))) and
                   (e.createdOn > :date)
             group by e.post
             order by (sum(e.strength) + (e.post.recencyScore)) desc
           """)
-  Page<Object[]> findPostsByTrendingAfter(@Param("user") User user, @Param("followings") Collection<User> followings, @Param("date") Date date, Pageable pageable);
+  Page<Object[]> findPostsByTrendingAfter(@Param("user") User user, @Param("date") Date date, Pageable pageable);
 }

@@ -59,9 +59,10 @@ public class Post extends BaseEntity {
   @JoinColumn(name = "TRIP_ID")
   private Trip trip;
 
-  @Formula("""
-            0.000005 * (CURRENT_TIMESTAMP - CREATED_ON)
-          """)
+
+//  (0.000005 * (select extract('epoch' from now()) - extract('epoch' from max(p1_0.created_on))))
+  //todo: rework formula (current shows oldest posts with higher score)
+  @Formula("0.000005 * (select extract('epoch' from now()) - extract('epoch' from max(CREATED_ON)))")
   private Double recencyScore;
 
   public boolean canBeSeenBy(User user) {
