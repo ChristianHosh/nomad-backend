@@ -4,11 +4,11 @@ import com.nomad.socialspring.country.CountryResponse;
 import com.nomad.socialspring.image.ImageMapper;
 
 public class ProfileMapper {
-  public static ProfileResponse entityToRequest(Profile profile, boolean detailedProfile) {
+  public static ProfileResponseR entityToRequest(Profile profile, boolean detailedProfile) {
     if (profile == null)
       return null;
 
-    return ProfileResponse.builder()
+    return ProfileResponseR.builder()
             .displayName(profile.getDisplayName())
             .bio(profile.getBio())
             .gender(profile.getGender())

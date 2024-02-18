@@ -9,7 +9,7 @@ public class CountryResponse extends BaseResponse {
 
   public CountryResponse(Country country) {
     super(country);
-    this.name = country.getName();
+    name = country.getName();
   }
 
   public static CountryResponse fromEntity(Country country) {

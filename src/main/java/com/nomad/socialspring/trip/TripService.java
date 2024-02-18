@@ -8,7 +8,7 @@ import com.nomad.socialspring.notification.NotificationFacade;
 import com.nomad.socialspring.user.User;
 import com.nomad.socialspring.user.UserFacade;
 import com.nomad.socialspring.user.UserMapper;
-import com.nomad.socialspring.user.UserResponse;
+import com.nomad.socialspring.user.UserResponseR;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,7 @@ public class TripService {
   private final ChatChannelFacade chatChannelFacade;
   private final NotificationFacade notificationFacade;
 
-  public Page<UserResponse> getUsersInTrip(Long tripId, int page, int size) {
+  public Page<UserResponseR> getUsersInTrip(Long tripId, int page, int size) {
     Trip trip = tripFacade.findById(tripId);
 
     return userFacade

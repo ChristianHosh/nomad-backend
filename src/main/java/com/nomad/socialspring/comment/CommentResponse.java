@@ -1,6 +1,6 @@
 package com.nomad.socialspring.comment;
 
-import com.nomad.socialspring.user.UserResponse;
+import com.nomad.socialspring.user.UserResponseR;
 import lombok.Builder;
 
 import java.sql.Timestamp;
@@ -15,7 +15,7 @@ public record CommentResponse(
         Timestamp updatedOn,
         String content,
         Boolean canLike,
-        UserResponse author,
+        UserResponseR author,
         Integer numberOfLikes
 ) {
 }

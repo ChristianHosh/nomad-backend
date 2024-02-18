@@ -1,6 +1,6 @@
 package com.nomad.socialspring.recommender;
 
-import com.nomad.socialspring.post.PostMapper;
+import com.nomad.socialspring.post.Post;
 import com.nomad.socialspring.post.PostResponse;
 import com.nomad.socialspring.user.UserFacade;
 import lombok.RequiredArgsConstructor;
@@ -21,18 +21,18 @@ public class RecommendationController {
   @GetMapping("/my")
   Page<PostResponse> getReleventPosts() {
     return recommendationFacade.findPostsByRelevance(userFacade.getCurrentUserOrNull(), 0, 25)
-            .map(PostMapper::entityToResponse);
+        .map(Post::toResponse);
   }
 
   @GetMapping("/global")
   Page<PostResponse> getGlobalPosts() {
     return recommendationFacade.findPosts(userFacade.getCurrentUserOrNull(), 0, 25)
-            .map(PostMapper::entityToResponse);
+        .map(Post::toResponse);
   }
 
   @GetMapping("/trending")
   Page<PostResponse> getTrendingPosts() {
     return recommendationFacade.findPostsByTrendingThisWeek(userFacade.getCurrentUserOrNull(), 0, 25)
-            .map(PostMapper::entityToResponse);
+        .map(Post::toResponse);
   }
 }

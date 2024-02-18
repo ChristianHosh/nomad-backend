@@ -59,8 +59,6 @@ public class Post extends BaseEntity {
   @JoinColumn(name = "TRIP_ID")
   private Trip trip;
 
-
-//  (0.000005 * (select extract('epoch' from now()) - extract('epoch' from max(p1_0.created_on))))
   //todo: rework formula (current shows oldest posts with higher score)
   @Formula("0.000005 * (select extract('epoch' from now()) - extract('epoch' from max(CREATED_ON)))")
   private Double recencyScore;
@@ -81,6 +79,14 @@ public class Post extends BaseEntity {
     Set<Comment> comments = getComments();
     if (comments == null || comments.isEmpty()) return null;
     return comments.stream().max(Comparator.comparingInt(Comment::getNumberOfLikes)).orElseThrow(BxException.xHardcoded("should not happen"));
+  }
+  
+  public PostResponse toResponse() {
+    return PostResponse.fromEntity(this);
+  }
+  
+  public PostResponse toResponse(User other) {
+    return PostResponse.fromEntity(this, other);
   }
 
 }

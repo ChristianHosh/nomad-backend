@@ -1,6 +1,6 @@
 package com.nomad.socialspring.chat;
 
-import com.nomad.socialspring.user.UserResponse;
+import com.nomad.socialspring.user.UserResponseR;
 import lombok.Builder;
 
 import java.sql.Timestamp;
@@ -12,6 +12,6 @@ public record ChatMessageResponse(
         String chatChannelId,
         String content,
         Timestamp createdOn,
-        UserResponse sender
+        UserResponseR sender
 ) {
 }

@@ -3,10 +3,7 @@ package com.nomad.socialspring.comment;
 import com.nomad.socialspring.error.BxException;
 import com.nomad.socialspring.notification.NotificationFacade;
 import com.nomad.socialspring.recommender.PostEventHandler;
-import com.nomad.socialspring.user.User;
-import com.nomad.socialspring.user.UserFacade;
-import com.nomad.socialspring.user.UserMapper;
-import com.nomad.socialspring.user.UserResponse;
+import com.nomad.socialspring.user.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -46,7 +43,8 @@ public class CommentService {
   public Page<UserResponse> getCommentLikes(Long commentId, int page, int size) {
     Comment comment = commentFacade.findById(commentId);
 
-    return userFacade.findAllByCommentLiked(comment.getId(), page, size).map(UserMapper::entityToResponse);
+    return userFacade.findAllByCommentLiked(comment.getId(), page, size)
+        .map(User::toResponse);
   }
 
   public CommentResponse likeComment(Long commentId) {

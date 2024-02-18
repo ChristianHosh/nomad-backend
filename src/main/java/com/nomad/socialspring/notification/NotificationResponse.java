@@ -1,6 +1,6 @@
 package com.nomad.socialspring.notification;
 
-import com.nomad.socialspring.user.UserResponse;
+import com.nomad.socialspring.user.UserResponseR;
 import lombok.Builder;
 
 import java.sql.Timestamp;
@@ -16,6 +16,6 @@ public record NotificationResponse(
         NotificationType notificationType,
         String content,
         Long entityId,
-        UserResponse author
+        UserResponseR author
 ) {
 }
