@@ -58,6 +58,10 @@ public class PostEventHandler {
     return userPostInteractionRepository.findByUserAndPostAndEventOrderByCreatedOnDesc(user, post, event).getFirst();
   }
 
+  private void deleteInteractionBy(User user, Post post, Event event) {
+    deleteInteraction(findInteraction(user, post, event));
+  }
+  
   public void viewPost(User user, Post post) {
     Thread.ofVirtual().start(() -> {
       List<UserInterest> sharedInterests = getSharedInterests(user, post);
