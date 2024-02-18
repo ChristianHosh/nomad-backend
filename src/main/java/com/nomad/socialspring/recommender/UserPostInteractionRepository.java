@@ -12,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 import java.sql.Date;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 
 
 public interface UserPostInteractionRepository extends JpaRepository<UserPostInteraction, Long> {
@@ -39,7 +40,8 @@ public interface UserPostInteractionRepository extends JpaRepository<UserPostInt
   @Query("""
           select u from UserPostInteraction u
           where u.user = :user and u.post = :post and u.event = :event
-          order by u.createdOn DESC""")
+          order by u.createdOn DESC
+          """)
   List<UserPostInteraction> findByUserAndPostAndEventOrderByCreatedOnDesc(@Param("user") User user, @Param("post") Post post, @Param("event") Event event);
 
   @Query("""
@@ -50,4 +52,12 @@ public interface UserPostInteractionRepository extends JpaRepository<UserPostInt
             order by (sum(e.strength) + (e.post.recencyScore)) desc
           """)
   Page<Object[]> findPostsByTrendingAfter(@Param("user") User user, @Param("date") Date date, Pageable pageable);
+  
+  @Query("""
+          select e.post, sum(e.strength) from UserPostInteraction e
+          where (e.createdOn > :date)
+          group by e.post
+        """)
+  List<Object[]> findPostsWithInteractionsAfter(@Param("date") Date date);
+  
 }

@@ -88,5 +88,9 @@ public class Post extends BaseEntity {
   public PostResponse toResponse(User other) {
     return PostResponse.fromEntity(this, other);
   }
+  
+  public void setGZscore(double score) {
+    System.out.println("new g-z-score => " + score);
+  }
 
 }
