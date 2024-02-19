@@ -57,8 +57,8 @@ public class GScoreScheduler {
       double gScore = postDoublePair.getSecond();
       double zScore = (gScore - mean) / finalStandardDeviation;
       post.setGZscore(zScore);
-      postRepository.save(post);
     });
+    postRepository.saveAll(postScoreList.stream().map(Pair::getFirst).toList());
     log.info("UPDATED GZ-SCORES FOR [%d] POSTS".formatted(count));
   }
 
