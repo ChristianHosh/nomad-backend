@@ -50,4 +50,12 @@ public class Comment extends BaseEntity {
   public boolean canBeDeletedBy(User user) {
     return Objects.equals(getAuthor(), user) || Objects.equals(getPost().getAuthor(), user);
   }
+  
+  public CommentResponse toResponse() {
+    return CommentResponse.fromEntity(this);
+  }
+  
+  public CommentResponse toResponse(User other) {
+    return CommentResponse.fromEntity(this, other);
+  }
 }

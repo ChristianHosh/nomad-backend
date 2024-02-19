@@ -113,7 +113,7 @@ public class PostService {
     if (post.canBeSeenBy(currentUser))
       return commentFacade
               .findAllByPost(post, page, size)
-              .map(c -> CommentMapper.entityToResponse(c, currentUser));
+              .map(c -> c.toResponse(currentUser));
     throw BxException.unauthorized(currentUser);
   }
 
@@ -130,7 +130,7 @@ public class PostService {
         notificationFacade.notifyPostComment(post, comment);
 
       postEventHandler.commentOnPost(currentUser, post);
-      return CommentMapper.entityToResponse(comment, currentUser);
+      return comment.toResponse(currentUser);
     }
     throw BxException.unauthorized(currentUser);
   }

@@ -13,23 +13,4 @@ public class CommentMapper {
             .post(post)
             .build();
   }
-
-  public static CommentResponse entityToResponse(Comment comment) {
-    return entityToResponse(comment, null);
-  }
-
-  public static CommentResponse entityToResponse(Comment comment, User user) {
-    if (comment == null)
-      return null;
-
-    return CommentResponse.builder()
-            .id(comment.getId())
-            .createdOn(comment.getCreatedOn())
-            .updatedOn(comment.getUpdatedOn())
-            .content(comment.getContent())
-            .canLike(user != null && comment.getLikes().contains(user))
-            .author(UserMapper.entityToResponse(comment.getAuthor(), user))
-            .numberOfLikes(comment.getNumberOfLikes())
-            .build();
-  }
 }

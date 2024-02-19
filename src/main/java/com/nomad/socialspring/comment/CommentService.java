@@ -23,7 +23,7 @@ public class CommentService {
     if (comment.canBeDeletedBy(currentUser)) {
       commentFacade.delete(comment);
       postEventHandler.deleteComment(currentUser, comment.getPost());
-      return CommentMapper.entityToResponse(comment);
+      return comment.toResponse();
     }
 
     throw BxException.unauthorized(currentUser);
@@ -34,7 +34,7 @@ public class CommentService {
     User currentUser = userFacade.getCurrentUser();
     if (comment.canBeModifiedBy(currentUser)) {
       comment.setContent(commentRequest.content());
-      return CommentMapper.entityToResponse(commentFacade.save(comment));
+      return commentFacade.save(comment).toResponse(currentUser);
     }
 
     throw BxException.unauthorized(currentUser);
@@ -57,7 +57,7 @@ public class CommentService {
       throw BxException.hardcoded(BxException.X_COULD_NOT_LIKE_COMMENT, currentUser);
 
     postEventHandler.likeComment(currentUser, comment.getPost());
-    return CommentMapper.entityToResponse(commentFacade.save(comment));
+    return commentFacade.save(comment).toResponse(currentUser);
   }
 
   public CommentResponse unlikeComment(Long commentId) {
@@ -68,6 +68,6 @@ public class CommentService {
       throw BxException.hardcoded(BxException.X_COULD_NOT_UNLIKE_COMMENT, currentUser);
 
     postEventHandler.unlikeComment(currentUser, comment.getPost());
-    return CommentMapper.entityToResponse(commentFacade.save(comment));
+    return commentFacade.save(comment).toResponse(currentUser);
   }
 }
