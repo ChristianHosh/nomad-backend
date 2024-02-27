@@ -18,6 +18,6 @@ public class NotificationService {
 
     return notificationFacade
             .getNotifications(currentUser, page, size)
-            .map(NotificationMapper::entityToResponse);
+            .map(Notification::toResponse);
   }
 }

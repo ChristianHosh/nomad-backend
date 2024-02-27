@@ -18,7 +18,16 @@ public class PostFacade {
 
 
   public Post save(PostRequest request, Trip trip, User user, Set<Interest> interestSet, Set<Image> images) {
-    return save(PostMapper.requestToEntity(request, trip, user, interestSet, images));
+    Post post = Post.builder()
+        .author(user)
+        .content(request.content())
+        .isPrivate(request.isPrivate())
+        .interests(interestSet)
+        .trip(trip)
+        .images(images)
+        .build();
+    post.getImages().forEach(image -> image.setPost(post));
+    return save(post);
   }
 
   public Post save(Post post) {

@@ -6,5 +6,5 @@ import lombok.Builder;
  * ResponseOk DTO for {@link FollowRequest}
  */
 @Builder
-public record FollowRequestResponse(Long id, UserResponse fromUser) {
+public record FollowRequestResponse(Long id, UserResponseR fromUser) {
 }

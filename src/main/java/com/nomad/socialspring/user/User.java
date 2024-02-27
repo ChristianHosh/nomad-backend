@@ -199,5 +199,17 @@ public class User extends BaseEntity {
     });
     interests.removeIf(toRemove::contains);
   }
+  
+  public UserResponse toResponse() {
+    return UserResponse.fromEntity(this);
+  }
+  
+  public UserResponse toResponse(User other) {
+    return UserResponse.fromEntity(this, other);
+  }
+  
+  public UserResponse toResponse(User other, boolean detailed) {
+    return UserResponse.fromEntity(this, other, detailed);
+  }
 
 }

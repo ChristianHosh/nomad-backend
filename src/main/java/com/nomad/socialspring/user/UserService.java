@@ -38,7 +38,7 @@ public class UserService {
     User user = userFacade.findById(userId);
 
     if (user.canBeSeenBy(currentUser))
-      return UserMapper.entityToResponse(user, currentUser, true);
+      return user.toResponse(currentUser, true);
     throw BxException.unauthorized(currentUser);
   }
 
@@ -54,7 +54,7 @@ public class UserService {
       FollowRequest followRequest = followRequestFacade.save(new FollowRequest(currentUser, user));
       notificationFacade.notifyFollowRequest(followRequest);
 
-      return UserMapper.entityToResponse(user);
+      return user.toResponse();
     }
     throw BxException.unauthorized(currentUser);
   }
@@ -68,7 +68,7 @@ public class UserService {
         throw BxException.badRequest(User.class, BxException.X_CURRENT_USER_ALREADY_UNFOLLOWS);
 
       if (user.removeFollowing(currentUser))
-        return UserMapper.entityToResponse(userFacade.save(user), currentUser);
+        return userFacade.save(user).toResponse(currentUser);
       throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOWER, currentUser);
     }
     throw BxException.unauthorized(currentUser);
@@ -92,7 +92,7 @@ public class UserService {
       deleteFollowRequestAndNotification(followRequest);
     }
 
-    return UserMapper.entityToResponse(userFacade.save(followRequest.getFromUser()));
+    return userFacade.save(followRequest.getFromUser()).toResponse();
   }
 
   @Transactional
@@ -104,7 +104,7 @@ public class UserService {
       deleteFollowRequestAndNotification(followRequest);
     }
 
-    return UserMapper.entityToResponse(followRequest.getFromUser());
+    return userFacade.save(followRequest.getFromUser()).toResponse();
   }
 
   private void deleteFollowRequestAndNotification(FollowRequest followRequest) {
@@ -114,18 +114,20 @@ public class UserService {
 
   public Page<UserResponse> getUserFollowers(Long userId, int page, int size) {
     User user = userFacade.findById(userId);
+    User currentUser = userFacade.getCurrentUserOrNull();
 
     return userFacade
-            .getFollowersByUser(user.getId(), page, size)
-            .map(u -> UserMapper.entityToResponse(u, userFacade.getCurrentUserOrNull()));
+        .getFollowersByUser(user.getId(), page, size)
+        .map(u -> u.toResponse(currentUser));
   }
 
   public Page<UserResponse> getUserFollowings(Long userId, int page, int size) {
     User user = userFacade.findById(userId);
+    User currentUser = userFacade.getCurrentUserOrNull();
 
     return userFacade
-            .getFollowingsByUser(user.getId(), page, size)
-            .map(u -> UserMapper.entityToResponse(u, userFacade.getCurrentUserOrNull()));
+        .getFollowingsByUser(user.getId(), page, size)
+        .map(u -> u.toResponse(currentUser));
   }
 
   public UserResponse updateProfileInfo(@NotNull ProfileRequest profileRequest) {
@@ -139,7 +141,7 @@ public class UserService {
 
     currentUser = userFacade.updateProfile(currentUser, profileRequest, interestSet, country);
 
-    return UserMapper.entityToResponse(currentUser);
+    return currentUser.toResponse();
   }
 
   public UserResponse updateProfileImage(MultipartFile imageFile) {
@@ -147,7 +149,7 @@ public class UserService {
 
     currentUser.getProfile().setProfileImage(imageFacade.save(imageFile));
 
-    return UserMapper.entityToResponse(userFacade.save(currentUser));
+    return userFacade.save(currentUser).toResponse();
   }
 
   public UserResponse deleteProfileImage() {
@@ -155,7 +157,7 @@ public class UserService {
 
     currentUser.getProfile().setProfileImage(null);
 
-    return UserMapper.entityToResponse(userFacade.save(currentUser));
+    return userFacade.save(currentUser).toResponse();
   }
 
   public Page<UserResponse> getUserMutualFollowings(Long userId, int page, int size) {
@@ -163,18 +165,18 @@ public class UserService {
     User currentUser = userFacade.getCurrentUser();
 
     return userFacade
-            .getMutualFollowings(user, currentUser, page, size)
-            .map(u -> UserMapper.entityToResponse(u, currentUser));
+        .getMutualFollowings(user, currentUser, page, size)
+        .map(u -> u.toResponse(currentUser));
   }
 
   public List<UserResponse> getSuggestedUsers() {
     User currentUser = userFacade.getCurrentUser();
 
     return userFacade
-            .getSuggestedUsers(currentUser)
-            .stream()
-            .map(u -> UserMapper.entityToResponse(u, currentUser))
-            .toList();
+        .getSuggestedUsers(currentUser)
+        .stream()
+        .map(u -> u.toResponse(currentUser))
+        .toList();
   }
 
   public UserResponse createUserReview(Long userId, ReviewRequest reviewRequest) {
@@ -184,7 +186,7 @@ public class UserService {
     Review review = reviewFacade.save(reviewRequest, currentUser, user);
     notificationFacade.notifyUserReview(review);
 
-    return UserMapper.entityToResponse(user, currentUser, true);
+    return user.toResponse(currentUser, true);
   }
 
   public UserResponse blockUser(Long userId) {
@@ -205,7 +207,7 @@ public class UserService {
         throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOW_REQUEST, user);
     if (currentUser.getBlockedUsers().add(user)) {
       userRepository.save(currentUser);
-      return UserMapper.entityToResponse(user, currentUser);
+      return user.toResponse(currentUser);
     }
     throw BxException.hardcoded(BxException.X_COULD_NOT_BLOCK_USER, user);
   }
@@ -216,7 +218,7 @@ public class UserService {
 
     if (currentUser.getBlockedUsers().remove(user)) {
       userRepository.save(currentUser);
-      return UserMapper.entityToResponse(user, currentUser);
+      return user.toResponse(currentUser);
     }
     throw BxException.hardcoded(BxException.X_COULD_NOT_UNBLOCK_USER, user);
   }
@@ -225,7 +227,7 @@ public class UserService {
     User currentUser = userFacade.getCurrentUser();
 
     return userFacade
-            .getBlockedUsers(currentUser, page, size)
-            .map(u -> UserMapper.entityToResponse(u, currentUser));
+        .getBlockedUsers(currentUser, page, size)
+        .map(User::toResponse);
   }
 }

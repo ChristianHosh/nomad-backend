@@ -54,4 +54,8 @@ public class Notification extends BaseEntity {
       case REVIEW -> Review.class;
     };
   }
+
+  public NotificationResponse toResponse() {
+    return NotificationResponse.fromEntity(this);
+  }
 }

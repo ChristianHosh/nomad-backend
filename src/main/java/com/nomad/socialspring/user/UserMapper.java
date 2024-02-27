@@ -26,29 +26,29 @@ public class UserMapper {
     return user;
   }
 
-  public static UserResponse entityToResponse(User user) {
+  public static UserResponseR entityToResponse(User user) {
     return entityToResponse(user, null, null, false);
   }
 
-  public static UserResponse entityToResponse(User user, User currentUser) {
+  public static UserResponseR entityToResponse(User user, User currentUser) {
     return entityToResponse(user, null, currentUser, false);
   }
 
-  public static UserResponse entityToResponse(User user, String token) {
+  public static UserResponseR entityToResponse(User user, String token) {
     return entityToResponse(user, token, null, false);
   }
 
-  public static UserResponse entityToResponse(User user, User currentUser, boolean detailedProfile) {
+  public static UserResponseR entityToResponse(User user, User currentUser, boolean detailedProfile) {
     return entityToResponse(user, null, currentUser, detailedProfile);
   }
 
-  public static UserResponse entityToResponse(User user, String token, User currentUser, boolean detailedProfile) {
+  public static UserResponseR entityToResponse(User user, String token, User currentUser, boolean detailedProfile) {
     if (user == null)
       return null;
 
     FollowStatus followStatus = getFollowStatus(user, currentUser);
 
-    return UserResponse.builder()
+    return UserResponseR.builder()
             .id(user.getId())
             .createdOn(user.getCreatedOn())
             .updatedOn(user.getUpdatedOn())

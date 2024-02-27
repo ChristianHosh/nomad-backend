@@ -1,23 +1,61 @@
 package com.nomad.socialspring.user;
 
-import lombok.Builder;
+import com.nomad.socialspring.common.BaseResponse;
+import lombok.Getter;
 
-import java.sql.Timestamp;
+@Getter
+public class UserResponse extends BaseResponse {
+  private final String username;
+  private final String email;
+  private final Role role;
+  private final FollowStatus followStatus;
+  private final ProfileResponse profile;
+  private Integer rating;
+  private String token;
 
-/**
- * ResponseOk DTO for {@link User}
- */
-@Builder
-public record UserResponse(
-        Long id,
-        Timestamp updatedOn,
-        Timestamp createdOn,
-        String username,
-        String email,
-        Role role,
-        String token,
-        FollowStatus followStatus,
-        Integer rating,
-        ProfileResponse profile
-) {
+
+  private UserResponse(User user, FollowStatus followStatus, boolean detailed) {
+    super(user);
+    this.followStatus = followStatus;
+
+    username = user.getUsername();
+    email = user.getEmail();
+    role = user.getRole();
+    
+    if (detailed)
+      rating = user.getRating();
+    profile = ProfileResponse.fromEntity(user.getProfile(), detailed);
+  }
+  
+  public UserResponse withToken(String token) {
+    this.token = token;
+    return this;
+  }
+  
+  public static UserResponse fromEntity(User user) {
+    return fromEntity(user, null);
+  }
+  
+  public static UserResponse fromEntity(User user, User currentUser) {
+    return fromEntity(user, currentUser, false);
+  }
+  
+  public static UserResponse fromEntity(User user, User currentUser, boolean detailed) {
+    return user == null 
+        ? null 
+        : new UserResponse(user, followStat(user, currentUser), detailed);
+  }
+  
+  private static FollowStatus followStat(User user, User currentUser) {
+    FollowStatus followStatus = FollowStatus.UNKNOWN;
+    if (currentUser != null) {
+      if (currentUser.follows(user))
+        followStatus = FollowStatus.FOLLOWING;
+      else if (user.hasPendingRequestFrom(currentUser))
+        followStatus = FollowStatus.PENDING;
+      else
+        followStatus = FollowStatus.CAN_FOLLOW;
+    }
+    return followStatus;
+  }
 }

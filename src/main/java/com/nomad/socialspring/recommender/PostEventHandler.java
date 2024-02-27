@@ -58,8 +58,12 @@ public class PostEventHandler {
     return userPostInteractionRepository.findByUserAndPostAndEventOrderByCreatedOnDesc(user, post, event).getFirst();
   }
 
+  private void deleteInteractionBy(User user, Post post, Event event) {
+    deleteInteraction(findInteraction(user, post, event));
+  }
+
   public void viewPost(User user, Post post) {
-    Thread.ofVirtual().start(() -> {
+    run(() -> {
       Event event = Event.VIEW;
       List<UserInterest> sharedInterests = getSharedInterests(user, post);
       sharedInterests = setNewInterestsStrength(sharedInterests, event, true);
@@ -67,7 +71,7 @@ public class PostEventHandler {
   }
 
   public void likePost(User user, Post post) {
-    Thread.ofVirtual().start(() -> {
+    run(() -> {
       Event event = Event.LIKE;
       List<UserInterest> sharedInterests = getSharedInterests(user, post);
       sharedInterests = setNewInterestsStrength(sharedInterests, event, true);
@@ -80,7 +84,7 @@ public class PostEventHandler {
   }
 
   public void unlikePost(User user, Post post) {
-    Thread.ofVirtual().start(() -> {
+    run(() -> {
       List<UserInterest> sharedInterests = getSharedInterests(user, post);
       sharedInterests = setNewInterestsStrength(sharedInterests, Event.LIKE, false);
 
@@ -88,7 +92,7 @@ public class PostEventHandler {
   }
 
   public void favoritePost(User user, Post post) {
-    Thread.ofVirtual().start(() -> {
+    run(() -> {
       List<UserInterest> sharedInterests = getSharedInterests(user, post);
       sharedInterests = setNewInterestsStrength(sharedInterests, Event.FAVORITE, true);
 
@@ -96,7 +100,7 @@ public class PostEventHandler {
   }
 
   public void unfavoritePost(User user, Post post) {
-    Thread.ofVirtual().start(() -> {
+    run(() -> {
       List<UserInterest> sharedInterests = getSharedInterests(user, post);
       sharedInterests = setNewInterestsStrength(sharedInterests, Event.FAVORITE, false);
 
@@ -104,7 +108,7 @@ public class PostEventHandler {
   }
 
   public void commentOnPost(User user, Post post) {
-    Thread.ofVirtual().start(() -> {
+    run(() -> {
       List<UserInterest> sharedInterests = getSharedInterests(user, post);
       sharedInterests = setNewInterestsStrength(sharedInterests, Event.COMMENT, true);
 
@@ -112,7 +116,7 @@ public class PostEventHandler {
   }
 
   public void deleteComment(User user, Post post) {
-    Thread.ofVirtual().start(() -> {
+    run(() -> {
       List<UserInterest> sharedInterests = getSharedInterests(user, post);
       sharedInterests = setNewInterestsStrength(sharedInterests, Event.COMMENT, false);
 
@@ -120,7 +124,7 @@ public class PostEventHandler {
   }
 
   public void likeComment(User user, Post post) {
-    Thread.ofVirtual().start(() -> {
+    run(() -> {
       List<UserInterest> sharedInterests = getSharedInterests(user, post);
       sharedInterests = setNewInterestsStrength(sharedInterests, Event.LIKE_COMMENT, true);
 
@@ -128,7 +132,7 @@ public class PostEventHandler {
   }
 
   public void unlikeComment(User user, Post post) {
-    Thread.ofVirtual().start(() -> {
+    run(() -> {
       List<UserInterest> sharedInterests = getSharedInterests(user, post);
       sharedInterests = setNewInterestsStrength(sharedInterests, Event.LIKE_COMMENT, false);
 
@@ -136,7 +140,7 @@ public class PostEventHandler {
   }
 
   public void joinTrip(User user, Post post) {
-    Thread.ofVirtual().start(() -> {
+    run(() -> {
       List<UserInterest> sharedInterests = getSharedInterests(user, post);
       sharedInterests = setNewInterestsStrength(sharedInterests, Event.JOIN, true);
 
@@ -144,10 +148,14 @@ public class PostEventHandler {
   }
 
   public void leaveTrip(User user, Post post) {
-    Thread.ofVirtual().start(() -> {
+    run(() -> {
       List<UserInterest> sharedInterests = getSharedInterests(user, post);
       sharedInterests = setNewInterestsStrength(sharedInterests, Event.JOIN, false);
 
     });
+  }
+
+  private void run(Runnable task) {
+    Thread.ofVirtual().start(task);
   }
 }

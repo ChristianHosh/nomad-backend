@@ -13,10 +13,7 @@ import com.nomad.socialspring.notification.NotificationFacade;
 import com.nomad.socialspring.recommender.PostEventHandler;
 import com.nomad.socialspring.trip.Trip;
 import com.nomad.socialspring.trip.TripFacade;
-import com.nomad.socialspring.user.User;
-import com.nomad.socialspring.user.UserFacade;
-import com.nomad.socialspring.user.UserMapper;
-import com.nomad.socialspring.user.UserResponse;
+import com.nomad.socialspring.user.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -66,7 +63,7 @@ public class PostService {
     Set<Interest> interestSet = interestFacade.getInterestFromTags(request.interestsTags());
 
     Post post = postFacade.save(request, trip, currentUser, interestSet, images);
-    return PostMapper.entityToResponse(post, currentUser);
+    return post.toResponse(currentUser);
   }
 
   @Transactional
@@ -80,8 +77,7 @@ public class PostService {
       post.setContent(request.content());
       post.setIsPrivate(request.isPrivate());
       post.setInterests(interestSet);
-      post = postFacade.save(post);
-      return PostMapper.entityToResponse(post, currentUser);
+      return postFacade.save(post).toResponse(currentUser);
     }
     throw BxException.unauthorized(currentUser);
   }
@@ -93,7 +89,7 @@ public class PostService {
     // only return if post is public or current user follows post author
     if (post.canBeSeenBy(currentUser)) {
       postEventHandler.viewPost(currentUser, post);
-      return PostMapper.entityToResponse(post, currentUser);
+      return post.toResponse(currentUser);
     }
     throw BxException.unauthorized(currentUser);
   }
@@ -105,7 +101,7 @@ public class PostService {
 
     if (post.canBeModifiedBy(currentUser)) {
       postFacade.delete(post);
-      return PostMapper.entityToResponse(post);
+      return post.toResponse();
     }
     throw BxException.unauthorized(currentUser);
   }
@@ -117,7 +113,7 @@ public class PostService {
     if (post.canBeSeenBy(currentUser))
       return commentFacade
               .findAllByPost(post, page, size)
-              .map(c -> CommentMapper.entityToResponse(c, currentUser));
+              .map(c -> c.toResponse(currentUser));
     throw BxException.unauthorized(currentUser);
   }
 
@@ -134,7 +130,7 @@ public class PostService {
         notificationFacade.notifyPostComment(post, comment);
 
       postEventHandler.commentOnPost(currentUser, post);
-      return CommentMapper.entityToResponse(comment, currentUser);
+      return comment.toResponse(currentUser);
     }
     throw BxException.unauthorized(currentUser);
   }
@@ -146,7 +142,7 @@ public class PostService {
     if (post.canBeSeenBy(currentUser))
       return userFacade
               .findAllByPostLiked(post, page, size)
-              .map(u -> UserMapper.entityToResponse(u, currentUser));
+              .map(u -> u.toResponse(currentUser));
     throw BxException.unauthorized(currentUser);
   }
 
@@ -163,7 +159,7 @@ public class PostService {
         notificationFacade.notifyPostLike(post, currentUser);
 
       postEventHandler.likePost(currentUser, post);
-      return PostMapper.entityToResponse(postFacade.save(post), currentUser);
+      return postFacade.save(post).toResponse(currentUser);
     }
     throw BxException.unauthorized(currentUser);
   }
@@ -178,7 +174,7 @@ public class PostService {
         throw BxException.hardcoded(BxException.X_COULD_NOT_UNLIKE_POST, currentUser);
 
       postEventHandler.unlikePost(currentUser, post);
-      return PostMapper.entityToResponse(postFacade.save(post), currentUser);
+      return postFacade.save(post).toResponse(currentUser);
     }
     throw BxException.unauthorized(currentUser);
   }
