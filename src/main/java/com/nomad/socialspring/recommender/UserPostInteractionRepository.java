@@ -22,7 +22,7 @@ public interface UserPostInteractionRepository extends JpaRepository<UserPostInt
             group by e.post
             order by (sum(e.strength) + (e.post.recencyScore)) desc
           """)
-  Page<Object[]> findPosts(@Param("user") User user, Pageable pageable);
+  Page<Post> findPosts(@Param("user") User user, Pageable pageable);
 
   @Query("""
             select e.post from UserPostInteraction e
@@ -31,7 +31,7 @@ public interface UserPostInteractionRepository extends JpaRepository<UserPostInt
             group by e.post
             order by (sum(e.strength) + (e.post.recencyScore)) desc
           """)
-  Page<Object[]> findPostsByCountry(@Param("user") User user, Country country, Pageable pageable);
+  Page<Post> findPostsByCountry(@Param("user") User user, Country country, Pageable pageable);
 
   @Query("select count(distinct u) from UserPostInteraction u")
   long countDistinct();
@@ -49,5 +49,5 @@ public interface UserPostInteractionRepository extends JpaRepository<UserPostInt
             group by e.post
             order by (sum(e.strength) + (e.post.recencyScore)) desc
           """)
-  Page<Object[]> findPostsByTrendingAfter(@Param("user") User user, @Param("date") Date date, Pageable pageable);
+  Page<Post> findPostsByTrendingAfter(@Param("user") User user, @Param("date") Date date, Pageable pageable);
 }

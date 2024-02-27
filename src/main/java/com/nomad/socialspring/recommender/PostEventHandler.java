@@ -60,17 +60,21 @@ public class PostEventHandler {
 
   public void viewPost(User user, Post post) {
     Thread.ofVirtual().start(() -> {
+      Event event = Event.VIEW;
       List<UserInterest> sharedInterests = getSharedInterests(user, post);
-      sharedInterests = setNewInterestsStrength(sharedInterests, Event.VIEW, true);
+      sharedInterests = setNewInterestsStrength(sharedInterests, event, true);
     });
   }
 
   public void likePost(User user, Post post) {
     Thread.ofVirtual().start(() -> {
+      Event event = Event.LIKE;
       List<UserInterest> sharedInterests = getSharedInterests(user, post);
-      sharedInterests = setNewInterestsStrength(sharedInterests, Event.LIKE, true);
+      sharedInterests = setNewInterestsStrength(sharedInterests, event, true);
 
-      UserPostInteraction postInteraction = createPostInteraction(user, post, Event.LIKE);
+      UserPostInteraction postInteraction = createPostInteraction(user, post, event);
+      postInteraction = userPostInteractionRepository.save(postInteraction);
+
 
     });
   }

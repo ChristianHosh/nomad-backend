@@ -5,6 +5,7 @@ import lombok.Getter;
 @Getter
 public enum Event {
   FAVORITE(10),
+  SHARE(4),
   VIEW(2),
   JOIN(5),
   COMMENT(3),

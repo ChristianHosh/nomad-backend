@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -39,6 +40,11 @@ public class ControllerExceptionHandler {
   @ExceptionHandler(BxException.class)
   public ResponseEntity<ApiError> handleBxExceptions(BxException exception) {
     return buildErrorResponse(exception);
+  }
+
+  @ExceptionHandler(BadCredentialsException.class)
+  public ResponseEntity<ApiError> handleBadCredentials(BadCredentialsException exception) {
+    return buildErrorResponse(BxException.hardcoded(exception.getMessage()), HttpStatus.UNAUTHORIZED, false);
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)

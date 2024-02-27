@@ -32,7 +32,8 @@ public class RecommendationController {
 
   @GetMapping("/trending")
   Page<PostResponse> getTrendingPosts() {
-    return recommendationFacade.findPostsByTrendingThisWeek(userFacade.getCurrentUserOrNull(), 0, 25)
-            .map(PostMapper::entityToResponse);
+//    return recommendationFacade.findPostsByTrendingAfter(userFacade.getCurrentUserOrNull(), 0, 25)
+//            .map(PostMapper::entityToResponse);
+    return null;
   }
 }

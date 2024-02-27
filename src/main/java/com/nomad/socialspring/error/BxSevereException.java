@@ -7,7 +7,7 @@ public class BxSevereException extends BxException {
   }
 
   protected BxSevereException(Exception cause) {
-    super(cause);
+    super(cause.getMessage(), cause);
   }
 
 }

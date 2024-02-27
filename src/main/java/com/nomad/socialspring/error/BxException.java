@@ -46,6 +46,15 @@ public class BxException extends RuntimeException {
 
   protected BxException(Throwable cause) {
     super(cause);
+    constructException(cause);
+  }
+
+  protected BxException(String message, Throwable cause) {
+    super(message, cause);
+    constructException(cause);
+  }
+
+  private void constructException(Throwable cause) {
     if (cause instanceof Exception e)
       this.exception = e;
     else
