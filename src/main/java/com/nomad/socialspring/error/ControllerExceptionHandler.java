@@ -42,9 +42,10 @@ public class ControllerExceptionHandler {
     return buildErrorResponse(exception);
   }
 
+  @SuppressWarnings("unused")
   @ExceptionHandler(BadCredentialsException.class)
   public ResponseEntity<ApiError> handleBadCredentials(BadCredentialsException exception) {
-    return buildErrorResponse(BxException.hardcoded(exception.getMessage()), HttpStatus.UNAUTHORIZED, false);
+    return buildErrorResponse(BxException.hardcoded(BxException.X_BAD_CREDENTIALS), HttpStatus.UNAUTHORIZED, false);
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)

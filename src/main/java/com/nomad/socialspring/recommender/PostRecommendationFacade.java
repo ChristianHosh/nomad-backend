@@ -48,18 +48,7 @@ public class PostRecommendationFacade {
 
       AtomicReference<Double> p1Score = new AtomicReference<>((double) 0);
       double p2Score = 0;
-      Thread p1ScorerThread = Thread.ofVirtual().start(() -> {
-        for (Interest interest : p1Interests) {
-          for (UserInterest userInterest : userInterests) {
-            if (Objects.equals(userInterest.getInterest(), interest)) {
-              if (userInterest.getIsSetFromProfile())
-                p1Score.updateAndGet(oldValue -> oldValue + userInterest.getScore() * 2);
-              else
-                p1Score.updateAndGet(oldValue -> oldValue + userInterest.getScore());
-            }
-          }
-        }
-      });
+      Thread p1ScorerThread = getP1ScorerThread(p1Interests, userInterests, p1Score);
       for (Interest interest : p2Interests) {
         for (UserInterest userInterest : userInterests) {
           if (Objects.equals(userInterest.getInterest(), interest)) {
@@ -81,6 +70,24 @@ public class PostRecommendationFacade {
     });
 
     return new PageImpl<>(generalPostList, PageRequest.of(page, size), postRepository.countDistinct());
+  }
+
+  @NotNull
+  private static Thread getP1ScorerThread(Set<Interest> p1Interests, Set<UserInterest> userInterests, AtomicReference<Double> p1Score) {
+    Thread p1ScorerThread = new Thread(() -> {
+      for (Interest interest : p1Interests) {
+        for (UserInterest userInterest : userInterests) {
+          if (Objects.equals(userInterest.getInterest(), interest)) {
+            if (userInterest.getIsSetFromProfile())
+              p1Score.updateAndGet(oldValue -> oldValue + userInterest.getScore() * 2);
+            else
+              p1Score.updateAndGet(oldValue -> oldValue + userInterest.getScore());
+          }
+        }
+      }
+    });
+    p1ScorerThread.start();
+    return p1ScorerThread;
   }
 
 }

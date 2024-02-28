@@ -36,6 +36,7 @@ public class BxException extends RuntimeException {
   public static final String X_COULD_NOT_BLOCK_USER = "Could not block user";
   public static final String X_COULD_NOT_UNBLOCK_USER = "Could not unblock user";
   public static final String X_INVALID_TOKEN = "Invalid Token";
+  public static final String X_BAD_CREDENTIALS = "Username or password incorrect";
 
   private Exception exception;
 

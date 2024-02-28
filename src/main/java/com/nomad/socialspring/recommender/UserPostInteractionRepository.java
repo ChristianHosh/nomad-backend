@@ -1,5 +1,6 @@
 package com.nomad.socialspring.recommender;
 
+import com.nomad.socialspring.common.BDate;
 import com.nomad.socialspring.country.Country;
 import com.nomad.socialspring.post.Post;
 import com.nomad.socialspring.user.User;
@@ -52,4 +53,11 @@ public interface UserPostInteractionRepository extends JpaRepository<UserPostInt
             order by (sum(e.strength) + (e.post.recencyScore)) desc
           """)
   Page<Post> findPostsByTrendingAfter(@Param("user") User user, @Param("date") Date date, Pageable pageable);
+
+  @Query("""
+          select e.post, sum(e.strength) from UserPostInteraction e
+          where (e.createdOn > :date)
+          group by e.post
+        """)
+  List<Object[]> findPostsWithInteractionsAfter(@Param("date") Date date);
 }

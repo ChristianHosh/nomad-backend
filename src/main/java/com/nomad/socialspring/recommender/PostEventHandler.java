@@ -55,7 +55,7 @@ public class PostEventHandler {
   }
 
   private UserPostInteraction findInteraction(User user, Post post, Event event) {
-    return userPostInteractionRepository.findByUserAndPostAndEventOrderByCreatedOnDesc(user, post, event).getFirst();
+    return userPostInteractionRepository.findByUserAndPostAndEventOrderByCreatedOnDesc(user, post, event).get(0);
   }
 
   private void deleteInteractionBy(User user, Post post, Event event) {
@@ -156,6 +156,6 @@ public class PostEventHandler {
   }
 
   private void run(Runnable task) {
-    Thread.ofVirtual().start(task);
+    new Thread(task).start();
   }
 }

@@ -148,7 +148,8 @@ public class UserFacade {
     List<User> suggestedUsers = new ArrayList<>(suggestUsers(currentUser));
     suggestedUsers.sort((user1, user2) -> {
       AtomicInteger sharedInterests1 = new AtomicInteger(0);
-      Thread thread = Thread.ofVirtual().start(() -> sharedInterests1.set(countSharedInterests(currentUser, user1)));
+      Thread thread = new Thread(() -> sharedInterests1.set(countSharedInterests(currentUser, user1)));
+      thread.start();
       int sharedInterests2 = countSharedInterests(currentUser, user2);
 
       try {

@@ -2,6 +2,7 @@ package com.nomad.socialspring.security;
 
 import com.nomad.socialspring.common.BDate;
 import com.nomad.socialspring.error.BxException;
+import com.nomad.socialspring.error.BxNotFoundException;
 import com.nomad.socialspring.user.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -74,7 +75,14 @@ public class AuthService {
   }
 
   public UserResponse loginUser(@NotNull LoginRequest request) {
-    if (!userFacade.findByUsername(request.username()).getIsVerified())
+    User user;
+    try {
+      user = userFacade.findByUsername(request.username());
+    } catch (BxNotFoundException e) {
+      throw BxException.unauthorized(BxException.X_BAD_CREDENTIALS);
+    }
+
+    if (!user.getIsVerified())
       throw BxException.unauthorized(BxException.X_ACCOUNT_NOT_VERIFIED);
 
     Authentication authentication = authenticationManager.authenticate(
@@ -83,8 +91,6 @@ public class AuthService {
     SecurityContextHolder.getContext().setAuthentication(authentication);
     String jwt = jwtUtils.generateJwtToken(authentication);
 
-    User user = userFacade.findByUsername(request.username());
-    
     return user.toResponse().withToken(jwt);
   }
 }
