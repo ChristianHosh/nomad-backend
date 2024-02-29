@@ -69,7 +69,7 @@ public class AuthService {
     verificationTokenFacade.delete(verificationToken);
 
     HttpHeaders headers = new HttpHeaders();
-    headers.setLocation(URI.create("https://localhost:5300"));
+    headers.setLocation(URI.create("http://localhost:5173/login"));
 
     return new ResponseEntity<>(headers, HttpStatus.TEMPORARY_REDIRECT);
   }

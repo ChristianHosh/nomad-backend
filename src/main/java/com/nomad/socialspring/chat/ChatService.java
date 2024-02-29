@@ -2,7 +2,9 @@ package com.nomad.socialspring.chat;
 
 import com.nomad.socialspring.error.BxException;
 import com.nomad.socialspring.security.JwtUtils;
-import com.nomad.socialspring.user.*;
+import com.nomad.socialspring.user.User;
+import com.nomad.socialspring.user.UserFacade;
+import com.nomad.socialspring.user.UserResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -114,4 +116,11 @@ public class ChatService {
     return userPage.map(User::toResponse);
   }
 
+  public Page<ChatChannelResponse> getAllChannels(int page, int size) {
+    User user = userFacade.getCurrentUser();
+
+    Page<ChatChannel> chatChannelPage = chatChannelFacade.getChannelThatContainUser(user, page, size);
+
+    return chatChannelPage.map(c -> ChatChannelMapper.entityToResponse(c, user));
+  }
 }

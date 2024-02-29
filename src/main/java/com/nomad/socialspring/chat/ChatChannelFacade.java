@@ -5,6 +5,8 @@ import com.nomad.socialspring.trip.Trip;
 import com.nomad.socialspring.user.User;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -66,5 +68,9 @@ public class ChatChannelFacade {
   public ChatChannel findByTrip(Trip trip) {
     return repository.findByTrip(trip)
             .orElseThrow(BxException.xNotFound(ChatChannel.class, trip));
+  }
+
+  public Page<ChatChannel> getChannelThatContainUser(User user, int page, int size) {
+    return repository.findByChatChannelUsers_User(user, PageRequest.of(page, size));
   }
 }
