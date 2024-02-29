@@ -6,26 +6,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
+@RequestMapping("/api/chat")
 @RequiredArgsConstructor
 public class ChatController {
 
   private final ChatService chatService;
-  private final SimpMessagingTemplate messagingTemplate;
 
-  @MessageMapping("/messages")
-  public void chat(ChatMessageRequest request) {
-    ChatMessageResponse messageResponse = chatService.chat(request);
-
-    messagingTemplate.convertAndSend("/channel/chat/" + messageResponse.chatChannelId(), messageResponse);
-  }
-
-  @PutMapping("/api/chat/read")
+  @PutMapping("/read")
   @ResponseStatus(HttpStatus.OK)
   public ResponseEntity<?> updateMessageReadStatus(
           @RequestBody @Valid ChatMessageReadRequest request
@@ -33,7 +23,7 @@ public class ChatController {
     return chatService.updateMessageReadStatus(request);
   }
 
-  @PostMapping("/api/chat/channels")
+  @PostMapping("/channels")
   @ResponseStatus(HttpStatus.OK)
   public ChatChannelResponse createNewChannel(
           @RequestBody @Valid ChatChannelRequest request
@@ -41,7 +31,7 @@ public class ChatController {
     return chatService.createNewChannel(request);
   }
 
-  @GetMapping("/api/chat/channels")
+  @GetMapping("/channels")
   @ResponseStatus(HttpStatus.OK)
   public Page<ChatChannelResponse> getAllChannels(
           @RequestParam(name = "page", defaultValue = "0") int page,
@@ -50,7 +40,7 @@ public class ChatController {
     return chatService.getAllChannels(page, size);
   }
 
-  @GetMapping("/api/chat/channels/{id}/users")
+  @GetMapping("/channels/{id}/users")
   @ResponseStatus(HttpStatus.OK)
   public Page<UserResponse> getChannelUsers(
           @PathVariable(name = "id") String channelId,
@@ -60,7 +50,7 @@ public class ChatController {
     return chatService.getChannelUsers(channelId, page, size);
   }
 
-  @PutMapping("/api/chat/channels/{id}/users")
+  @PutMapping("/channels/{id}/users")
   @ResponseStatus(HttpStatus.OK)
   public ChatChannelResponse addNewUsersToChannel(
           @PathVariable(name = "id") String channelId,
@@ -69,7 +59,7 @@ public class ChatController {
     return chatService.addNewUsersToChannel(channelId, request);
   }
 
-  @DeleteMapping("/api/chat/channels/{id}/users")
+  @DeleteMapping("/channels/{id}/users")
   @ResponseStatus(HttpStatus.OK)
   public ChatChannelResponse removeUsersFromChannel(
           @PathVariable(name = "id") String channelId,
@@ -79,7 +69,7 @@ public class ChatController {
   }
 
 
-  @GetMapping("/api/chat/channels/{id}/messages")
+  @GetMapping("/channels/{id}/messages")
   @ResponseStatus(HttpStatus.OK)
   public Page<ChatMessageResponse> getChannelMessages(
           @PathVariable(name = "id") String channelId,
