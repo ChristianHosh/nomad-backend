@@ -55,12 +55,6 @@ public abstract class BaseEntity {
 
   @Override
   public String toString() {
-    return "%s | ID:%d | CREATED ON:%s | UPDATED ON:%s | IS NEW:%s".formatted(
-            getClass().getSimpleName(),
-            getId(),
-            getCreatedOn(),
-            getUpdatedOn(),
-            String.valueOf(isNew)
-    );
+    return "%s | ID:%d ".formatted(getClass().getSimpleName(), getId());
   }
 }

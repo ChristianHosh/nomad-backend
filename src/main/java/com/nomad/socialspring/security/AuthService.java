@@ -69,9 +69,9 @@ public class AuthService {
     verificationTokenFacade.delete(verificationToken);
 
     HttpHeaders headers = new HttpHeaders();
-
     headers.setLocation(URI.create("https://localhost:5300"));
-    return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
+
+    return new ResponseEntity<>(headers, HttpStatus.TEMPORARY_REDIRECT);
   }
 
   public UserResponse loginUser(@NotNull LoginRequest request) {

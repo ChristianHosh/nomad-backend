@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface InterestRepository extends JpaRepository<Interest, Long> {
   Optional<Interest> findByNameIgnoreCase(String name);
 
-  @Query("select i from Interest i where :name is null or i.name like concat('%', :name, '%')")
+  @Query("select i from Interest i where :name is null or i.name like :name")
   Page<Interest> findByNameContains(@Param("name") String name, Pageable pageable);
 }
