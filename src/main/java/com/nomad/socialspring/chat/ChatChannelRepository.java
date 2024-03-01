@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -24,4 +26,11 @@ public interface ChatChannelRepository extends JpaRepository<ChatChannel, Long> 
           where chatChannelUsers.user = :user
           """)
   Page<ChatChannel> findByChatChannelUsers_User(@Param("user") User user, Pageable pageable);
+
+  @Query("""
+         select distinct c from ChatChannel c inner join c.chatChannelUsers ccu
+         group by c
+         having sum(case when ccu.user in :users then 1 else 0 end) = :usersSize
+         """)
+  List<ChatChannel> findChatChannelByUsers(@Param("users") Collection<User> users, @Param("usersSize") int usersSize);
 }

@@ -1,6 +1,5 @@
 package com.nomad.socialspring.chat;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -10,9 +9,9 @@ public record ChatChannelRequest(
 
         String name,
 
-        @NotNull(message = "usernames is null")
-        @NotEmpty(message = "usernames is empty")
-        List<@NotNull(message = "username is null") @NotBlank(message = "username is blank") String> usernames
+        @NotNull(message = "id is null")
+        @NotEmpty(message = "id is empty")
+        List<@NotNull(message = "id is null")Long> userIds
 
 
 ) {

@@ -16,7 +16,7 @@ public class UserMapper {
             .username(request.username())
             .password(encoder.encode(request.password()))
             .email(request.email())
-            .role(Role.USER)
+            .role(Role.ROLE_USER)
             .isVerified(false)
             .build();
     user.setProfile(Profile.builder()

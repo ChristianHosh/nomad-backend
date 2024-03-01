@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -79,4 +81,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
                                              @Param("excludeSelf") boolean excludeSelf,
                                              Pageable pageable);
 
+  @Query("select u from User u where u.id in :ids")
+  List<User> findByIdIn(@Param("ids") Collection<Long> ids);
+
+  @Query("select u from User u where u.username in :usernames")
+  List<User> findByUsernameIn(@Param("usernames") Collection<String> usernames);
 }

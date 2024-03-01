@@ -51,7 +51,7 @@ public class ChatService {
   @Transactional
   public ChatChannelResponse createNewChannel(@NotNull ChatChannelRequest request) {
     User user = userFacade.getCurrentUser();
-    List<User> userList = userFacade.findByUsernameList(request.usernames());
+    List<User> userList = userFacade.findByIdList(request.userIds());
     userList.add(user);
 
     ChatChannel chatChannel = chatChannelFacade.newChannel(request.name(), userList);
@@ -68,7 +68,7 @@ public class ChatService {
     if (!chatChannel.containsUser(authenticatedUser))
       throw BxException.unauthorized(BxException.X_CURRENT_USER_NOT_IN_CHAT);
 
-    List<User> userList = userFacade.findByUsernameList(request.usernames());
+    List<User> userList = userFacade.findByIdList(request.userIds());
 
     chatChannel = chatChannelFacade.addNewUsers(chatChannel, userList);
 
@@ -83,7 +83,7 @@ public class ChatService {
     if (!chatChannel.containsUser(userFacade.getCurrentUser()))
       throw BxException.unauthorized(BxException.X_CURRENT_USER_NOT_IN_CHAT);
 
-    List<User> userList = userFacade.findByUsernameList(request.usernames());
+    List<User> userList = userFacade.findByIdList(request.userIds());
 
     chatChannel = chatChannelFacade.removeUsers(chatChannel, userList);
 

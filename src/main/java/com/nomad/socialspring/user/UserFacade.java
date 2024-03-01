@@ -78,15 +78,11 @@ public class UserFacade {
   }
 
   public List<User> findByUsernameList(@NotNull List<String> usernames) {
-    List<User> userList = new ArrayList<>(usernames.size());
+    return repository.findByUsernameIn(usernames);
+  }
 
-    usernames.forEach(username -> {
-      User user = findByUsernameOrNull(username);
-      if (user != null)
-        userList.add(user);
-    });
-
-    return userList;
+  public List<User> findByIdList(@NotNull List<Long> ids) {
+    return repository.findByIdIn(ids);
   }
 
   public Page<User> getUsersByChatChannel(ChatChannel chatChannel, int page, int size) {
@@ -217,6 +213,7 @@ public class UserFacade {
     if (user != null) {
       List<User> userList = userPage.stream()
               .sorted(new UserSocialSorter(user))
+              .filter(u -> u.isNotBlockedBy(user))
               .toList();
 
       return new PageImpl<>(userList, pageable, userPage.getTotalElements());

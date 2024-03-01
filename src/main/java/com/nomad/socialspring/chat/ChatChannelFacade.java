@@ -27,17 +27,20 @@ public class ChatChannelFacade {
             .orElseThrow(BxException.xNotFound(ChatChannel.class, id));
   }
 
-  public ChatChannel newChannel() {
-    return repository.save(new ChatChannel());
-  }
-
   public ChatChannel save(ChatChannel chatChannel) {
     return repository.save(chatChannel);
   }
 
   public ChatChannel newChannel(String name, @NotNull List<User> userList) {
-    ChatChannel chatChannel = newChannel();
-    chatChannel.setName(name);
+    ChatChannel chatChannel = ChatChannel.builder()
+            .uuid(UUID.randomUUID())
+            .name(name)
+            .build();
+
+    ChatChannel oldChannel = findChannelByUsers(userList).get(0);
+    if (oldChannel != null) {
+      return oldChannel;
+    }
 
     userList.forEach(u -> {
       if (!chatChannel.addUser(u))
@@ -45,6 +48,10 @@ public class ChatChannelFacade {
     });
 
     return save(chatChannel);
+  }
+
+  private List<ChatChannel> findChannelByUsers(List<User> userList) {
+    return repository.findChatChannelByUsers(userList, userList.size());
   }
 
   public ChatChannel addNewUsers(@NotNull ChatChannel chatChannel, @NotNull List<User> userList) {
