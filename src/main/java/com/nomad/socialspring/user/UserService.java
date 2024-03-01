@@ -231,11 +231,11 @@ public class UserService {
             .map(User::toResponse);
   }
 
-  public Page<UserResponse> getAllUsers(String query, int page, int size) {
+  public Page<UserResponse> getAllUsers(String query, boolean excludeSelf, int page, int size) {
     User currentUser = userFacade.getCurrentUserOrNull();
 
     return userFacade
-            .getAllUsers(currentUser, query, page, size)
+            .findBySearchParamExcludeBlocked(currentUser, query, excludeSelf, page, size)
             .map(User::toResponse);
   }
 }

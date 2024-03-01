@@ -209,11 +209,10 @@ public class UserFacade {
     return repository.findByBlockedUsersById(user.getId(), PageRequest.of(page, size));
   }
 
-  public Page<User> getAllUsers(User user, String query, int page, int size) {
+  public Page<User> findBySearchParamExcludeBlocked(User user, String query, boolean excludeSelf, int page, int size) {
     Pageable pageable = PageRequest.of(page, size);
-    Page<User> userPage = repository.findBySearchParamExcludeBlocked(query, user,
-            user == null ? null : user.getBlockedUsers(),
-            pageable);
+
+    Page<User> userPage = repository.findBySearchParamExcludeBlocked(query, user, excludeSelf, pageable);
 
     if (user != null) {
       List<User> userList = userPage.stream()
