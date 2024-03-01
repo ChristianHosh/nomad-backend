@@ -37,9 +37,9 @@ public class ChatChannelFacade {
             .name(name)
             .build();
 
-    ChatChannel oldChannel = findChannelByUsers(userList).get(0);
-    if (oldChannel != null) {
-      return oldChannel;
+    List<ChatChannel> potentialOldChannels = findChannelByUsers(userList);
+    if (!potentialOldChannels.isEmpty()) {
+      return potentialOldChannels.get(0);
     }
 
     userList.forEach(u -> {
