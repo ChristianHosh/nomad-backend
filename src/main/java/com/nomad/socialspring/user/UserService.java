@@ -117,8 +117,8 @@ public class UserService {
     User currentUser = userFacade.getCurrentUserOrNull();
 
     return userFacade
-        .getFollowersByUser(user.getId(), page, size)
-        .map(u -> u.toResponse(currentUser));
+            .getFollowersByUser(user.getId(), page, size)
+            .map(u -> u.toResponse(currentUser));
   }
 
   public Page<UserResponse> getUserFollowings(Long userId, int page, int size) {
@@ -126,8 +126,8 @@ public class UserService {
     User currentUser = userFacade.getCurrentUserOrNull();
 
     return userFacade
-        .getFollowingsByUser(user.getId(), page, size)
-        .map(u -> u.toResponse(currentUser));
+            .getFollowingsByUser(user.getId(), page, size)
+            .map(u -> u.toResponse(currentUser));
   }
 
   public UserResponse updateProfileInfo(@NotNull ProfileRequest profileRequest) {
@@ -165,18 +165,18 @@ public class UserService {
     User currentUser = userFacade.getCurrentUser();
 
     return userFacade
-        .getMutualFollowings(user, currentUser, page, size)
-        .map(u -> u.toResponse(currentUser));
+            .getMutualFollowings(user, currentUser, page, size)
+            .map(u -> u.toResponse(currentUser));
   }
 
   public List<UserResponse> getSuggestedUsers() {
     User currentUser = userFacade.getCurrentUser();
 
     return userFacade
-        .getSuggestedUsers(currentUser)
-        .stream()
-        .map(u -> u.toResponse(currentUser))
-        .toList();
+            .getSuggestedUsers(currentUser)
+            .stream()
+            .map(u -> u.toResponse(currentUser))
+            .toList();
   }
 
   public UserResponse createUserReview(Long userId, ReviewRequest reviewRequest) {
@@ -227,7 +227,15 @@ public class UserService {
     User currentUser = userFacade.getCurrentUser();
 
     return userFacade
-        .getBlockedUsers(currentUser, page, size)
-        .map(User::toResponse);
+            .getBlockedUsers(currentUser, page, size)
+            .map(User::toResponse);
+  }
+
+  public Page<UserResponse> getAllUsers(String query, int page, int size) {
+    User currentUser = userFacade.getCurrentUserOrNull();
+
+    return userFacade
+            .getAllUsers(currentUser, query, page, size)
+            .map(User::toResponse);
   }
 }

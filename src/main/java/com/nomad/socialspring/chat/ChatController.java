@@ -15,12 +15,12 @@ public class ChatController {
 
   private final ChatService chatService;
 
-  @PutMapping("/read")
+  @PutMapping("/channels/{id}/read")
   @ResponseStatus(HttpStatus.OK)
   public ResponseEntity<?> updateMessageReadStatus(
-          @RequestBody @Valid ChatMessageReadRequest request
+          @PathVariable(name = "id") String channelId
   ) {
-    return chatService.updateMessageReadStatus(request);
+    return chatService.updateMessageReadStatus(channelId);
   }
 
   @PostMapping("/channels")

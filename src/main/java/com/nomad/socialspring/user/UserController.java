@@ -161,4 +161,14 @@ public class UserController {
   ) {
     return userService.getBlockedUsers(page, size);
   }
+
+  @GetMapping("")
+  @ResponseStatus(HttpStatus.OK)
+  public Page<UserResponse> getAllUsers(
+          @RequestParam(name = "query", defaultValue = "") String query,
+          @RequestParam(name = "page", defaultValue = "0") int page,
+          @RequestParam(name = "size", defaultValue = "25") int size
+  ) {
+    return userService.getAllUsers(query, page, size);
+  }
 }

@@ -168,7 +168,7 @@ public class BxException extends RuntimeException {
   @NotNull
   @Contract("_ -> new")
   public static BxSevereException unexpected(@NotNull Exception e) {
-    return new BxSevereException(e);
+    return new BxSevereException("Internal System Error, Try Again Later", e);
   }
 
   public HttpStatus getStatus() {

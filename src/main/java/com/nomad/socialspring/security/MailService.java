@@ -47,7 +47,7 @@ public class MailService {
     Email from = new Email(fromEmail);
     Email to = new Email(user.getEmail());
 
-    String verificationLink = "localhost:8080/api/auth/verify_email?token=" + verificationToken.getToken();
+    String verificationLink = "localhost:8080/api/auth/verify-email?token=" + verificationToken.getToken();
     Content content = new Content(
             "text/html",
             //language=HTML

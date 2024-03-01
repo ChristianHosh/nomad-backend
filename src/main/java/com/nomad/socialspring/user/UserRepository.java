@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.Optional;
 
 @Repository
@@ -57,4 +58,23 @@ public interface UserRepository extends JpaRepository<User, Long> {
               WHERE BU.user_1_id = :id
           """, nativeQuery = true)
   Page<User> findByBlockedUsersById(@Param("id") Long id, Pageable pageable);
+
+  @Query("""
+          select u from User u
+          where (
+            (
+              :query is not null and (
+                u.username ilike concat('%',:query ,'%')  or
+                u.profile.displayName ilike concat('%',:query ,'%')
+              )
+            ) and (
+              (:currentUser is null and :currentBlockedUsers is null) or (
+                (:currentUser not in elements(u.blockedUsers)) and
+                (u not in :currentBlockedUsers)
+              )
+            )
+          )
+          """)
+  Page<User> findBySearchParamExcludeBlocked(@Param("query") String query, @Param("currentUser") User currentUser, @Param("currentBlockedUsers") Collection<User> currentBlockedUsers, Pageable pageable);
+
 }

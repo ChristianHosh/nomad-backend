@@ -38,9 +38,9 @@ public class ChatService {
   }
 
   @Transactional
-  public ResponseEntity<?> updateMessageReadStatus(@NotNull ChatMessageReadRequest request) {
+  public ResponseEntity<?> updateMessageReadStatus(@NotNull String channelId) {
     User user = userFacade.getCurrentUser();
-    ChatChannel chatChannel = chatChannelFacade.findByUUID(request.chatChannelUUID());
+    ChatChannel chatChannel = chatChannelFacade.findByUUID(channelId);
     ChatChannelUser chatChannelUser = chatChannelUserFacade.findById(chatChannel, user);
 
     chatChannelUserFacade.setReadMessage(chatChannelUser);

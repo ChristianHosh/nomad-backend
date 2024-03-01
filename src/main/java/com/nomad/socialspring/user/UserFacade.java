@@ -208,4 +208,47 @@ public class UserFacade {
   public Page<User> getBlockedUsers(User user, int page, int size) {
     return repository.findByBlockedUsersById(user.getId(), PageRequest.of(page, size));
   }
+
+  public Page<User> getAllUsers(User user, String query, int page, int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    Page<User> userPage = repository.findBySearchParamExcludeBlocked(query, user,
+            user == null ? null : user.getBlockedUsers(),
+            pageable);
+
+    if (user != null) {
+      List<User> userList = userPage.stream()
+              .sorted(new UserSocialSorter(user))
+              .toList();
+
+      return new PageImpl<>(userList, pageable, userPage.getTotalElements());
+    }
+
+    return userPage;
+  }
+
+  private record UserSocialSorter(User currentUser) implements Comparator<User> {
+
+    @Override
+    public int compare(User user1, User user2) {
+      boolean following1 = currentUser.getFollowings().contains(user1);
+      boolean following2 = currentUser.getFollowings().contains(user2);
+
+      // Users currently followed by the current user come first
+      if (following1 && !following2) {
+        return -1;
+      } else if (!following1 && following2) {
+        return 1;
+      }
+
+      // Users following the current user come next
+      if (!following1 && user2.getFollowings().contains(currentUser)) {
+        return -1;
+      } else if (following1 && !user1.getFollowings().contains(currentUser)) {
+        return 1;
+      }
+
+      // Users with no following relationship come last
+      return 0;
+    }
+  }
 }

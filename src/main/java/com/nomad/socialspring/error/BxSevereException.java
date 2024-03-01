@@ -6,8 +6,8 @@ public class BxSevereException extends BxException {
     super(message);
   }
 
-  protected BxSevereException(Exception cause) {
-    super(cause.getMessage(), cause);
+  protected BxSevereException(String message, Exception cause) {
+    super(message, cause);
   }
 
 }
