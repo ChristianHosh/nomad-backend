@@ -12,7 +12,9 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "T_CHAT_MESSAGE")
+@Table(name = "T_CHAT_MESSAGE", indexes = {
+        @Index(name = "idx_chatmessage", columnList = "CHAT_CHANNEL_ID")
+})
 public class ChatMessage extends BaseEntity {
 
   @Column(name = "CONTENT", nullable = false)

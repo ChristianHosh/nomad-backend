@@ -6,10 +6,7 @@ import com.nomad.socialspring.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Builder
 @AllArgsConstructor
@@ -34,6 +31,10 @@ public class ChatChannel extends BaseEntity {
   @OneToMany(mappedBy = "chatChannel", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
   @Builder.Default
   private Set<ChatChannelUser> chatChannelUsers = new HashSet<>();
+
+  @OneToMany(mappedBy = "chatChannel", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+  @Builder.Default
+  private Set<ChatMessage> chatMessages = new LinkedHashSet<>();
 
   @SuppressWarnings("BooleanMethodIsAlwaysInverted")
   public boolean containsUser(User user) {
