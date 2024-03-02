@@ -222,6 +222,23 @@ public class UserFacade {
     return userPage;
   }
 
+  public List<User> getMentionedUsersFromContent(String content) {
+    if (!content.contains("@"))
+      return List.of();
+
+    List<String> usernames = new ArrayList<>();
+    int index = 0;
+    while ((index = content.indexOf("@", index)) != -1) {
+      String username = content.substring(index + 1, content.indexOf(" ", index));
+      if (!usernames.contains(username)) {
+        usernames.add(username);
+      }
+      index += 1;
+    }
+
+    return findByUsernameList(usernames);
+  }
+
   private record UserSocialSorter(User currentUser) implements Comparator<User> {
 
     @Override

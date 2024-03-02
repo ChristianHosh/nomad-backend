@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CommentService {
@@ -33,8 +35,13 @@ public class CommentService {
     Comment comment = commentFacade.findById(commentId);
     User currentUser = userFacade.getCurrentUser();
     if (comment.canBeModifiedBy(currentUser)) {
+      String content = commentRequest.content();
       comment.setContent(commentRequest.content());
-      return commentFacade.save(comment).toResponse(currentUser);
+      List<User> mentionedUsers = userFacade.getMentionedUsersFromContent(content);
+      comment = commentFacade.save(comment);
+
+      notificationFacade.notifyMentions(mentionedUsers, comment);
+      return comment.toResponse(currentUser);
     }
 
     throw BxException.unauthorized(currentUser);

@@ -129,6 +129,7 @@ public class PostService {
       if (!Objects.equals(currentUser, post.getAuthor()))
         notificationFacade.notifyPostComment(post, comment);
 
+      notificationFacade.notifyMentions(userFacade.getMentionedUsersFromContent(comment.getContent()), comment);
       postEventHandler.commentOnPost(currentUser, post);
       return comment.toResponse(currentUser);
     }

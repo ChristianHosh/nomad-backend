@@ -27,6 +27,7 @@ public class NotificationFacade {
   public static final String COMMENT_LIKE_CONTENT = "has liked your comment";
   private static final String JOIN_TRIP_CONTENT = "has joined your trip";
   private static final String REVIEW_CONTENT = "has left a review on your profile";
+  private static final String MENTION_CONTENT = "has mentioned you in their comment";
 
   private final NotificationRepository repository;
 
@@ -122,5 +123,17 @@ public class NotificationFacade {
             review.getAuthor().getId(),
             NotificationType.REVIEW
     );
+  }
+
+  public void notifyMentions(List<User> mentionedUsers, Comment comment) {
+    for (User mentionedUser : mentionedUsers) {
+      notify(
+              mentionedUser,
+              comment.getAuthor(),
+              MENTION_CONTENT,
+              comment.getPost().getId(),
+              NotificationType.POST
+      );
+    }
   }
 }
