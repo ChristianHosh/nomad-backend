@@ -22,8 +22,11 @@ public interface ChatChannelRepository extends JpaRepository<ChatChannel, Long> 
   Optional<ChatChannel> findByTrip(@Param("trip") Trip trip);
 
   @Query("""
-          select c from ChatChannel c inner join c.chatChannelUsers chatChannelUsers
+          select distinct c from ChatChannel c
+            inner join c.chatChannelUsers chatChannelUsers
+            inner join ChatMessage m on m.chatChannel.id = c.id
           where chatChannelUsers.user = :user
+          order by max(m.createdOn)
           """)
   Page<ChatChannel> findByChatChannelUsers_User(@Param("user") User user, Pageable pageable);
 

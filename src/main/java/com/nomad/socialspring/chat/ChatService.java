@@ -56,7 +56,7 @@ public class ChatService {
 
     ChatChannel chatChannel = chatChannelFacade.newChannel(request.name(), userList);
 
-    return ChatChannelMapper.entityToResponse(chatChannel, user);
+    return chatChannel.toResponse(user);
   }
 
   @Transactional
@@ -72,7 +72,7 @@ public class ChatService {
 
     chatChannel = chatChannelFacade.addNewUsers(chatChannel, userList);
 
-    return ChatChannelMapper.entityToResponse(chatChannel);
+    return chatChannel.toResponse();
   }
 
   @Transactional
@@ -87,7 +87,7 @@ public class ChatService {
 
     chatChannel = chatChannelFacade.removeUsers(chatChannel, userList);
 
-    return ChatChannelMapper.entityToResponse(chatChannel);
+    return chatChannel.toResponse();
   }
 
   @Transactional
@@ -121,6 +121,6 @@ public class ChatService {
 
     Page<ChatChannel> chatChannelPage = chatChannelFacade.getChannelThatContainUser(user, page, size);
 
-    return chatChannelPage.map(c -> ChatChannelMapper.entityToResponse(c, user));
+    return chatChannelPage.map(c -> c.toResponse(user));
   }
 }

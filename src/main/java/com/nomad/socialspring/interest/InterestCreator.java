@@ -50,7 +50,7 @@ public class InterestCreator {
       try {
         interestRepository.save(interest);
       } catch (Exception e) {
-        log.info("Could not save interest [%s] [%s]".formatted(interest, interest.getName()));
+        log.warn("Could not save interest [%s] [%s]".formatted(interest, interest.getName()));
       }
     }
     log.info("Done saving interests");

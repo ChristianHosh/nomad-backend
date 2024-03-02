@@ -59,16 +59,12 @@ public class ChatChannel extends BaseEntity {
     return chatChannelUsers.removeIf(channelUser -> channelUser.getUser().equals(user));
   }
 
-  public String getOtherName(User currentUser) {
-    if (getChatChannelUsers().size() > 2 || currentUser == null)
-      return getName();
-    ChatChannelUser otherChannelUser = getChatChannelUsers()
-            .stream()
-            .filter(chatChannelUser -> !chatChannelUser.getUser().equals(currentUser))
-            .findAny().orElse(null);
-    if (otherChannelUser == null)
-      return getName();
-    return otherChannelUser.getUser().getProfile().getDisplayName();
+  public ChatChannelResponse toResponse() {
+    return ChatChannelResponse.fromEntity(this);
+  }
+
+  public ChatChannelResponse toResponse(User user) {
+    return ChatChannelResponse.fromEntity(this, user);
   }
 
 }
