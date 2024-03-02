@@ -27,7 +27,7 @@ public interface ChatChannelRepository extends JpaRepository<ChatChannel, Long> 
             left join c.chatMessages cm
           where ccu.user = :user
           group by c
-          order by max(cm.createdOn)
+          order by coalesce(max(cm.createdOn), c.createdOn)
           """)
   Page<ChatChannel> findByChatChannelUsers_User(@Param("user") User user, Pageable pageable);
 
