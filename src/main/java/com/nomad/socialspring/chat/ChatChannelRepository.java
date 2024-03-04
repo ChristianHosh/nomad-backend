@@ -35,7 +35,7 @@ public interface ChatChannelRepository extends JpaRepository<ChatChannel, Long> 
           select c from ChatChannel c inner join c.chatChannelUsers ccu
           group by c
           having (sum(case when ccu.user in :users then 1 else 0 end) = :usersSize) and
-             (:usersSize = c.chatChannelUsers.size)
+             (:usersSize = size(c.chatChannelUsers))
           """)
   List<ChatChannel> findChatChannelByUsers(@Param("users") Collection<User> users, @Param("usersSize") int usersSize);
 }
