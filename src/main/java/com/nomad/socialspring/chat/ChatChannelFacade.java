@@ -4,6 +4,7 @@ import com.nomad.socialspring.error.BxException;
 import com.nomad.socialspring.trip.Trip;
 import com.nomad.socialspring.user.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ChatChannelFacade {
@@ -32,15 +34,17 @@ public class ChatChannelFacade {
   }
 
   public ChatChannel newChannel(String name, @NotNull List<User> userList) {
+    List<ChatChannel> potentialOldChannels = findChannelByUsers(userList);
+    log.warn("potential old channels [%s]".formatted(potentialOldChannels.toString()));
+    if (!potentialOldChannels.isEmpty()) {
+      return potentialOldChannels.get(0);
+    }
+
+    log.warn("creating new channel");
     ChatChannel chatChannel = ChatChannel.builder()
             .uuid(UUID.randomUUID())
             .name(name)
             .build();
-
-    List<ChatChannel> potentialOldChannels = findChannelByUsers(userList);
-    if (!potentialOldChannels.isEmpty()) {
-      return potentialOldChannels.get(0);
-    }
 
     userList.forEach(u -> {
       if (!chatChannel.addUser(u))
