@@ -32,9 +32,10 @@ public interface ChatChannelRepository extends JpaRepository<ChatChannel, Long> 
   Page<ChatChannel> findByChatChannelUsers_User(@Param("user") User user, Pageable pageable);
 
   @Query("""
-         select c from ChatChannel c inner join c.chatChannelUsers ccu
-         group by c
-         having sum(case when ccu.user in :users then 1 else 0 end) = :usersSize
-         """)
+          select c from ChatChannel c inner join c.chatChannelUsers ccu
+          group by c
+          having (sum(case when ccu.user in :users then 1 else 0 end) = :usersSize) and
+             (:usersSize = c.chatChannelUsers.size)
+          """)
   List<ChatChannel> findChatChannelByUsers(@Param("users") Collection<User> users, @Param("usersSize") int usersSize);
 }
