@@ -41,7 +41,7 @@ public class AuthService {
 
     mailService.sendVerificationEmail(user, verificationToken);
 
-    return user.toResponse();
+    return loginUser(new LoginRequest(request.username(), request.password()));
   }
 
   @Transactional
@@ -81,9 +81,6 @@ public class AuthService {
     } catch (BxNotFoundException e) {
       throw BxException.unauthorized(BxException.X_BAD_CREDENTIALS);
     }
-
-    if (!user.getIsVerified())
-      throw BxException.unauthorized(BxException.X_ACCOUNT_NOT_VERIFIED);
 
     Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(request.username(), request.password()));

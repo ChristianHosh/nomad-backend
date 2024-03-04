@@ -132,11 +132,16 @@ public class UserFacade {
   }
 
   public User updateProfile(@NotNull User user, @NotNull ProfileRequest profileRequest, Set<Interest> interestSet, Country country) {
-    user.getProfile().setBio(profileRequest.bio());
-    user.getProfile().setDisplayName(profileRequest.displayName());
-    user.getProfile().setGender(profileRequest.gender());
-    user.getProfile().setCountry(country);
-    user.keepInterestsAndRemoveOthers(interestSet);
+    if (profileRequest.displayName() != null)
+      user.getProfile().setDisplayName(profileRequest.displayName());
+    if (profileRequest.bio() != null)
+      user.getProfile().setBio(profileRequest.bio());
+    if (profileRequest.gender() != null)
+      user.getProfile().setGender(profileRequest.gender());
+    if (country != null)
+      user.getProfile().setCountry(country);
+    if (interestSet != null)
+      user.keepInterestsAndRemoveOthers(interestSet);
     return save(user);
   }
 
