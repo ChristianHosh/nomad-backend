@@ -43,7 +43,9 @@ public class ChatChannelResponse extends BaseResponse {
     } else {
       if (entity.getName() == null) {
         List<String> names = channelUserSet.stream()
-                .map(ccu -> ccu.getUser().getProfile().getDisplayName())
+                .map(ChatChannelUser::getUser)
+                .filter(u -> !Objects.equals(u, user))
+                .map(u -> u.getProfile().getDisplayName())
                 .limit(3)
                 .toList();
         name = String.join(", ", names);
