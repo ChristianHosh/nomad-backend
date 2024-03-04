@@ -25,8 +25,8 @@ public class ChatMessage extends BaseEntity {
   @JoinColumn(name = "CHAT_CHANNEL_ID", nullable = false)
   private ChatChannel chatChannel;
 
-  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-  @JoinColumn(name = "SENDER_ID")
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false)
+  @JoinColumn(name = "SENDER_ID", nullable = false)
   private User sender;
 
 }
