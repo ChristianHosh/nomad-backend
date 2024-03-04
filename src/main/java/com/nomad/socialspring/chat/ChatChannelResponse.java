@@ -6,7 +6,9 @@ import com.nomad.socialspring.user.User;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 public class ChatChannelResponse extends BaseResponse {
@@ -23,23 +25,36 @@ public class ChatChannelResponse extends BaseResponse {
 
     uuid = entity.getUuid().toString();
     ChatChannelUser otherUser = null;
-    if (user != null && entity.getChatChannelUsers().size() == 2) {
-      otherUser = entity.getChatChannelUsers().stream()
+
+    Set<ChatChannelUser> channelUserSet = entity.getChatChannelUsers();
+    groupSize = channelUserSet.size();
+    isGroup = groupSize > 2;
+
+    if (!isGroup && user != null) {
+      otherUser = channelUserSet.stream()
               .filter(ccu -> !Objects.equals(ccu.getUser(), user))
               .findAny().orElse(null);
     }
+
 
     if (otherUser != null) {
       name = otherUser.getUser().getProfile().getDisplayName();
       avatarUrl = ImageMapper.entityToUrl(otherUser.getUser().getProfile().getProfileImage());
     } else {
-      name = entity.getName();
+      if (entity.getName() == null) {
+        List<String> names = channelUserSet.stream()
+                .map(ccu -> ccu.getUser().getProfile().getDisplayName())
+                .limit(3)
+                .toList();
+        name = String.join(", ", names);
+      } else {
+        name = entity.getName();
+      }
       avatarUrl = null;
     }
 
-    isGroup = otherUser == null;
-    groupSize = entity.getChatChannelUsers().size();
-    ChatChannelUser currentUser = entity.getChatChannelUsers().stream()
+
+    ChatChannelUser currentUser = channelUserSet.stream()
             .filter(ccu -> Objects.equals(ccu.getUser(), user))
             .findAny().orElse(null);
     hasUnreadMessages = currentUser != null && !currentUser.getReadMessages();
@@ -47,7 +62,7 @@ public class ChatChannelResponse extends BaseResponse {
   }
 
   public static ChatChannelResponse fromEntity(ChatChannel entity) {
-   return fromEntity(entity, null);
+    return fromEntity(entity, null);
   }
 
   public static ChatChannelResponse fromEntity(ChatChannel entity, User user) {
