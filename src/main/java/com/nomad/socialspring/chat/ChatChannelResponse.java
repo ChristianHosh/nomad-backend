@@ -14,11 +14,11 @@ import java.util.Set;
 public class ChatChannelResponse extends BaseResponse {
 
   private final String uuid;
-  private final String name;
   private final String avatarUrl;
   private final Boolean isGroup;
   private final Integer groupSize;
   private final Boolean hasUnreadMessages;
+  private String name;
 
   private ChatChannelResponse(@NotNull ChatChannel entity, User user) {
     super(entity);
@@ -36,7 +36,6 @@ public class ChatChannelResponse extends BaseResponse {
               .findAny().orElse(null);
     }
 
-
     if (otherUser != null) {
       name = otherUser.getUser().getProfile().getDisplayName();
       avatarUrl = ImageMapper.entityToUrl(otherUser.getUser().getProfile().getProfileImage());
@@ -49,12 +48,13 @@ public class ChatChannelResponse extends BaseResponse {
                 .limit(3)
                 .toList();
         name = String.join(", ", names);
+        if (groupSize > 3)
+          name += ",...";
       } else {
         name = entity.getName();
       }
       avatarUrl = null;
     }
-
 
     ChatChannelUser currentUser = channelUserSet.stream()
             .filter(ccu -> Objects.equals(ccu.getUser(), user))
