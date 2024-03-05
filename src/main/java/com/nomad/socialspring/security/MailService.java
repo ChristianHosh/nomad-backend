@@ -1,6 +1,7 @@
 package com.nomad.socialspring.security;
 
 import com.nomad.socialspring.error.BxException;
+import com.nomad.socialspring.image.ImageMapper;
 import com.nomad.socialspring.user.User;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
@@ -26,9 +27,6 @@ public class MailService {
   @Value("${nomad.mail.from}")
   private String fromEmail;
 
-  @Value("${nomad.hostname.url}")
-  private String hostname;
-
   public void sendVerificationEmail(User user, VerificationToken verificationToken) {
     Mail mail = getMail(user, verificationToken);
     SendGrid sendGrid = new SendGrid(apiKey);
@@ -50,7 +48,7 @@ public class MailService {
     Email from = new Email(fromEmail);
     Email to = new Email(user.getEmail());
 
-    String verificationLink = hostname + "/api/auth/verify-email?token=" + verificationToken.getToken();
+    String verificationLink = ImageMapper.HOSTNAME + "/api/auth/verify-email?token=" + verificationToken.getToken();
     Content content = new Content(
             "text/html",
             //language=HTML

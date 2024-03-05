@@ -2,7 +2,6 @@ package com.nomad.socialspring.image;
 
 import com.nomad.socialspring.error.BxException;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
@@ -12,9 +11,7 @@ import java.util.zip.Inflater;
 
 public class ImageMapper {
 
-
-  @Value("${nomad.hostname.url}")
-  private static String HOSTNAME;
+  public static final String HOSTNAME = "https://nomad-backend-dev-hmtn.2.ie-1.fl0.io";
 
   @NotNull
   private static byte[] compressImage(byte[] data) {
