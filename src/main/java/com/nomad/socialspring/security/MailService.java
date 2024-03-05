@@ -26,6 +26,9 @@ public class MailService {
   @Value("${nomad.mail.from}")
   private String fromEmail;
 
+  @Value("${nomad.hostname.url}")
+  private String hostname;
+
   public void sendVerificationEmail(User user, VerificationToken verificationToken) {
     Mail mail = getMail(user, verificationToken);
     SendGrid sendGrid = new SendGrid(apiKey);
@@ -47,7 +50,7 @@ public class MailService {
     Email from = new Email(fromEmail);
     Email to = new Email(user.getEmail());
 
-    String verificationLink = "localhost:8080/api/auth/verify-email?token=" + verificationToken.getToken();
+    String verificationLink = hostname + "/api/auth/verify-email?token=" + verificationToken.getToken();
     Content content = new Content(
             "text/html",
             //language=HTML

@@ -2,6 +2,7 @@ package com.nomad.socialspring.image;
 
 import com.nomad.socialspring.error.BxException;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
@@ -11,7 +12,9 @@ import java.util.zip.Inflater;
 
 public class ImageMapper {
 
-  public static final String SERVER_URL = "https://localhost:8080/api/images/";
+
+  @Value("${nomad.hostname.url}")
+  private static String HOSTNAME;
 
   @NotNull
   private static byte[] compressImage(byte[] data) {
@@ -57,7 +60,7 @@ public class ImageMapper {
     if (image == null)
       return null;
 
-    return SERVER_URL + image.getId();
+    return HOSTNAME + "/api/images/" + image.getId();
   }
 
   public static ImageResponse entityToResponse(Image image) {
