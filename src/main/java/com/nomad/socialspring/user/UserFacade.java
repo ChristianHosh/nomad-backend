@@ -1,7 +1,7 @@
 package com.nomad.socialspring.user;
 
 import com.nomad.socialspring.chat.ChatChannel;
-import com.nomad.socialspring.country.Country;
+import com.nomad.socialspring.location.Location;
 import com.nomad.socialspring.error.BxException;
 import com.nomad.socialspring.interest.Interest;
 import com.nomad.socialspring.interest.UserInterest;
@@ -131,15 +131,15 @@ public class UserFacade {
     );
   }
 
-  public User updateProfile(@NotNull User user, @NotNull ProfileRequest profileRequest, Set<Interest> interestSet, Country country) {
+  public User updateProfile(@NotNull User user, @NotNull ProfileRequest profileRequest, Set<Interest> interestSet, Location location) {
     if (profileRequest.displayName() != null)
       user.getProfile().setDisplayName(profileRequest.displayName());
     if (profileRequest.bio() != null)
       user.getProfile().setBio(profileRequest.bio());
     if (profileRequest.gender() != null)
       user.getProfile().setGender(profileRequest.gender());
-    if (country != null)
-      user.getProfile().setCountry(country);
+    if (location != null)
+      user.getProfile().setLocation(location);
     if (interestSet != null)
       user.keepInterestsAndRemoveOthers(interestSet);
     return save(user);

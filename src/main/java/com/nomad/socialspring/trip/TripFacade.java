@@ -1,7 +1,7 @@
 package com.nomad.socialspring.trip;
 
 import com.nomad.socialspring.common.BDate;
-import com.nomad.socialspring.country.Country;
+import com.nomad.socialspring.location.Location;
 import com.nomad.socialspring.error.BxException;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -13,13 +13,13 @@ public class TripFacade {
 
   private final TripRepository repository;
 
-  public Trip save(@NotNull TripRequest tripRequest, Country country) {
+  public Trip save(@NotNull TripRequest tripRequest, Location location) {
     BDate startDate = BDate.valueOf(tripRequest.startDate());
     BDate endDate = BDate.valueOf(tripRequest.endDate());
     if (startDate.after(endDate))
       throw BxException.badRequest(Trip.class, "end date", "can't be before start date");
 
-    return save(TripMapper.requestToEntity(tripRequest, country));
+    return save(TripMapper.requestToEntity(tripRequest, location));
   }
 
   public Trip save(Trip trip) {

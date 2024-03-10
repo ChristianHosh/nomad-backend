@@ -1,7 +1,7 @@
 package com.nomad.socialspring.user;
 
-import com.nomad.socialspring.country.Country;
-import com.nomad.socialspring.country.CountryFacade;
+import com.nomad.socialspring.location.Location;
+import com.nomad.socialspring.location.LocationFacade;
 import com.nomad.socialspring.error.BxException;
 import com.nomad.socialspring.image.ImageFacade;
 import com.nomad.socialspring.interest.Interest;
@@ -28,7 +28,7 @@ public class UserService {
   private final FollowRequestFacade followRequestFacade;
   private final InterestFacade interestFacade;
   private final ImageFacade imageFacade;
-  private final CountryFacade countryFacade;
+  private final LocationFacade locationFacade;
   private final NotificationFacade notificationFacade;
   private final ReviewFacade reviewFacade;
   private final UserRepository userRepository;
@@ -135,11 +135,11 @@ public class UserService {
 
     Set<Interest> interestSet = interestFacade.getInterestFromTags(profileRequest.interestsTags());
 
-    Country country = null;
+    Location location = null;
     if (profileRequest.countryId() != null)
-      country = countryFacade.findById(profileRequest.countryId());
+      location = locationFacade.findById(profileRequest.countryId());
 
-    currentUser = userFacade.updateProfile(currentUser, profileRequest, interestSet, country);
+    currentUser = userFacade.updateProfile(currentUser, profileRequest, interestSet, location);
 
     return currentUser.toResponse();
   }

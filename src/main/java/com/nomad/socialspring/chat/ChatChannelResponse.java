@@ -59,8 +59,10 @@ public class ChatChannelResponse extends BaseResponse {
     ChatChannelUser currentUser = channelUserSet.stream()
             .filter(ccu -> Objects.equals(ccu.getUser(), user))
             .findAny().orElse(null);
-    hasUnreadMessages = currentUser != null && !currentUser.getReadMessages();
-
+    if (currentUser != null)
+      hasUnreadMessages = !currentUser.getReadMessages();
+    else
+      hasUnreadMessages = false;
   }
 
   public static ChatChannelResponse fromEntity(ChatChannel entity) {

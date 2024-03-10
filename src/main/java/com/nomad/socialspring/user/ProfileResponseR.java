@@ -1,6 +1,6 @@
 package com.nomad.socialspring.user;
 
-import com.nomad.socialspring.country.CountryResponse;
+import com.nomad.socialspring.location.LocationResponse;
 import lombok.Builder;
 
 import java.sql.Date;
@@ -15,7 +15,7 @@ public record ProfileResponseR(
         Gender gender,
         Date birthDate,
         String profileImageUrl,
-        CountryResponse country,
+        LocationResponse country,
         Integer numberOfFollowers,
         Integer numberOfFollowings
 ) {

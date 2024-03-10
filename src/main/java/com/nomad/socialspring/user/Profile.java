@@ -1,7 +1,7 @@
 package com.nomad.socialspring.user;
 
 import com.nomad.socialspring.common.BaseEntity;
-import com.nomad.socialspring.country.Country;
+import com.nomad.socialspring.location.Location;
 import com.nomad.socialspring.image.Image;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -44,8 +44,8 @@ public class Profile extends BaseEntity {
   private Image profileImage;
 
   @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-  @JoinColumn(name = "COUNTRY_ID")
-  private Country country;
+  @JoinColumn(name = "LOCATION_ID")
+  private Location location;
 
 
   @Override

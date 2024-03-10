@@ -1,7 +1,6 @@
 package com.nomad.socialspring.recommender;
 
-import com.nomad.socialspring.common.BDate;
-import com.nomad.socialspring.country.Country;
+import com.nomad.socialspring.location.Location;
 import com.nomad.socialspring.post.Post;
 import com.nomad.socialspring.user.User;
 import org.springframework.data.domain.Page;
@@ -11,9 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.sql.Date;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Stream;
 
 
 public interface UserPostInteractionRepository extends JpaRepository<UserPostInteraction, Long> {
@@ -29,11 +26,11 @@ public interface UserPostInteractionRepository extends JpaRepository<UserPostInt
   @Query("""
             select e.post from UserPostInteraction e
             where (e.post.isPrivate = false or (:user is not null and :user in elements(e.post.author.followers))) and
-                  (e.post.trip is not null and e.post.trip.country = :country)
+                  (e.post.trip is not null and e.post.trip.location = :location)
             group by e.post
             order by (sum(e.strength) + (e.post.recencyScore)) desc
           """)
-  Page<Post> findPostsByCountry(@Param("user") User user, Country country, Pageable pageable);
+  Page<Post> findPostsByCountry(@Param("user") User user, Location location, Pageable pageable);
 
   @Query("select count(distinct u) from UserPostInteraction u")
   long countDistinct();

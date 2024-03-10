@@ -1,6 +1,6 @@
 package com.nomad.socialspring.trip;
 
-import com.nomad.socialspring.country.CountryResponse;
+import com.nomad.socialspring.location.LocationResponse;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -14,7 +14,7 @@ public record TripResponse(
         Timestamp updatedOn,
         Date startDate,
         Date endDate,
-        CountryResponse country,
+        LocationResponse country,
         Integer numberOfParticipants
 ) {
 }

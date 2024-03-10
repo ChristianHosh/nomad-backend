@@ -1,11 +1,12 @@
 package com.nomad.socialspring.trip;
 
 import com.nomad.socialspring.common.BaseEntity;
-import com.nomad.socialspring.country.Country;
+import com.nomad.socialspring.location.Location;
 import com.nomad.socialspring.post.Post;
 import com.nomad.socialspring.user.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.boot.json.JacksonJsonParser;
 
 import java.sql.Date;
 import java.util.HashSet;
@@ -27,8 +28,8 @@ public class Trip extends BaseEntity {
   private Date endDate;
 
   @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false)
-  @JoinColumn(name = "COUNTRY_ID", nullable = false)
-  private Country country;
+  @JoinColumn(name = "LOCATION_ID", nullable = false)
+  private Location location;
 
   @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
   @JoinTable(name = "T_TRIP_USERS",

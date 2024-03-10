@@ -1,7 +1,7 @@
 package com.nomad.socialspring.user;
 
 import com.nomad.socialspring.common.BaseResponse;
-import com.nomad.socialspring.country.CountryResponse;
+import com.nomad.socialspring.location.LocationResponse;
 import com.nomad.socialspring.image.ImageMapper;
 import lombok.Getter;
 
@@ -14,7 +14,7 @@ public class ProfileResponse extends BaseResponse {
   private final String profileImageUrl;
   private Gender gender;
   private String bio;
-  private CountryResponse country;
+  private LocationResponse country;
   private Date birthDate;
   private Integer numberOfFollowers;
   private Integer numberOfFollowings;
@@ -31,7 +31,7 @@ public class ProfileResponse extends BaseResponse {
       birthDate = profile.getBirthDate();
       numberOfFollowers = profile.getNumberOfFollowers();
       numberOfFollowings = profile.getNumberOfFollowings();
-      country = CountryResponse.fromEntity(profile.getCountry());
+      country = LocationResponse.fromEntity(profile.getLocation());
     }
   }
   

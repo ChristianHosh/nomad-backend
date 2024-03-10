@@ -1,0 +1,418 @@
+[
+  {
+    "name": "Palestine",
+    "locations": [
+      "Bethlehem",
+      "Ramallah",
+      "Jenin",
+      "Jericho",
+      "Nablus",
+      "Jerusalem",
+      "Haifa",
+      "Yafo",
+      "Akre",
+      "Gaza"
+    ]
+  },
+  {
+    "name": "USA",
+    "locations": [
+      "New York",
+      "Los Angeles",
+      "Chicago",
+      "Houston",
+      "San Francisco",
+      "Washington",
+      "Alaska",
+      "West Virginia",
+      "Las Vegas",
+      "Ohio"
+    ]
+  },
+  {
+    "name": "Canada",
+    "locations": [
+      "Toronto",
+      "Vancouver"
+    ]
+  },
+  {
+    "name": "China",
+    "locations": [
+      "Beijing",
+      "Shanghai",
+      "Shenzhen",
+      "Guangzhou",
+      "Tianjin"
+    ]
+  },
+  {
+    "name": "UK",
+    "locations": [
+      "London",
+      "Manchester",
+      "Birmingham",
+      "Edinburgh"
+    ]
+  },
+  {
+    "name": "Jordan",
+    "locations": [
+      "Amman",
+      "Aqaba",
+      "Wad Ram"
+    ]
+  },
+  {
+    "name": "Ireland",
+    "locations": [
+      "Dublin",
+      "Cork"
+    ]
+  },
+  {
+    "name": "Indonesia",
+    "locations": [
+      "Jakarta",
+      "Surabaya",
+      "Bandung"
+    ]
+  },
+  {
+    "name": "New Zealand",
+    "locations": [
+      "Wellington",
+      "Auckland"
+    ]
+  },
+  {
+    "name": "Armenia",
+    "locations": [
+      "Yerevan"
+    ]
+  },
+  {
+    "name": "Georgia",
+    "locations": [
+      "Tbilisi"
+    ]
+  },
+  {
+    "name": "Bulgaria",
+    "locations": [
+      "Sofia"
+    ]
+  },
+  {
+    "name": "Egypt",
+    "locations": [
+      "Cairo",
+      "Alexandria"
+    ]
+  },
+  {
+    "name": "Turkey",
+    "locations": [
+      "Istanbul",
+      "Ankara",
+      "Antalya"
+    ]
+  },
+  {
+    "name": "Greece",
+    "locations": [
+      "Athens",
+      "Thessaloniki"
+    ]
+  },
+  {
+    "name": "Cyprus",
+    "locations": [
+      "Ayia Napa"
+    ]
+  },
+  {
+    "name": "Spain",
+    "locations": [
+      "Barcelona",
+      "Madrid",
+      "Ibiza"
+    ]
+  },
+  {
+    "name": "Sweden",
+    "locations": [
+      "Stockholm",
+      "Luleå"
+    ]
+  },
+  {
+    "name": "Norway",
+    "locations": [
+      "Oslo",
+      "Bergen",
+      "Trondheim"
+    ]
+  },
+  {
+    "name": "Switzerland",
+    "locations": [
+      "Bern",
+      "Zurich"
+    ]
+  },
+  {
+    "name": "Finland",
+    "locations": [
+      "Helsinki",
+      "Espoo"
+    ]
+  },
+  {
+    "name": "Romania",
+    "locations": [
+      "Bucharest"
+    ]
+  },
+  {
+    "name": "UAE",
+    "locations": [
+      "Abu Dhabi"
+    ]
+  },
+  {
+    "name": "Lebanon",
+    "locations": [
+      "Beirut"
+    ]
+  },
+  {
+    "name": "Japan",
+    "locations": [
+      "Tokyo",
+      "Kyoto",
+      "Osaka",
+      "Nagoya"
+    ]
+  },
+  {
+    "name": "Netherlands",
+    "locations": [
+      "Amsterdam",
+      "Rotterdam"
+    ]
+  },
+  {
+    "name": "France",
+    "locations": [
+      "Paris",
+      "Lyon",
+      "Nantes",
+      "Bordeaux",
+      "Strasbourg"
+    ]
+  },
+  {
+    "name": "Germany",
+    "locations": [
+      "Berlin",
+      "Hamburg",
+      "Munich"
+    ]
+  },
+  {
+    "name": "Russia",
+    "locations": [
+      "Moscow",
+      "St. Petersburg",
+      "Kazan",
+      "Novosibirsk",
+      "Omsk",
+      "Krasnoyarsk",
+      "Kamchatka",
+      "Yekaterinburg",
+      "Krasnoyarsk"
+    ]
+  },
+  {
+    "name": "Poland",
+    "locations": [
+      "Warsaw",
+      "Lublin",
+      "Krakow"
+    ]
+  },
+  {
+    "name": "Italy",
+    "locations": [
+      "Rome",
+      "Milan",
+      "Ravenna",
+      "Venice"
+    ]
+  },
+  {
+    "name": "Portugal",
+    "locations": [
+      "Lisbon",
+      "Porto"
+    ]
+  },
+  {
+    "name": "Brazil",
+    "locations": [
+      "Brasília",
+      "Salvador",
+      "Rio de Janeiro"
+    ]
+  },
+  {
+    "name": "Cuba",
+    "locations": [
+      "Havana"
+    ]
+  },
+  {
+    "name": "Mexico",
+    "locations": [
+      "Mexico City",
+      "Puebla"
+    ]
+  },
+  {
+    "name": "India",
+    "locations": [
+      "New Delhi",
+      "Delhi",
+      "Bangalore",
+      "Chennai"
+    ]
+  },
+  {
+    "name": "Thailand",
+    "locations": [
+      "Bangkok"
+    ]
+  },
+  {
+    "name" : "Australia",
+    "locations": [
+      "Sydney",
+      "Melbourne"
+    ]
+  },
+  {
+    "name": "South Korea",
+    "locations": [
+      "Seoul"
+    ]
+  },
+  {
+    "name": "Pakistan",
+    "locations": [
+      "Islamabad"
+    ]
+  },
+  {
+    "name": "Iraq",
+    "locations": [
+      "Baghdad"
+    ]
+  },
+  {
+    "name": "Saudi Arabia",
+    "locations": [
+      "Riyadh"
+    ]
+  },
+  {
+    "name": "South Africa",
+    "locations": [
+      "Pretoria",
+      "Cape Town"
+    ]
+  },
+  {
+    "name": "Serbia",
+    "locations": [
+      "Belgrade"
+    ]
+  },
+  {
+    "name": "Hungary",
+    "locations": [
+      "Budapest",
+      "Debrecen"
+    ]
+  },
+  {
+    "name": "Austria",
+    "locations": [
+      "Vienna",
+      "Graz"
+    ]
+  },
+  {
+    "name": "Nepal",
+    "locations": [
+      "Kathmandu"
+    ]
+  },
+  {
+    "name": "Nigeria",
+    "locations": [
+      "Abuja"
+    ]
+  },
+  {
+    "name": "Morocco",
+    "locations": [
+      "Casablanca",
+      "Fes",
+      "Marrakesh"
+    ]
+  },
+  {
+    "name": "Iceland",
+    "locations": [
+      "Reykjavik"
+    ]
+  },
+  {
+    "name": "Greenland",
+    "locations": [
+      "Nuuk"
+    ]
+  },
+  {
+    "name": "Slovenia",
+    "locations": [
+      "Ljubljana"
+    ]
+  },
+  {
+    "name": "Croatia",
+    "locations": [
+      "Zagreb",
+      "Dubrovnik"
+    ]
+  },
+  {
+    "name": "Slovakia",
+    "locations": [
+      "Bratislava"
+    ]
+  },
+  {
+    "name": "Czech",
+    "locations": [
+      "Prague"
+    ]
+  },
+  {
+    "name": "Malta",
+    "locations": [
+      "Valletta"
+    ]
+  }
+]

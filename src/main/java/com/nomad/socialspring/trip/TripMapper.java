@@ -1,13 +1,13 @@
 package com.nomad.socialspring.trip;
 
-import com.nomad.socialspring.country.Country;
+import com.nomad.socialspring.location.Location;
 import org.jetbrains.annotations.NotNull;
 
 public class TripMapper {
 
-  public static Trip requestToEntity(@NotNull TripRequest request, Country country) {
+  public static Trip requestToEntity(@NotNull TripRequest request, Location location) {
     return Trip.builder()
-            .country(country)
+            .location(location)
             .startDate(request.startDate())
             .endDate(request.endDate())
             .build();

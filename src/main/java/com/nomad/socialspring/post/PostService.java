@@ -3,7 +3,7 @@ package com.nomad.socialspring.post;
 import com.nomad.socialspring.chat.ChatChannel;
 import com.nomad.socialspring.chat.ChatChannelFacade;
 import com.nomad.socialspring.comment.*;
-import com.nomad.socialspring.country.CountryFacade;
+import com.nomad.socialspring.location.LocationFacade;
 import com.nomad.socialspring.error.BxException;
 import com.nomad.socialspring.image.Image;
 import com.nomad.socialspring.image.ImageFacade;
@@ -35,7 +35,7 @@ public class PostService {
   private final InterestFacade interestFacade;
   private final CommentFacade commentFacade;
   private final NotificationFacade notificationFacade;
-  private final CountryFacade countryFacade;
+  private final LocationFacade locationFacade;
   private final TripFacade tripFacade;
   private final ChatChannelFacade chatChannelFacade;
   private final PostEventHandler postEventHandler;
@@ -47,7 +47,7 @@ public class PostService {
     Set<Image> images = imageFacade.saveAll(imageFiles);
     Trip trip = null;
     if (request.trip() != null) {
-      trip = tripFacade.save(request.trip(), countryFacade.findById(request.trip().countryId()));
+      trip = tripFacade.save(request.trip(), locationFacade.findById(request.trip().countryId()));
 
       ChatChannel chatChannel = ChatChannel.builder()
               .trip(trip)

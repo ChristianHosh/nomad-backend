@@ -1,7 +1,7 @@
 package com.nomad.socialspring.recommender;
 
 import com.nomad.socialspring.common.BDate;
-import com.nomad.socialspring.country.Country;
+import com.nomad.socialspring.location.Location;
 import com.nomad.socialspring.error.BxException;
 import com.nomad.socialspring.interest.Interest;
 import com.nomad.socialspring.interest.UserInterest;
@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
@@ -30,8 +29,8 @@ public class PostRecommendationFacade {
     return findPostsByTrendingAfter(currentUser, BDate.currentDate().addMonth(-1), page, size);
   }
 
-  public Page<Post> findPostsByCountry(User currentUser, Country country, int page, int size) {
-    return postRepository.findPostsByCountry(currentUser, country, PageRequest.of(page, size));
+  public Page<Post> findPostsByCountry(User currentUser, Location location, int page, int size) {
+    return postRepository.findPostsByCountry(currentUser, location, PageRequest.of(page, size));
   }
 
   public Page<Post> findPostsByTrendingAfter(User currentUser, BDate date, int page, int size) {
