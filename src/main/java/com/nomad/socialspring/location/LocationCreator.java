@@ -1,9 +1,8 @@
 package com.nomad.socialspring.location;
 
+import com.google.gson.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -20,10 +19,14 @@ public class LocationCreator {
 
   private final LocationRepository locationRepository;
 
+  private static final String SEP = File.pathSeparator;
+
+
   @EventListener(ApplicationReadyEvent.class)
   void createLocations() {
-    File generatedJsonFile = new File("./online/loc_generated.json");
-    File locationsJsonFile = new File("./online/loc_json.json");
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    File generatedJsonFile = new File("." + SEP + "online" + SEP + "loc_generated.json");
+    File locationsJsonFile = new File("." + SEP + "online" + SEP + "loc_json.json");
 
     if (!locationsJsonFile.exists()) {
       log.error("Could not find loc_json.json file, will not create locations");
@@ -46,17 +49,14 @@ public class LocationCreator {
       }
 
 
-      JSONArray countriesArray = new JSONArray(locationsJson);
-      for (Object obj : countriesArray) {
-        if (obj instanceof JSONObject jsonObject) {
-          String countryName = jsonObject.getString("name");
-          JSONArray locationsArray = jsonObject.getJSONArray("locations");
-          countryLocations.put(countryName, new ArrayList<>(locationsArray.length()));
-          for (Object locObj : locationsArray) {
-            if (locObj instanceof String locationName) {
-              countryLocations.get(countryName).add(locationName);
-            }
-          }
+      for (JsonElement jsonElement : gson.fromJson(locationsJson, JsonArray.class)) {
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
+        String countryName = jsonObject.get("name").getAsString();
+        JsonArray locationsJsonArray = jsonObject.get("locations").getAsJsonArray();
+        countryLocations.put(countryName, new ArrayList<>(locationsJsonArray.size()));
+        for (JsonElement locationElement : locationsJsonArray) {
+          String locationName = locationElement.getAsString();
+          countryLocations.get(countryName).add(locationName);
         }
       }
       try {
@@ -68,7 +68,6 @@ public class LocationCreator {
       log.error("Could not read generated.json file", e);
       return;
     }
-
 
     for (Map.Entry<String, List<String>> entry : countryLocations.entrySet()) {
       String countryName = entry.getKey();
