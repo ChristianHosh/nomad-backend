@@ -41,6 +41,12 @@ public class ChatChannel extends BaseEntity {
     return chatChannelUsers.stream().anyMatch(chatChannelUser -> Objects.equals(chatChannelUser.getChatChannel(), this) && Objects.equals(chatChannelUser.getUser(), user));
   }
 
+  public ChatChannelUser findUser(User user) {
+    return chatChannelUsers.stream()
+            .filter(channelUser -> channelUser.getUser().equals(user))
+            .findAny().orElse(null);
+  }
+
   @SuppressWarnings("BooleanMethodIsAlwaysInverted")
   public boolean addUser(User user) {
     return chatChannelUsers.add(newChatChannelUser(user));

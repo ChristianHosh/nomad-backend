@@ -168,7 +168,7 @@ public class UserFacade {
   }
 
   @NotNull
-  private static List<User> suggestUsers(@NotNull User currentUser) {
+  private List<User> suggestUsers(@NotNull User currentUser) {
     Set<User> potentialUsers = new HashSet<>();
     Set<User> currentUserFollowings = currentUser.getFollowings();
 
@@ -178,12 +178,21 @@ public class UserFacade {
       if (user.getDepth() < 3) {
         potentialUsers.add(user);
         user.getFollowings().forEach(userFollowing -> {
-          userFollowing.incrementDepth(user.getDepth());
-          if (userFollowing.getDepth() < 3)
-            frontier.add(userFollowing);
+          if (userFollowing.canBeSeenBy(currentUser)) {
+            userFollowing.incrementDepth(user.getDepth());
+            if (userFollowing.getDepth() < 3)
+              frontier.add(userFollowing);
+          }
         });
       }
     }
+
+    if (potentialUsers.size() < 10) {
+      int toComplete = 25 - potentialUsers.size();
+      List<User> toAdd = repository.findByRandom(currentUser, toComplete, Pageable.ofSize(toComplete));
+      potentialUsers.addAll(toAdd);
+    }
+
     return potentialUsers.stream()
             .filter(user -> !user.isFollowedBy(currentUser))
             .filter(user -> user.canBeSeenBy(currentUser))

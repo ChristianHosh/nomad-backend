@@ -94,10 +94,13 @@ public class ChatService {
   public Page<ChatMessageResponse> getChannelMessages(String channelId, int page, int size) {
     ChatChannel chatChannel = chatChannelFacade.findByUUID(channelId);
 
+    ChatChannelUser chatChannelUser;
     // if current user is not in {chatChannel} throw unauthorized
-    if (!chatChannel.containsUser(userFacade.getCurrentUser()))
+    if ((chatChannelUser = chatChannel.findUser(userFacade.getCurrentUser())) == null)
       throw BxException.unauthorized(BxException.X_CURRENT_USER_NOT_IN_CHAT);
 
+    chatChannelUser.setReadMessages(true);
+    chatChannelUserFacade.save(chatChannelUser);
     Page<ChatMessage> chatMessagePage = chatMessageFacade.getMessagesByChatChannel(chatChannel, page, size);
 
     return chatMessagePage.map(ChatMessageMapper::entityToResponse);

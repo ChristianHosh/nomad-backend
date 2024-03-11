@@ -86,4 +86,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   @Query("select u from User u where u.username in :usernames")
   List<User> findByUsernameIn(@Param("usernames") Collection<String> usernames);
+
+  @Query("""
+              select u from User u
+              where (
+                :user not member of u.blockedUsers
+              )
+              order by u.createdOn desc
+          """)
+  List<User> findByRandom(@Param("user") User user, @Param("toComplete") int toComplete, Pageable pageable);
 }

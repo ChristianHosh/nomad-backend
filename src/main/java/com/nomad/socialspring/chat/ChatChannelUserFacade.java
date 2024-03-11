@@ -33,4 +33,8 @@ public class ChatChannelUserFacade {
   public void setReadMessage(@NotNull ChatChannelUser chatChannelUser) {
     repository.updateReadMessagesTrueById(chatChannelUser.getId());
   }
+
+  public ChatChannelUser save(ChatChannelUser chatChannelUser) {
+    return repository.save(chatChannelUser);
+  }
 }
