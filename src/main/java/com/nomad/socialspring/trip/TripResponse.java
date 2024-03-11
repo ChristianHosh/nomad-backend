@@ -14,7 +14,7 @@ public record TripResponse(
         Timestamp updatedOn,
         Date startDate,
         Date endDate,
-        LocationResponse country,
+        LocationResponse location,
         Integer numberOfParticipants
 ) {
 }

@@ -14,7 +14,7 @@ public class ProfileResponse extends BaseResponse {
   private final String profileImageUrl;
   private Gender gender;
   private String bio;
-  private LocationResponse country;
+  private LocationResponse location;
   private Date birthDate;
   private Integer numberOfFollowers;
   private Integer numberOfFollowings;
@@ -31,7 +31,7 @@ public class ProfileResponse extends BaseResponse {
       birthDate = profile.getBirthDate();
       numberOfFollowers = profile.getNumberOfFollowers();
       numberOfFollowings = profile.getNumberOfFollowings();
-      country = LocationResponse.fromEntity(profile.getLocation());
+      location = LocationResponse.fromEntity(profile.getLocation());
     }
   }
   

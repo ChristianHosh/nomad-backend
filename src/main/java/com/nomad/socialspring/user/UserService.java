@@ -136,8 +136,8 @@ public class UserService {
     Set<Interest> interestSet = interestFacade.getInterestFromTags(profileRequest.interestsTags());
 
     Location location = null;
-    if (profileRequest.countryId() != null)
-      location = locationFacade.findById(profileRequest.countryId());
+    if (profileRequest.locationId() != null)
+      location = locationFacade.findById(profileRequest.locationId());
 
     currentUser = userFacade.updateProfile(currentUser, profileRequest, interestSet, location);
 

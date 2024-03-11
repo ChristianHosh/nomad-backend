@@ -15,7 +15,7 @@ public record ProfileRequest(
         String bio,
         Gender gender,
         Date birthDate,
-        Long countryId,
+        Long locationId,
         Set<String> interestsTags
 
 ) {

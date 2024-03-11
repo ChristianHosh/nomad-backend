@@ -5,10 +5,7 @@ import com.nomad.socialspring.chat.ChatChannel;
 import com.nomad.socialspring.chat.ChatChannelFacade;
 import com.nomad.socialspring.error.BxException;
 import com.nomad.socialspring.notification.NotificationFacade;
-import com.nomad.socialspring.user.User;
-import com.nomad.socialspring.user.UserFacade;
-import com.nomad.socialspring.user.UserMapper;
-import com.nomad.socialspring.user.UserResponseR;
+import com.nomad.socialspring.user.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,12 +20,13 @@ public class TripService {
   private final ChatChannelFacade chatChannelFacade;
   private final NotificationFacade notificationFacade;
 
-  public Page<UserResponseR> getUsersInTrip(Long tripId, int page, int size) {
+  public Page<UserResponse> getUsersInTrip(Long tripId, int page, int size) {
     Trip trip = tripFacade.findById(tripId);
+    User currentUser = userFacade.getCurrentUserOrNull();
 
     return userFacade
             .getUsersInTrip(trip, page, size)
-            .map(u -> UserMapper.entityToResponse(u, userFacade.getCurrentUserOrNull()));
+            .map(u -> u.toResponse(currentUser));
   }
 
   @Transactional

@@ -47,7 +47,7 @@ public class PostService {
     Set<Image> images = imageFacade.saveAll(imageFiles);
     Trip trip = null;
     if (request.trip() != null) {
-      trip = tripFacade.save(request.trip(), locationFacade.findById(request.trip().countryId()));
+      trip = tripFacade.save(request.trip(), locationFacade.findById(request.trip().locationId()));
 
       ChatChannel chatChannel = ChatChannel.builder()
               .trip(trip)

@@ -18,7 +18,7 @@ public record TripRequest(
         @NotNull(message = "endDate can't be null")
         Date endDate,
 
-        @NotNull(message = "countryId can't be null")
-        Long countryId
+        @NotNull(message = "locationId can't be null")
+        Long locationId
 ) {
 }
