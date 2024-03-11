@@ -188,8 +188,7 @@ public class UserFacade {
     }
 
     if (potentialUsers.size() < 10) {
-      int toComplete = 25 - potentialUsers.size();
-      List<User> toAdd = repository.findByRandom(currentUser, toComplete, Pageable.ofSize(toComplete));
+      List<User> toAdd = repository.findByRandom(currentUser, Pageable.ofSize(25 - potentialUsers.size()));
       potentialUsers.addAll(toAdd);
     }
 

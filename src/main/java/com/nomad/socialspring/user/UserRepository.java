@@ -94,5 +94,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
               )
               order by u.createdOn desc
           """)
-  List<User> findByRandom(@Param("user") User user, @Param("toComplete") int toComplete, Pageable pageable);
+  List<User> findByRandom(@Param("user") User user, Pageable pageable);
 }
