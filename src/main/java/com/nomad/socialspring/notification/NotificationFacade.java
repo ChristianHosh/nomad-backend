@@ -136,4 +136,8 @@ public class NotificationFacade {
       );
     }
   }
+
+  public long countUnreadNotifications(User user) {
+    return repository.countUnreadNotifications(user);
+  }
 }

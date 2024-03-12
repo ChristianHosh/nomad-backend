@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -54,7 +55,7 @@ public class ChatService {
     List<User> userList = userFacade.findByIdList(request.userIds());
     userList.add(user);
 
-    ChatChannel chatChannel = chatChannelFacade.newChannel(request.name(), userList);
+    ChatChannel chatChannel = chatChannelFacade.newChannel(request.name(), userList, user);
 
     return chatChannel.toResponse(user);
   }
@@ -62,10 +63,10 @@ public class ChatService {
   @Transactional
   public ChatChannelResponse addNewUsersToChannel(String channelId, @NotNull ChatChannelUsersRequest request) {
     ChatChannel chatChannel = chatChannelFacade.findByUUID(channelId);
-    User authenticatedUser = userFacade.getCurrentUser();
+    User currentUser = userFacade.getCurrentUser();
 
     // if current user is not in {chatChannel} throw unauthorized
-    if (!chatChannel.containsUser(authenticatedUser))
+    if (!chatChannel.containsUser(currentUser) && Objects.equals(chatChannel.getAdmin(), currentUser))
       throw BxException.unauthorized(BxException.X_CURRENT_USER_NOT_IN_CHAT);
 
     List<User> userList = userFacade.findByIdList(request.userIds());
@@ -78,9 +79,10 @@ public class ChatService {
   @Transactional
   public ChatChannelResponse removeUsersFromChannel(String channelId, @NotNull ChatChannelUsersRequest request) {
     ChatChannel chatChannel = chatChannelFacade.findByUUID(channelId);
+    User currentUser = userFacade.getCurrentUser();
 
     // if current user is not in {chatChannel} throw unauthorized
-    if (!chatChannel.containsUser(userFacade.getCurrentUser()))
+    if (!chatChannel.containsUser(currentUser)  && Objects.equals(chatChannel.getAdmin(), currentUser))
       throw BxException.unauthorized(BxException.X_CURRENT_USER_NOT_IN_CHAT);
 
     List<User> userList = userFacade.findByIdList(request.userIds());

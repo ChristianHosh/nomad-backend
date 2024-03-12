@@ -37,4 +37,8 @@ public class ChatChannelUserFacade {
   public ChatChannelUser save(ChatChannelUser chatChannelUser) {
     return repository.save(chatChannelUser);
   }
+
+  public long countUnreadMessages(User user) {
+    return repository.countUnreadMessages(user);
+  }
 }

@@ -33,17 +33,17 @@ public class ChatChannelFacade {
     return repository.save(chatChannel);
   }
 
-  public ChatChannel newChannel(String name, @NotNull List<User> userList) {
+  public ChatChannel newChannel(String name, @NotNull List<User> userList, User admin) {
     List<ChatChannel> potentialOldChannels = findChannelByUsers(userList);
     log.warn("potential old channels [%s]".formatted(potentialOldChannels.toString()));
     if (!potentialOldChannels.isEmpty()) {
       return potentialOldChannels.get(0);
     }
 
-    log.warn("creating new channel");
     ChatChannel chatChannel = ChatChannel.builder()
             .uuid(UUID.randomUUID())
             .name(name)
+            .admin(admin)
             .build();
 
     userList.forEach(u -> {

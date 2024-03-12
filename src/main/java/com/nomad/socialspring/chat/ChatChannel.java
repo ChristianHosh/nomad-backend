@@ -36,6 +36,10 @@ public class ChatChannel extends BaseEntity {
   @Builder.Default
   private Set<ChatMessage> chatMessages = new LinkedHashSet<>();
 
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+  @JoinColumn(name = "ADMIN_ID")
+  private User admin;
+
   @SuppressWarnings("BooleanMethodIsAlwaysInverted")
   public boolean containsUser(User user) {
     return chatChannelUsers.stream().anyMatch(chatChannelUser -> Objects.equals(chatChannelUser.getChatChannel(), this) && Objects.equals(chatChannelUser.getUser(), user));

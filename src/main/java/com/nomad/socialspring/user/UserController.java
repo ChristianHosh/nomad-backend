@@ -132,6 +132,12 @@ public class UserController {
     return userService.getSuggestedUsers();
   }
 
+  @GetMapping("/info")
+  @ResponseStatus(HttpStatus.OK)
+  public UserInfoResponse getUserInfo() {
+    return userService.getUserInfo();
+  }
+
   //todo get user reviews
 
   @PostMapping("/{id}/reviews")

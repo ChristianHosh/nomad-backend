@@ -1,5 +1,6 @@
 package com.nomad.socialspring.user;
 
+import com.nomad.socialspring.chat.ChatChannelUserFacade;
 import com.nomad.socialspring.location.Location;
 import com.nomad.socialspring.location.LocationFacade;
 import com.nomad.socialspring.error.BxException;
@@ -31,7 +32,7 @@ public class UserService {
   private final LocationFacade locationFacade;
   private final NotificationFacade notificationFacade;
   private final ReviewFacade reviewFacade;
-  private final UserRepository userRepository;
+  private final ChatChannelUserFacade chatChannelUserFacade;
 
   public UserResponse getUser(Long userId) {
     User currentUser = userFacade.getCurrentUserOrNull();
@@ -215,7 +216,7 @@ public class UserService {
       if (!currentUser.removeFollowRequestFrom(user))
         throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOW_REQUEST, user);
     if (currentUser.getBlockedUsers().add(user)) {
-      userRepository.save(currentUser);
+      userFacade.save(currentUser);
       return user.toResponse(currentUser);
     }
     throw BxException.hardcoded(BxException.X_COULD_NOT_BLOCK_USER, user);
@@ -226,7 +227,7 @@ public class UserService {
     User user = userFacade.findById(userId);
 
     if (currentUser.getBlockedUsers().remove(user)) {
-      userRepository.save(currentUser);
+      userFacade.save(currentUser);
       return user.toResponse(currentUser);
     }
     throw BxException.hardcoded(BxException.X_COULD_NOT_UNBLOCK_USER, user);
@@ -246,5 +247,15 @@ public class UserService {
     return userFacade
             .findBySearchParamExcludeBlocked(currentUser, query, excludeSelf, page, size)
             .map(User::toResponse);
+  }
+
+  public UserInfoResponse getUserInfo() {
+    User user = userFacade.getCurrentUser();
+
+    long unreadMessagesCount = chatChannelUserFacade.countUnreadMessages(user);
+    long unreadNotificationsCount = notificationFacade.countUnreadNotifications(user);
+
+
+    return new UserInfoResponse(unreadMessagesCount, unreadNotificationsCount);
   }
 }

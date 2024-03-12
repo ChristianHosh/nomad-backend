@@ -21,4 +21,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
   @Modifying
   @Query("update Notification n set n.isRead = true where n.id in :ids and n.isRead = false")
   void updateIsReadByIdInAndIsReadFalse(@Param("ids") Collection<Long> ids);
+
+  @Query("select count(n) from Notification n where n.isRead = false and n.recipient = :recipient")
+  long countUnreadNotifications(@Param("recipient") User recipient);
 }
