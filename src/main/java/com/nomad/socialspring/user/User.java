@@ -100,7 +100,7 @@ public class User extends BaseEntity {
   @Builder.Default
   private Set<Review> reviews = new HashSet<>();
 
-  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
   @Builder.Default
   private Set<UserInterest> interests = new HashSet<>();
 

@@ -19,14 +19,12 @@ public class LocationCreator {
 
   private final LocationRepository locationRepository;
 
-  private static final String SEP = File.pathSeparator;
-
 
   @EventListener(ApplicationReadyEvent.class)
   void createLocations() {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    File generatedJsonFile = new File("." + SEP + "online" + SEP + "loc_generated.json");
-    File locationsJsonFile = new File("." + SEP + "online" + SEP + "loc_json.json");
+    File generatedJsonFile = new File("./online/loc_generated.json");
+    File locationsJsonFile = new File("./online/loc_json.json");
 
     if (!locationsJsonFile.exists()) {
       log.error("Could not find loc_json.json file, will not create locations");

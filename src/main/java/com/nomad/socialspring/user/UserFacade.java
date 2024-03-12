@@ -18,7 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -148,20 +148,13 @@ public class UserFacade {
   public List<User> getSuggestedUsers(@NotNull User currentUser) {
     List<User> suggestedUsers = new ArrayList<>(suggestUsers(currentUser));
     suggestedUsers.sort((user1, user2) -> {
-      AtomicInteger sharedInterests1 = new AtomicInteger(0);
-      Thread thread = new Thread(() -> sharedInterests1.set(countSharedInterests(currentUser, user1)));
-      thread.start();
+      int sharedInterests1 = countSharedInterests(currentUser, user1);
       int sharedInterests2 = countSharedInterests(currentUser, user2);
 
-      try {
-        thread.join();
-      } catch (InterruptedException e) {
-        throw BxException.unexpected(e);
-      }
-      if (sharedInterests1.get() == sharedInterests2)
+      if (sharedInterests1 == sharedInterests2)
         return Integer.compare(user1.getDepth(), user2.getDepth());
       else
-        return Integer.compare(sharedInterests2, sharedInterests1.get());
+        return Integer.compare(sharedInterests1, sharedInterests2);
     });
 
     return suggestedUsers;
@@ -177,24 +170,26 @@ public class UserFacade {
       User user = frontier.poll();
       if (user.getDepth() < 3) {
         potentialUsers.add(user);
-        user.getFollowings().forEach(userFollowing -> {
+        for (User userFollowing : user.getFollowings()) {
           if (userFollowing.canBeSeenBy(currentUser)) {
             userFollowing.incrementDepth(user.getDepth());
             if (userFollowing.getDepth() < 3)
               frontier.add(userFollowing);
           }
-        });
+        }
       }
     }
+
+    Predicate<User> potentialPredicate = (user) -> !user.isFollowedBy(currentUser);
+    potentialUsers.removeIf(potentialPredicate.or((user) -> user.canBeSeenBy(currentUser)));
 
     if (potentialUsers.size() < 10) {
       List<User> toAdd = repository.findByRandom(currentUser, Pageable.ofSize(25 - potentialUsers.size()));
       potentialUsers.addAll(toAdd);
     }
 
+    potentialUsers.removeIf(potentialPredicate.or((user) -> user.canBeSeenBy(currentUser)));
     return potentialUsers.stream()
-            .filter(user -> !user.isFollowedBy(currentUser))
-            .filter(user -> user.canBeSeenBy(currentUser))
             .limit(25)
             .toList();
   }
