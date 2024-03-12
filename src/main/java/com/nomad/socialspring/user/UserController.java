@@ -25,6 +25,14 @@ public class UserController {
     return userService.getUser(userId);
   }
 
+  @GetMapping("/@{username}")
+  @ResponseStatus(HttpStatus.OK)
+  public UserResponse getUserByUsername(
+          @PathVariable(name = "username") String username
+  ) {
+    return userService.getUser(username);
+  }
+
   @PostMapping("/{id}/follow")
   @ResponseStatus(HttpStatus.OK)
   public UserResponse followUser(

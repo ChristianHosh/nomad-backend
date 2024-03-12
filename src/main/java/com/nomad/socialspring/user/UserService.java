@@ -42,6 +42,15 @@ public class UserService {
     throw BxException.unauthorized(currentUser);
   }
 
+  public UserResponse getUser(String username) {
+    User currentUser = userFacade.getCurrentUserOrNull();
+    User user = userFacade.findByUsername(username);
+
+    if (user.canBeSeenBy(currentUser))
+      return user.toResponse(currentUser, true);
+    throw BxException.unauthorized(currentUser);
+  }
+
   @Transactional
   public UserResponse followUser(Long userId) {
     User user = userFacade.findById(userId);
