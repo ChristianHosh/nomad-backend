@@ -180,15 +180,18 @@ public class UserFacade {
       }
     }
 
-    Predicate<User> potentialPredicate = (user) -> !user.isFollowedBy(currentUser);
-    potentialUsers.removeIf(potentialPredicate.or((user) -> user.canBeSeenBy(currentUser)));
+    Predicate<User> potentialPredicate = (user) -> user.isFollowedBy(currentUser);
+    potentialPredicate = potentialPredicate.and((user) -> !user.canBeSeenBy(currentUser))
+            .or(user -> user.equals(currentUser));
+
+    potentialUsers.removeIf(potentialPredicate);
 
     if (potentialUsers.size() < 10) {
       List<User> toAdd = repository.findByRandom(currentUser, Pageable.ofSize(25 - potentialUsers.size()));
       potentialUsers.addAll(toAdd);
     }
 
-    potentialUsers.removeIf(potentialPredicate.or((user) -> user.canBeSeenBy(currentUser)));
+    potentialUsers.removeIf(potentialPredicate);
     return potentialUsers.stream()
             .limit(25)
             .toList();
