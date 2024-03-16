@@ -29,4 +29,7 @@ public class ChatMessage extends BaseEntity {
   @JoinColumn(name = "SENDER_ID", nullable = false)
   private User sender;
 
+  public ChatMessageResponse toResponse() {
+    return ChatMessageResponse.fromEntity(this);
+  }
 }

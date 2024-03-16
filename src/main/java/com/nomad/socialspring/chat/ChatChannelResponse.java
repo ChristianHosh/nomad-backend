@@ -6,6 +6,7 @@ import com.nomad.socialspring.user.User;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -18,6 +19,7 @@ public class ChatChannelResponse extends BaseResponse {
   private final Boolean isGroup;
   private final Integer groupSize;
   private final Boolean hasUnreadMessages;
+  private final ChatMessageResponse latestMessage;
   private String name;
 
   private ChatChannelResponse(@NotNull ChatChannel entity, User user) {
@@ -63,6 +65,11 @@ public class ChatChannelResponse extends BaseResponse {
       hasUnreadMessages = !currentUser.getReadMessages();
     else
       hasUnreadMessages = false;
+
+    ChatMessage latest = entity.getChatMessages().stream()
+            .max(Comparator.comparingLong(c -> c.getCreatedOn().getTime()))
+            .orElse(null);
+    latestMessage = latest == null ? null : latest.toResponse();
   }
 
   public static ChatChannelResponse fromEntity(ChatChannel entity) {

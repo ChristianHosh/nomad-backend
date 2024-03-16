@@ -35,7 +35,7 @@ public class ChatService {
     ChatMessage chatMessage = chatMessageFacade.newChatMessageFrom(request, sender, chatChannel);
     chatChannelUserFacade.setNewMessageOn(chatChannel);
 
-    return ChatMessageMapper.entityToResponse(chatMessage);
+    return chatMessage.toResponse();
   }
 
   @Transactional
@@ -105,7 +105,7 @@ public class ChatService {
     chatChannelUserFacade.save(chatChannelUser);
     Page<ChatMessage> chatMessagePage = chatMessageFacade.getMessagesByChatChannel(chatChannel, page, size);
 
-    return chatMessagePage.map(ChatMessageMapper::entityToResponse);
+    return chatMessagePage.map(ChatMessage::toResponse);
   }
 
   @Transactional

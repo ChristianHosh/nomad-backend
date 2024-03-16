@@ -162,7 +162,7 @@ public class UserFacade {
 
   @NotNull
   private List<User> suggestUsers(@NotNull User currentUser) {
-    Set<User> potentialUsers = new HashSet<>();
+    Set<User> potentialUsers = new HashSet<>(currentUser.getFollowers());
     Set<User> currentUserFollowings = currentUser.getFollowings();
 
     Queue<User> frontier = new LinkedList<>(currentUserFollowings);
