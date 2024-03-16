@@ -1,10 +1,10 @@
 package com.nomad.socialspring.user;
 
 import com.nomad.socialspring.chat.ChatChannel;
-import com.nomad.socialspring.location.Location;
 import com.nomad.socialspring.error.BxException;
 import com.nomad.socialspring.interest.Interest;
 import com.nomad.socialspring.interest.UserInterest;
+import com.nomad.socialspring.location.Location;
 import com.nomad.socialspring.post.Post;
 import com.nomad.socialspring.security.AuthenticationFacade;
 import com.nomad.socialspring.security.RegisterRequest;
@@ -180,18 +180,19 @@ public class UserFacade {
       }
     }
 
-    Predicate<User> potentialPredicate = (user) -> user.isFollowedBy(currentUser);
-    potentialPredicate = potentialPredicate.and((user) -> !user.canBeSeenBy(currentUser))
-            .or(user -> user.equals(currentUser));
-
-    potentialUsers.removeIf(potentialPredicate);
-
+    Predicate<User> removalPredicate = (user) -> {
+      if (Objects.equals(user, currentUser))
+        return true;
+      if (user.isFollowedBy(currentUser))
+        return true;
+      return !user.canBeSeenBy(currentUser);
+    };
     if (potentialUsers.size() < 10) {
-      List<User> toAdd = repository.findByRandom(currentUser, Pageable.ofSize(25 - potentialUsers.size()));
+      List<User> toAdd = repository.findByRandomAndExclude(currentUser, potentialUsers, Pageable.ofSize(25 - potentialUsers.size()));
       potentialUsers.addAll(toAdd);
     }
 
-    potentialUsers.removeIf(potentialPredicate);
+    potentialUsers.removeIf(removalPredicate);
     return potentialUsers.stream()
             .limit(25)
             .toList();

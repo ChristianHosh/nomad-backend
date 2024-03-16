@@ -90,9 +90,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
   @Query("""
               select u from User u
               where (
-                :user not member of u.blockedUsers
+                :user not member of u.blockedUsers and
+                :user not member of u.followers and
+                u not in :excludedUsers
               )
               order by u.createdOn desc
           """)
-  List<User> findByRandom(@Param("user") User user, Pageable pageable);
+  List<User> findByRandomAndExclude(@Param("user") User user, @Param("excludedUsers") Collection<User> excludedUsers, Pageable pageable);
 }
