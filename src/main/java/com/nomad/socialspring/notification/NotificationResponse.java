@@ -11,6 +11,7 @@ public class NotificationResponse extends BaseResponse {
   private final UserResponse author;
   private final NotificationType type;
   private final Long entityId;
+  private final Boolean isRead;
 
   private NotificationResponse(Notification notification) {
     super(notification);
@@ -19,6 +20,7 @@ public class NotificationResponse extends BaseResponse {
     author = notification.getAuthor().toResponse();
     type = notification.getNotificationType();
     entityId = notification.getEntityId();
+    isRead = notification.getIsRead();
   }
   
   public static NotificationResponse fromEntity(Notification notification) {

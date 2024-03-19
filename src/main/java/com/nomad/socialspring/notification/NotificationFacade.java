@@ -97,8 +97,8 @@ public class NotificationFacade {
 
   private void readAndSave(@NotNull List<Notification> notificationList) {
     repository.updateIsReadByIdInAndIsReadFalse(notificationList.stream()
-            .mapToLong(BaseEntity::getId)
-            .boxed().toList());
+            .map(BaseEntity::getId)
+            .toList());
   }
 
   public void deleteFollowNotification(@NotNull FollowRequest followRequest) {

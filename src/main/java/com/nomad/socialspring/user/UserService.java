@@ -64,7 +64,7 @@ public class UserService {
       FollowRequest followRequest = followRequestFacade.save(new FollowRequest(currentUser, user));
       notificationFacade.notifyFollowRequest(followRequest);
 
-      return user.toResponse();
+      return user.toResponse(currentUser, true);
     }
     throw BxException.unauthorized(currentUser);
   }
@@ -78,7 +78,7 @@ public class UserService {
         throw BxException.badRequest(User.class, BxException.X_CURRENT_USER_ALREADY_UNFOLLOWS);
 
       if (user.removeFollowing(currentUser))
-        return userFacade.save(user).toResponse(currentUser);
+        return userFacade.save(user).toResponse(currentUser, true);
       throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOWER, currentUser);
     }
     throw BxException.unauthorized(currentUser);
