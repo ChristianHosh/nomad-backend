@@ -32,7 +32,7 @@ public class ChatChannelResponse extends BaseResponse {
     groupSize = channelUserSet.size();
     isGroup = groupSize > 2;
 
-    if (!isGroup && user != null) {
+    if (Boolean.FALSE.equals(isGroup) && user != null) {
       otherUser = channelUserSet.stream()
               .filter(ccu -> !Objects.equals(ccu.getUser(), user))
               .findAny().orElse(null);

@@ -203,17 +203,13 @@ public class UserService {
     User currentUser = userFacade.getCurrentUser();
     User user = userFacade.findById(userId);
 
-    if (user.follows(currentUser))
-      if (!user.removeFollowing(currentUser))
+    if (user.follows(currentUser) && (!user.removeFollowing(currentUser)))
         throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOWER, currentUser);
-    if (currentUser.follows(user))
-      if (!currentUser.removeFollowing(user))
+    if (currentUser.follows(user) && (!currentUser.removeFollowing(user)))
         throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOWER, user);
-    if (user.hasPendingRequestFrom(currentUser))
-      if (!user.removeFollowRequestFrom(currentUser))
+    if (user.hasPendingRequestFrom(currentUser) && (!user.removeFollowRequestFrom(currentUser)))
         throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOW_REQUEST, currentUser);
-    if (currentUser.hasPendingRequestFrom(user))
-      if (!currentUser.removeFollowRequestFrom(user))
+    if (currentUser.hasPendingRequestFrom(user) && (!currentUser.removeFollowRequestFrom(user)))
         throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOW_REQUEST, user);
     if (currentUser.getBlockedUsers().add(user)) {
       userFacade.save(currentUser);

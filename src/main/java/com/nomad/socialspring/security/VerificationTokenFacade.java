@@ -31,7 +31,7 @@ public class VerificationTokenFacade {
   }
 
   public VerificationToken accountSave(User user) {
-    if (user.getIsVerified())
+    if (Boolean.TRUE.equals(user.getIsVerified()))
       throw BxException.badRequest(User.class, "already verified");
 
     return repository.save(VerificationTokenMapper.accountToken(user));

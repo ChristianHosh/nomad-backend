@@ -61,7 +61,8 @@ public class PostRecommendationFacade {
 
       try {
         p1ScorerThread.join();
-      } catch (InterruptedException e) {
+      } catch (Exception e) {
+        p1ScorerThread.interrupt();
         throw BxException.unexpected(e);
       }
 

@@ -46,6 +46,7 @@ public class UserFacade {
             .orElseThrow(BxException.xNotFound(User.class, username));
   }
 
+  @SuppressWarnings("unused")
   public User findByUsernameOrNull(String username) {
     return repository.findByUsername(username)
             .orElse(null);
@@ -170,20 +171,13 @@ public class UserFacade {
       User user = frontier.poll();
       if (user.getDepth() < 3) {
         potentialUsers.add(user);
-        for (User userFollowing : user.getFollowings()) {
-          if (userFollowing.canBeSeenBy(currentUser)) {
-            userFollowing.incrementDepth(user.getDepth());
-            if (userFollowing.getDepth() < 3)
-              frontier.add(userFollowing);
-          }
-        }
+        for (User userFollowing : user.getFollowings())
+          fillFrontier(currentUser, userFollowing, user, frontier);
       }
     }
 
-    Predicate<User> removalPredicate = (user) -> {
-      if (Objects.equals(user, currentUser))
-        return true;
-      if (user.isFollowedBy(currentUser))
+    Predicate<User> removalPredicate = user -> {
+      if (Objects.equals(user, currentUser) || user.isFollowedBy(currentUser))
         return true;
       return !user.canBeSeenBy(currentUser);
     };
@@ -196,6 +190,14 @@ public class UserFacade {
     return potentialUsers.stream()
             .limit(25)
             .toList();
+  }
+
+  private static void fillFrontier(@NotNull User currentUser, User userFollowing, User user, Queue<User> frontier) {
+    if (userFollowing.canBeSeenBy(currentUser)) {
+      userFollowing.incrementDepth(user.getDepth());
+      if (userFollowing.getDepth() < 3)
+        frontier.add(userFollowing);
+    }
   }
 
   private static int countSharedInterests(@NotNull User user1, @NotNull User user2) {

@@ -11,6 +11,9 @@ import java.util.zip.Inflater;
 
 public class ImageMapper {
 
+  private ImageMapper() {
+  }
+
   public static final String HOSTNAME = "https://nomad-backend-dev-hmtn.2.ie-1.fl0.io";
 
   @NotNull

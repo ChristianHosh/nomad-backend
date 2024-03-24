@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Builder
@@ -15,7 +16,7 @@ import java.util.Objects;
 @Setter
 @Entity
 @Table(name = "T_CHAT_CHANNEL_USER")
-public class ChatChannelUser {
+public class ChatChannelUser implements Serializable {
 
   @EmbeddedId
   private ChatChannelUsersId id;
@@ -39,8 +40,8 @@ public class ChatChannelUser {
   public final boolean equals(Object object) {
     if (this == object) return true;
     if (object == null) return false;
-    Class<?> oEffectiveClass = object instanceof HibernateProxy ? ((HibernateProxy) object).getHibernateLazyInitializer().getPersistentClass() : object.getClass();
-    Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+    Class<?> oEffectiveClass = object instanceof HibernateProxy proxy ? proxy.getHibernateLazyInitializer().getPersistentClass() : object.getClass();
+    Class<?> thisEffectiveClass = this instanceof HibernateProxy proxy ? proxy.getHibernateLazyInitializer().getPersistentClass() : this.getClass();
     if (thisEffectiveClass != oEffectiveClass) return false;
     ChatChannelUser that = (ChatChannelUser) object;
     return getId() != null && Objects.equals(getId(), that.getId());

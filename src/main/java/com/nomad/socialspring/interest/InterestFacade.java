@@ -17,7 +17,7 @@ public class InterestFacade {
 
   public Set<Interest> getInterestFromTags(Set<String> interestNames) {
     if (interestNames == null || interestNames.isEmpty())
-      return null;
+      return Set.of();
 
     Set<Interest> interestList = new HashSet<>(interestNames.size());
 

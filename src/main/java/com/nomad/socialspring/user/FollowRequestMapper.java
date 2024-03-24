@@ -4,6 +4,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class FollowRequestMapper {
 
+  private FollowRequestMapper() {}
+
   public static FollowRequestResponse entityToResponse(@NotNull FollowRequest followRequest) {
     return FollowRequestResponse.builder()
             .id(followRequest.getId())

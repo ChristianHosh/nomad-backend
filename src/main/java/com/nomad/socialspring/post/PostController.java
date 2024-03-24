@@ -20,7 +20,6 @@ public class PostController {
   private final PostService postService;
 
   @PostMapping("")
-  @ResponseBody
   @ResponseStatus(HttpStatus.CREATED)
   public PostResponse createPost(
           @ModelAttribute @Valid PostRequest request,
@@ -65,7 +64,6 @@ public class PostController {
   }
 
   @PostMapping("/{id}/comments")
-  @ResponseBody
   @ResponseStatus(HttpStatus.CREATED)
   public CommentResponse createComment(
           @PathVariable(name = "id") Long postId,
@@ -85,7 +83,6 @@ public class PostController {
   }
 
   @PostMapping("/{id}/likes")
-  @ResponseBody
   @ResponseStatus(HttpStatus.CREATED)
   public PostResponse likePost(
           @PathVariable(name = "id") Long postId
@@ -94,7 +91,6 @@ public class PostController {
   }
 
   @DeleteMapping("/{id}/likes")
-  @ResponseBody
   @ResponseStatus(HttpStatus.CREATED)
   public PostResponse unlikePost(
           @PathVariable(name = "id") Long postId

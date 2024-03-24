@@ -76,7 +76,6 @@ public class Post extends BaseEntity {
   }
 
   public Comment getTopComment() {
-    Set<Comment> comments = getComments();
     if (comments == null || comments.isEmpty()) return null;
     return comments.stream().max(Comparator.comparingInt(Comment::getNumberOfLikes)).orElseThrow(BxException.xHardcoded("should not happen"));
   }

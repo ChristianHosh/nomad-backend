@@ -4,6 +4,9 @@ import com.nomad.socialspring.location.LocationResponse;
 import com.nomad.socialspring.image.ImageMapper;
 
 public class ProfileMapper {
+
+  private ProfileMapper() {}
+
   public static ProfileResponseR entityToRequest(Profile profile, boolean detailedProfile) {
     if (profile == null)
       return null;

@@ -6,7 +6,6 @@ import com.nomad.socialspring.post.Post;
 import com.nomad.socialspring.user.User;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.boot.json.JacksonJsonParser;
 
 import java.sql.Date;
 import java.util.HashSet;

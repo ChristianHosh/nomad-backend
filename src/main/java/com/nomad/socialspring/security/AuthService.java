@@ -62,7 +62,7 @@ public class AuthService {
   }
 
   @Transactional
-  public ResponseEntity<?> verifyEmail(String token) {
+  public ResponseEntity<Object> verifyEmail(String token) {
     VerificationToken verificationToken = verificationTokenFacade.findByToken(token);
 
     userFacade.verify(verificationToken.getUser());

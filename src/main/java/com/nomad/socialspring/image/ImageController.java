@@ -16,7 +16,7 @@ public class ImageController {
 
   @GetMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public ResponseEntity<?> getImageById(@PathVariable Long id) {
+  public ResponseEntity<Object> getImageById(@PathVariable Long id) {
     return ResponseEntity
             .status(HttpStatus.OK)
             .contentType(MediaType.IMAGE_PNG)

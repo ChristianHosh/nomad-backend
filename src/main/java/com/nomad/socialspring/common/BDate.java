@@ -8,9 +8,10 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+@SuppressWarnings("unused")
 public class BDate extends Date {
 
-  private final static Calendar calender = new GregorianCalendar();
+  private final Calendar calender = new GregorianCalendar();
 
   public BDate(long time) {
     super(time);
@@ -22,6 +23,10 @@ public class BDate extends Date {
 
   public BDate(@NotNull Timestamp timestamp) {
     this(timestamp.getTime());
+  }
+
+  public static BDate valueOf(String value) {
+    return new BDate(Date.valueOf(value).getTime());
   }
 
   @NotNull
@@ -81,6 +86,17 @@ public class BDate extends Date {
     calender.add(field, amount);
     setTime(calender.getTimeInMillis());
     return this;
+  }
+
+  @Override
+  public boolean equals(Object object) {
+    return object instanceof Date date && date.getTime() == getTime();
+  }
+
+  @Override
+  public int hashCode() {
+    long time = getTime();
+    return (int) time ^ (int) (time << 32);
   }
 
   public boolean before(Date when) {

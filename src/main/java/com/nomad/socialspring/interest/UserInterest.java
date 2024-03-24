@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Builder
@@ -15,7 +16,7 @@ import java.util.Objects;
 @Setter
 @Entity
 @Table(name = "T_USER_INTERSEST")
-public class UserInterest {
+public class UserInterest implements Serializable {
 
   @EmbeddedId
   private InterestUserId id;
@@ -52,8 +53,8 @@ public class UserInterest {
   public final boolean equals(Object object) {
     if (this == object) return true;
     if (object == null) return false;
-    Class<?> oEffectiveClass = object instanceof HibernateProxy ? ((HibernateProxy) object).getHibernateLazyInitializer().getPersistentClass() : object.getClass();
-    Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+    Class<?> oEffectiveClass = object instanceof HibernateProxy proxy ? proxy.getHibernateLazyInitializer().getPersistentClass() : object.getClass();
+    Class<?> thisEffectiveClass = this instanceof HibernateProxy proxy ? proxy.getHibernateLazyInitializer().getPersistentClass() : this.getClass();
     if (thisEffectiveClass != oEffectiveClass) return false;
     UserInterest that = (UserInterest) object;
     return getId() != null && Objects.equals(getId(), that.getId());

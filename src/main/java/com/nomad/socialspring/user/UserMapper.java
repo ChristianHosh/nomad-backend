@@ -7,7 +7,10 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class UserMapper {
-  private final static BCryptPasswordEncoder encoder = AuthenticationFacade.getEncoder();
+
+  private static final BCryptPasswordEncoder encoder = AuthenticationFacade.getEncoder();
+
+  private UserMapper() {}
 
   @NotNull
   @Contract("_ -> new")
@@ -26,20 +29,8 @@ public class UserMapper {
     return user;
   }
 
-  public static UserResponseR entityToResponse(User user) {
-    return entityToResponse(user, null, null, false);
-  }
-
   public static UserResponseR entityToResponse(User user, User currentUser) {
     return entityToResponse(user, null, currentUser, false);
-  }
-
-  public static UserResponseR entityToResponse(User user, String token) {
-    return entityToResponse(user, token, null, false);
-  }
-
-  public static UserResponseR entityToResponse(User user, User currentUser, boolean detailedProfile) {
-    return entityToResponse(user, null, currentUser, detailedProfile);
   }
 
   public static UserResponseR entityToResponse(User user, String token, User currentUser, boolean detailedProfile) {

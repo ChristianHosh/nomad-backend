@@ -14,6 +14,7 @@ import java.util.function.Supplier;
 @Getter
 @Setter
 @Accessors(chain = true)
+@SuppressWarnings("unused")
 public class BxException extends RuntimeException {
 
   public static final String X_CURRENT_USER_NOT_IN_CHAT = "You are not in this chat";
@@ -74,8 +75,8 @@ public class BxException extends RuntimeException {
   @NotNull
   @Contract("_, _ -> new")
   public static BxException notFound(@NotNull Class<?> clazz, @NotNull Object value) {
-    if (value instanceof BaseEntity)
-      value = getBaseEntityValue((BaseEntity) value);
+    if (value instanceof BaseEntity entity)
+      value = getBaseEntityValue(entity);
     return new BxNotFoundException(clazz.getSimpleName() + ": not found for [" + value + "]");
   }
 
@@ -161,7 +162,7 @@ public class BxException extends RuntimeException {
   @Contract(pure = true)
   public static Supplier<? extends RuntimeException> xHardcoded(String message) {
     return () -> {
-      throw BxSevereException.hardcoded(message);
+      throw BxException.hardcoded(message);
     };
   }
 

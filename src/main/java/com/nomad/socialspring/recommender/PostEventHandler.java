@@ -29,8 +29,6 @@ public class PostEventHandler {
     userInterests.addAll(post.getInterests().stream()
             .map(interest -> UserInterest.of(interest, user))
             .toList());
-    // may need to uncomment below
-//    user.getInterests().addAll(userInterests);
     return saveAllInterests(userInterests);
   }
 
@@ -58,6 +56,7 @@ public class PostEventHandler {
     return userPostInteractionRepository.findByUserAndPostAndEventOrderByCreatedOnDesc(user, post, event).get(0);
   }
 
+  @SuppressWarnings("unused")
   private void deleteInteractionBy(User user, Post post, Event event) {
     deleteInteraction(findInteraction(user, post, event));
   }
@@ -91,6 +90,7 @@ public class PostEventHandler {
     });
   }
 
+  @SuppressWarnings("unused")
   public void favoritePost(User user, Post post) {
     run(() -> {
       List<UserInterest> sharedInterests = getSharedInterests(user, post);
@@ -99,6 +99,7 @@ public class PostEventHandler {
     });
   }
 
+  @SuppressWarnings("unused")
   public void unfavoritePost(User user, Post post) {
     run(() -> {
       List<UserInterest> sharedInterests = getSharedInterests(user, post);

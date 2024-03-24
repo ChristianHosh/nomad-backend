@@ -12,7 +12,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.hibernate.proxy.HibernateProxy;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
@@ -107,22 +106,6 @@ public class User extends BaseEntity {
   @Transient
   @Builder.Default
   private Integer depth = 0;
-
-  @Override
-  public final boolean equals(Object object) {
-    if (this == object) return true;
-    if (object == null) return false;
-    Class<?> oEffectiveClass = object instanceof HibernateProxy ? ((HibernateProxy) object).getHibernateLazyInitializer().getPersistentClass() : object.getClass();
-    Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
-    if (thisEffectiveClass != oEffectiveClass) return false;
-    User user = (User) object;
-    return getId() != null && Objects.equals(getId(), user.getId());
-  }
-
-  @Override
-  public final int hashCode() {
-    return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
-  }
 
   @Override
   public String getExceptionString() {

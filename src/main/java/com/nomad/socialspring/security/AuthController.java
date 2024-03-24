@@ -34,7 +34,7 @@ public class AuthController {
 
   @GetMapping("/verify-email")
   @ResponseStatus(HttpStatus.TEMPORARY_REDIRECT)
-  public ResponseEntity<?> verifyEmail(@RequestParam(name = "token") String token) {
+  public ResponseEntity<Object> verifyEmail(@RequestParam(name = "token") String token) {
     return authService.verifyEmail(token);
   }
 }

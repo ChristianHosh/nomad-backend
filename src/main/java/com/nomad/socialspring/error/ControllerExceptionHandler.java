@@ -30,7 +30,7 @@ public class ControllerExceptionHandler {
   }
 
   public ResponseEntity<ApiError> buildErrorResponse(@NotNull BxException exception, HttpStatus status, Boolean isSevere) {
-    if (isSevere)
+    if (Boolean.TRUE.equals(isSevere))
       log.error(exception.getMessage(), exception.getException());
     else
       log.warn(exception.getMessage(), exception.getException());

@@ -9,6 +9,8 @@ import java.util.UUID;
 
 public class VerificationTokenMapper {
 
+  private VerificationTokenMapper() {}
+
   @NotNull
   @Contract("_ -> new")
   public static VerificationToken accountToken(@NotNull User user) {

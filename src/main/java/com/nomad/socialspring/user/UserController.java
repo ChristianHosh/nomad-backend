@@ -141,7 +141,6 @@ public class UserController {
   //todo get user reviews
 
   @PostMapping("/{id}/reviews")
-  @ResponseBody
   @ResponseStatus(HttpStatus.CREATED)
   public UserResponse createUserReview(
           @PathVariable(name = "id") Long userId,
