@@ -69,6 +69,7 @@ public class UserService {
     throw BxException.unauthorized(currentUser);
   }
 
+  @Transactional
   public UserResponse unfollowUser(Long userId) {
     User user = userFacade.findById(userId);
     User currentUser = userFacade.getCurrentUser();
@@ -77,7 +78,7 @@ public class UserService {
       if (!currentUser.follows(user))
         throw BxException.badRequest(User.class, BxException.X_CURRENT_USER_ALREADY_UNFOLLOWS);
 
-      if (user.removeFollowing(currentUser))
+      if (currentUser.removeFollowing(user))
         return userFacade.save(user).toResponse(currentUser, true);
       throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOWER, currentUser);
     }
