@@ -21,7 +21,7 @@ public class GScoreScheduler {
   private final PostRepository postRepository;
   private final UserPostInteractionRepository postInteractionRepository;
 
-  @Scheduled(initialDelay = 1, fixedDelay = 3, timeUnit = TimeUnit.MINUTES)
+  @Scheduled(initialDelay = 1, fixedDelay = 3, timeUnit = TimeUnit.HOURS)
   public void computeGScores() {
     log.info("STARTING G-SCORE CALCULATIONS");
     List<Object[]> postGScoreList = postInteractionRepository.findPostsWithInteractionsAfter(BDate.currentDate().addDay(-30));
