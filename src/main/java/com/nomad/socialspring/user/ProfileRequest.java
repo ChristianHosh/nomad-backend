@@ -3,7 +3,7 @@ package com.nomad.socialspring.user;
 import jakarta.validation.constraints.Size;
 
 import java.sql.Date;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Request DTO for {@link Profile}
@@ -16,7 +16,7 @@ public record ProfileRequest(
         Gender gender,
         Date birthDate,
         Long locationId,
-        Set<String> interestsTags
+        List<Long> interestsIds
 
 ) {
 }

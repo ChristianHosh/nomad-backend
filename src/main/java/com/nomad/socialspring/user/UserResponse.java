@@ -3,6 +3,8 @@ package com.nomad.socialspring.user;
 import com.nomad.socialspring.common.BaseResponse;
 import lombok.Getter;
 
+import java.util.Set;
+
 @Getter
 public class UserResponse extends BaseResponse {
   private final String username;
@@ -49,7 +51,8 @@ public class UserResponse extends BaseResponse {
   private static FollowStatus followStat(User user, User currentUser) {
     FollowStatus followStatus = FollowStatus.UNKNOWN;
     if (currentUser != null) {
-      if (currentUser.follows(user))
+      Set<User> followings = currentUser.getFollowings();
+      if (followings.contains(user))
         followStatus = FollowStatus.FOLLOWING;
       else if (user.hasPendingRequestFrom(currentUser))
         followStatus = FollowStatus.PENDING;

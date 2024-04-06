@@ -8,6 +8,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -61,6 +62,7 @@ public class PostEventHandler {
     deleteInteraction(findInteraction(user, post, event));
   }
 
+  @Async
   public void viewPost(User user, Post post) {
     run(() -> {
       Event event = Event.VIEW;
@@ -69,19 +71,20 @@ public class PostEventHandler {
     });
   }
 
+  @Async
   public void likePost(User user, Post post) {
-    run(() -> {
-      Event event = Event.LIKE;
-      List<UserInterest> sharedInterests = getSharedInterests(user, post);
-      sharedInterests = setNewInterestsStrength(sharedInterests, event, true);
+    log.info("running like post");
+    Event event = Event.LIKE;
+    List<UserInterest> sharedInterests = getSharedInterests(user, post);
+    setNewInterestsStrength(sharedInterests, event, true);
 
-      UserPostInteraction postInteraction = createPostInteraction(user, post, event);
-      postInteraction = userPostInteractionRepository.save(postInteraction);
+    UserPostInteraction postInteraction = createPostInteraction(user, post, event);
+    postInteraction = userPostInteractionRepository.save(postInteraction);
 
-
-    });
+    log.info("saved post interaction: {}", postInteraction);
   }
 
+  @Async
   public void unlikePost(User user, Post post) {
     run(() -> {
       List<UserInterest> sharedInterests = getSharedInterests(user, post);
@@ -91,6 +94,7 @@ public class PostEventHandler {
   }
 
   @SuppressWarnings("unused")
+  @Async
   public void favoritePost(User user, Post post) {
     run(() -> {
       List<UserInterest> sharedInterests = getSharedInterests(user, post);
@@ -100,6 +104,7 @@ public class PostEventHandler {
   }
 
   @SuppressWarnings("unused")
+  @Async
   public void unfavoritePost(User user, Post post) {
     run(() -> {
       List<UserInterest> sharedInterests = getSharedInterests(user, post);
@@ -108,6 +113,7 @@ public class PostEventHandler {
     });
   }
 
+  @Async
   public void commentOnPost(User user, Post post) {
     run(() -> {
       List<UserInterest> sharedInterests = getSharedInterests(user, post);
@@ -116,6 +122,7 @@ public class PostEventHandler {
     });
   }
 
+  @Async
   public void deleteComment(User user, Post post) {
     run(() -> {
       List<UserInterest> sharedInterests = getSharedInterests(user, post);
@@ -124,6 +131,7 @@ public class PostEventHandler {
     });
   }
 
+  @Async
   public void likeComment(User user, Post post) {
     run(() -> {
       List<UserInterest> sharedInterests = getSharedInterests(user, post);
@@ -132,6 +140,7 @@ public class PostEventHandler {
     });
   }
 
+  @Async
   public void unlikeComment(User user, Post post) {
     run(() -> {
       List<UserInterest> sharedInterests = getSharedInterests(user, post);
@@ -140,6 +149,7 @@ public class PostEventHandler {
     });
   }
 
+  @Async
   public void joinTrip(User user, Post post) {
     run(() -> {
       List<UserInterest> sharedInterests = getSharedInterests(user, post);
@@ -148,6 +158,7 @@ public class PostEventHandler {
     });
   }
 
+  @Async
   public void leaveTrip(User user, Post post) {
     run(() -> {
       List<UserInterest> sharedInterests = getSharedInterests(user, post);

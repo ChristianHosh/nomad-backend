@@ -10,7 +10,6 @@ import com.nomad.socialspring.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.hibernate.annotations.Formula;
 
 import java.util.Comparator;
 import java.util.HashSet;
@@ -59,9 +58,8 @@ public class Post extends BaseEntity {
   @JoinColumn(name = "TRIP_ID")
   private Trip trip;
 
-  //todo: rework formula (current shows oldest posts with higher score)
-  @Formula("0.000005 * (select extract('epoch' from now()) - extract('epoch' from max(CREATED_ON)))")
-  private Double recencyScore;
+  @Column(name = "z_score")
+  private Double zScore;
 
   public boolean canBeSeenBy(User user) {
     return (!isPrivate || user.follows(author)) && (author.canBeSeenBy(user));
@@ -88,8 +86,10 @@ public class Post extends BaseEntity {
     return PostResponse.fromEntity(this, other);
   }
   
-  public void setGZscore(double score) {
-    System.out.println("new g-z-score => " + score);
-  }
+  public Double getRecencyScore() {
+    long creationTime = getCreatedOn().getTime();
+    long now = System.currentTimeMillis();
 
+    return (now - creationTime) / (1000.0 * 60 * 60);
+  }
 }

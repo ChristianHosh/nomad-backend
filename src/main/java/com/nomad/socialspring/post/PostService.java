@@ -16,6 +16,7 @@ import com.nomad.socialspring.trip.TripFacade;
 import com.nomad.socialspring.user.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PostService {
@@ -46,21 +48,18 @@ public class PostService {
 
     Set<Image> images = imageFacade.saveAll(imageFiles);
     Trip trip = null;
-    if (request.trip() != null) {
+    if (request.trip() != null && request.trip().locationId() != null) {
       trip = tripFacade.save(request.trip(), locationFacade.findById(request.trip().locationId()));
 
-      ChatChannel chatChannel = ChatChannel.builder()
-              .trip(trip)
-              .build();
-      if (!chatChannel.addUser(currentUser))
-        throw BxException.hardcoded(BxException.X_COULD_NOT_ADD_USER_TO_CHANNEL, currentUser);
+      ChatChannel chatChannel = chatChannelFacade.newChannel(trip.getLocation().getFullName(), List.of(currentUser), currentUser);
+      chatChannel.setTrip(trip);
       chatChannelFacade.save(chatChannel);
 
       if (!trip.addParticipant(currentUser))
         throw BxException.hardcoded(BxException.X_COULD_NOT_ADD_USER_TO_TRIP, currentUser);
     }
 
-    Set<Interest> interestSet = interestFacade.getInterestFromTags(request.interestsTags());
+    Set<Interest> interestSet = interestFacade.getInterestsFromIds(request.interestsIds());
 
     Post post = postFacade.save(request, trip, currentUser, interestSet, images);
     return post.toResponse(currentUser);
@@ -71,9 +70,9 @@ public class PostService {
     User currentUser = userFacade.getCurrentUser();
     Post post = postFacade.findById(postId);
 
-    Set<Interest> interestSet = interestFacade.getInterestFromTags(request.interestsTags());
     // only author can update their posts
     if (post.canBeModifiedBy(currentUser)) {
+      Set<Interest> interestSet = interestFacade.getInterestsFromIds(request.interestsIds());
       post.setContent(request.content());
       post.setIsPrivate(request.isPrivate());
       post.setInterests(interestSet);
@@ -159,7 +158,9 @@ public class PostService {
       if (!Objects.equals(currentUser, post.getAuthor()))
         notificationFacade.notifyPostLike(post, currentUser);
 
+      log.info("calling like post from controller");
       postEventHandler.likePost(currentUser, post);
+      log.info("finishing request handling");
       return postFacade.save(post).toResponse(currentUser);
     }
     throw BxException.unauthorized(currentUser);

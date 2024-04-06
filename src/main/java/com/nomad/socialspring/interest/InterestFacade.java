@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -33,5 +34,9 @@ public class InterestFacade {
 
   public Page<Interest> getInterests(int page, int size, String name) {
     return repository.findByNameContains(name, PageRequest.of(page, size));
+  }
+
+  public Set<Interest> getInterestsFromIds(List<Long> ids) {
+    return new HashSet<>(repository.findAllById(ids));
   }
 }

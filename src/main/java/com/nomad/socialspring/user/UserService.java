@@ -141,16 +141,16 @@ public class UserService {
             .map(u -> u.toResponse(currentUser));
   }
 
-  public UserResponse updateProfileInfo(@NotNull ProfileRequest profileRequest) {
+  public UserResponse updateProfileInfo(@NotNull ProfileRequest request) {
     User currentUser = userFacade.getCurrentUser();
 
-    Set<Interest> interestSet = interestFacade.getInterestFromTags(profileRequest.interestsTags());
+    Set<Interest> interestSet = interestFacade.getInterestsFromIds(request.interestsIds());
 
     Location location = null;
-    if (profileRequest.locationId() != null)
-      location = locationFacade.findById(profileRequest.locationId());
+    if (request.locationId() != null)
+      location = locationFacade.findById(request.locationId());
 
-    currentUser = userFacade.updateProfile(currentUser, profileRequest, interestSet, location);
+    currentUser = userFacade.updateProfile(currentUser, request, interestSet, location);
 
     return currentUser.toResponse();
   }

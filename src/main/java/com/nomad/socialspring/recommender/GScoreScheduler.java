@@ -21,7 +21,7 @@ public class GScoreScheduler {
   private final PostRepository postRepository;
   private final UserPostInteractionRepository postInteractionRepository;
 
-  @Scheduled(initialDelay = 1, fixedDelay = 3, timeUnit = TimeUnit.HOURS)
+  @Scheduled(initialDelay = 1, fixedDelay = 3, timeUnit = TimeUnit.MINUTES)
   public void computeGScores() {
     log.info("STARTING G-SCORE CALCULATIONS");
     List<Object[]> postGScoreList = postInteractionRepository.findPostsWithInteractionsAfter(BDate.currentDate().addDay(-30));
@@ -56,7 +56,7 @@ public class GScoreScheduler {
       Post post = postDoublePair.getFirst();
       double gScore = postDoublePair.getSecond();
       double zScore = (gScore - mean) / finalStandardDeviation;
-      post.setGZscore(zScore);
+      post.setZScore(zScore);
     });
     postRepository.saveAll(postScoreList.stream().map(Pair::getFirst).toList());
     log.info("UPDATED GZ-SCORES FOR [%d] POSTS".formatted(count));

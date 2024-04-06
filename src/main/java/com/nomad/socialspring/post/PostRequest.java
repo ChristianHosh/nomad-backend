@@ -1,11 +1,10 @@
 package com.nomad.socialspring.post;
 
 import com.nomad.socialspring.trip.TripRequest;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * Request DTO for {@link Post}
@@ -17,10 +16,9 @@ public record PostRequest(
         @NotNull(message = "isPrivate can't be null")
         Boolean isPrivate,
 
-        @NotNull(message = "interestTags can't be null")
-        Set<String> interestsTags,
+        @NotNull(message = "interestIds can't be null")
+        List<Long> interestsIds,
 
-        @Valid
         TripRequest trip
 ) {
 }
