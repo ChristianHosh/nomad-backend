@@ -19,7 +19,7 @@ public class PostRecommendationFacade {
   private final PostRepository postRepository;
 
   public Page<PostResponse> findPosts(User currentUser, int page, int size) {
-    Page<Post> postPage = postRepository.findByOrderByScoreDesc(PageRequest.of(page, size));
+    Page<Post> postPage = postRepository.findPosts(currentUser, PageRequest.of(page, size));
 
     if (currentUser == null)
       return postPage.map(Post::toResponse);
