@@ -1,6 +1,7 @@
 package com.nomad.socialspring.security;
 
 import com.nomad.socialspring.common.BDate;
+import com.nomad.socialspring.error.BxException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -40,15 +41,17 @@ public class JwtUtils {
       return true;
     } catch (MalformedJwtException e) {
       logger.error("Invalid JWT token: {}", e.getMessage());
+      throw BxException.unauthorized("Invalid JWT token");
     } catch (ExpiredJwtException e) {
       logger.error("JWT token is expired: {}", e.getMessage());
+      throw BxException.unauthorized("JWT token is expired");
     } catch (UnsupportedJwtException e) {
       logger.error("JWT token is unsupported: {}", e.getMessage());
+      throw BxException.unauthorized("JWT token is unsupported");
     } catch (IllegalArgumentException e) {
       logger.error("JWT claims string is empty: {}", e.getMessage());
+      throw BxException.unauthorized("JWT claims string is empty");
     }
-
-    return false;
   }
 
   private Key key() {
