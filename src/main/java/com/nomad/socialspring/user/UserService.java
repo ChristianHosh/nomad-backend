@@ -8,6 +8,8 @@ import com.nomad.socialspring.image.ImageFacade;
 import com.nomad.socialspring.interest.Interest;
 import com.nomad.socialspring.interest.InterestFacade;
 import com.nomad.socialspring.notification.NotificationFacade;
+import com.nomad.socialspring.post.PostFacade;
+import com.nomad.socialspring.post.PostResponse;
 import com.nomad.socialspring.review.Review;
 import com.nomad.socialspring.review.ReviewFacade;
 import com.nomad.socialspring.review.ReviewRequest;
@@ -33,6 +35,7 @@ public class UserService {
   private final NotificationFacade notificationFacade;
   private final ReviewFacade reviewFacade;
   private final ChatChannelUserFacade chatChannelUserFacade;
+  private final PostFacade postFacade;
 
   public UserResponse getUser(Long userId) {
     User currentUser = userFacade.getCurrentUserOrNull();
@@ -254,5 +257,13 @@ public class UserService {
 
 
     return new UserInfoResponse(unreadMessagesCount, unreadNotificationsCount);
+  }
+
+  public Page<PostResponse> getUserPosts(Long userId, int page, int size) {
+    User currentUser = userFacade.getCurrentUserOrNull();
+    User user = userFacade.findById(userId);
+
+    return postFacade.findByUser(user, currentUser, page, size)
+            .map(p -> p.toResponse(currentUser));
   }
 }

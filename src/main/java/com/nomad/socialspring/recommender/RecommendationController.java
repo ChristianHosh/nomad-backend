@@ -24,4 +24,20 @@ public class RecommendationController {
   ) {
     return recommendationFacade.findPosts(userFacade.getCurrentUserOrNull(), page, size);
   }
+
+  @GetMapping("/followings")
+  public Page<PostResponse> getFollowingsRecommendations(
+          @RequestParam(name = "page", defaultValue = "0") int page,
+          @RequestParam(name = "size", defaultValue = "25") int size
+  ) {
+    return recommendationFacade.findFollowingsRecommendations(userFacade.getCurrentUser(), page, size);
+  }
+
+  @GetMapping("/local-trips")
+  public Page<PostResponse> getLocalTripsRecommendations(
+          @RequestParam(name = "page", defaultValue = "0") int page,
+          @RequestParam(name = "size", defaultValue = "25") int size
+  ) {
+    return recommendationFacade.findLocalTripsRecommendations(userFacade.getCurrentUser(), page, size);
+  }
 }

@@ -182,7 +182,9 @@ public class UserFacade {
       return !user.canBeSeenBy(currentUser);
     };
     if (potentialUsers.size() < 10) {
-      List<User> toAdd = repository.findByRandomAndExclude(currentUser, potentialUsers, Pageable.ofSize(25 - potentialUsers.size()));
+      List<User> excludedUsers = new ArrayList<>(potentialUsers);
+      excludedUsers.add(currentUser);
+      List<User> toAdd = repository.findByRandomAndExclude(currentUser, excludedUsers, Pageable.ofSize(25 - potentialUsers.size()));
       potentialUsers.addAll(toAdd);
     }
 

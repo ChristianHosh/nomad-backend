@@ -1,5 +1,6 @@
 package com.nomad.socialspring.user;
 
+import com.nomad.socialspring.post.PostResponse;
 import com.nomad.socialspring.review.ReviewRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -102,6 +103,16 @@ public class UserController {
           @RequestParam(name = "size", defaultValue = "25") int size
   ) {
     return userService.getUserFollowings(userId, page, size);
+  }
+
+  @GetMapping("/{id}/posts")
+  @ResponseStatus(HttpStatus.OK)
+  public Page<PostResponse> getUserPosts(
+          @PathVariable(name = "id") Long userId,
+          @RequestParam(name = "page", defaultValue = "0") int page,
+          @RequestParam(name = "size", defaultValue = "25") int size
+  ) {
+    return userService.getUserPosts(userId, page, size);
   }
 
   @PutMapping("/profile")

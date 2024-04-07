@@ -6,6 +6,8 @@ import com.nomad.socialspring.interest.Interest;
 import com.nomad.socialspring.trip.Trip;
 import com.nomad.socialspring.user.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -43,4 +45,7 @@ public class PostFacade {
             .orElseThrow(BxException.xNotFound(Post.class, id));
   }
 
+  public Page<Post> findByUser(User user, User currentUser, int page, int size) {
+    return repository.findByUser(user, currentUser, PageRequest.of(page, size));
+  }
 }
