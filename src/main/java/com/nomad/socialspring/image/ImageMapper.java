@@ -14,7 +14,7 @@ public class ImageMapper {
   private ImageMapper() {
   }
 
-  public static final String HOSTNAME = "https://nomad-backend-dev-hmtn.2.ie-1.fl0.io";
+  public static final String HOSTNAME = "https://nomad-backend-production-62f9.up.railway.app";
 
   @NotNull
   private static byte[] compressImage(byte[] data) {
