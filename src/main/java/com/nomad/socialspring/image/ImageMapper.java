@@ -1,6 +1,7 @@
 package com.nomad.socialspring.image;
 
 import com.nomad.socialspring.error.BxException;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
+@Slf4j
 public class ImageMapper {
 
   private ImageMapper() {
@@ -72,6 +74,7 @@ public class ImageMapper {
 
   @NotNull
   public static byte[] entityToBytes(@NotNull Image image) {
+    log.info("decompressing image: {}", image);
     return decompressImage(image.getImageData());
   }
 
