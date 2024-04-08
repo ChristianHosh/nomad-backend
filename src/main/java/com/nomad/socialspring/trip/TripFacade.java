@@ -3,6 +3,7 @@ package com.nomad.socialspring.trip;
 import com.nomad.socialspring.common.BDate;
 import com.nomad.socialspring.location.Location;
 import com.nomad.socialspring.error.BxException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ public class TripFacade {
 
   private final TripRepository repository;
 
-  public Trip save(@NotNull TripRequest tripRequest, Location location) {
+  public Trip save(@NotNull @Valid TripRequest tripRequest, Location location) {
     BDate startDate = BDate.valueOf(tripRequest.startDate());
     BDate endDate = BDate.valueOf(tripRequest.endDate());
     if (startDate.after(endDate))

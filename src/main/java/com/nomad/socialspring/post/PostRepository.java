@@ -17,14 +17,14 @@ public interface PostRepository extends JpaRepository<Post, Long> {
           where
             (p.isPrivate = false) or
             (:user is not null and (:user in elements(p.author.followers) or :user = p.author))
-          order by p.zScore DESC
+          order by p.zScore desc nulls last, p.createdOn desc
           """)
   Page<Post> findPosts(User user, Pageable pageable);
 
   @Query("""
           select p from Post p
           where (:user is not null and (:user in elements(p.author.followers) or :user = p.author))
-          order by p.zScore DESC
+          order by p.zScore desc nulls last, p.createdOn desc
           """)
   Page<Post> findFollowingsPosts(User user, Pageable pageable);
 
@@ -36,7 +36,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
               (p.isPrivate = false) or
               (:user is not null and (:user in elements(p.author.followers) or :user = p.author))
             )
-          order by p.zScore DESC
+          order by p.zScore desc nulls last, p.createdOn desc
         """)
   Page<Post> findLocalTrips(User user, Location location, Pageable pageable);
 

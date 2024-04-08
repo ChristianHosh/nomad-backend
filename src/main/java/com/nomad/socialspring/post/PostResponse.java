@@ -19,6 +19,8 @@ public class PostResponse extends BaseResponse {
   private final UserResponse author;
   private final List<ImageResponse> images;
   private final Integer numberOfLikes;
+  private final Integer numberOfComments;
+
 //  private final TripResponse trip;
   private final CommentResponse topComment;
   
@@ -29,6 +31,7 @@ public class PostResponse extends BaseResponse {
     author = post.getAuthor().toResponse(user);
     images = post.getImages().stream().map(ImageMapper::entityToResponse).toList();
     numberOfLikes = post.getNumberOfLikes();
+    numberOfComments = post.getNumberOfComments();
     topComment = post.getTopComment() == null ? null : post.getTopComment().toResponse(user);
     canLike = user == null ? null : post.getLikes().contains(user);
     if (post.getTrip() != null) {

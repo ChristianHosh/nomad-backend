@@ -60,6 +60,11 @@ public class UserDetailsImpl implements UserDetails {
   }
 
   @Override
+  public String toString() {
+    return String.format("%s: %d, %s", getClass().getSimpleName(), getId(), getUsername());
+  }
+
+  @Override
   public boolean isAccountNonExpired() {
     return true;
   }

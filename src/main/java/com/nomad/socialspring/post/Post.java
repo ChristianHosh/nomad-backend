@@ -73,6 +73,10 @@ public class Post extends BaseEntity {
     return likes == null ? 0 : likes.size();
   }
 
+  public Integer getNumberOfComments() {
+    return comments == null ? 0 : comments.size();
+  }
+
   public Comment getTopComment() {
     if (comments == null || comments.isEmpty()) return null;
     return comments.stream().max(Comparator.comparingInt(Comment::getNumberOfLikes)).orElseThrow(BxException.xHardcoded("should not happen"));

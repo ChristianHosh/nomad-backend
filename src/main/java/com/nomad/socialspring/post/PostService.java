@@ -3,6 +3,7 @@ package com.nomad.socialspring.post;
 import com.nomad.socialspring.chat.ChatChannel;
 import com.nomad.socialspring.chat.ChatChannelFacade;
 import com.nomad.socialspring.comment.*;
+import com.nomad.socialspring.common.BDate;
 import com.nomad.socialspring.location.LocationFacade;
 import com.nomad.socialspring.error.BxException;
 import com.nomad.socialspring.image.Image;
@@ -13,6 +14,7 @@ import com.nomad.socialspring.notification.NotificationFacade;
 import com.nomad.socialspring.recommender.PostEventHandler;
 import com.nomad.socialspring.trip.Trip;
 import com.nomad.socialspring.trip.TripFacade;
+import com.nomad.socialspring.trip.TripRequest;
 import com.nomad.socialspring.user.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -48,8 +50,14 @@ public class PostService {
 
     Set<Image> images = imageFacade.saveAll(imageFiles);
     Trip trip = null;
-    if (request.trip() != null && request.trip().locationId() != null) {
-      trip = tripFacade.save(request.trip(), locationFacade.findById(request.trip().locationId()));
+    if (request.locationId() != null) {
+      TripRequest tripRequest = new TripRequest(
+              new BDate(Long.parseLong(request.startDate())),
+              new BDate(Long.parseLong(request.endDate())),
+              request.locationId()
+      );
+
+      trip = tripFacade.save(tripRequest, locationFacade.findById(tripRequest.locationId()));
 
       ChatChannel chatChannel = chatChannelFacade.newChannel(trip.getLocation().getFullName(), List.of(currentUser), currentUser);
       chatChannel.setTrip(trip);
@@ -58,6 +66,9 @@ public class PostService {
       if (!trip.addParticipant(currentUser))
         throw BxException.hardcoded(BxException.X_COULD_NOT_ADD_USER_TO_TRIP, currentUser);
     }
+
+    if (request.interestsIds().isEmpty())
+      request.interestsIds().add(21L); // GENERAL INTEREST
 
     Set<Interest> interestSet = interestFacade.getInterestsFromIds(request.interestsIds());
 

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -25,7 +26,7 @@ public class PostController {
           @ModelAttribute @Valid PostRequest request,
           @RequestParam(name = "imageFiles", required = false) MultipartFile[] imageFiles
   ) {
-    return postService.createPost(request, Arrays.asList(imageFiles));
+    return postService.createPost(request, imageFiles != null ? Arrays.asList(imageFiles) : List.of());
   }
 
   @GetMapping("/{id}")

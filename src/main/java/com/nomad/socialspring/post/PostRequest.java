@@ -1,6 +1,5 @@
 package com.nomad.socialspring.post;
 
-import com.nomad.socialspring.trip.TripRequest;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -19,6 +18,10 @@ public record PostRequest(
         @NotNull(message = "interestIds can't be null")
         List<Long> interestsIds,
 
-        TripRequest trip
+        String startDate,
+
+        String endDate,
+
+        Long locationId
 ) {
 }
