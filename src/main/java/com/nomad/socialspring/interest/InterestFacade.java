@@ -37,6 +37,9 @@ public class InterestFacade {
   }
 
   public Set<Interest> getInterestsFromIds(List<Long> ids) {
+    if (ids == null || ids.isEmpty())
+      return Set.of();
+    
     return new HashSet<>(repository.findAllById(ids));
   }
 }
