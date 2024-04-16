@@ -74,7 +74,6 @@ public class ImageMapper {
 
   @NotNull
   public static byte[] entityToBytes(@NotNull Image image) {
-    log.info("decompressing image: {}", image);
     return decompressImage(image.getImageData());
   }
 

@@ -155,7 +155,7 @@ public class UserService {
 
     currentUser = userFacade.updateProfile(currentUser, request, interestSet, location);
 
-    return currentUser.toResponse();
+    return currentUser.toResponse(null, true);
   }
 
   public UserResponse updateProfileImage(MultipartFile imageFile) {

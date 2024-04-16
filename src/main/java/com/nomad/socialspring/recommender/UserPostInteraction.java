@@ -37,4 +37,14 @@ public class UserPostInteraction extends BaseEntity {
     super.preSave();
     strength = event.getStrength();
   }
+
+  @Override
+  public String toString() {
+    return "UserPostInteraction{" +
+            "user=" + user +
+            ", event=" + event +
+            ", post=" + post +
+            ", strength=" + strength +
+            '}';
+  }
 }

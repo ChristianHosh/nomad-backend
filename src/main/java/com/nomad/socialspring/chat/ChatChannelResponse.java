@@ -1,6 +1,7 @@
 package com.nomad.socialspring.chat;
 
 import com.nomad.socialspring.common.BaseResponse;
+import com.nomad.socialspring.image.Image;
 import com.nomad.socialspring.image.ImageMapper;
 import com.nomad.socialspring.user.User;
 import lombok.Getter;
@@ -55,7 +56,13 @@ public class ChatChannelResponse extends BaseResponse {
       } else {
         name = entity.getName();
       }
-      avatarUrl = null;
+      if (entity.getTrip() != null) {
+        Image image = entity.getTrip().getPost().getImages().stream().findFirst().orElse(null);
+        avatarUrl = ImageMapper.entityToUrl(image);
+      } else {
+        avatarUrl = null;
+      }
+
     }
 
     ChatChannelUser currentUser = channelUserSet.stream()

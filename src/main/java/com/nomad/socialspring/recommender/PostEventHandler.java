@@ -4,24 +4,24 @@ import com.nomad.socialspring.interest.InterestUserRepository;
 import com.nomad.socialspring.interest.UserInterest;
 import com.nomad.socialspring.post.Post;
 import com.nomad.socialspring.user.User;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.scheduling.annotation.Async;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Service
-@Transactional
-@RequiredArgsConstructor
 @Slf4j
+@Service
+@RequiredArgsConstructor
 public class PostEventHandler {
 
+  private final ApplicationEventPublisher applicationEventPublisher;
   private final UserPostInteractionRepository userPostInteractionRepository;
   private final InterestUserRepository interestUserRepository;
 
@@ -37,12 +37,12 @@ public class PostEventHandler {
     return interestUserRepository.saveAll(userInterests);
   }
 
-  private List<UserInterest> setNewInterestsStrength(List<UserInterest> interests, Event event, boolean increment) {
+  private void setNewInterestsStrength(List<UserInterest> interests, Event event, boolean increment) {
     if (increment)
       interests.forEach(interestUser -> interestUser.setScore(interestUser.getScore() + event.getStrength()));
     else
       interests.forEach(interestUser -> interestUser.setScore(interestUser.getScore() - event.getStrength()));
-    return saveAllInterests(interests);
+    saveAllInterests(interests);
   }
 
   private UserPostInteraction createPostInteraction(User user, Post post, Event event) {
@@ -62,112 +62,66 @@ public class PostEventHandler {
     deleteInteraction(findInteraction(user, post, event));
   }
 
-  @Async
   public void viewPost(User user, Post post) {
-    run(() -> {
-      Event event = Event.VIEW;
-      List<UserInterest> sharedInterests = getSharedInterests(user, post);
-      sharedInterests = setNewInterestsStrength(sharedInterests, event, true);
-    });
+    applicationEventPublisher.publishEvent(new UserPostEvent(user, post, Event.VIEW));
   }
 
-  @Async
   public void likePost(User user, Post post) {
-    log.info("running like post");
-    Event event = Event.LIKE;
+    applicationEventPublisher.publishEvent(new UserPostEvent(user, post, Event.LIKE));
+  }
+
+  public void unlikePost(User user, Post post) {
+    applicationEventPublisher.publishEvent(new UserPostEvent(user, post, Event.LIKE, false));
+  }
+
+  @SuppressWarnings("unused")
+  public void favoritePost(User user, Post post) {
+    applicationEventPublisher.publishEvent(new UserPostEvent(user, post, Event.FAVORITE));
+
+  }
+
+  @SuppressWarnings("unused")
+  public void unfavoritePost(User user, Post post) {
+    applicationEventPublisher.publishEvent(new UserPostEvent(user, post, Event.FAVORITE, false));
+  }
+
+  public void commentOnPost(User user, Post post) {
+    applicationEventPublisher.publishEvent(new UserPostEvent(user, post, Event.COMMENT));
+  }
+
+  public void deleteComment(User user, Post post) {
+    applicationEventPublisher.publishEvent(new UserPostEvent(user, post, Event.COMMENT, false));
+  }
+
+  public void likeComment(User user, Post post) {
+    applicationEventPublisher.publishEvent(new UserPostEvent(user, post, Event.LIKE_COMMENT));
+  }
+
+  public void unlikeComment(User user, Post post) {
+    applicationEventPublisher.publishEvent(new UserPostEvent(user, post, Event.LIKE_COMMENT, false));
+  }
+
+  public void joinTrip(User user, Post post) {
+    applicationEventPublisher.publishEvent(new UserPostEvent(user, post, Event.JOIN, false));
+  }
+
+  public void leaveTrip(User user, Post post) {
+    applicationEventPublisher.publishEvent(new UserPostEvent(user, post, Event.JOIN, false));
+
+  }
+
+  @TransactionalEventListener(UserPostEvent.class)
+  public void handleUserPostEvent(UserPostEvent userPostEvent) {
+    log.info("starting to handle user post event: {}", userPostEvent);
+    User user = userPostEvent.user();
+    Post post = userPostEvent.post();
+    Event event = userPostEvent.event();
     List<UserInterest> sharedInterests = getSharedInterests(user, post);
-    setNewInterestsStrength(sharedInterests, event, true);
+    setNewInterestsStrength(sharedInterests, event, userPostEvent.increment());
 
     UserPostInteraction postInteraction = createPostInteraction(user, post, event);
     postInteraction = userPostInteractionRepository.save(postInteraction);
 
     log.info("saved post interaction: {}", postInteraction);
-  }
-
-  @Async
-  public void unlikePost(User user, Post post) {
-    run(() -> {
-      List<UserInterest> sharedInterests = getSharedInterests(user, post);
-      sharedInterests = setNewInterestsStrength(sharedInterests, Event.LIKE, false);
-
-    });
-  }
-
-  @SuppressWarnings("unused")
-  @Async
-  public void favoritePost(User user, Post post) {
-    run(() -> {
-      List<UserInterest> sharedInterests = getSharedInterests(user, post);
-      sharedInterests = setNewInterestsStrength(sharedInterests, Event.FAVORITE, true);
-
-    });
-  }
-
-  @SuppressWarnings("unused")
-  @Async
-  public void unfavoritePost(User user, Post post) {
-    run(() -> {
-      List<UserInterest> sharedInterests = getSharedInterests(user, post);
-      sharedInterests = setNewInterestsStrength(sharedInterests, Event.FAVORITE, false);
-
-    });
-  }
-
-  @Async
-  public void commentOnPost(User user, Post post) {
-    run(() -> {
-      List<UserInterest> sharedInterests = getSharedInterests(user, post);
-      sharedInterests = setNewInterestsStrength(sharedInterests, Event.COMMENT, true);
-
-    });
-  }
-
-  @Async
-  public void deleteComment(User user, Post post) {
-    run(() -> {
-      List<UserInterest> sharedInterests = getSharedInterests(user, post);
-      sharedInterests = setNewInterestsStrength(sharedInterests, Event.COMMENT, false);
-
-    });
-  }
-
-  @Async
-  public void likeComment(User user, Post post) {
-    run(() -> {
-      List<UserInterest> sharedInterests = getSharedInterests(user, post);
-      sharedInterests = setNewInterestsStrength(sharedInterests, Event.LIKE_COMMENT, true);
-
-    });
-  }
-
-  @Async
-  public void unlikeComment(User user, Post post) {
-    run(() -> {
-      List<UserInterest> sharedInterests = getSharedInterests(user, post);
-      sharedInterests = setNewInterestsStrength(sharedInterests, Event.LIKE_COMMENT, false);
-
-    });
-  }
-
-  @Async
-  public void joinTrip(User user, Post post) {
-    run(() -> {
-      List<UserInterest> sharedInterests = getSharedInterests(user, post);
-      sharedInterests = setNewInterestsStrength(sharedInterests, Event.JOIN, true);
-
-    });
-  }
-
-  @Async
-  public void leaveTrip(User user, Post post) {
-    run(() -> {
-      List<UserInterest> sharedInterests = getSharedInterests(user, post);
-      sharedInterests = setNewInterestsStrength(sharedInterests, Event.JOIN, false);
-
-    });
-  }
-
-  private void run(Runnable task) {
-    new Thread(task).start();
   }
 }
