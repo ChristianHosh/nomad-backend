@@ -13,6 +13,7 @@ import lombok.*;
 
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Builder
@@ -60,6 +61,12 @@ public class Post extends BaseEntity {
 
   @Column(name = "z_score")
   private Double zScore;
+
+  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+  @JoinTable(name = "T_POST_FAVORITES",
+          joinColumns = @JoinColumn(name = "POST_ID"),
+          inverseJoinColumns = @JoinColumn(name = "USER_ID"))
+  private Set<User> favorites = new LinkedHashSet<>();
 
   public boolean canBeSeenBy(User user) {
     return (!isPrivate || user.follows(author)) && (author.canBeSeenBy(user));

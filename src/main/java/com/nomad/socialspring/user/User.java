@@ -15,6 +15,7 @@ import lombok.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -106,6 +107,9 @@ public class User extends BaseEntity {
   @Transient
   @Builder.Default
   private Integer depth = 0;
+
+  @ManyToMany(mappedBy = "likes", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+  private Set<Post> favoritePosts = new LinkedHashSet<>();
 
   @Override
   public String getExceptionString() {

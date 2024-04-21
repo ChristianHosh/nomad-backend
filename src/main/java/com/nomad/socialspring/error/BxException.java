@@ -38,6 +38,8 @@ public class BxException extends RuntimeException {
   public static final String X_COULD_NOT_UNBLOCK_USER = "Could not unblock user";
   public static final String X_INVALID_TOKEN = "Invalid Token";
   public static final String X_BAD_CREDENTIALS = "Username or password incorrect";
+  public static final String X_COULD_NOT_FAVORITE_POST = "Could not favorite post";
+  public static final String X_COULD_NOT_UNFAVORITE_POST = "Could not unfavorite post";
 
   private Exception exception;
 

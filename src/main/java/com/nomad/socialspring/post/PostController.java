@@ -99,4 +99,20 @@ public class PostController {
     return postService.unlikePost(postId);
   }
 
+  @PostMapping("/{id}/favorite")
+  @ResponseStatus(HttpStatus.CREATED)
+  public PostResponse favoritePost(
+          @PathVariable(name = "id") Long postId
+  ) {
+    return postService.favoritePost(postId);
+  }
+
+  @DeleteMapping("/{id}/favorite")
+  @ResponseStatus(HttpStatus.OK)
+  public PostResponse unfavoritePost(
+          @PathVariable(name = "id") Long postId
+  ) {
+    return postService.unfavoritePost(postId);
+  }
+
 }

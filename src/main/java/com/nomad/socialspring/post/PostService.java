@@ -192,4 +192,34 @@ public class PostService {
     throw BxException.unauthorized(currentUser);
   }
 
+  @Transactional
+  public PostResponse favoritePost(Long postId) {
+    Post post = postFacade.findById(postId);
+    User currentUser = userFacade.getCurrentUser();
+
+    if (post.canBeSeenBy(currentUser)) {
+      if (!post.getFavorites().add(currentUser))
+        throw BxException.hardcoded(BxException.X_COULD_NOT_FAVORITE_POST, currentUser);
+
+      postEventHandler.favoritePost(currentUser, post);
+      return postFacade.save(post).toResponse(currentUser);
+    }
+    throw BxException.unauthorized(currentUser);
+  }
+
+  @Transactional
+  public PostResponse unfavoritePost(Long postId) {
+    Post post = postFacade.findById(postId);
+    User currentUser = userFacade.getCurrentUser();
+
+    if (post.canBeSeenBy(currentUser)) {
+      if (!post.getFavorites().remove(currentUser))
+        throw BxException.hardcoded(BxException.X_COULD_NOT_UNFAVORITE_POST, currentUser);
+
+      postEventHandler.unfavoritePost(currentUser, post);
+      return postFacade.save(post).toResponse(currentUser);
+    }
+    throw BxException.unauthorized(currentUser);
+  }
+
 }
