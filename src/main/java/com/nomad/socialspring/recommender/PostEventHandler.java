@@ -75,13 +75,11 @@ public class PostEventHandler {
     applicationEventPublisher.publishEvent(new UserPostEvent(user, post, Event.LIKE, false));
   }
 
-  @SuppressWarnings("unused")
   public void favoritePost(User user, Post post) {
     applicationEventPublisher.publishEvent(new UserPostEvent(user, post, Event.FAVORITE));
 
   }
 
-  @SuppressWarnings("unused")
   public void unfavoritePost(User user, Post post) {
     applicationEventPublisher.publishEvent(new UserPostEvent(user, post, Event.FAVORITE, false));
   }
