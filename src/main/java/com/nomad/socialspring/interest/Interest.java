@@ -18,4 +18,7 @@ public class Interest extends BaseEntity {
   @Column(name = "NAME", nullable = false, unique = true)
   private String name;
 
+  public InterestResponse toResponse() {
+    return new InterestResponse(this);
+  }
 }

@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.Future;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -255,7 +256,7 @@ public class UserFacade {
     return findByUsernameList(usernames);
   }
 
-  private record UserSocialSorter(User currentUser) implements Comparator<User> {
+  public record UserSocialSorter(User currentUser) implements Comparator<User> {
 
     @Override
     public int compare(User user1, User user2) {
@@ -279,5 +280,9 @@ public class UserFacade {
       // Users with no following relationship come last
       return 0;
     }
+  }
+
+  public Future<Page<User>> searchUsersAsync(String query, Pageable pageable) {
+    return repository.searchUsersAsync(query, getCurrentUserOrNull(), pageable);
   }
 }

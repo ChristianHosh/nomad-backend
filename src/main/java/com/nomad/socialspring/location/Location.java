@@ -23,4 +23,8 @@ public class Location extends BaseEntity {
   public String getFullName() {
     return belongsTo == null ? name : belongsTo.getFullName() + ", " + name;
   }
+
+  public LocationResponse toResponse() {
+    return new LocationResponse(this);
+  }
 }
