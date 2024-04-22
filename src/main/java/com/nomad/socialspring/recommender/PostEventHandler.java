@@ -4,6 +4,7 @@ import com.nomad.socialspring.interest.InterestUserRepository;
 import com.nomad.socialspring.interest.UserInterest;
 import com.nomad.socialspring.post.Post;
 import com.nomad.socialspring.user.User;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -110,6 +111,7 @@ public class PostEventHandler {
 
   }
 
+  @Transactional(Transactional.TxType.REQUIRES_NEW)
   @TransactionalEventListener(UserPostEvent.class)
   public void handleUserPostEvent(UserPostEvent userPostEvent) {
     log.info("starting to handle user post event: {}", userPostEvent);
