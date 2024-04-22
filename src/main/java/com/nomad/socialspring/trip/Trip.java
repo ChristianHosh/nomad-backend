@@ -56,4 +56,8 @@ public class Trip extends BaseEntity {
   public int getNumberOfParticipants() {
     return participants.size();
   }
+
+  public TripResponse toResponse(User currentUser) {
+    return new TripResponse(this, currentUser);
+  }
 }

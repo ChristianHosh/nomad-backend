@@ -32,7 +32,7 @@ public class TripService {
   }
 
   @Transactional
-  public Object joinTrip(Long tripId) {
+  public TripResponse joinTrip(Long tripId) {
     Trip trip = tripFacade.findById(tripId);
     User currentUser = userFacade.getCurrentUser();
     if (!trip.addParticipant(currentUser))
@@ -43,11 +43,11 @@ public class TripService {
       throw BxException.hardcoded(BxException.X_COULD_NOT_ADD_USER_TO_CHANNEL, currentUser);
 
     notificationFacade.notifyTripJoin(trip, currentUser);
-    return trip; //todo response
+    return trip.toResponse(currentUser);
   }
 
   @Transactional
-  public Object leaveTrip(Long tripId) {
+  public TripResponse leaveTrip(Long tripId) {
     Trip trip = tripFacade.findById(tripId);
     User currentUser = userFacade.getCurrentUser();
     if (!trip.removeParticipant(currentUser))
@@ -57,6 +57,7 @@ public class TripService {
     if (!chatChannel.removeUser(currentUser))
       throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_USER_FROM_CHANNEL, currentUser);
 
-    return trip; //todo response
+    return trip.toResponse(currentUser);
   }
+
 }
