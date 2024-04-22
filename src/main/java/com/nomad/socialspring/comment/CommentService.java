@@ -4,6 +4,7 @@ import com.nomad.socialspring.error.BxException;
 import com.nomad.socialspring.notification.NotificationFacade;
 import com.nomad.socialspring.recommender.PostEventHandler;
 import com.nomad.socialspring.user.*;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -54,6 +55,7 @@ public class CommentService {
         .map(User::toResponse);
   }
 
+  @Transactional
   public CommentResponse likeComment(Long commentId) {
     Comment comment = commentFacade.findById(commentId);
     User currentUser = userFacade.getCurrentUser();
@@ -67,6 +69,7 @@ public class CommentService {
     return commentFacade.save(comment).toResponse(currentUser);
   }
 
+  @Transactional
   public CommentResponse unlikeComment(Long commentId) {
     Comment comment = commentFacade.findById(commentId);
     User currentUser = userFacade.getCurrentUser();
