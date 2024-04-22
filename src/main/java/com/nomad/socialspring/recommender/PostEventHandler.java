@@ -102,7 +102,7 @@ public class PostEventHandler {
   }
 
   public void joinTrip(User user, Post post) {
-    applicationEventPublisher.publishEvent(new UserPostEvent(user, post, Event.JOIN, false));
+    applicationEventPublisher.publishEvent(new UserPostEvent(user, post, Event.JOIN));
   }
 
   public void leaveTrip(User user, Post post) {
