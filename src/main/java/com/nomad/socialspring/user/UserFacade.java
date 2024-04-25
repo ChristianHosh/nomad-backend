@@ -140,6 +140,8 @@ public class UserFacade {
       user.getProfile().setBio(profileRequest.bio());
     if (profileRequest.gender() != null)
       user.getProfile().setGender(profileRequest.gender());
+    if (profileRequest.birthDate() != null)
+      user.getProfile().setBirthDate(profileRequest.birthDate());
     if (location != null)
       user.getProfile().setLocation(location);
     if (interestSet != null)
