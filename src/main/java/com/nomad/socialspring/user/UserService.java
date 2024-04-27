@@ -246,7 +246,7 @@ public class UserService {
 
     return userFacade
             .findBySearchParamExcludeBlocked(currentUser, query, excludeSelf, page, size)
-            .map(User::toResponse);
+            .map(u -> u.toResponse(currentUser));
   }
 
   public UserInfoResponse getUserInfo() {
