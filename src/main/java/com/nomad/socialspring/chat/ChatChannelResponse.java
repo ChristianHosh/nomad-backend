@@ -40,7 +40,10 @@ public class ChatChannelResponse extends BaseResponse {
     }
 
     if (otherUser != null) {
-      name = otherUser.getUser().getProfile().getDisplayName();
+      if (entity.getName() == null)
+        name = otherUser.getUser().getProfile().getDisplayName();
+      else
+        name = entity.getName();
       avatarUrl = ImageMapper.entityToUrl(otherUser.getUser().getProfile().getProfileImage());
     } else {
       if (entity.getName() == null) {
