@@ -13,4 +13,8 @@ public class InterestService {
   public Page<InterestResponse> getInterests(int page, int size, String name) {
     return interestFacade.getInterests(page, size, name).map(InterestResponse::fromEntity);
   }
+
+  public InterestResponse getInterest(Long id) {
+    return interestFacade.getInterest(id).toResponse();
+  }
 }
