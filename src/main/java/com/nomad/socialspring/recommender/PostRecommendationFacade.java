@@ -45,7 +45,7 @@ public class PostRecommendationFacade {
   }
 
 
-  public List<Post> sortByInterests(List<Post> content, User user) {
+  public static List<Post> sortByInterests(List<Post> content, User user) {
     List<UserInterest> userInterestList = new ArrayList<>(user.getInterests());
 
     List<Pair<Post, Double>> rScores = content.stream()

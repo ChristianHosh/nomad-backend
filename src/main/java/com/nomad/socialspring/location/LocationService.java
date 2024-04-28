@@ -16,4 +16,8 @@ public class LocationService {
             .getLocations(page, size, query)
             .map(LocationResponse::fromEntity);
   }
+
+  public LocationResponse getLocation(Long id) {
+    return locationFacade.findById(id).toResponse();
+  }
 }
