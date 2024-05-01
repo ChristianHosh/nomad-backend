@@ -48,4 +48,9 @@ public class PostFacade {
   public Page<Post> findByUser(User user, User currentUser, int page, int size) {
     return repository.findByUser(user, currentUser, PageRequest.of(page, size));
   }
+
+  public Page<Post> findAllByFavorites(User user, int page, int size) {
+    System.out.println("this");
+    return repository.findAllByFavorites(user, PageRequest.of(page, size));
+  }
 }

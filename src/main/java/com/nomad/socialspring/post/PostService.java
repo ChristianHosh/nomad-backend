@@ -222,4 +222,9 @@ public class PostService {
     throw BxException.unauthorized(currentUser);
   }
 
+
+  public Page<PostResponse> getFavoritePosts(int page, int size) {
+    User user = userFacade.getCurrentUser();
+    return postFacade.findAllByFavorites(user, page, size).map(p -> p.toResponse(user));
+  }
 }

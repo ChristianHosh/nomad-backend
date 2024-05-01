@@ -115,4 +115,12 @@ public class PostController {
     return postService.unfavoritePost(postId);
   }
 
+  @GetMapping("/favorites")
+  @ResponseStatus(HttpStatus.OK)
+  public Page<PostResponse> getFavoritePosts(
+          @RequestParam(name = "page", defaultValue = "0") int page,
+          @RequestParam(name = "size", defaultValue = "50") int size
+  ) {
+    return postService.getFavoritePosts(page, size);
+  }
 }

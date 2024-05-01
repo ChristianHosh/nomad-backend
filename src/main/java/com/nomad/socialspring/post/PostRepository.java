@@ -51,4 +51,18 @@ public interface PostRepository extends JpaRepository<Post, Long> {
           order by p.createdOn DESC
         """)
   Page<Post> findByUser(User user, User currentUser, Pageable pageable);
+
+  @Query("""
+          select p from Post p
+            inner join UserPostInteraction pi on p.id = pi.post.id
+          where :user in elements(p.favorites) and
+          (
+             (p.isPrivate = false) or
+             (:user in elements(p.author.followers) or :user = p.author)
+          ) and
+          pi.event = com.nomad.socialspring.recommender.Event.FAVORITE and
+          pi.user = :user
+          order by pi.createdOn
+          """)
+  Page<Post> findAllByFavorites(User user, Pageable pageable);
 }
