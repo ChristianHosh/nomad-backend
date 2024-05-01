@@ -67,6 +67,7 @@ public class LocationCreator {
       return;
     }
 
+    List<Location> failedLocations = new ArrayList<>();
     for (Map.Entry<String, List<String>> entry : countryLocations.entrySet()) {
       String countryName = entry.getKey();
       List<String> locationNames = entry.getValue();
@@ -83,9 +84,12 @@ public class LocationCreator {
         try {
           locationRepository.save(location);
         } catch (Exception e) {
-          log.error("Could not save location [%s]".formatted(location));
+          failedLocations.add(location);
         }
       }
+    }
+    if (!failedLocations.isEmpty()) {
+      log.error("failed to save {} locations", failedLocations.size());
     }
     log.info("done saving locations");
   }

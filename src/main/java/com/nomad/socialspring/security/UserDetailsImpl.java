@@ -61,7 +61,7 @@ public class UserDetailsImpl implements UserDetails {
 
   @Override
   public String toString() {
-    return String.format("%s: %d, %s", getClass().getSimpleName(), getId(), getUsername());
+    return String.format("User: %d, %s", getId(), getUsername());
   }
 
   @Override
