@@ -20,6 +20,7 @@ public class CommentService {
   private final NotificationFacade notificationFacade;
   private final PostEventHandler postEventHandler;
 
+  @Transactional
   public CommentResponse deleteComment(Long commentId) {
     Comment comment = commentFacade.findById(commentId);
     User currentUser = userFacade.getCurrentUser();
@@ -32,6 +33,7 @@ public class CommentService {
     throw BxException.unauthorized(currentUser);
   }
 
+  @Transactional
   public CommentResponse updateComment(Long commentId, CommentRequest commentRequest) {
     Comment comment = commentFacade.findById(commentId);
     User currentUser = userFacade.getCurrentUser();

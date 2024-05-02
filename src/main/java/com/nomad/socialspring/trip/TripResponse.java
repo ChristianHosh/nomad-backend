@@ -33,7 +33,7 @@ public class TripResponse extends BaseResponse {
     this.location = LocationResponse.fromEntity(entity.getLocation());
     this.numberOfParticipants = entity.getNumberOfParticipants();
 
-    if (user == null || startDate.after(new Date(System.currentTimeMillis())))
+    if (user == null || startDate.before(new Date(System.currentTimeMillis())))
       this.canJoin = CanJoin.DISABLED;
     else if (entity.findTripUser(user) != null)
       this.canJoin = CanJoin.JOINED;
