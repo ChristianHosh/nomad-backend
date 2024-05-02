@@ -1,10 +1,10 @@
 package com.nomad.socialspring.trip;
 
 
-import com.nomad.socialspring.chat.ChatChannel;
-import com.nomad.socialspring.chat.ChatChannelFacade;
 import com.nomad.socialspring.error.BxException;
 import com.nomad.socialspring.notification.NotificationFacade;
+import com.nomad.socialspring.post.PostFacade;
+import com.nomad.socialspring.post.PostResponse;
 import com.nomad.socialspring.user.User;
 import com.nomad.socialspring.user.UserFacade;
 import com.nomad.socialspring.user.UserResponse;
@@ -19,8 +19,8 @@ public class TripService {
 
   private final TripFacade tripFacade;
   private final UserFacade userFacade;
-  private final ChatChannelFacade chatChannelFacade;
   private final NotificationFacade notificationFacade;
+  private final PostFacade postFacade;
 
   public Page<UserResponse> getUsersInTrip(Long tripId, int page, int size) {
     Trip trip = tripFacade.findById(tripId);
@@ -38,10 +38,6 @@ public class TripService {
     if (!trip.addParticipant(currentUser))
       throw BxException.hardcoded(BxException.X_COULD_NOT_ADD_USER_TO_TRIP, currentUser);
 
-    ChatChannel chatChannel = chatChannelFacade.findByTrip(trip);
-    if (!chatChannel.addUser(currentUser))
-      throw BxException.hardcoded(BxException.X_COULD_NOT_ADD_USER_TO_CHANNEL, currentUser);
-
     notificationFacade.notifyTripJoin(trip, currentUser);
     return trip.toResponse(currentUser);
   }
@@ -53,11 +49,26 @@ public class TripService {
     if (!trip.removeParticipant(currentUser))
       throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_USER_FROM_TRIP, currentUser);
 
-    ChatChannel chatChannel = chatChannelFacade.findByTrip(trip);
-    if (!chatChannel.removeUser(currentUser))
-      throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_USER_FROM_CHANNEL, currentUser);
-
     return trip.toResponse(currentUser);
   }
 
+  public Page<PostResponse> getMyTrips(int page, int size) {
+    User currentUser = userFacade.getCurrentUser();
+    return postFacade.getMyTrips(currentUser, page, size).map(p -> p.toResponse(currentUser));
+  }
+
+  @Transactional
+  public TripResponse updateTripStatusAsWent(Long tripId) {
+    User currentUser = userFacade.getCurrentUser();
+    Trip trip = tripFacade.findById(tripId);
+
+    TripUser tripUser = trip.findTripUser(currentUser);
+    if (tripUser == null)
+      throw BxException.hardcoded(BxException.X_USER_NOT_IN_TRIP, currentUser);
+    if (tripUser.getStatus().equals(TripUser.TripUserStatus.JOINED))
+      throw BxException.hardcoded(BxException.X_CANT_UPDATE_TRIP_USER_STATUS, currentUser);
+
+    tripUser.setStatus(TripUser.TripUserStatus.WENT);
+    return tripFacade.save(trip).toResponse(currentUser);
+  }
 }

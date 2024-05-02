@@ -1,5 +1,6 @@
 package com.nomad.socialspring.trip;
 
+import com.nomad.socialspring.chat.ChatChannel;
 import com.nomad.socialspring.common.BaseEntity;
 import com.nomad.socialspring.location.Location;
 import com.nomad.socialspring.post.Post;
@@ -8,7 +9,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Builder
@@ -30,34 +32,50 @@ public class Trip extends BaseEntity {
   @JoinColumn(name = "LOCATION_ID", nullable = false)
   private Location location;
 
-  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-  @JoinTable(name = "T_TRIP_USERS",
-          joinColumns = @JoinColumn(name = "TRIP_ID"),
-          inverseJoinColumns = @JoinColumn(name = "USER_ID"))
-  @Builder.Default
-  private Set<User> participants = new HashSet<>();
-
   @OneToOne(mappedBy = "trip", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false, orphanRemoval = true)
   private Post post;
+
+  @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
+  private Set<TripUser> tripUsers = new LinkedHashSet<>();
+
+  @OneToOne(mappedBy = "trip", cascade = CascadeType.ALL, optional = false, orphanRemoval = true)
+  private ChatChannel chatChannel;
+
+  private TripUser newTripUser(User user) {
+    return new TripUser(
+            new TripUser.TripUserId(this.getId(), user.getId()),
+            this,
+            user,
+            TripUser.TripUserStatus.JOINED
+    );
+  }
 
   @SuppressWarnings("BooleanMethodIsAlwaysInverted")
   public boolean addParticipant(User user) {
     if (user == null)
       return false;
-    return participants.add(user);
+    return tripUsers.add(newTripUser(user)) && chatChannel.addUser(user);
   }
 
   public boolean removeParticipant(User user) {
     if (user == null)
       return false;
-    return participants.remove(user);
+    return tripUsers.removeIf(tripUser -> Objects.equals(tripUser.getUser(), user)) &&
+            chatChannel.removeUser(user);
   }
 
   public int getNumberOfParticipants() {
-    return participants.size();
+    return tripUsers.size();
   }
 
   public TripResponse toResponse(User currentUser) {
     return new TripResponse(this, currentUser);
+  }
+
+  public TripUser findTripUser(User user) {
+    return tripUsers.stream()
+            .filter(tu -> Objects.equals(tu.getUser(), user))
+            .findAny()
+            .orElse(null);
   }
 }

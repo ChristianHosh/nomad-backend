@@ -21,14 +21,22 @@ public class AuthenticationFacadeImpl implements AuthenticationFacade {
 
   @Override
   public User getAuthenticatedUser() {
-    String username = getAuthentication().getName();
+    Authentication authentication = getAuthentication();
+    if (authentication.getDetails() instanceof UserDetailsImpl userDetails)
+      return userDetails.getUser();
+
+    String username = authentication.getName();
     return userRepository.findByUsername(username)
             .orElseThrow(() -> BxException.unauthorized(BxException.X_NOT_LOGGED_IN));
   }
 
   @Override
   public User getAuthenticatedUserOrNull() {
-    return userRepository.findByUsername(getAuthentication().getName())
+    Authentication authentication = getAuthentication();
+    if (authentication.getDetails() instanceof UserDetailsImpl userDetails)
+      return userDetails.getUser();
+
+    return userRepository.findByUsername(authentication.getName())
             .orElse(null);
   }
 }

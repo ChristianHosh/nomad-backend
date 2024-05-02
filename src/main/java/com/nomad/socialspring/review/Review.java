@@ -34,4 +34,7 @@ public class Review extends BaseEntity {
   @JoinColumn(name = "RECIPIENT_ID")
   private User recipient;
 
+  public ReviewResponse toResponse() {
+    return new ReviewResponse(this);
+  }
 }

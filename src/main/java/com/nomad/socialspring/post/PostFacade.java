@@ -53,4 +53,8 @@ public class PostFacade {
     System.out.println("this");
     return repository.findAllByFavorites(user, PageRequest.of(page, size));
   }
+
+  public Page<Post> getMyTrips(User currentUser, int page, int size) {
+    return repository.findTripsByUser(currentUser, PageRequest.of(page, size));
+  }
 }

@@ -13,6 +13,7 @@ import com.nomad.socialspring.post.PostResponse;
 import com.nomad.socialspring.review.Review;
 import com.nomad.socialspring.review.ReviewFacade;
 import com.nomad.socialspring.review.ReviewRequest;
+import com.nomad.socialspring.review.ReviewResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -197,6 +198,9 @@ public class UserService {
     User currentUser = userFacade.getCurrentUser();
     User user = userFacade.findById(userId);
 
+    if (user.isReviewedBy(currentUser))
+      throw BxException.badRequest(User.class, BxException.X_USER_ALREADY_REVIEWED);
+
     Review review = reviewFacade.save(reviewRequest, currentUser, user);
     notificationFacade.notifyUserReview(review);
 
@@ -265,5 +269,10 @@ public class UserService {
 
     return postFacade.findByUser(user, currentUser, page, size)
             .map(p -> p.toResponse(currentUser));
+  }
+
+  public Page<ReviewResponse> getUserReviews(Long userId, int page, int size) {
+    return reviewFacade.findByUser(userFacade.findById(userId), page, size)
+            .map(Review::toResponse);
   }
 }

@@ -53,7 +53,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
   @Query("select u from User u inner join u.likedComments likedComments where likedComments.id = :id")
   Page<User> findByLikedComments_Id(@Param("id") Long id, Pageable pageable);
 
-  @Query("select u from User u inner join u.trips trips where trips.id = :id")
+  @Query("select u from User u inner join TripUser tu on u.id = tu.user.id where tu.trip.id = :id")
   Page<User> findByTrips_Id(@Param("id") Long id, Pageable pageable);
 
   @Query(value = """

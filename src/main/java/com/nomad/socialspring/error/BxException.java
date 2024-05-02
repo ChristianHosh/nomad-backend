@@ -40,6 +40,9 @@ public class BxException extends RuntimeException {
   public static final String X_BAD_CREDENTIALS = "Username or password incorrect";
   public static final String X_COULD_NOT_FAVORITE_POST = "Could not favorite post";
   public static final String X_COULD_NOT_UNFAVORITE_POST = "Could not unfavorite post";
+  public static final String X_USER_NOT_IN_TRIP = "User is not in trip";
+  public static final String X_CANT_UPDATE_TRIP_USER_STATUS = "Can't Update TripUser Status";
+  public static final Object X_USER_ALREADY_REVIEWED = "Already reviewed user";
 
   private Exception exception;
 

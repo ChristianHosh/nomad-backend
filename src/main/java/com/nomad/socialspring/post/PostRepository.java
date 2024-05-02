@@ -29,27 +29,27 @@ public interface PostRepository extends JpaRepository<Post, Long> {
   Page<Post> findFollowingsPosts(User user, Pageable pageable);
 
   @Query("""
-          select p from Post p
-          where
-            (p.trip != null and (p.trip.location = :location or p.trip.location.belongsTo = :location)) and
-            (
-              (p.isPrivate = false) or
-              (:user is not null and (:user in elements(p.author.followers) or :user = p.author))
-            )
-          order by p.zScore desc nulls last, p.createdOn desc
-        """)
+            select p from Post p
+            where
+              (p.trip != null and (p.trip.location = :location or p.trip.location.belongsTo = :location)) and
+              (
+                (p.isPrivate = false) or
+                (:user is not null and (:user in elements(p.author.followers) or :user = p.author))
+              )
+            order by p.zScore desc nulls last, p.createdOn desc
+          """)
   Page<Post> findLocalTrips(User user, Location location, Pageable pageable);
 
   @Query("""
-          select p from Post p
-          where
-            (p.author = :user) and
-            (
-              (p.isPrivate = false) or
-              (:currentUser is not null and (:currentUser in elements(p.author.followers) or :currentUser = p.author))
-            )
-          order by p.createdOn DESC
-        """)
+            select p from Post p
+            where
+              (p.author = :user) and
+              (
+                (p.isPrivate = false) or
+                (:currentUser is not null and (:currentUser in elements(p.author.followers) or :currentUser = p.author))
+              )
+            order by p.createdOn DESC
+          """)
   Page<Post> findByUser(User user, User currentUser, Pageable pageable);
 
   @Query("""
@@ -65,4 +65,20 @@ public interface PostRepository extends JpaRepository<Post, Long> {
           order by pi.createdOn
           """)
   Page<Post> findAllByFavorites(User user, Pageable pageable);
+
+  @Query("""
+          select p from Post p
+            inner join TripUser tu on p.trip.id = tu.trip.id
+          where
+          p.trip is not null and
+          (
+             (p.isPrivate = false) or
+             (:user in elements(p.author.followers) or :user = p.author)
+          ) and
+          (
+            (tu.user = :user)
+          )
+          order by p.trip.startDate asc
+          """)
+  Page<Post> findTripsByUser(User user, Pageable pageable);
 }

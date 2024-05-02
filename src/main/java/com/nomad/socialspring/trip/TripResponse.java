@@ -14,11 +14,17 @@ import java.sql.Date;
 @Getter
 public class TripResponse extends BaseResponse {
 
+  public enum CanJoin {
+    CAN_JOIN,
+    JOINED,
+    DISABLED
+  }
+
   private final Date startDate;
   private final Date endDate;
   private final LocationResponse location;
   private final Integer numberOfParticipants;
-  private final Boolean canJoin;
+  private final CanJoin canJoin;
 
   protected TripResponse(@NotNull Trip entity, User user) {
     super(entity);
@@ -26,7 +32,13 @@ public class TripResponse extends BaseResponse {
     this.endDate = entity.getEndDate();
     this.location = LocationResponse.fromEntity(entity.getLocation());
     this.numberOfParticipants = entity.getNumberOfParticipants();
-    this.canJoin = user == null ? null : entity.getParticipants().contains(user);
+
+    if (user == null || startDate.after(new Date(System.currentTimeMillis())))
+      this.canJoin = CanJoin.DISABLED;
+    else if (entity.findTripUser(user) != null)
+      this.canJoin = CanJoin.JOINED;
+    else
+      this.canJoin = CanJoin.CAN_JOIN;
   }
 
   public static TripResponse fromEntity(Trip trip, User user) {

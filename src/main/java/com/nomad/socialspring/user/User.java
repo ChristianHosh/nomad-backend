@@ -7,7 +7,6 @@ import com.nomad.socialspring.interest.Interest;
 import com.nomad.socialspring.interest.UserInterest;
 import com.nomad.socialspring.post.Post;
 import com.nomad.socialspring.review.Review;
-import com.nomad.socialspring.trip.Trip;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
@@ -76,10 +75,6 @@ public class User extends BaseEntity {
   @Builder.Default
   private Set<Post> posts = new HashSet<>();
 
-  @ManyToMany(mappedBy = "participants", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-  @Builder.Default
-  private Set<Trip> trips = new HashSet<>();
-
   @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
   @Builder.Default
   private Set<ChatChannelUser> userChatChannels = new HashSet<>();
@@ -108,13 +103,9 @@ public class User extends BaseEntity {
   @Builder.Default
   private Integer depth = 0;
 
-  @ManyToMany(mappedBy = "likes", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+  @ManyToMany(mappedBy = "favorites", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+  @Builder.Default
   private Set<Post> favoritePosts = new LinkedHashSet<>();
-
-  @Override
-  public String getExceptionString() {
-    return getUsername();
-  }
 
   public boolean canBeSeenBy(User user) {
     return user == null || (isNotBlockedBy(user) && user.isNotBlockedBy(this));
@@ -186,17 +177,28 @@ public class User extends BaseEntity {
     });
     interests.removeIf(toRemove::contains);
   }
-  
+
   public UserResponse toResponse() {
     return UserResponse.fromEntity(this);
   }
-  
+
   public UserResponse toResponse(User other) {
     return UserResponse.fromEntity(this, other);
   }
-  
+
   public UserResponse toResponse(User other, boolean detailed) {
     return UserResponse.fromEntity(this, other, detailed);
   }
 
+  @Override
+  public String toString() {
+    return super.toString() + " username: " + username;
+  }
+
+  public boolean isReviewedBy(User user) {
+    if (user == null)
+      return false;
+    return reviews.stream()
+            .anyMatch(review -> Objects.equals(review.getAuthor(), user));
+  }
 }

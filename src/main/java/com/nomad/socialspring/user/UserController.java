@@ -2,6 +2,7 @@ package com.nomad.socialspring.user;
 
 import com.nomad.socialspring.post.PostResponse;
 import com.nomad.socialspring.review.ReviewRequest;
+import com.nomad.socialspring.review.ReviewResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -149,7 +150,15 @@ public class UserController {
     return userService.getUserInfo();
   }
 
-  //todo get user reviews
+  @GetMapping("/{id}/reviews")
+  @ResponseStatus(HttpStatus.OK)
+  public Page<ReviewResponse> getUserReviews(
+          @PathVariable(name = "id") Long userId,
+          @RequestParam(name = "page", defaultValue = "0") int page,
+          @RequestParam(name = "size", defaultValue = "25") int size
+  ) {
+    return userService.getUserReviews(userId, page, size);
+  }
 
   @PostMapping("/{id}/reviews")
   @ResponseStatus(HttpStatus.CREATED)

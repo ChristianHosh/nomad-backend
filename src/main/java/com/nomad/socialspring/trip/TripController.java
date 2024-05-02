@@ -1,5 +1,6 @@
 package com.nomad.socialspring.trip;
 
+import com.nomad.socialspring.post.PostResponse;
 import com.nomad.socialspring.user.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,23 @@ import org.springframework.web.bind.annotation.*;
 public class TripController {
 
   private final TripService tripService;
+
+  @GetMapping("/mine")
+  public Page<PostResponse> getMyTrips(
+          @RequestParam(name = "page", defaultValue = "0") int page,
+          @RequestParam(name = "size", defaultValue = "25") int size
+  ) {
+    return tripService.getMyTrips(page, size);
+  }
+
+  @PutMapping("/{id}/went")
+  public TripResponse updateTripStatusAsWent(
+          @PathVariable(name = "id") Long tripId
+  ) {
+    return tripService.updateTripStatusAsWent(tripId);
+  }
+
+
 
   @GetMapping("/{id}/participants")
   public Page<UserResponse> getTripParticipants(
