@@ -13,7 +13,7 @@ import java.util.concurrent.Future;
 public interface InterestRepository extends JpaRepository<Interest, Long> {
   Optional<Interest> findByNameIgnoreCase(String name);
 
-  @Query("select i from Interest i where :name is null or i.name ilike concat('%', :name, '%')")
+  @Query("select i from Interest i where i.name ilike concat('%', :name, '%')")
   Page<Interest> findByNameContains(@Param("name") String name, Pageable pageable);
 
   @Async

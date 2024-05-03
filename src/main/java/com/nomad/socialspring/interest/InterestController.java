@@ -17,7 +17,7 @@ public class InterestController {
   public Page<InterestResponse> getInterests(
           @RequestParam(name = "page", defaultValue = "0") int page,
           @RequestParam(name = "size", defaultValue = "50") int size,
-          @RequestParam(name = "name", required = false) String name
+          @RequestParam(name = "name", defaultValue = "") String name
   ) {
     return interestService.getInterests(page, size, name);
   }
