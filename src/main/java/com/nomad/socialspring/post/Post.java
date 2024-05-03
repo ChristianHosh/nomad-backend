@@ -66,6 +66,7 @@ public class Post extends BaseEntity {
   @JoinTable(name = "T_POST_FAVORITES",
           joinColumns = @JoinColumn(name = "POST_ID"),
           inverseJoinColumns = @JoinColumn(name = "USER_ID"))
+  @Builder.Default
   private Set<User> favorites = new LinkedHashSet<>();
 
   public boolean canBeSeenBy(User user) {
