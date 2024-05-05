@@ -36,6 +36,7 @@ public class Trip extends BaseEntity {
   private Post post;
 
   @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
+  @Builder.Default
   private Set<TripUser> tripUsers = new LinkedHashSet<>();
 
   @OneToOne(mappedBy = "trip", cascade = CascadeType.ALL, optional = false, orphanRemoval = true)
@@ -52,8 +53,14 @@ public class Trip extends BaseEntity {
 
   @SuppressWarnings("BooleanMethodIsAlwaysInverted")
   public boolean addParticipant(User user) {
+    return addParticipant(user, false);
+  }
+
+  public boolean addParticipant(User user, boolean skipChannel) {
     if (user == null)
       return false;
+    if (skipChannel)
+      return tripUsers.add(newTripUser(user));
     return tripUsers.add(newTripUser(user)) && chatChannel.addUser(user);
   }
 

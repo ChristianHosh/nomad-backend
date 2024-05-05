@@ -24,6 +24,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -52,18 +53,18 @@ public class PostService {
     Trip trip = null;
     if (request.locationId() != null) {
       TripRequest tripRequest = new TripRequest(
-              new BDate(Long.parseLong(request.startDate())),
-              new BDate(Long.parseLong(request.endDate())),
+              Date.valueOf(request.startDate()),
+              Date.valueOf(request.endDate()),
               request.locationId()
       );
 
       trip = tripFacade.save(tripRequest, locationFacade.findById(tripRequest.locationId()));
 
-      ChatChannel chatChannel = chatChannelFacade.newChannel(trip.getLocation().getFullName(), List.of(currentUser), currentUser);
+      ChatChannel chatChannel = chatChannelFacade.newChannel(trip.getLocation().getFullName() + " Trip", List.of(currentUser), currentUser);
       chatChannel.setTrip(trip);
-      chatChannelFacade.save(chatChannel);
+      trip.setChatChannel(chatChannel);
 
-      if (!trip.addParticipant(currentUser))
+      if (!trip.addParticipant(currentUser, true))
         throw BxException.hardcoded(BxException.X_COULD_NOT_ADD_USER_TO_TRIP, currentUser);
     }
 
