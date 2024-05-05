@@ -111,7 +111,9 @@ public class User extends BaseEntity {
     return user == null || (isNotBlockedBy(user) && user.isNotBlockedBy(this));
   }
 
-  public boolean isNotBlockedBy(@NotNull User user) {
+  public boolean isNotBlockedBy(User user) {
+    if (user == null)
+      return false;
     return !user.getBlockedUsers().contains(this);
   }
 
