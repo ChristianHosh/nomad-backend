@@ -71,4 +71,25 @@ public class TripService {
     tripUser.setStatus(TripUser.TripUserStatus.WENT);
     return tripFacade.save(trip).toResponse(currentUser);
   }
+
+  @Transactional
+  public TripResponse updateTripStatusAsNotWent(Long tripId) {
+    User currentUser = userFacade.getCurrentUser();
+    Trip trip = tripFacade.findById(tripId);
+
+    TripUser tripUser = trip.findTripUser(currentUser);
+    if (tripUser == null)
+      throw BxException.hardcoded(BxException.X_USER_NOT_IN_TRIP, currentUser);
+    if (tripUser.getStatus().equals(TripUser.TripUserStatus.JOINED))
+      throw BxException.hardcoded(BxException.X_CANT_UPDATE_TRIP_USER_STATUS, currentUser);
+
+    tripUser.setStatus(TripUser.TripUserStatus.DIDNT_GO);
+    return tripFacade.save(trip).toResponse(currentUser);
+  }
+
+  public Page<PostResponse> getUpcomingTrips(int page, int size) {
+    User currentUser = userFacade.getCurrentUser();
+    return postFacade.getUpcomingTrips(currentUser, page, size)
+            .map(p -> p.toResponse(currentUser));
+  }
 }

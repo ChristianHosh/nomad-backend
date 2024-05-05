@@ -81,4 +81,14 @@ public interface PostRepository extends JpaRepository<Post, Long> {
           order by p.trip.startDate asc
           """)
   Page<Post> findTripsByUser(User user, Pageable pageable);
+
+  @Query("""
+          select p from Post p
+            inner join TripUser tu on p.trip.id = tu.trip.id
+          where (p.trip is not null) and
+                (p.trip.endDate > current date) and
+                (:user = tu.user)
+          order by p.trip.startDate asc
+          """)
+  Page<Post> findUpcomingTrips(User user, Pageable pageable);
 }

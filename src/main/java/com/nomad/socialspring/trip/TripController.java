@@ -30,6 +30,20 @@ public class TripController {
     return tripService.updateTripStatusAsWent(tripId);
   }
 
+  @PutMapping("/{id}/not-went")
+  public TripResponse updateTripStatusAsNotWent(
+          @PathVariable(name = "id") Long tripId
+  ) {
+    return tripService.updateTripStatusAsNotWent(tripId);
+  }
+
+  @GetMapping("/upcoming")
+  public Page<PostResponse> getUpcomingTrips(
+          @RequestParam(name = "page", defaultValue = "0") int page,
+          @RequestParam(name = "size", defaultValue = "25") int size
+  ) {
+    return tripService.getUpcomingTrips(page, size);
+  }
 
 
   @GetMapping("/{id}/participants")
