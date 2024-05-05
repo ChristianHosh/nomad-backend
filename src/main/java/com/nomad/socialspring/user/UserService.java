@@ -93,7 +93,7 @@ public class UserService {
   public Page<FollowRequestResponse> getUserFollowRequests(int page, int size) {
     User currentUser = userFacade.getCurrentUser();
 
-    return followRequestFacade.findByUser(currentUser, page, size).map(FollowRequestMapper::entityToResponse);
+    return followRequestFacade.findByUser(currentUser, page, size).map(FollowRequestResponse::fromEntity);
   }
 
   @Transactional

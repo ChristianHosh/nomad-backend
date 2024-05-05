@@ -12,17 +12,22 @@ public class UserResponse extends BaseResponse {
   private final Role role;
   private final FollowStatus followStatus;
   private final ProfileResponse profile;
+  private final Boolean canReview;
+  private final Boolean canBlock;
   private Integer rating;
   private String token;
 
 
-  private UserResponse(User user, FollowStatus followStatus, boolean detailed) {
+  private UserResponse(User user, User currentUser, boolean detailed) {
     super(user);
-    this.followStatus = followStatus;
+    this.followStatus = followStat(user, currentUser);
 
     username = user.getUsername();
     email = user.getEmail();
     role = user.getRole();
+
+    canReview = !user.isReviewedBy(currentUser);
+    canBlock = user.isNotBlockedBy(currentUser);
     
     if (detailed)
       rating = user.getRating();
@@ -43,9 +48,7 @@ public class UserResponse extends BaseResponse {
   }
   
   public static UserResponse fromEntity(User user, User currentUser, boolean detailed) {
-    return user == null 
-        ? null 
-        : new UserResponse(user, followStat(user, currentUser), detailed);
+    return user == null ? null : new UserResponse(user, currentUser, detailed);
   }
   
   private static FollowStatus followStat(User user, User currentUser) {
