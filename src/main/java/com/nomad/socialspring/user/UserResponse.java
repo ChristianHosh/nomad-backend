@@ -7,12 +7,19 @@ import java.util.Set;
 
 @Getter
 public class UserResponse extends BaseResponse {
+
+  public enum CanReview {
+    DISABLED,
+    REVIEWED,
+    CAN_REVIEW
+  }
+
   private final String username;
   private final String email;
   private final Role role;
   private final FollowStatus followStatus;
   private final ProfileResponse profile;
-  private final Boolean canReview;
+  private final CanReview canReview;
   private final Boolean canBlock;
   private Integer rating;
   private String token;
@@ -26,8 +33,8 @@ public class UserResponse extends BaseResponse {
     email = user.getEmail();
     role = user.getRole();
 
-    canReview = !user.isReviewedBy(currentUser);
-    canBlock = user.isNotBlockedBy(currentUser);
+    canReview = detailed ? CanReview.DISABLED : user.canBeReviewedBy(currentUser);
+    canBlock = !detailed && user.isNotBlockedBy(currentUser);
     
     if (detailed)
       rating = user.getRating();

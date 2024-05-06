@@ -7,6 +7,7 @@ import com.nomad.socialspring.interest.Interest;
 import com.nomad.socialspring.interest.UserInterest;
 import com.nomad.socialspring.post.Post;
 import com.nomad.socialspring.review.Review;
+import com.nomad.socialspring.trip.TripUser;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
@@ -107,6 +108,10 @@ public class User extends BaseEntity {
   @Builder.Default
   private Set<Post> favoritePosts = new LinkedHashSet<>();
 
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  @Builder.Default
+  private Set<TripUser> tripUsers = new LinkedHashSet<>();
+
   public boolean canBeSeenBy(User user) {
     return user == null || (isNotBlockedBy(user) && user.isNotBlockedBy(this));
   }
@@ -202,5 +207,24 @@ public class User extends BaseEntity {
       return false;
     return reviews.stream()
             .anyMatch(review -> Objects.equals(review.getAuthor(), user));
+  }
+
+  public UserResponse.CanReview canBeReviewedBy(User user) {
+    if (user != null) {
+      if (isReviewedBy(user))
+        return UserResponse.CanReview.REVIEWED;
+
+      for (TripUser tripUser : tripUsers) {
+        for (TripUser otherTripUser : user.tripUsers) {
+          if (Objects.equals(tripUser.getTrip(), otherTripUser.getTrip())
+                  && tripUser.getStatus() == TripUser.TripUserStatus.WENT
+                  && otherTripUser.getStatus() == TripUser.TripUserStatus.WENT
+          ) {
+            return UserResponse.CanReview.CAN_REVIEW;
+          }
+        }
+      }
+    }
+    return UserResponse.CanReview.DISABLED;
   }
 }
