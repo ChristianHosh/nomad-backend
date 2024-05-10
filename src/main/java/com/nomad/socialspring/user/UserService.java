@@ -44,7 +44,7 @@ public class UserService {
 
     if (user.canBeSeenBy(currentUser))
       return user.toResponse(currentUser, true);
-    throw BxException.unauthorized(currentUser);
+    throw BxException.forbidden(currentUser);
   }
 
   public UserResponse getUser(String username) {
@@ -53,7 +53,7 @@ public class UserService {
 
     if (user.canBeSeenBy(currentUser))
       return user.toResponse(currentUser, true);
-    throw BxException.unauthorized(currentUser);
+    throw BxException.forbidden(currentUser);
   }
 
   @Transactional
@@ -70,7 +70,7 @@ public class UserService {
 
       return user.toResponse(currentUser, true);
     }
-    throw BxException.unauthorized(currentUser);
+    throw BxException.forbidden(currentUser);
   }
 
   @Transactional
@@ -86,7 +86,7 @@ public class UserService {
         return userFacade.save(user).toResponse(currentUser, true);
       throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOWER, currentUser);
     }
-    throw BxException.unauthorized(currentUser);
+    throw BxException.forbidden(currentUser);
   }
 
 

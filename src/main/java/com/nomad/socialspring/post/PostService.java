@@ -3,7 +3,6 @@ package com.nomad.socialspring.post;
 import com.nomad.socialspring.chat.ChatChannel;
 import com.nomad.socialspring.chat.ChatChannelFacade;
 import com.nomad.socialspring.comment.*;
-import com.nomad.socialspring.common.BDate;
 import com.nomad.socialspring.location.LocationFacade;
 import com.nomad.socialspring.error.BxException;
 import com.nomad.socialspring.image.Image;
@@ -102,7 +101,7 @@ public class PostService {
       postEventHandler.viewPost(currentUser, post);
       return post.toResponse(currentUser);
     }
-    throw BxException.unauthorized(currentUser);
+    throw BxException.forbidden(currentUser);
   }
 
   @Transactional
@@ -125,7 +124,7 @@ public class PostService {
       return commentFacade
               .findAllByPost(post, page, size)
               .map(c -> c.toResponse(currentUser));
-    throw BxException.unauthorized(currentUser);
+    throw BxException.forbidden(currentUser);
   }
 
   @Transactional
@@ -144,7 +143,7 @@ public class PostService {
       postEventHandler.commentOnPost(currentUser, post);
       return comment.toResponse(currentUser);
     }
-    throw BxException.unauthorized(currentUser);
+    throw BxException.forbidden(currentUser);
   }
 
   public Page<UserResponse> getPostLikes(Long postId, int page, int size) {
@@ -155,7 +154,7 @@ public class PostService {
       return userFacade
               .findAllByPostLiked(post, page, size)
               .map(u -> u.toResponse(currentUser));
-    throw BxException.unauthorized(currentUser);
+    throw BxException.forbidden(currentUser);
   }
 
   @Transactional
@@ -175,7 +174,7 @@ public class PostService {
       log.info("finishing request handling");
       return postFacade.save(post).toResponse(currentUser);
     }
-    throw BxException.unauthorized(currentUser);
+    throw BxException.forbidden(currentUser);
   }
 
   @Transactional
@@ -190,7 +189,7 @@ public class PostService {
       postEventHandler.unlikePost(currentUser, post);
       return postFacade.save(post).toResponse(currentUser);
     }
-    throw BxException.unauthorized(currentUser);
+    throw BxException.forbidden(currentUser);
   }
 
   @Transactional
@@ -205,7 +204,7 @@ public class PostService {
       postEventHandler.favoritePost(currentUser, post);
       return postFacade.save(post).toResponse(currentUser);
     }
-    throw BxException.unauthorized(currentUser);
+    throw BxException.forbidden(currentUser);
   }
 
   @Transactional
@@ -220,7 +219,7 @@ public class PostService {
       postEventHandler.unfavoritePost(currentUser, post);
       return postFacade.save(post).toResponse(currentUser);
     }
-    throw BxException.unauthorized(currentUser);
+    throw BxException.forbidden(currentUser);
   }
 
 

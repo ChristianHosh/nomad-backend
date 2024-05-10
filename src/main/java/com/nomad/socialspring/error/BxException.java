@@ -171,6 +171,12 @@ public class BxException extends RuntimeException {
     };
   }
 
+  public static BxForbiddenException forbidden(Object value) {
+    if (value instanceof BaseEntity e)
+      value = getBaseEntityValue(e);
+    return new BxForbiddenException("you are forbidden to do this action [" + value + "]");
+  }
+
   @NotNull
   @Contract("_ -> new")
   public static BxSevereException unexpected(@NotNull Exception e) {
