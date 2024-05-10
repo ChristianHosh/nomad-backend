@@ -53,4 +53,7 @@ public class Profile extends BaseEntity {
     return user.getFollowings().size();
   }
 
+  public Integer getNumberOfPosts() {
+    return user.getPosts().size();
+  }
 }

@@ -18,6 +18,7 @@ public class ProfileResponse extends BaseResponse {
   private Date birthDate;
   private Integer numberOfFollowers;
   private Integer numberOfFollowings;
+  private Integer numberOfPosts;
 
 
   private ProfileResponse(Profile profile, boolean detailed) {
@@ -31,6 +32,7 @@ public class ProfileResponse extends BaseResponse {
       birthDate = profile.getBirthDate();
       numberOfFollowers = profile.getNumberOfFollowers();
       numberOfFollowings = profile.getNumberOfFollowings();
+      numberOfPosts = profile.getNumberOfPosts();
       location = LocationResponse.fromEntity(profile.getLocation());
     }
   }
