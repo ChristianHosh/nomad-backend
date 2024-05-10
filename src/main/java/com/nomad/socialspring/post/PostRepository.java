@@ -15,15 +15,17 @@ public interface PostRepository extends JpaRepository<Post, Long> {
   @Query("""
           select p from Post p
           where
-            (p.isPrivate = false) or
-            (:user is not null and (:user in elements(p.author.followers) or :user = p.author))
+            ((p.isPrivate = false) or
+            (:user is not null and (:user in elements(p.author.followers) or :user = p.author))) and
+            (:user not member of p.author.blockedUsers)
           order by p.zScore desc nulls last, p.createdOn desc
           """)
   Page<Post> findPosts(User user, Pageable pageable);
 
   @Query("""
           select p from Post p
-          where (:user is not null and (:user in elements(p.author.followers) or :user = p.author))
+          where (:user is not null and (:user in elements(p.author.followers) or :user = p.author)) and
+            (:user not member of p.author.blockedUsers)
           order by p.zScore desc nulls last, p.createdOn desc
           """)
   Page<Post> findFollowingsPosts(User user, Pageable pageable);
@@ -35,7 +37,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
               (
                 (p.isPrivate = false) or
                 (:user is not null and (:user in elements(p.author.followers) or :user = p.author))
-              )
+              ) and
+            (:user not member of p.author.blockedUsers)
             order by p.zScore desc nulls last, p.createdOn desc
           """)
   Page<Post> findLocalTrips(User user, Location location, Pageable pageable);
@@ -47,7 +50,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
               (
                 (p.isPrivate = false) or
                 (:currentUser is not null and (:currentUser in elements(p.author.followers) or :currentUser = p.author))
-              )
+              ) and
+            (:user not member of p.author.blockedUsers)
             order by p.createdOn DESC
           """)
   Page<Post> findByUser(User user, User currentUser, Pageable pageable);
@@ -61,7 +65,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
              (:user in elements(p.author.followers) or :user = p.author)
           ) and
           pi.event = com.nomad.socialspring.recommender.Event.FAVORITE and
-          pi.user = :user
+          pi.user = :user and
+            (:user not member of p.author.blockedUsers)
           order by pi.createdOn
           """)
   Page<Post> findAllByFavorites(User user, Pageable pageable);
@@ -87,7 +92,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             inner join TripUser tu on p.trip.id = tu.trip.id
           where (p.trip is not null) and
                 (p.trip.endDate > current date) and
-                (:user = tu.user)
+                (:user = tu.user) and
+                (:user not member of p.author.blockedUsers)
           order by p.trip.startDate asc
           """)
   Page<Post> findUpcomingTrips(User user, Pageable pageable);
