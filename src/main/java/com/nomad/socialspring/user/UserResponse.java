@@ -34,7 +34,7 @@ public class UserResponse extends BaseResponse {
     role = user.getRole();
 
     canReview = detailed ? CanReview.DISABLED : user.canBeReviewedBy(currentUser);
-    canBlock = !detailed && user.isNotBlockedBy(currentUser);
+    canBlock = detailed && user.isNotBlockedBy(currentUser);
     
     if (detailed)
       rating = user.getRating();
