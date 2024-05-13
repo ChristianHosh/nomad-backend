@@ -3,6 +3,7 @@ package com.nomad.socialspring.post;
 import com.nomad.socialspring.error.BxException;
 import com.nomad.socialspring.image.Image;
 import com.nomad.socialspring.interest.Interest;
+import com.nomad.socialspring.location.Location;
 import com.nomad.socialspring.trip.Trip;
 import com.nomad.socialspring.user.User;
 import lombok.RequiredArgsConstructor;
@@ -59,5 +60,13 @@ public class PostFacade {
 
   public Page<Post> getUpcomingTrips(User currentUser, int page, int size) {
     return repository.findUpcomingTrips(currentUser, PageRequest.of(page, size));
+  }
+
+  public Page<Post> findByLocation(Location location, User user, int page, int size) {
+    return repository.findByLocation(location, user, PageRequest.of(page, size));
+  }
+
+  public Page<Post> findByInterest(Interest interest, User user, int page, int size) {
+    return repository.findByInterest(interest, user, PageRequest.of(page, size));
   }
 }

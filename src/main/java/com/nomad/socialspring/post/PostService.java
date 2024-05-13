@@ -2,24 +2,32 @@ package com.nomad.socialspring.post;
 
 import com.nomad.socialspring.chat.ChatChannel;
 import com.nomad.socialspring.chat.ChatChannelFacade;
-import com.nomad.socialspring.comment.*;
-import com.nomad.socialspring.location.LocationFacade;
+import com.nomad.socialspring.comment.Comment;
+import com.nomad.socialspring.comment.CommentFacade;
+import com.nomad.socialspring.comment.CommentRequest;
+import com.nomad.socialspring.comment.CommentResponse;
 import com.nomad.socialspring.error.BxException;
 import com.nomad.socialspring.image.Image;
 import com.nomad.socialspring.image.ImageFacade;
 import com.nomad.socialspring.interest.Interest;
 import com.nomad.socialspring.interest.InterestFacade;
+import com.nomad.socialspring.interest.InterestResponse;
+import com.nomad.socialspring.location.LocationFacade;
 import com.nomad.socialspring.notification.NotificationFacade;
 import com.nomad.socialspring.recommender.PostEventHandler;
 import com.nomad.socialspring.trip.Trip;
 import com.nomad.socialspring.trip.TripFacade;
 import com.nomad.socialspring.trip.TripRequest;
-import com.nomad.socialspring.user.*;
+import com.nomad.socialspring.user.User;
+import com.nomad.socialspring.user.UserFacade;
+import com.nomad.socialspring.user.UserResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -226,5 +234,16 @@ public class PostService {
   public Page<PostResponse> getFavoritePosts(int page, int size) {
     User user = userFacade.getCurrentUser();
     return postFacade.findAllByFavorites(user, page, size).map(p -> p.toResponse(user));
+  }
+
+  public Page<InterestResponse> getPostInterests(Long postId) {
+    Post post = postFacade.findById(postId);
+
+    var interests = post.getInterests();
+    return new PageImpl<>(
+            interests.stream().map(InterestResponse::fromEntity).toList(),
+            PageRequest.of(0, interests.size()),
+            interests.size()
+    );
   }
 }

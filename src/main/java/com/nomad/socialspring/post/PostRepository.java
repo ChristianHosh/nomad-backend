@@ -1,5 +1,6 @@
 package com.nomad.socialspring.post;
 
+import com.nomad.socialspring.interest.Interest;
 import com.nomad.socialspring.location.Location;
 import com.nomad.socialspring.user.User;
 import org.springframework.data.domain.Page;
@@ -97,4 +98,26 @@ public interface PostRepository extends JpaRepository<Post, Long> {
           order by p.trip.startDate asc
           """)
   Page<Post> findUpcomingTrips(User user, Pageable pageable);
+
+  @Query("""
+          select p from Post p
+          where
+            ((p.isPrivate = false) or
+            (:user is not null and (:user in elements(p.author.followers) or :user = p.author))) and
+            (:user not member of p.author.blockedUsers) and
+            (p.trip is not null and p.trip.location = :location)
+          order by p.zScore desc nulls last, p.createdOn desc
+          """)
+  Page<Post> findByLocation(Location location, User user, Pageable pageable);
+
+  @Query("""
+          select p from Post p
+          where
+            ((p.isPrivate = false) or
+            (:user is not null and (:user in elements(p.author.followers) or :user = p.author))) and
+            (:user not member of p.author.blockedUsers) and
+            (:interest in elements(p.interests))
+          order by p.zScore desc nulls last, p.createdOn desc
+          """)
+  Page<Post> findByInterest(Interest interest, User user, Pageable pageable);
 }

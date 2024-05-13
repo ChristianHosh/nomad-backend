@@ -1,5 +1,6 @@
 package com.nomad.socialspring.location;
 
+import com.nomad.socialspring.post.PostResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,15 @@ public class LocationController {
   @GetMapping("/{id}")
   public LocationResponse getLocation(@PathVariable("id") Long id) {
     return locationService.getLocation(id);
+  }
+
+  @GetMapping("/{id}/trips")
+  public Page<PostResponse> getTrips(
+          @PathVariable("id") Long id,
+          @RequestParam(name = "page", defaultValue = "0") int page,
+          @RequestParam(name = "size", defaultValue = "25") int size
+  ) {
+    return locationService.getTrips(id, page, size);
   }
 
 }

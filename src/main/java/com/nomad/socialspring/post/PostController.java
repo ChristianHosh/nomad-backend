@@ -2,6 +2,7 @@ package com.nomad.socialspring.post;
 
 import com.nomad.socialspring.comment.CommentRequest;
 import com.nomad.socialspring.comment.CommentResponse;
+import com.nomad.socialspring.interest.InterestResponse;
 import com.nomad.socialspring.user.UserResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -122,5 +123,13 @@ public class PostController {
           @RequestParam(name = "size", defaultValue = "50") int size
   ) {
     return postService.getFavoritePosts(page, size);
+  }
+
+  @GetMapping("/{id}/interests")
+  @ResponseStatus(HttpStatus.OK)
+  public Page<InterestResponse> getPostInterests(
+          @PathVariable(name = "id") Long postId
+  ) {
+    return postService.getPostInterests(postId);
   }
 }
