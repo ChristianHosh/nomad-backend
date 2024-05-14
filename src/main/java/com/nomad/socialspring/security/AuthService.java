@@ -14,6 +14,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
@@ -89,5 +91,23 @@ public class AuthService {
     String jwt = jwtUtils.generateJwtToken(authentication);
 
     return user.toResponse(null, true).withToken(jwt);
+  }
+
+  public UserResponse resetPassword(AuthController.ResetPasswordRequest resetPasswordRequest) {
+    User user = userFacade.getCurrentUser();
+
+    PasswordEncoder passwordEncoder = AuthenticationFacade.getEncoder();
+    String encodedOldPassword = passwordEncoder.encode(resetPasswordRequest.oldPassword());
+    if (user.getPassword().equalsIgnoreCase(encodedOldPassword)) {
+      if (!resetPasswordRequest.newPassword().equals(resetPasswordRequest.confirmPassword())) {
+        throw BxException.badRequest(User.class, "confirmPassword", BxException.X_PASSWORDS_DO_NOT_MATCH);
+      }
+
+      user.setPassword(passwordEncoder.encode(resetPasswordRequest.newPassword()));
+
+      return user.toResponse();
+    } else {
+      throw BxException.badRequest(User.class, "password", BxException.X_BAD_CREDENTIALS);
+    }
   }
 }

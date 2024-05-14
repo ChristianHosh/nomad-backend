@@ -3,6 +3,7 @@ package com.nomad.socialspring.security;
 import com.nomad.socialspring.user.UserResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,16 @@ public class AuthController {
   @ResponseStatus(HttpStatus.PROCESSING)
   public UserResponse resendVerificationToken(@RequestBody @Valid ResendEmailVerificationRequest verificationRequest) {
     return authService.resendEmailVerification(verificationRequest);
+  }
+
+  @PostMapping("/reset-password")
+  @ResponseStatus(HttpStatus.OK)
+  public UserResponse resetPassword(@RequestBody @Valid ResetPasswordRequest resetPasswordRequest) {
+    return authService.resetPassword(resetPasswordRequest);
+  }
+
+  public record ResetPasswordRequest(@NotNull String oldPassword, @NotNull String newPassword, @NotNull String confirmPassword) {
+
   }
 
   @GetMapping("/verify-email")

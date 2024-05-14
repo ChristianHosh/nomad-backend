@@ -43,6 +43,7 @@ public class BxException extends RuntimeException {
   public static final String X_USER_NOT_IN_TRIP = "User is not in trip";
   public static final String X_CANT_UPDATE_TRIP_USER_STATUS = "Can't Update TripUser Status";
   public static final Object X_USER_ALREADY_REVIEWED = "Already reviewed user";
+  public static final Object X_PASSWORDS_DO_NOT_MATCH = "Passwords do not match";
 
   private Exception exception;
 
