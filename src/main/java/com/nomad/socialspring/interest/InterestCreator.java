@@ -36,7 +36,7 @@ public class InterestCreator {
           "Water Activities",     // 18
           "Theme Parks",          // 19
           "Stargazing",           // 20
-          "General"             // 21
+          "General"               // 21
   );
 
   @EventListener(ApplicationReadyEvent.class)
