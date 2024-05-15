@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Getter
-@Setter(AccessLevel.PRIVATE)
+@Setter(AccessLevel.PROTECTED)
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
 

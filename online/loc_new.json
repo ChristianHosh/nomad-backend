@@ -1,0 +1,1260 @@
+[
+  {
+    "id": 1,
+    "name": "Cyprus",
+    "imageUrl": "https://lh5.googleusercontent.com/p/AF1QipMGWFVljLyuHFvLDpE8Is4bzf0DY3G_EWgAyAiE=w608-h351-n-k-no",
+    "about": "Cyprus is the third-largest and third-most populous island in the Mediterranean.",
+    "locations": [
+      {
+        "id": 2,
+        "name": "Ayia Napa",
+        "imageUrl": "https://lh5.googleusercontent.com/p/AF1QipMdjPM1R5BCT1Hd1X-YnFvn8wS2_Ku3Zey7WCa9=w608-h351-n-k-no",
+        "about": "Ayia Napa officially romanised Agia Napa, is a tourist resort at the far eastern end of the southern coast of Cyprus."
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Portugal",
+    "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcQor3tJkQkS-uQ-3T8C9gc3PJ1JgtRPfx3U7wRGXswBdwme-JOQ3pJkA5gLma2N04-IfEZLT704GLVzb3K2_PnrKoj1xfGcVYKUgQOj7Q",
+    "about": "Portugal, officially the Portuguese Republic, is a country located on the Iberian Peninsula, in Southwestern Europe",
+    "locations": [
+      {
+        "id": 4,
+        "name": "Lisbon",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcT1X_snhfK6o1lizpVDHaj-TcSIwQp3Vk6PJUcf9Xi6ovFdJYkIwS6u94ebG2V8KVz83owr5X-aIdnpp6tYxB_Dlj7lPdecI5kgMoxSEg",
+        "about": "The freshest and most exciting wine region in Portugal at this moment is Lisbon."
+      },
+      {
+        "id": 5,
+        "name": "Porto",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcQN5AZVSVWx9dxHoiSf1lfizcLe2ACviNu5KahC4M0voav5d2R4m5IhDfD-PiDt_IKhNlgZoeaGd9jYQ8N2UTpTRo54d-mLfKSU0PMbJg",
+        "about": "Porto also known as Oporto, is the second largest city in Portugal after Lisbon."
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Iceland",
+    "imageUrl": "https://cdn.britannica.com/06/171306-050-C88DD752/Aurora-borealis-peninsula-Snaefellsnes-Iceland-March-2013.jpg",
+    "about": "Iceland is a Nordic island country between the North Atlantic and Arctic Oceans, on the Mid-Atlantic Ridge between North America and Europe.",
+    "locations": [
+      {
+        "id": 7,
+        "name": "Reykjavik",
+        "imageUrl" : "https://content.icelandtravel.is/wp-content/uploads/2019/03/Reykjavik.jpg",
+        "about": "Reykjavík is the capital and largest city of Iceland. It is located in southwestern Iceland, on the southern shore of Faxaflói bay."
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Armenia",
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCEMNBAuVvQS7qL6a1_v9MHQ4HfTO6xNXdmImTJ4GITg&s",
+    "about": "Armenia is a unitary, multi-party, democratic nation-state with an ancient cultural heritage. The Armenian Highlands has been home to the Hayasa-Azzi.",
+    "locations": [
+      {
+        "id": 9,
+        "name": "Yerevan",
+        "imageUrl" : "https://move2armenia.am/wp-content/uploads/2023/08/levon-vardanyan-_epaiwp5yc8-unsplash-2500x1667.jpg",
+        "about": "It has been the capital since 1918, the fourteenth in the history of Armenia and the seventh located in or around the Ararat Plain."
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "name": "Morocco",
+    "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcTLJMPQ7dpYq672iJ_4IryEvwwMtXhCI7YlylEhSVnSyyZVNzO5L5tZpSvbI6RLJ2UB_l4uVhJTNHlM6H2vqCD4WNmFSglMMyg7rt3Hjw",
+    "about": "Morocco, officially the Kingdom of Morocco, is a country in the Maghreb region of North Africa. It overlooks the Mediterranean Sea to the north.",
+    "locations": [
+      {
+        "id": 19,
+        "name": "Casablanca",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcT6KH83OshlnJD1Wv7OQ9VqnTU8JXMtezqs1bmPEeef3revLKopfg3vImbOmKJzHmmkKZ-rrYEm9l5MXnPwUxeCf0kdfp7maqn6avC4XQ",
+        "about": "Casablanca is Morocco's chief port, with the Port of Casablanca being one of the largest artificial ports in Africa, and the third-largest port in North Africa."
+      },
+      {
+        "id": 20,
+        "name": "Fes",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcQNFsy9qAtCdM597kuwTAOXhdEMVgtxFF73GKb7jCGAMWw77JAddeUKNwxMFGoIsG3kWC0EzzaAKN2bmGs4BIq5UX177z4bvEFuVkCtxg",
+        "about": "Fez or Fes is a city in northern inland Morocco and the capital of the Fès-Meknès administrative region. It is the second largest city in Morocco."
+      },
+      {
+        "id": 21,
+        "name": "Marrakesh",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcQBC_P4V46nWPikaX7OOqZC92bvzXrxwQg5wHh41JACtoOuK0wNGqp0iF4lpITrGxm5IYZxRhLaYOTe0OyNUZQ69B4tMIxhTbn2ZkXaaQ",
+        "about": "Marrakesh or Marrakech is the fourth-largest city in Morocco. It is one of the four imperial cities of Morocco and is the capital of the Marrakesh–Safi."
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "name": "UK",
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkslVtqHCOGdXX5uxkQ_W5DQI2mQSIyJa_Xw&s",
+    "about": "The United Kingdom comprises four geographic and historical parts—England, Scotland, Wales, and Northern Ireland.",
+    "locations": [
+      {
+        "id": 23,
+        "name": "London",
+        "imageUrl": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/33/f5/de/london.jpg?w=1400&h=1400&s=1",
+        "about": "London is the capital and largest city of both England and the United Kingdom, with a population of around 8.8 million."
+      },
+      {
+        "id": 24,
+        "name": "Manchester",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcRVVAoyW6ZdYjknbyNQ7vrK76DLO9sW2-KgTJWW-Zib8UfyGYOCV1aPvSDRHY6BQh1AHBPz7kCEET0Z2c7P88zS4eAalxVEdlxIJxoEfw",
+        "about": "Manchester is a city and metropolitan borough of Greater Manchester, England, which had a population of 552,000 at the 2021 census."
+      },
+      {
+        "id": 25,
+        "name": "Birmingham",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcTuO5aOwJ4HabZFdZ1CKTl_3VNDi_wYdW7QdkNkb8g2Qvl9yW04ytIDbUQllK3cl2drMVuVM4syYhJW0CCfFtUEbaGWHa9iyv1MeFSbLNM",
+        "about": "Located in the West Midlands region of England, approximately 100 miles (160 km) from London, Birmingham is considered to be the social, cultural, financial and commercial centre of the Midlands."
+      },
+      {
+        "id": 26,
+        "name": "Edinburgh",
+        "imageUrl": "https://lh5.googleusercontent.com/p/AF1QipOFSwi9MiEcHrB6Aut_zIbo_apmZZ15_gXJAKr3=w608-h351-n-k-no",
+        "about": "Edinburgh had a population of 506,520 in mid-2020, making it the second-most populous city in Scotland and the seventh-most populous in the United Kingdom."
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "name": "Brazil",
+    "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcSDFBYpl5rmj50fQA1bbHvslEzip_6QhZ7Toz7uXXv1WiKadu1bXaHdrV1-sLxHRS4GzyDH6_ekD6EQU6yGCIDOr6rr4SKmtMunn8j3sQ",
+    "about": "Brazil is the world's fifth-largest country by area and the seventh most populous. Its capital is Brasília, and its most populous city is São Paulo.",
+    "locations": [
+      {
+        "id": 28,
+        "name": "Brasília",
+        "imageUrl": "https://lh4.googleusercontent.com/proxy/8i7qWvEYIEQxa52qSDlC1iFn__v8NPHR--xrMEYh_Dztp-3mp-98mi2Iget1J2SIQWdZVn1FVhsabsrnO544pzNcr07_XPi9b7UO2_zfosedoGQ5cHhFnp_67JBv_Np6UQILcka4j6QpfDUm3z-E844R7b2ZZSk=w608-h351-n-k-no",
+        "about": "Brasília is the federal capital of Brazil and seat of government of the Federal District. The city is located in the Brazilian highlands in the country's Central-West region."
+      },
+      {
+        "id": 29,
+        "name": "Salvador",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcQJP8JrW-zYPtXYY9cuquE9u8FjgqJLb6fyw2WHmdppvL-aS6fXAx_s7iVEZBVDvcPfwcTpwnRv3Ixz7POdiMy5viCtrk3rYOTQPURHpA",
+        "about": "Salvador is a Brazilian municipality and capital city of the state of Bahia. Situated in the Zona da Mata in the Northeast Region of Brazil."
+      },
+      {
+        "id": 30,
+        "name": "Rio de Janeiro",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcT_5ClOUxd8bU5kGIEitLqeedBTxFMtcCKERREJBZXN36AY8KMo-Rlsn80B--IS0gr2WTyKgyp9Kkt5m_L3nXmSScvuBsp4FY5wrrVLGA",
+        "about": "It is the second-most-populous city in Brazil (after São Paulo) and the sixth-most-populous city in the Americas."
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "name": "Iraq",
+    "imageUrl": "https://lh5.googleusercontent.com/p/AF1QipNCuUvb-9nLdjQKJiGs8mJrVGdlu5WiRdBjdn7k=w608-h351-n-k-no",
+    "about": "It is a federal parliamentary republic that consists of 19 governorates.",
+    "locations": [
+      {
+        "id": 32,
+        "name": "Baghdad",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcQ-KciWxvUYEVaSMUH5DJVeFiQJWno0DOFl10BqvTLxjJ-Zde6o7p8C-cH2duzvbLHPXItADl-Fx-QHDa5iZZ4XhxDEctOJaKql9nNJFg",
+        "about": "Baghdad is the capital of Iraq and the second-largest city in the Arab world after Cairo. It is located on the Tigris river. In 762 AD, Baghdad was chosen as the capital of the Abbasid Caliphate, and became its most notable major development project."
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "name": "Slovenia",
+    "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcTCeyRbKpiQPTVrH3deW_QnBl0pImVKZc9Zxlnl0mdIVXKnYIqCIUuvlm5xR8F-5fRy7B7DF6iDiupCrh9U0BqqeHvmAvdkU_clcClljg",
+    "about": "Slovenia is mostly mountainous and forested, covers 20,271 square kilometres (7,827 sq mi), and has a population of approximately 2.1 million.",
+    "locations": [
+      {
+        "id": 34,
+        "name": "Ljubljana",
+        "imageUrl": "https://lh5.googleusercontent.com/p/AF1QipOIq5y_N2ppzknM4He5RkzRFqFSrsEvJf-s0eTJ=w608-h351-n-k-no",
+        "about": "Ljubljana is the capital and largest city of Slovenia, located along a trade route between the northern Adriatic Sea and the Danube region."
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "name": "Nepal",
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcSMOBglm6GmBj2QVfAw7dkNUc03KkpQbhP5nEjKAt079BDDPNntmFy8hPHJShwoU1DGsd1biHEAzO2tfHfpYVTFyJSB_z2klFFaUCjF7w",
+    "about": "Nepal, officially the Federal Democratic Republic of Nepal, is a landlocked country in South Asia. It is mainly situated in the Himalayas.",
+    "locations": [
+      {
+        "id": 36,
+        "name": "Kathmandu",
+        "imageUrl": "https://lh5.googleusercontent.com/p/AF1QipNsDWKYCJLEyPh-rGM5PDMK-F1AN_ibmUSYh66C=w608-h351-n-k-no",
+        "about": "Kathmandu, officially Kathmandu Metropolitan City, is the capital and most populous city of Nepal."
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "name": "Hungary",
+    "imageUrl": "https://lh5.googleusercontent.com/p/AF1QipM88iex3M4vXGGJ2a3ct0M84LT6fhyjoYYrmJu_=w608-h351-n-k-no",
+    "about": "Hungary is a landlocked country in Central Europe. ... Spanning 93,030 square kilometres (35,920 sq mi) of the Carpathian Basin.",
+    "locations": [
+      {
+        "id": 38,
+        "name": "Budapest",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcT5-8jFuHFz18BoWqBqsiendpMni4_xu1WVYstdBv8r2s3EcVrwp7cDOvnpbSvja2L8VAyGCYsyVjETW8j0PjmbNANvzs-FNv0kTB7IDQ",
+        "about": "Budapest is the capital and most populous city of Hungary. It is the ninth-largest city in the European Union by population within city limits"
+      },
+      {
+        "id": 39,
+        "name": "Debrecen",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcR99Jc_-dayg9_m2koSkiL9ZhvR29YYhTf0gbWAqwmZnsmGYPwBb6SkoMolKL5cNGGnl-HOvDHaVBzxoRW_uEn-INvjvFIhmqX4psqYYg",
+        "about": "A city with county rights, it was the largest Hungarian city in the 18th century and it is one of the Hungarian people's most important cultural centres."
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "name": "Japan",
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtuWaMmfv7tsO5bjIOyXKS73rM_75B7p1dgvAuvM1f6w&s",
+    "about": "Japan is an island country in East Asia. It is in the northwest Pacific Ocean and is bordered on the west by the Sea of Japan.",
+    "locations": [
+      {
+        "id": 41,
+        "name": "Tokyo",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcTtKwVrlfcKOoIV_mopoE0PbELge60uB4OwsPue5KHxv8UkdUWOW8OmjlPfMsywv4CjMmwv4b-HftGHPz8VS9GpVq_BSVw8CJibTfS9mw",
+        "about": "Located at the head of Tokyo Bay, Tokyo is part of the Kantō region on the central coast of Honshu, Japan's largest island."
+      },
+      {
+        "id": 42,
+        "name": "Kyoto",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQ_6Pf3ixkglBK0OXXmGk-og0h8NyoIdfIUd5nLFQl3F31Ikt79dxqbkJmdEvD-ZuNkvH62LmUZ2cuK-G0ihH7mDtDCC2hQPlCx8sl6nw",
+        "about": "Kyoto is considered the cultural capital of Japan and is a major tourist destination."
+      },
+      {
+        "id": 43,
+        "name": "Osaka",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcQe1kQmMJ3wsXFSXgURfvjjfafb_JpHvgp5dKv7p5Oad3UpSg8S4CNRlgxHtwBvM4Vqcw0j3V-hBhANGUk3uQ8J8rNjBj6mUOumx-dfjw",
+        "about": "It is the capital of and most populous city in Osaka Prefecture, and the third-most populous city in Japan, following the special wards of Tokyo and Yokohama."
+      },
+      {
+        "id": 44,
+        "name": "Nagoya",
+        "imageUrl": "https://lh3.googleusercontent.com/proxy/taEpp6pcUA_FsD9Dw7q412-OrBTka-F6ENB06ihFedUPcvUbwRXvSSOphe-W5shuky8pkdkFHnPMGG1Huj3JrYrgj4EvwkmebTa1iTuPG_Z3sEfKOVtGD-sj-uDgPwD33zF6nuCzC6_ivMWK4C4aJV3Ep4F03g=w608-h351-n-k-no",
+        "about": " Located on the Pacific coast in central Honshu, it is the capital and most populous city of Aichi Prefecture, with the Port of Nagoya being Japan's largest seaport."
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "name": "India",
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcQjz1tvQRLMAxbUOLiViXvw0ekvtTOOCHzTRxn7Kx_1wIq-9incKCTDkdmF1-YclCoWnIknIVYDHzj8nWvhE2rgOQs8joJ96TWQZfA1Ww",
+    "about": "India has been a federal republic since 1950, governed through a democratic parliamentary system. It is a pluralistic, multilingual and multi-ethnic society.",
+    "locations": [
+      {
+        "id": 46,
+        "name": "New Delhi",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcTxnFFv7e2MEjs9BWTWCAUkBa8FlNaq3OcpLNMVDFr249cEUphd6o8H8GjaStXImSZ0sSBJcIUinYSwmmJoIJEDnrScOIC3CQE_03PFzQ",
+        "about": "New Delhi is the capital of India and a part of the National Capital Territory of Delhi (NCT)."
+      },
+      {
+        "id": 47,
+        "name": "Delhi",
+        "imageUrl": "https://lh5.googleusercontent.com/p/AF1QipP2fJjXnCg-pJvnwTOhCsHxyCsySJHPK9m-jPnU=w608-h351-n-k-no",
+        "about": "Delhi, officially the National Capital Territory (NCT) of Delhi, is a city and a union territory of India containing New Delhi, the capital of India."
+      },
+      {
+        "id": 48,
+        "name": "Bangalore",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcQx0DquhCL-lmPY6XggYu3XSEsIFkIUqpfDGRRHeO-4nfiJ0hSXE6DLU0rSk0avPvmV4QjDHbAPcs_Ab38waHfnRlvEqdF9LwR0i0xkUQ",
+        "about": "It is the most populous city and largest urban agglomeration in South India, and is the 27th largest city in the world."
+      },
+      {
+        "id": 49,
+        "name": "Chennai",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcSFNrZMa_qKcxqZgdEAJNycQHF0eOi23q_1y1jwXtLAs_4X25pJ-QuzVx9aJK7QPJqU3t7OaDPhR1gyUNFeChAWmv57WfETeu_Q4o4rNQ",
+        "about": "It is the state's primate city and is located on the Coromandel Coast of the Bay of Bengal."
+      }
+    ]
+  },
+  {
+    "id": 50,
+    "name": "New Zealand",
+    "imageUrl": "https://lh5.googleusercontent.com/p/AF1QipPjeYDUrOebyLPuuVr__KGF-7Lki2D984WLahcY=w608-h351-n-k-no",
+    "about": "It is the sixth-largest island country by area and lies east of Australia across the Tasman Sea and south of the islands of New Caledonia, Fiji, and Tonga.",
+    "locations": [
+      {
+        "id": 51,
+        "name": "Wellington",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQNwBXKKOudNNVJ0NALExaaeRxH6JIq_NOFihVqmAWNTQLTZUJcyRzuVpdFey2KFNwOWytjxxP9tO-qBv5DFUjOKIc5LqtdQQTztaX0hw",
+        "about": "Wellington is the capital city of New Zealand. It is located at the south-western tip of the North Island, between Cook Strait and the Remutaka Range."
+      },
+      {
+        "id": 52,
+        "name": "Auckland",
+        "imageUrl": "https://cdn.britannica.com/99/61399-050-B867F67F/skyline-Auckland-New-Zealand-Westhaven-Marina.jpg",
+        "about": "Auckland is a large metropolitan city in the North Island of New Zealand."
+      }
+    ]
+  },
+  {
+    "id": 53,
+    "name": "Canada",
+    "imageUrl": "https://a.cdn-hotels.com/gdcs/production149/d121/06dc8ae0-c55c-11e8-9739-0242ac110006.jpg?impolicy=fcrop&w=800&h=533&q=medium",
+    "about": "Canada is a country in North America. Its ten provinces and three territories extend from the Atlantic Ocean to the Pacific Ocean and northward into the Arctic Ocean.",
+    "locations": [
+      {
+        "id": 54,
+        "name": "Toronto",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcTn7K5WsNRHmdS8MpaaO8xEINXmJZYdEsVv6nQV99Nu47eBL1ED69kxtUY1Tc_HnXgNSR9BGtjruCWRUW_peWql_UON_xWMAVqVBzG8TQ",
+        "about": "Toronto is the most populous city in Canada and the capital city of the Canadian province of Ontario."
+      },
+      {
+        "id": 55,
+        "name": "Vancouver",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcR2IR0IpIEnCnu2BOtCwVLwhdwyMemADCKpOK-tug1cZKtr90uMkwrZAaTLjmP-lRON3hGTpuBDWjHIX1KT20xRKpRUjsl4Ep5WCqwyFw",
+        "about": "Vancouver is a major city in western Canada, located in the Lower Mainland region of British Columbia."
+      }
+    ]
+  },
+  {
+    "id": 56,
+    "name": "Turkey",
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcQ5kfh_XtyTUAV7pyer4oBxIdPifnwOWPEnMeBmBJEgKgLYwGLNDxCIAN4oTShka_ycCKVLv6kyorjquHBJWSzo0qJdQsk0pVn-XiQr5Q",
+    "about": "Turkey, officially the Republic of Türkiye, is a country mainly in Anatolia in West Asia, with a smaller part called East Thrace in Southeast Europe.",
+    "locations": [
+      {
+        "id": 57,
+        "name": "Istanbul",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcShBLKZEhiUekTXPFs2QiR7TWfh81T3V-Pv-L1jf_k_-ImodANVmNu1-IRup1_9NsfwMX345ZvByGkN_L9bd9myAmkCbdO97SXrY5uE_Q",
+        "about": "Istanbul is the largest city in Turkey, straddling the Bosporus Strait, the boundary between Europe and Asia."
+      },
+      {
+        "id": 58,
+        "name": "Ankara",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcQS_euTMWUp1pargYBwg7LZprV2X8_P7vGTRGpy4msqqQOz0VajEN8I0NFg1C7deoYgCDVjocfKV2gZPfvCoFXxAGWuDU-RxhZU8zYylw",
+        "about": "Ankara historically known as Ancyra and Angora, is the capital of Turkey. Located in the central part of Anatolia."
+      },
+      {
+        "id": 59,
+        "name": "Antalya",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcTjPDi7V49jTp_gYB0jf-W0P4pRA2e6mLVbOqScmyGqXY7zdB57BUdv_0uE5-VbCKFImrrCHjSP4YnX-0oKG_6hl0YeBuQd3n-ghtDv1A",
+        "about": "Antalya, is the fifth-most populous city in Turkey and the capital of Antalya Province."
+      }
+    ]
+  },
+  {
+    "id": 60,
+    "name": "Finland",
+    "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcSshjLLQFFdiOXXL8PvdvIXTi8GJwMaejOw9rRlxGBkPG5jXI3Uue3EOJ5M1I3iosJlodR3_sE8Lk3ZgpTuZCHcN6jSIsjmt-LWD0HCiQ",
+    "about": "Finland covers an area of 338,145 square kilometres (130,559 sq mi) and has a population of 5.6 million. Helsinki is the capital and largest city.",
+    "locations": [
+      {
+        "id": 61,
+        "name": "Helsinki",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcTuXDFOuKYMZeIX0VifnvKPNiFng-4r9J3T2CbVcKvtqWwkWdcl8B5OgZqbkT8HZ60dOI4dAP8Y4kOWuzT3yUbiCMLtiUUKWhM0XSQdCA",
+        "about": "Helsinki is the capital and most populous city in Finland. It is located on the shore of the Gulf of Finland."
+      },
+      {
+        "id": 62,
+        "name": "Espoo",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcQRp97WPR6s9CfefbMaCP7gXrPNiwqxtjti1ENaOQFUUZ9UuFoknoHJqRg5jdwS3kJ3SMd2Zf35P9xZuMGICv_pcEQXyYIPmqphv0qZ2Q",
+        "about": "Espoo is a city in Finland. It is located to the west of the capital, Helsinki, in southern Uusimaa. The population of Espoo is approximately 314,000."
+      }
+    ]
+  },
+  {
+    "id": 63,
+    "name": "UAE",
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcQyMiN_wDL09qcdFgsFGHz00tj7zLyRzh_NV_OhgCSMvE2td8pJ2cYaOmdj8BQt1thoFT3vy5dL2p1QkXh_StsfjK1sPcGum0nXgqJs4Q",
+    "about": "The United Arab Emirates is an elective monarchy formed from a federation of seven emirates.",
+    "locations": [
+      {
+        "id": 64,
+        "name": "Abu Dhabi",
+        "imageUrl": "https://lh5.googleusercontent.com/p/AF1QipPB6fwvLuOQn2ByH7G70FJnMoIuKyvE-i--Tsk9=w608-h351-n-k-no",
+        "about": "Dubai is the most populous city in the United Arab Emirates (UAE) and the capital of the Emirate of Dubai."
+      }
+    ]
+  },
+  {
+    "id": 65,
+    "name": "Italy",
+    "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcRm4NIsxAinaXjVMwfnRnPiVTr7c8V3-QHdpkUFuJ2rNKHV7Phpf6iSwYmjWcs_7zv21JyEOTGIIq1xq25cyoK5lJNgutat-_F_Ypin5g",
+    "about": "It is the tenth-largest country by land area in the European continent.",
+    "locations": [
+      {
+        "id": 66,
+        "name": "Rome",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcS9iFReftNMS8F30Ohai-JIekiPzPItMjPu8HUEV2CtZXXzxT_BSdZavvZX1HGW-XvROkgcaNIaeOLnKi0nANWkDsm1SdVWH8Vv-sQr3Q",
+        "about": "Rome is located in the central-western portion of the Italian Peninsula, within Lazio (Latium), along the shores of the Tiber."
+      },
+      {
+        "id": 67,
+        "name": "Milan",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcRbCJ-zq3SvCOPk5e7QD5Fm2Hs49QzQDBEZ4-gUqBjf1Qu-Sxse4NIyZ5YqAmhHr6hoWFxD2d1wKFxu6xD7IiqJxP0ayGPsx6MPCTaZsQ",
+        "about": "Milan is the economic capital of Italy, one of the economic capitals of Europe and a global financial centre. Milan. Milano (Italian) Milan (Milanese)."
+      },
+      {
+        "id": 68,
+        "name": "Ravenna",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcSd4vzTj_97zDXclCZN9TCEurziIFM_CnZmppL7A-2eok78RDRGPPgjoXNxuoAjXC2VnB9D-im19zYTfry4llkexinpiA14ThYazhjvgg",
+        "about": "Ravenna is the capital city of the Province of Ravenna, in the Emilia-Romagna region of Northern Italy."
+      },
+      {
+        "id": 69,
+        "name": "Venice",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcSjk2F4KyFig5BnrX2H2yvPp7iVnsHkpjBNYQLtyh2gWN8PLuH-f_sUYzy_zHWJ5sBc1ZnEcaqHuHdrUKfjqLtdwtvNyT5lWLdqOVqY5Q",
+        "about": "Venice is a city in northeastern Italy and the capital of the Veneto region. It is built on a group of 126 islands that are separated by expanses of open water and by canals; portions of the city are linked by 472 bridges."
+      }
+    ]
+  },
+  {
+    "id": 70,
+    "name": "South Africa",
+    "imageUrl": "https://lh3.googleusercontent.com/proxy/ATW_RSt7K-rKe_HDi4kBojenziFv9ep57w10YIOVQqYt6DLJbOt_oVlHguon8wPu3EwXSQ05C1aJJvD-7SslqcDYLlbi8VprlwD4XztdDBlAzkxx0V_sbyb7ePuzsD5gTz-lRHXiZtSZ4g5x0eMr31M2kbntsUo=w608-h351-n-k-no",
+    "about": "South Africa is a biodiversity hotspot, with unique biomes, plant and animal life. With over 62 million people.",
+    "locations": [
+      {
+        "id": 71,
+        "name": "Pretoria",
+        "imageUrl": "https://lh5.googleusercontent.com/p/AF1QipOp_QGN6EWwKgT4yS1tucHx5mR1WAUo45L8whyb=w608-h351-n-k-no",
+        "about": "Pretoria also known as Tshwane, is South Africa's administrative capital."
+      },
+      {
+        "id": 72,
+        "name": "Cape Town",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcTjpuee53Z0yNFVylrKpSvSiyMY79f_-dWgniQ65UFk0orqaStq3rUKy2rtsELhKW2GcGBU0Xxjv7QJlH_hSbR6oYh42H4UPbBMN_-lDA",
+        "about": "Cape Town is the legislative capital of South Africa. It is the country's oldest city and the seat of the Parliament of South Africa."
+      }
+    ]
+  },
+  {
+    "id": 73,
+    "name": "Georgia",
+    "imageUrl": "https://www.telegraph.co.uk/content/dam/Travel/2017/May/Tbilisi-travel-alamy.jpg?imwidth=680",
+    "about": "Georgia is a transcontinental country in Eastern Europe and West Asia.",
+    "locations": [
+      {
+        "id": 74,
+        "name": "Tbilisi",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcRR0-xdq5oT_BZFlYTAAHKur1T0s1zLYNA-LTy6nnvbtvJDFqzR07h0fHo7DvT0iMz9YRTbdcKH5PHgQfvRCTLXbRiKyqFh9FUNxiPFnQ",
+        "about": "Tbilisi was founded in the fifth century AD by Vakhtang I of Iberia, and since then has served as the capital of various Georgian kingdoms and republics."
+      }
+    ]
+  },
+  {
+    "id": 75,
+    "name": "Germany",
+    "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcSoGusnMmsgXOVvEfVdiM6yQAubevFHegVXj5_JU_Bv5FUxGYpvQ_pC2leYQZIsqiPQ9xEinKBl3d3muHKczTBQfbugYJZ4Hbesfg-Wbw",
+    "about": "Germany, officially the Federal Republic of Germany, is a country in the western region of Central Europe.",
+    "locations": [
+      {
+        "id": 76,
+        "name": "Berlin",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcQOU-y5EjfF3BHz7UBXaPbfbVWPwgdL9KkadNV7Od1x2UgqQah6kRYs0cb-DOpsogm2KuR4zA8dKKZOME8p7_wB4bQZ33iK98VTLQNJbw",
+        "about": "Berlin is the capital and largest city of Germany, both by area and by population. Its more than 3.85 million inhabitants make it the European Union's most populous city."
+      },
+      {
+        "id": 77,
+        "name": "Hamburg",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcT-EFAYCg7tODjA7ggRjaCUfatYP8NNoBNgAGA5cWjD8Z4mdrnmTB1RZhleImOhXG7IuBIUCp88ZTnp49rUZ70roXBA1vw5E3-Ada4D_g",
+        "about": "Hamburg is one of Germany's three city-states alongside Berlin and Bremen, and is surrounded by Schleswig-Holstein to the north and Lower Saxony to the south."
+      },
+      {
+        "id": 78,
+        "name": "Munich",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcTMA-P5kKx8SjFARBPowGRTNQ63wOXiXRFtUe3FfL-40pYFzhniGlq5eRwqnIasM9iUhu7Tvs-ECAmE3wJPjDxTar4aISzl8n10TXFY1mY",
+        "about": "With a population of 1,589,706 inhabitants as of 29 February 2024, it is the third-largest city in Germany, after Berlin and Hamburg."
+      }
+    ]
+  },
+  {
+    "id": 79,
+    "name": "Egypt",
+    "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQ4VquUuMS5-j0Ajgibw6nUvVTyGB68Eh7Ex816fCDStJNkJPrnZJ930W19dNrWnoN5Ye0tkGoiHXSjCTz_aOk7i13QVxjP4iP6uwZrCg",
+    "about": "Egypt officially the Arab Republic of Egypt, is a transcontinental country spanning the northeast corner of Africa and the Sinai Peninsula in the southwest corner of Asia.",
+    "locations": [
+      {
+        "id": 80,
+        "name": "Cairo",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcRukqd2HB6xeHHgn4joMLKjbTT7KIdruHd3UKsFaJByTsZYB1PKgvxtExUTsP6LgXuUz9HIVcMZYLKuMjpj6fVXEsoM7yLTmkAcy8Vhgw",
+        "about": "Cairo is associated with ancient Egypt, as the Giza pyramid complex and the ancient cities of Memphis and Heliopolis are located in its geographical area."
+      },
+      {
+        "id": 81,
+        "name": "Alexandria",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcTXazTuFhrsfU99cUYA5hu6KGPZmDqaeURlT-vCpKtw1PklF1iOTGmB-QqEfZS6lokohfQ9N3XAo41bcQE2BhtAnTuZZqk_IuWcDBGd6g",
+        "about": "Alexandria is the second largest city in Egypt and the largest city on the Mediterranean coast. It lies at the western edge of the Nile River delta."
+      }
+    ]
+  },
+  {
+    "id": 82,
+    "name": "Thailand",
+    "imageUrl": "https://lh5.googleusercontent.com/p/AF1QipMF-ocWKAetApFQh-i2hmgdKQZTXKkxAXTVjqAL=w608-h351-n-k-no",
+    "about": "Thailand, officially the Kingdom of Thailand and historically known as Siam (the official name until 1939).",
+    "locations": [
+      {
+        "id": 83,
+        "name": "Bangkok",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcSs9sullHje7HkcKE0Kd8zdVqvNL7nNLJ3OcSXMWtn6xrTIfJW8iF5daE2qMS_sJlOLgsmiUl8s1rgwp7ha22R9XTTKMRQF7F_VucUDhA",
+        "about": "Bangkok, officially known in Thai as Krung Thep Maha Nakhon and colloquially as Krung Thep, is the capital and most populous city of Thailand."
+      }
+    ]
+  },
+  {
+    "id": 84,
+    "name": "Russia",
+    "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcTzwZU_o4JX9IXExCYB9ppMstHfTLRTR5dKZBC0KsmKPyTBBlixf4_wZe7cEHsNvFqNlHFYtdylvENlcxL7WIaTdCVLR5CXg9imB79aBg",
+    "about": "Russia, or the Russian Federation, is a country spanning Eastern Europe and North Asia. It is the largest country in the world by area.",
+    "locations": [
+      {
+        "id": 85,
+        "name": "Moscow",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcTJHdedgJT7IPhFyQIj_R8CYUCuO4n3iZcL9gwBM_D4gI6diuvWgHhV0F1gEGz38lezKKBBMUm-_d_rKsTTjQVAQOwRA_Yq9Z06ev8dZg",
+        "about": "Moscow is the capital and largest city of Russia. The city stands on the Moskva River in Central Russia."
+      },
+      {
+        "id": 86,
+        "name": "St. Petersburg",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcQmVaDy4fzq2Zi_jJ6pTdHFPjuWEEoJCy-rKRd57FAw82gydqLMJ8EYPbEYr-EKruAZ1WzKwEPNaRc6khpAgUUypl_MX04flLjttBAdyw",
+        "about": "Saint Petersburg, formerly known as Petrograd and later Leningrad, is the second-largest city in Russia after Moscow."
+      },
+      {
+        "id": 87,
+        "name": "Kazan",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQTPFL5vq8A58D4fVaVpwlNvGS6FMqOnjIRCzAOAnQ99sNZgQAQpZlOYpt__f4ObpzQj_foohJG1i-4fC5hA2c6KiMgPzADT4UabjTbHA",
+        "about": "Kazan is the largest city and capital of Tatarstan, Russia. The city lies at the confluence of the Volga and the Kazanka Rivers"
+      },
+      {
+        "id": 88,
+        "name": "Novosibirsk",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcQSwdeWESRPxCQ6pyBKam9FYeLvIkyAaPhunfz_EZTurQlX9GZDerYzJyLi6_5Yh6d6INiGmfeUnLJ6Hrwp7FrLdQnz2QrLk4bZFT5HKA",
+        "about": "Novosibirsk is the largest city and administrative centre of Novosibirsk Oblast and the Siberian Federal District in Russia."
+      },
+      {
+        "id": 89,
+        "name": "Omsk",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcSR99hzEzO4OxdoBywJN4_B6-VkDkrSMg6YcNANe0WFCg2R7YucY6ObKL6vP--D7aCS1jYv2xGMQjLib4Tu3W2_8aT_7IVbFTLifPywFA",
+        "about": "Omsk is the administrative center and largest city of Omsk Oblast, Russia. It is situated in southwestern Siberia and has a population of over 1.1 million."
+      },
+      {
+        "id": 90,
+        "name": "Krasnoyarsk",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcSKqrdHX0G3SJpzK2xfWeWF6ZRGDiTdz9tn1-WBqUJrcqDqu_Hi25gLJAo1OKUj4Au6fpTiEx4b6yNGlZ0LHtwQQ6zr4O7DpZTPuh-IHQ",
+        "about": "Krasnoyarsk is the largest city and administrative center of Krasnoyarsk Krai, Russia."
+      },
+      {
+        "id": 91,
+        "name": "Kamchatka",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcSBZ8Hm9zpN77uKTo0pYYWxVGdzYFeZUoc8E7JLMbwTvolpvLyzQL-jwueAN-Tvxbj7tRXIwswSUBHKh0yFP9X6e5zZjhhwww8XDNB2Dg",
+        "about": "The Kamchatka Peninsula is a 1,250-kilometre-long peninsula in the Russian Far East"
+      },
+      {
+        "id": 92,
+        "name": "Yekaterinburg",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcSHvGsz-u_N28ooZsDm03-cz9Xoz3IdyQRk8iiCz_OMhEpzY1v2p1utRsN61dHns0vYGHnVmhON5EDGeUlnDb9uMG9jCxO2R8iCDpWOtw",
+        "about": "Yekaterinburg is the fourth-largest city in Russia, the largest city in the Ural Federal District, and one of Russia's main cultural and industrial centres."
+      }
+    ]
+  },
+  {
+    "id": 94,
+    "name": "Malta",
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcQ-TDS8euV8hSikmUJOvT1MGXWeBKfdftSMrapaQ25dyY82LsvMxc3QOxOTKa55aXZMPY0GdmQgFzHW10YcsqnPLFk71ecDZT8LSjKRcQ",
+    "about": "Malta officially the Republic of Malta, is an island country in Southern Europe, located in the Mediterranean Sea.",
+    "locations": [
+      {
+        "id": 95,
+        "name": "Valletta",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQ4_ZYGUTvXHk5kTkJIYYMWS1XI6oPSEw6c8LKTIYqKWgJMFnvlCIwFKcgTKnWHKMqTaikwRMKgvEZwevUyDBKGMeokGm_k7uIXljX0zQ",
+        "about": "Valletta is the capital city of Malta and one of its 68 council areas. Located between the Grand Harbour to the east and Marsamxett Harbour to the west."
+      }
+    ]
+  },
+  {
+    "id": 98,
+    "name": "Sweden",
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcRQsmZdlYj9iaWxlfSjdvamuLSB27fANqwlfaHVWf0qInTLdYmwKZ-0Vx7MhKCUaZHLF5O7qpdpXBWDN5OHaPP3_1bHSHlftbLK9cxvtMQ",
+    "about": "At 450,295 square kilometres, Sweden is the largest Nordic country and the fifth-largest country in Europe.",
+    "locations": [
+      {
+        "id": 99,
+        "name": "Stockholm",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcQuEbN_-steYt8baV8HoZWZqgksNQ83f6R4RhP8EjDyPSFXo_xS5Sz565RRezC8ljTDqWsap0xVelHH6ZD-RoTbK6PR0L05OojuNx2DMQ",
+        "about": "Stockholm is the cultural, media, political, and economic centre of Sweden."
+      },
+      {
+        "id": 100,
+        "name": "Luleå",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcQH6nF3DJVypT0GJ1lE-LOCSmGup_eQwjUxi-8z9cF_RMbqmEVvrssrHVq-95aonZ1BT5-FCM2FwdyNplW3m5Nh3hhVN93qUQRWqEBv_wU",
+        "about": "Luleå is a city on the coast of northern Sweden, and the capital of Norrbotten County, the northernmost county in Sweden."
+      }
+    ]
+  },
+  {
+    "id": 101,
+    "name": "Netherlands",
+    "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcTebIC5Ze33SyS8SK81x_G_9h5MfjaTpPFh9cZ5r24a--9PdpxvBsoS3xvh4VYxA19sXgJ6NXWubN4UX6atu-Iu0sBzin5_LEUavfIZVw",
+    "about": "The Netherlands, informally Holland, is a country located in northwestern Europe with overseas territories in the Caribbean.",
+    "locations": [
+      {
+        "id": 102,
+        "name": "Amsterdam",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcSOw56aG9Pl1t4FgpGtoOavGySRoCFJWEexO5CxiGAAjMhDFWBMKBP_Lcf1XX3CueiV6TH91K92QIo1Jg4Di9xAlQFHZBwjeyX1uSEJuQ",
+        "about": "The city is the cultural capital of the Netherlands. Many large Dutch institutions have their headquarters in the city."
+      },
+      {
+        "id": 103,
+        "name": "Rotterdam",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcRqxn7mnWe57ML_fdvL7-nhlgii9w1zZ8FHknstGn0Q9GngfR6IuluyAguYB5dEbhsf3cJk3bbWQolustAPRnd36-5DZYsrdFO_yfauGg",
+        "about": "\"The Dam on the River Rotte\") is the second-largest city in the Netherlands after the national capital of Amsterdam."
+      }
+    ]
+  },
+  {
+    "id": 104,
+    "name": "Pakistan",
+    "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcSc_BmQpXGWtWtLMEijCdGoYOe9AAz2ILbzU0EnDkTNO3s9-uGsT1Y1EYNjz5lkyJTGTSSQVJEMN0p4lTOEKiPRGWSUPLGA20XSdBO6pg",
+    "about": "Pakistan, officially the Islamic Republic of Pakistan, is a country in South Asia. It is the fifth-most populous country.",
+    "locations": [
+      {
+        "id": 105,
+        "name": "Islamabad",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcQDfBA8hsQHezfzwjLTmSd-QuZmqVW1VbPmgv9XFa91SvVBfTFKbqcOzOy5DIiJNYem-Bb4mglkAmSgIPUfAJmN4BCkxlRnZID3KW5ZCQ",
+        "about": "'City of Islam' is the capital city of the Islamic Republic of Pakistan. It is the country's ninth-most populous city with a population of over 1.2 million people."
+      }
+    ]
+  },
+  {
+    "id": 106,
+    "name": "China",
+    "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcRIlJz4ruS7wtsrs22ducxGE8c432v3qn41FmDI6RkD6sKbNZiNfILG804-OWPHBpYh_24bPTfq3tXGVOcjF9XhBaN_v1T3_o5DMWEAqA",
+    "about": "China, officially the People's Republic of China (PRC), is a country in East Asia. With a population exceeding 1.4 billion",
+    "locations": [
+      {
+        "id": 107,
+        "name": "Beijing",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRn9aT0ZTt7lG6eUCVBUwehXMrMshoEM15WDzxm_5p9Tw&s",
+        "about": "Beijing, alternatively romanized as Peking, is the capital of China. With more than 22 million residents."
+      },
+      {
+        "id": 108,
+        "name": "Shanghai",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcRYViunak7LS0ZIm2vCbB4S85t4rhTLFkRBpjrs2Aq9RLTLiDOJZl2iOsYHwlFJCmUcURnjNmwrVikMdx91YsnHDRZijI8vAh4C3No7iw",
+        "about": "Shanghai is one of the four direct-administered municipalities of China. The city is located on the southern estuary of the Yangtze River."
+      },
+      {
+        "id": 109,
+        "name": "Shenzhen",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcRJHUZ8oIv_5P9OmguCdLbE5BdjIJgN5uXIlZrFhFu4QXCsp--g-076JkCkGTZlkK3V2pvYI5F1O4y1pcyZZjA_rKL-L5y__i9jvidGdA",
+        "about": "Shenzhen is a city and special economic zone on the east bank of the Pearl River estuary on the central coast of the southern Chinese province of Guangdong."
+      },
+      {
+        "id": 110,
+        "name": "Guangzhou",
+        "imageUrl": "https://lh5.googleusercontent.com/p/AF1QipPrveqmSzPzCdWVwQipFXE8iaShi2NS4-m4qpvJ=w608-h351-n-k-no",
+        "about": "Guangzhou is the capital and largest city of Guangdong province in southern China."
+      },
+      {
+        "id": 111,
+        "name": "Tianjin",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcT_7uCnGhnuFSOhDs37mCd_jv8yzM-rE2VKIGkERMv1idQuweGfJ-L8G8A6J47oASOL7Of26UX8Pa3A-MdVQ7lgLi9-P5LJjhwdDEcTdg",
+        "about": "Tianjin is a municipality and metropolis in Northern China on the shore of the Bohai Sea. As such, it is not part of a province of China."
+      }
+    ]
+  },
+  {
+    "id": 112,
+    "name": "Ireland",
+    "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcQoxiY_q7BNljFtr70Q06i6dyzRQgAYBZOFOgsWUw2ScG4XvCmXf54FF_XUa0o7ga17jXdQFpgBPElBt6RBX3TaLS1H7E7A6NOKCyQnQQ",
+    "about": "Ireland is an island in the North Atlantic Ocean, in north-western Europe. It is separated from Great Britain to its east by the North Channel.",
+    "locations": [
+      {
+        "id": 113,
+        "name": "Dublin",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcRmDssf2kTN7MCC2qTGo07aMeoLPeqNMXoyPgW6lh-v5SWlCfx1idkqEaFHx_WzvAu35B-bjliT8VlcjmrQoawV1NLFIlvQEBXaPehXWw",
+        "about": "Dublin is the capital and largest city of Ireland. On a bay at the mouth of the River Liffey, it is in the province of Leinster."
+      },
+      {
+        "id": 114,
+        "name": "Cork",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcSv9Ju-JvpMrK_C8iCoUqSPtfpPcovMc6a0hojhm4RcEu2NCDBH1YUi9lx2wwnVLiqxt6g8CHKxJiT_hrsgU0v23EdIxA93_H9E7yBwbw",
+        "about": "Cork is the second largest city in the Republic of Ireland, third largest on the island of Ireland."
+      }
+    ]
+  },
+  {
+    "id": 115,
+    "name": "Poland",
+    "imageUrl": "https://lh5.googleusercontent.com/p/AF1QipOBP6SYE8Jr5NCGQc1AOjGP5VwHoDG54AWTVxyg=w608-h351-n-k-no",
+    "about": "Poland is a parliamentary republic, with its bicameral legislature comprising the Sejm and the Senate. It is a developed market and a high-income economy.",
+    "locations": [
+      {
+        "id": 116,
+        "name": "Warsaw",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcRUMnkmOvVhUIWxyIRw_BOBV5UmNBeRobqQnoHyetUhUuisJD5TiA_y-RvaGtnNQoEbuYlQJ2QVkCCP1vGcMCCP2EpYEQfkma-IIyLrow",
+        "about": "Warsaw, officially the Capital City of Warsaw, is the capital and largest city of Poland. The metropolis stands on the River Vistula in east-central Poland."
+      },
+      {
+        "id": 117,
+        "name": "Lublin",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcRw1JkFVcOy6tUog01mm8YOWYbHYzvw-iU3hBsNJYKYEKb9fsqlFPCWijv6OXuwcr63SUR-E64ftqWkfY70Zow1aAn4-8yHZs_Lt_n3a74",
+        "about": "Lublin is the ninth-largest city in Poland and the second-largest city of historical Lesser Poland."
+      },
+      {
+        "id": 118,
+        "name": "Krakow",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcRKGPiJG_VFGRoFY_53GaOYdXR6LyEorC6fXrEtxNMWomNv8YT6ZormFDE0x2Q2ioO4tTqXyA_b4oKZRDWhYes3sqI0ifcU3yZHJU40ctE",
+        "about": "Kraków was the official capital of Poland until 1596, and has traditionally been one of the leading centres of Polish academic, economic, cultural and artistic life."
+      }
+    ]
+  },
+  {
+    "id": 119,
+    "name": "Slovakia",
+    "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcRZL2Ox2rw1TzGqB89D8lH0POSwG3HP7hHjizartIi78dc0gYMUQGF4z6wgKJqxBoztSp7uMK1RoznftjpClhGd7kxMeHlsnnM_MeoIlQ",
+    "about": "Slovakia officially the Slovak Republic is a landlocked country in Central Europe.",
+    "locations": [
+      {
+        "id": 120,
+        "name": "Bratislava",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcTxwltej9BBW63lu3D-WIgHdyq-djJC9g1qlgsvFB53fbe85tQqs6QiEHaQeLV0HoH1LR9HztrBC0nPCAc8xiCnEsjwOoRBcQvOE8-dSg",
+        "about": "Bratislava is the political, cultural and economic centre of Slovakia. It is the seat of the Slovak president, the parliament and the Slovak Executive."
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Greece",
+    "imageUrl": "https://lh6.googleusercontent.com/proxy/h0Y85Pmmj2Tn0jg3a5vg_93gEIysIEOVwxCEO-Pv-KySzmMImHzTQOMAQ_UTG3tpG5LcLKW8DwhCq50lglbca9XA0iZQskrpkP0MKpS2x7Ks31yaLYNTlIkbqINN7oV92LbZ0OV0Na9tpvU9jVorEDICDWg-4g=w608-h351-n-k-no",
+    "about": "Greece, officially the Hellenic Republic, is a country in Southeast Europe. Located on the southern tip of the Balkan peninsula.",
+    "locations": [
+      {
+        "id": 11,
+        "name": "Athens",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcRVq1xQxBIcdR6aVLwX5jftBJyyOILBVIluMVDB9GxfCzvaeJAsnLxdUhZsqipEX8mNpKN0KXNrKioX-P7fa-K5jUEvH-sQM_4_dt4Qig",
+        "about": "Athens is the capital and largest city of Greece. A major coastal urban area in the Mediterranean."
+      },
+      {
+        "id": 12,
+        "name": "Thessaloniki",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcQn5ABmlIQUwl6WCOwF29d5ZgMe5MIiJuythLmoL17F7SLI5MXg1rJLhy2xUK6Vy6QEsSLo8r_lq8ADj76xHkfbHtnNYgVeCXAbqT3N0Q",
+        "about": "It is Greece's second major economic, industrial, commercial and political centre, and a major transportation hub for Greece and southeastern Europe."
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "name": "South Korea",
+    "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcSHKYgoijvtf35IN4x2kDyvUvV9X4zyD4fab2QN0a0ENiWtW5Xzorw5P4oMeGie3Nr_HkbQPMhBEprhqwmqPP9_kkT3swJ5hvtNq4sRTg",
+    "about": "South Korea, officially the Republic of Korea (ROK), is a country in East Asia.",
+    "locations": [
+      {
+        "id": 14,
+        "name": "Seoul",
+        "imageUrl": "https://lh5.googleusercontent.com/p/AF1QipOCqKsAzu4VnPyD2b_hSvOwKQAcpz25pdRXOY1w=w608-h351-n-k-no",
+        "about": "Seoul, officially Seoul Special City, is the capital of the Republic of Korea (ROK), commonly known as South Korea, and the country's most extensive urban city."
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "name": "Austria",
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcTnnhUFOPKE8w9yu_0iclAjoibEZJdmt3YFrSRlL2jBlz8YWP6jpMO2uXc5CYvBx8--2lmkndlX8g8FzyS1LqwLhWVvJFWKabeQXv947w",
+    "about": "Austria, formally the Republic of Austria, is a landlocked country in Central Europe, lying in the Eastern Alps.",
+    "locations": [
+      {
+        "id": 16,
+        "name": "Vienna",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcQ9tE5Kecz-3RAsFxSyCE7KI3yeXIjMpid2Og1gqgyXyGby8qydhXy31xblse7NN-BHXd_8yyDs2tt5JhBv4duFbY5WYIrWH-VkNlXmQg",
+        "about": "It is Austria's primate city, with just over two million inhabitants. Its larger metropolitan area has a population of nearly 2.9 million."
+      },
+      {
+        "id": 17,
+        "name": "Graz",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcSdmhx09IHFACAMfiEzeG2hUe0IeuOHs-p2Jw-g5LPhl8I4f0J2nAx_o35QLJZaHEcFuPb8dQHjLw_AYOuVEuUhatqT4XSAym2Z4epK_w",
+        "about": "Graz is the capital of Styria and the second-largest city in Austria, after Vienna."
+      }
+    ]
+  },
+  {
+    "id": 96,
+    "name": "Saudi Arabia",
+    "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQqJA8zWqK350-IeHnVAFzAzGGmGws7outVkZm9FxQ2IibRm4l2CQF1KaPqtyZ_j1KnuXGkAj0KcDKOkyRNGy1ewgdU4fgEm7JNpgsC8g",
+    "about": "Saudi Arabia is the only country with a coastline along both the Red Sea and the Persian Gulf.",
+    "locations": [
+      {
+        "id": 97,
+        "name": "Riyadh",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcQgDa6QJ-tDaAj1cvhoAj4PpVe7-1XrjkUoVKIUa0IUK2fn_O3-7gaLIeWKnaa-pP-TqN395GDjW2415-fdA2T4S9-rrwSNO7Eu_NUAJw",
+        "about": "Riyadh is the capital and largest city of Saudi Arabia. It is also the capital of the Riyadh Province and the centre of the Riyadh Governorate."
+      }
+    ]
+  },
+  {
+    "id": 121,
+    "name": "Jordan",
+    "imageUrl": "Jordan is a semi-arid country, covering an area of 89,342 km2 (34,495 sq mi), with a population of 11.5 million, making it the eleventh-most populous Arab country.",
+    "about": "https://static.independent.co.uk/2024/01/16/10/iStock-598060830.jpg",
+    "locations": [
+      {
+        "id": 122,
+        "name": "Amman",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcSBkW0VfCN6FGpwYPjAFS7a2DCVuNUyeeTqiXEqQmiIQHFHZPv4M6RGnRF25zIxn6chbkscfi6BdLpS5lW7QZCWaDLA0oS8XJG5nIiDuA",
+        "about": "Amman is the capital and the largest city of Jordan, and the country's economic, political, and cultural center."
+      },
+      {
+        "id": 123,
+        "name": "Aqaba",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcQx3c82oiIe1X21fEYmgl1wu71iO5GwaiJ036bfEwCUbIteXYLo4l3sqmprKafH603jp9EzerGhgybzmgqY5MGTUfe0u3ycAyln9dhIhg",
+        "about": "Situated in southernmost Jordan, Aqaba is the administrative center of the Aqaba Governorate."
+      },
+      {
+        "id": 124,
+        "name": "Wadi Ram",
+        "imageUrl": "https://media.meer.com/attachments/3b08b68c95c7b5dc1e1fb8a236176cb24bc411e7/store/fill/1090/613/ab222a80768bae72a4c3025f24abff06bab861b36cb7dc55fa1343678810/Camping-site-at-Wadi-Rum-Jordan.jpg",
+        "about": "Wadi Rum known also as the Valley of the Moon is a valley cut into the sandstone and granite rock in southern Jordan"
+      }
+    ]
+  },
+  {
+    "id": 125,
+    "name": "Bulgaria",
+    "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcTIpA0ThrEfxaNEZkGlDMHsjQN-taq0vT6bs-W8jFSfzHyi_vG2Y6gyRqWP-CV0iU2eLiyrRcLRzen4Dx_83FzIVnkP894cVzdqMydeyQ",
+    "about": "It covers a territory of 110,994 square kilometres and is the 16th largest country in Europe.",
+    "locations": [
+      {
+        "id": 126,
+        "name": "Sofia",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcS9Salhuc_5esHPWZfliryNvyGU7qQEEmwUyObaBf7aejyRH7Fb_jyPEe2_x-F5wtGynZOFS5hx86lA-LXer76Xy3wATiTM8HXnKU2mqQ",
+        "about": "Sofia is the capital and largest city of Bulgaria. It is situated in the Sofia Valley at the foot of the Vitosha mountain."
+      }
+    ]
+  },
+  {
+    "id": 127,
+    "name": "France",
+    "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQzo_QREgrUcEjDsyQoT1YIfVE1bSS24EDW7p-_fDmAK8PYM3R-CgoXEZE866S0H1L1k9-fqGu_qOwK3A8q71ebVSQojVj1Vw1ktrNiMg",
+    "about": "France is a developed country with a high nominal per capita income globally and its advanced economy ranks among the largest in the world.",
+    "locations": [
+      {
+        "id": 128,
+        "name": "Paris",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRV0WCDR6glhTu6XXEBawXK38I8grafCIEyt_wF9ZdzKA&s",
+        "about": "Paris is the capital and most populous city of France. With an official estimated population of 2,102,650 residents"
+      },
+      {
+        "id": 129,
+        "name": "Lyon",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcRc8ycMxXMmmVPquFyWtGtGg0432AxWpRNltJig3ezAnpHlT2V8d3OEKwCrM4qyRo-jDi5E9zqh5G4nVT0RTa6pP-EH0Kf6DurFmViyhA",
+        "about": "The home of renowned universities and higher education schools, Lyon is the second-largest student city in France."
+      },
+      {
+        "id": 130,
+        "name": "Nantes",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcSyE4AiJUHFIDM95Gm55RyHIg3Iwm3bgM8wLcnDToNctcvS1Fh9IRtF1qyu8LN7pQAutX70NJ1spfOzbnx2pI6v2wT-XmhZ-393WqOYsw",
+        "about": "It is the administrative seat of the Loire-Atlantique department and the Pays de la Loire region, one of 18 regions of France."
+      },
+      {
+        "id": 131,
+        "name": "Bordeaux",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcSF37e1zShaBUqAK7_2QGPT0JlDvBeJGBXUjf7cykFPJ9nNdb_gW5sfnCk4EHJEtGJXHCiA7LFF_1SlrJuIS14njDkLjkx2GTxE8_dbVQ",
+        "about": "Bordeaux is a city on the river Garonne in the Gironde department, southwestern France. A port city, it is the capital of the Nouvelle-Aquitaine region."
+      },
+      {
+        "id": 132,
+        "name": "Strasbourg",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcSnEafVNCetC8CLUd8XuyQ_8fegY0yENkuTFvJP8eL1OlccVTh9JlDBM5069LELA0jLWkjs_xAFEgMKmaYf_LCR1kLLqeWBtyWh0sZJmA",
+        "about": "Strasbourg is immersed in Franco-German culture and although violently disputed throughout history, has been a cultural bridge between France and Germany."
+      }
+    ]
+  },
+  {
+    "id": 133,
+    "name": "Serbia",
+    "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcQZmXAnUCIuSZc9vs3AOzOcHYfq9XkkfQQpImoNmkQ1xAz_3g1V9ei_56XDP4dTNzRBJKFFTEHgIFcxO4Zy9hK45ABA8L0eTNaYgNvLGQ",
+    "about": "Serbia, officially the Republic of Serbia, is a landlocked country at the crossroads of Southeast and Central Europe, located in the Balkans.",
+    "locations": [
+      {
+        "id": 134,
+        "name": "Belgrade",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcSiO8zVxGiVplTPjAD5PeV8LOrp8zVim0i_C0sOWu6IKyxS8Po1YWBlmfjjnisfHzr9LAgDUoGDGE2mFnm8bJ34y1OAeMnI9MAAOMBlJQ",
+        "about": "Belgrade is the capital and largest city of Serbia. It is located at the confluence of the Sava and Danube rivers and at the crossroads of the Pannonian."
+      }
+    ]
+  },
+  {
+    "id": 135,
+    "name": "Nigeria",
+    "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcTtuzurXL03LqzrYiKF2uXkUKe4U_EuFk1HypKnqHynbM3mexu6FhSnCW4L6C0qVi57C8hv2gmfuHRzhuIt8_arIgD0BCDunlnhcLKfbg",
+    "about": "Nigeria is a multinational state inhabited by more than 250 ethnic groups speaking 500 distinct languages, all identifying with a wide variety of cultures.",
+    "locations": [
+      {
+        "id": 136,
+        "name": "Abuja",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcRzKSg3gkg-hvbO479TQTHYZylNxBEda9ayGcadcG6htvl1BAFdYtexvw8uzwKC0nu2B69zMcBgvMwEUFkeJXeNXnUhefbcqVl5N99ZDA",
+        "about": "Abuja is the capital and eighth most populous city of Nigeria."
+      }
+    ]
+  },
+  {
+    "id": 137,
+    "name": "Croatia",
+    "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcT6w37nBlKlUYgzMJPrq9l9q5HabiTvjPUHhUqrpLoub9Yc64Ve69NYOl53VfQ_Wbp4IuD09WU1UldTVat5jEfExbyYaio0UZKAxCFNNw",
+    "about": "Croatia officially the Republic of Croatia (Croatian: Republika Hrvatska), is a country located at the crossroads of Central and Southeast Europe.",
+    "locations": [
+      {
+        "id": 138,
+        "name": "Zagreb",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcSsEz0ggVbMOCx4pQmwaxiDYBi6riIpkT5qO6OMgiOz4_zWWWDqFSgWJsmpIAFMEnKrI7ThvPFDmg9HvBrpKBI4En4WgxjgOsREuIzkbA",
+        "about": "Zagreb is the most important transport hub in Croatia: here Central Europe, the Mediterranean and Southeast Europe meet, making the Zagreb area the centre of the road, rail and air networks of Croatia."
+      },
+      {
+        "id": 139,
+        "name": "Dubrovnik",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcS9JoFaeGKaG6qF6nKTSMY3jbaPoG8QqoxG-0krBmLT0ML24BuDxqYbso8RT4SOR83iLlN0AeVleEzKkSGBXWfo48rJDHb9Al9-FpBw6Q",
+        "about": "Dubrovnik historically known as Ragusa is a city in southern Dalmatia, Croatia, by the Adriatic Sea. It is one of the most prominent tourist destinations in the Mediterranean, a seaport and the centre of the Dubrovnik-Neretva County."
+      }
+    ]
+  },
+  {
+    "id": 140,
+    "name": "USA",
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-AR6NzLFSc3HVpDvrTGR1UnLfD4A8VFA5L2DtorBpKQ&s",
+    "about": "The United States of America, is a country primarily located in North America, consisting of 50 states, a federal district, five major",
+    "locations": [
+      {
+        "id": 141,
+        "name": "New York",
+        "imageUrl": "https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg",
+        "about": "New York City was the capital of the United States from 1785 until 1790. The modern city was formed by the 1898 consolidation of its five boroughs: Manhattan, Brooklyn, Queens, The Bronx, and Staten Island, and has been the largest U.S. city ever since."
+      },
+      {
+        "id": 142,
+        "name": "Los Angeles",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcQ5J8p0gFHe2QWwflAILA0hgkxeaqWTcTZUgi56DT0auMnk3CceNK6q470NbJOWUUgrJcJxjl2vRAWpDcg7ChVlSly9ciooRPlQvCI8Fg",
+        "about": "Los Angeles, often referred to by its initials L.A., is the most populous city in the U.S. state of California."
+      },
+      {
+        "id": 143,
+        "name": "Chicago",
+        "imageUrl": "https://cdn.choosechicago.com/uploads/2022/09/Pink-skyline-with-out-logo.jpeg",
+        "about": "Chicago is the most populous city in the U.S. state of Illinois and in the Midwestern United States."
+      },
+      {
+        "id": 144,
+        "name": "Houston",
+        "imageUrl": "https://www.visittheusa.com/sites/default/files/styles/hero_l/public/images/hero_media_image/2016-10/0%20HERO_HoustonTX_GettyImages-532390052.jpg?h=c5520b1b&itok=uKyYtaMD",
+        "about": "Houston is the most populous city in the U.S. state of Texas and in the Southern United States."
+      },
+      {
+        "id": 145,
+        "name": "San Francisco",
+        "imageUrl": "https://lh5.googleusercontent.com/p/AF1QipN0-mJ4M1ftzod1vtrdwMyE2fmmqxGdPxnvQMH4=w608-h351-n-k-no",
+        "about": "San Francisco, officially the City and County of San Francisco, is a commercial, financial, and cultural center in Northern California."
+      },
+      {
+        "id": 146,
+        "name": "Washington",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcQcuvNbLh6lvRtkKc9dzf9FlrAybzx4aY3BEqQDofnd62iVcHhV5K_xE-fUW-AFMtygRWXS3U0bEjKVt4mVfaK--6mw0s6Bf1gdL4nLHw",
+        "about": "Washington, D.C., formally the District of Columbia and commonly called Washington or D.C., is the capital city and federal district of the United States."
+      },
+      {
+        "id": 147,
+        "name": "Alaska",
+        "imageUrl": "https://afar.brightspotcdn.com/dims4/default/9bc836e/2147483647/strip/true/crop/3800x2016+116+0/resize/1440x764!/quality/90/?url=https%3A%2F%2Fafar-media-production-web.s3.us-west-2.amazonaws.com%2Fbrightspot%2Fa5%2F76%2F7d733fb1419fb4fff5fec8d7aa0a%2Falaska-guide-lede-supriya-kalidas.jpg",
+        "about": "Alaska is a non-contiguous U.S. state on the northwest extremity of North America. It borders the Canadian province of British Columbia and the Yukon."
+      },
+      {
+        "id": 148,
+        "name": "West Virginia",
+        "imageUrl": "https://lh5.googleusercontent.com/p/AF1QipM6RPDfLOkaNG8kkpVw6slRQJmPMs7awqe0Crmd=w610-h353-n-k-no",
+        "about": "West Virginia is the 10th-smallest state by area and ranks as the 12th-least populous state, with a population of 1,793,716 residents."
+      },
+      {
+        "id": 149,
+        "name": "Las Vegas",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcSBTPwX221wqDb_RLYoARz2Y3_OG0Ht7gVGK4DHfuTYdvqvrNt9mlsY3ZEckyly3gLKuV4YAzRnKK4y2-swOgzZrDMVSNJvY1_-rWYABw",
+        "about": "Las Vegas, often known simply as Vegas, is the most populous city in the U.S. state of Nevada and the county seat of Clark County."
+      },
+      {
+        "id": 150,
+        "name": "Ohio",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQVj-qSFFxH4SMkoegUyTnh86_bj0manUH-g0yTphIyfmUoYLnDmULSZAoVhT02O4blTvGTTWaGm9Fg_S19M434Yjw3Y01xHrA5LvcmSg",
+        "about": "Ohio is a state in the Midwestern region of the United States."
+      }
+    ]
+  },
+  {
+    "id": 151,
+    "name": "Romania",
+    "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcThy2rUmv3t0GeB3b1Z5Jk5qnJWiLV2_dl7pK-_9-H7Qb0OMyfMQrDu-bS8EH4kAUq7LxXqf7QkWznc94YB6_a6FKAMDKfh6C8HuYfo1Q",
+    "about": "Romania is the twelfth-largest country in Europe and the sixth-most populous member state of the European Union.",
+    "locations": [
+      {
+        "id": 152,
+        "name": "Bucharest",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcS-xOpa34Yxf26GkSXuduBJjW2wdebA80wuK93Ijx-dMwNNxU1e9sZTSoLwJukzI94vYp99yvQZumWJ3s1j8O-LdWSBRNOttF13SVDXRA",
+        "about": "The metropolis stands on the River Dâmbovița in south-eastern Romania."
+      }
+    ]
+  },
+  {
+    "id": 153,
+    "name": "Switzerland",
+    "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcS6mCLYarVyGYZACSIOXJ1RMVRX2p_rWw2O3WbXkJCx6Xy4jDdSnli-qKBTcsOcFjMhJeQBEe-ySXXqacjTrodTt8y4kv5awzCe2D4omw",
+    "about": "Switzerland, officially the Swiss Confederation, is a landlocked country located in west-central Europe.",
+    "locations": [
+      {
+        "id": 154,
+        "name": "Bern",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcQZXaSD_YMPXjITF18DO44GVxqGrTEqvd_sQ2b_7sWneBAgHm_HdiGIoaxCZ2hwrMCLnCDl85qEEN9ACP-T8zSoR5JY-0fpklmWVw6wmA",
+        "about": "Bern is the fifth-most populous city in Switzerland, behind Zürich, Geneva, Basel and Lausanne."
+      },
+      {
+        "id": 155,
+        "name": "Zurich",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcTmJ3cvgO5LfaPVVEJWxIuoW4Lpoc_jC-V5BWUnvdBPj_36COjo_zwnChwp9JXENzZLi7HQKUsdjMx1_7Vz6rJ3oXxX_R71SEkP8Y_SHw",
+        "about": "It is located in north-central Switzerland, at the northwestern tip of Lake Zürich."
+      }
+    ]
+  },
+  {
+    "id": 156,
+    "name": "Palestine",
+    "imageUrl": "https://media.cntraveler.com/photos/612469f376a710edb543d3e5/16:9/w_2560%2Cc_limit/LICENSE_Malak%2520Mattar-Gaza_(c)%2520Getty%2520Images_CNT%2520UK_Sophie%2520Knight.jpeg",
+    "about": "Palestine officially the State of Palestine, is a country in the southern Levant region of West Asia.",
+    "locations": [
+      {
+        "id": 157,
+        "name": "Bethlehem",
+        "imageUrl": "https://ychef.files.bbci.co.uk/1280x720/p088rgnn.jpg",
+        "about": "Bethlehem is a city in the West Bank of the State of Palestine, located about ten kilometres south of Jerusalem. It's also famous for being the birthplace of Jesus Christ."
+      },
+      {
+        "id": 158,
+        "name": "Ramallah",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcSrE0BgSPywHqrmdpj8NCFPTnVAxzykRp9qmpC4hOpxtMvQLA0zpGPA8eyR_jjnD0J6iU2BtOtVI5mt-acG8WY-vnmz7_znzyenaZCgQg",
+        "about": "Ramallah is a Palestinian city in the central West Bank or Ramallah Bank, that serves as the de facto administrative capital of the State of Palestine."
+      },
+      {
+        "id": 159,
+        "name": "Jenin",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcS7xadIAr6VeWhxxAp6LYpsvpqBHookWsmjdu4IScahgpFoDGoPG_zEuRHZW0Slu7SFHVhB8jy4ioLMxHgXGBjI4wqel6zZB3IadH2mTA",
+        "about": "The city serves as the administrative center of the Jenin Governorate of Palestine and is a major center for the surrounding towns."
+      },
+      {
+        "id": 160,
+        "name": "Jericho",
+        "imageUrl": "https://lh5.googleusercontent.com/p/AF1QipMDXyHrUumcGwbEiiMvT6E7Eit-9jPem_UJ9tPT=w608-h351-n-k-no",
+        "about": "Jericho is a city in the West Bank, Palestine; it is the administrative seat of the Jericho Governorate of Palestine. Famous for being th oldest city in the world"
+      },
+      {
+        "id": 161,
+        "name": "Nablus",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcSM4aJcVWiaya-gZ_iSqlDIIR21AYvkk4zD_fi0-yHAxjyMknw6snr0IoZg-zsgAi5KSHErscEjxCaCHLruzkFSFR9JuDuTzRkXMHD8dg",
+        "about": "Located between Mount Ebal and Mount Gerizim, it is the capital of the Nablus Governorate and a commercial and cultural centre of the State of Palestine."
+      },
+      {
+        "id": 162,
+        "name": "Jerusalem",
+        "imageUrl": "Jerusalem is a city in the Southern Levant, on a plateau in the Judaean Mountains between the Mediterranean and the Dead Sea. It is one of the oldest cities in the world, and is considered holy to the three major Abrahamic religions; Christianity, Judaism, and Islam.",
+        "about": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQQ-S-Bm6Hqio_k-pNI9cumA-vv7f9vtiqmbopsVBncXsD_tRVNp3AvMyD-TfBzVZs8Pj-Agi-s8UDb0dAC-afDC9N0H1gGI-SS3wmr1g"
+      },
+      {
+        "id": 163,
+        "name": "Haifa",
+        "imageUrl": "https://lh6.googleusercontent.com/proxy/55CauuF6nQo1QOtU4FlfTLyUiQkLbzJa75Yty3XBy2NdsS6NY2OybLP5qmalHUR0Ps__wDIcS_22bkc3vYLzp0IBFmjX8gksK4Qq66T7DQmurB6rqfS8ApaMkfEnUfbedHO8RZiOtBFNh6R9cwdvl9UF6brjMIU=w608-h351-n-k-no",
+        "about": "Haifa is the third-largest city in Palestine after Jerusalem."
+      },
+      {
+        "id": 164,
+        "name": "Yafo",
+        "imageUrl": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/82/81/82/jaffa-n-1397x735-largejpg.jpg?w=1400&h=1400&s=1",
+        "about": "Yafo (or Jaffa) is the ancient port city of Palestine, filled with fascinating galleries, shops, and eateries."
+      },
+      {
+        "id": 165,
+        "name": "Akre",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcRu1rY5fGqQo5I4NMuiFqILfn5NY-uskNy2i9eRDqeaaHMquA0E0J1M7T1iHZUUtuRSGx8IuUVaBknH9yr-kynTxcPWk09lkzLnjcHY0w",
+        "about": "Akre is a city in the coastal plain region of the Northern District of Palestine."
+      },
+      {
+        "id": 166,
+        "name": "Gaza",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzi22hX4WR-LsJ70o8Y-1e0TriApAM0TCQsNCEa_u7ww&s",
+        "about": "Gaza is one of the oldest and biggest Palestinian cities and it goes back to 3000 BC."
+      }
+    ]
+  },
+  {
+    "id": 167,
+    "name": "Spain",
+    "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQZy0HKQmXOFC5taZ3sMt54RrdFRlSV_2gtUdKtd4EQnjyaOoIIiJDSfJWlp5s_-U7VRuIaaCL4G_W0I2FT2aMLP7O1ooe354RUCgjI21c",
+    "about": "Spain, or the Kingdom of Spain, is a country located in Southwestern Europe, with parts of its territory in the Atlantic Ocean, the Mediterranean Sea and Africa.",
+    "locations": [
+      {
+        "id": 168,
+        "name": "Barcelona",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcR49A_VOGKW2NFYyVwQ04hlf56Kcqt6HLFAs7Tr5FnDDznLk0NUws5wCn5z7MEGWWHtbmu9xcZXlV9qJ3gC2HYlE__y40Ve9EPyk3xPLA",
+        "about": "It is the capital and largest city of the autonomous community of Catalonia, as well as the second-most populous municipality of Spain."
+      },
+      {
+        "id": 169,
+        "name": "Madrid",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcQImXCK6XQ2ccRvWMYcojiDXkpAIZDZn-OYmXBJQeYCLmoySWBXtxqZ2--4u9_6Wnoho-LcAs4OWcerUGqCrZOXTo--plmxH4SaKmAL8g",
+        "about": "Madrid lies on the River Manzanares in the central part of the Iberian Peninsula at about 650 meters above mean sea level."
+      },
+      {
+        "id": 170,
+        "name": "Ibiza",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQhKdWv7J_gK50Qj_U2tKDwvZOkL7lxBX49GRpL5XRFmifwWUxgmJscKvhoEroZ5ouabzCllmM2mWpA9J14NipiH6NIccK-SunI0bv6Nw",
+        "about": "Ibiza is a Spanish island in the Mediterranean Sea off the eastern coast of the Iberian Peninsula."
+      }
+    ]
+  },
+  {
+    "id": 171,
+    "name": "Lebanon",
+    "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcSrRz8geRReIjuuktEefYV4jNeoBFf7ssKOMRFwFjrHVFzTvE_P7NCaHMI8DB2x6WpWP4xJRKK9tNH8jn5fUvRZwOm5s3wtmHXw3cQZbA",
+    "about": "Lebanon has a population of more than five million people and covers an area of 10,452 square kilometres.",
+    "locations": [
+      {
+        "id": 172,
+        "name": "Beirut",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcQRbHzwf1yReXL9urXqCOmNQV7sITsnbbMxf2jggVcVX4y8dE32Ns5nyWU1qZnR3D0Mgqvd5aFsJuXDHre7clMvWVzSGz7YZud3uZhJ3g",
+        "about": "Beirut is Lebanon's seat of government and plays a central role in the Lebanese economy, with many banks and corporations based in the city."
+      }
+    ]
+  },
+  {
+    "id": 173,
+    "name": "Cuba",
+    "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcS02lmb-uh2Z6ykSzzBTvsDklP4Q-07589j5YrXaxJMMyUMfYuNDmz0qXiAwj0OjvZIU87D5wcvAKw-xEDnW7TwIjxcv6MtCIZN7tGySw",
+    "about": "Cuba, officially the Republic of Cuba, is an island country, comprising the island of Cuba, and the mainland of the Caribbean Sea.",
+    "locations": [
+      {
+        "id": 174,
+        "name": "Havana",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcR7Bq3JVu3HLIqsTZJBJK_EdbwwMftCCvkXsQRcG1Cto6eR_zof51mSTO-l3XRa4_uyAtfrtreqoX48SSCc-7rJJzSsgYgU_rVru04Vsg",
+        "about": "Havana is the capital and largest city of Cuba. The heart of the La Habana Province, Havana is the country's main port and commercial center."
+      }
+    ]
+  },
+  {
+    "id": 175,
+    "name": "Norway",
+    "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcRVf1Ej8UTQbhZHBe1wLoth5q5iE1Hb5UG-9L_juLcZrb2p--r8zHjTk0u5Ilq7OoLhbF_quVjOk5JkLQtPgfxbeI11OE-T95CWOkff_Iw",
+    "about": "Norway formally the Kingdom of Norway, is a Nordic country in Northern Europe, situated on the Scandinavian Peninsula.",
+    "locations": [
+      {
+        "id": 176,
+        "name": "Oslo",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcS0pSnhFNq1N4AZKk_9ZN4dp5m3jMv4eLs2qz1R_SQPPJn3PJ_bXDIvoFr_5FG4TNpC4mCK5pAhELPX91E-7D7Wh0Uz10xsc6XgLAEXFcg",
+        "about": "Oslo is the capital and most populous city of Norway. It constitutes both a county and a municipality."
+      },
+      {
+        "id": 177,
+        "name": "Bergen",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQ13CD03R8vAsYDq0q89jOYcfvFFPJQUB9fxciid2Le7z_K32HqlSGdnL4ZM5EQNkePM3XYnxbTzPNi-WHxuXs1Yv_xcrEIDEbbEj9dLg",
+        "about": "Bergen is the second-largest city in Norway after national capital Oslo. The municipality covers 465 square kilometres."
+      },
+      {
+        "id": 178,
+        "name": "Trondheim",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcRSgESfcWyicmhguXQC_criPInTuCVOB94Cv5YqnrSFp3UGHTadnHEE8oYM5vZIJyqV0lABWj5ZlQPSQZLl4-Wm7G7NlDftpYHVq9beFw",
+        "about": "Trondheim is the third most populous municipality in Norway, and was the fourth largest urban area."
+      }
+    ]
+  },
+  {
+    "id": 179,
+    "name": "Mexico",
+    "imageUrl": "https://lh5.googleusercontent.com/p/AF1QipPVRyqNwBkPGFTPdcqXJRH_9UD9iRY3nZyUu3xB=w608-h351-n-k-no",
+    "about": "Mexico, officially the United Mexican States, is a country in the southern portion of North America. It covers 1,972,550 km2.",
+    "locations": [
+      {
+        "id": 180,
+        "name": "Mexico City",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcRqawv9tEjD5Ddocg-Cz3D-phcXvXKufBJZtyrivm-YZ6ivlqt0FdBgncLqPnL2-vz42IAvECjhtQFsB6NM_LmnRKFalZ9Gg7FWozPvqQ",
+        "about": "Mexico City is the capital and largest city of Mexico, and the most populous city in North America. Mexico City is one of the most important cultural and financial centers in the world."
+      },
+      {
+        "id": 181,
+        "name": "Puebla",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcSbluJ7cCAG59ag-KKNUJi0S5TNXE0-B_2DOeCqq8flQt_rilx3-aSdqk2EMLkXC4T8qj21_ienEijg8mU8X3_cGZOcwFrdsBqL_l7qnjU",
+        "about": "Being both the fourth largest city in Mexico and the fourth largest Metropolitan area in Mexico, it has a current population of 3,344,000 people."
+      }
+    ]
+  },
+  {
+    "id": 182,
+    "name": "Czech",
+    "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcQ6RNUQ6xL47DniRfKIcS1mHRlz_JurxbxjTDKAmo5lURz2ZHFM04C8yPrk9mUk4m7oA-b5dyun4LQnP8Z1ESFRyXwDQE8rHuILtvrkDQ",
+    "about": "The Czech Republic, also known as Czechia, is a landlocked country in Central Europe. Historically known as Bohemia.",
+    "locations": [
+      {
+        "id": 183,
+        "name": "Prague",
+        "imageUrl": "https://lh5.googleusercontent.com/p/AF1QipPC9OKd83WLl0KruuN8W5iaTU1otiEH0a_5ng17=w608-h351-n-k-no",
+        "about": "The city has a temperate oceanic climate, with relatively warm summers and chilly winters. Prague. Praha (Czech). Capital city."
+      }
+    ]
+  },
+  {
+    "id": 184,
+    "name": "Australia",
+    "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQXcZIHSBNrjUYm76kD9mkcxaafgwa2-JnY1rwi5MjFAP7qWPwa4QGyUaRHOO-WpAqAVov6n3YuFil_M0jIraLH9cp-WbWO3IiniEV_Cw",
+    "about": "ustralia is the largest country by area in Oceania and the world's sixth-largest country. Australia is the oldest, flattest, and driest inhabited continent.",
+    "locations": [
+      {
+        "id": 185,
+        "name": "Sydney",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcRRgJtR30wYbmyUWZD-0fYnhWMA5Z89pOaMsraG3RdForZRM3g06FjcZz2J8LJBYksVxnPs4WT4e75EVhcITQM120MY7o_RnbG24mJAog",
+        "about": "Sydney is the capital city of the state of New South Wales and the most populous city in Australia."
+      },
+      {
+        "id": 186,
+        "name": "Melbourne",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcRD-6Y5BsWXV-E7Ot7wz4MUM9WTl5OP-A-l8hveIgoUtJzjaZ-YHQMIzrWEJil8hm4eIc5XDW8XBIHeDBIAkn3RODDmbI1SX834VETu3A",
+        "about": "Melbourne is the capital and most populous city of the Australian state of Victoria, and the second-most populous city in Australia."
+      }
+    ]
+  },
+  {
+    "id": 187,
+    "name": "Greenland",
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFN4K3V_1ptX3WE9H7bXxbtai56E6lcGv3pEdj2kqmBA&s",
+    "about": "Greenland is a North American autonomous territory of the Kingdom of Denmark. It is the larger of two autonomous territories within the Kingdom.",
+    "locations": [
+      {
+        "id": 188,
+        "name": "Nuuk",
+        "imageUrl": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcR9hIcy9-jO2M8HOYRFL1kwBnsgMdUgd1WdTfVWHYMpQPlRIc50S6pNKPWwmavYSFPTMjJ0TTO_0kfpLDZatfudvfmIO2ZxPiBWaWX_fA",
+        "about": "\"Nuuk\" is the Greenlandic word for \"cape\" and is commonly found in Greenlandic place names. "
+      }
+    ]
+  },
+  {
+    "id": 189,
+    "name": "Indonesia",
+    "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcThfZJeWn-n-7pzhSIjB_1O5MQOFvkgSWw9C0Qc7t-_OlU1EZFIBp4M0vvQQo9jwgHhW03TRJrJHvG8UVANJawLK6YKG-kjjGdZfPCp7g",
+    "about": "Indonesia, officially the Republic of Indonesia, is a country in Southeast Asia and Oceania between the Indian and Pacific oceans.",
+    "locations": [
+      {
+        "id": 190,
+        "name": "Jakarta",
+        "imageUrl": "https://lh5.googleusercontent.com/p/AF1QipNAYN17x5UF5tbZFn76TJR04JSfWfwrml9S1r_H=w608-h351-n-k-no",
+        "about": "Jakarta is the economic, cultural, and political centre of Indonesia. It possesses a province-level status and has a population of 10,679,951 as of mid-2022."
+      },
+      {
+        "id": 191,
+        "name": "Surabaya",
+        "imageUrl": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcRuw4rv_8WMCC9JBPE4qscibA0ubD07RcyxyUQqAvqVjkb9GAqixseLt7KX59VjsWsFg1ZUoX2EietrHlrIxYXnOciCb99eCNXzFw3JBw",
+        "about": "According to the National Development Planning Agency, Surabaya is one of the four main central cities of Indonesia, alongside Jakarta, Medan, and Makassar."
+      },
+      {
+        "id": 192,
+        "name": "Bandung",
+        "imageUrl": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcRAxsXkpnVa6CrYSPv275BXoACZbvHTjIefYA3QHlvZSzym4OPImFlez2kFA9LMp9LOgjAVKBh39fG-v4rhPD7I38nu6FHrJB_MlDUHrA",
+        "about": "Bandung is the capital city of the West Java province of Indonesia. Located on the island of Java."
+      }
+    ]
+  }
+]
