@@ -87,13 +87,13 @@ public class UserFacade {
     return repository.findByIdIn(ids);
   }
 
-  public Page<User> getUsersByChatChannel(ChatChannel chatChannel, int page, int size) {
-    return getUsersByChatChannel(chatChannel, PageRequest.of(page, size));
+  public Page<User> getUsersByChatChannel(ChatChannel chatChannel, int page, int size, String query) {
+    return getUsersByChatChannel(chatChannel, query, PageRequest.of(page, size));
   }
 
 
-  public Page<User> getUsersByChatChannel(ChatChannel chatChannel, Pageable pageable) {
-    return repository.findByUserChatChannels_ChatChannel(chatChannel, pageable);
+  public Page<User> getUsersByChatChannel(ChatChannel chatChannel, String query, Pageable pageable) {
+    return repository.findByUserChatChannels_ChatChannel(chatChannel, query, pageable);
   }
 
   public Page<User> getFollowersByUser(Long userId, int page, int size) {

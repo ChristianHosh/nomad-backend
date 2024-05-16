@@ -40,9 +40,9 @@ public class ChatChannel extends BaseEntity {
   @JoinColumn(name = "ADMIN_ID")
   private User admin;
 
-  @SuppressWarnings("BooleanMethodIsAlwaysInverted")
   public boolean containsUser(User user) {
-    return chatChannelUsers.stream().anyMatch(chatChannelUser -> Objects.equals(chatChannelUser.getChatChannel(), this) && Objects.equals(chatChannelUser.getUser(), user));
+    return chatChannelUsers.stream()
+            .anyMatch(ccu -> Objects.equals(ccu.getChatChannel(), this) && Objects.equals(ccu.getUser(), user));
   }
 
   public ChatChannelUser findUser(User user) {

@@ -39,6 +39,11 @@ public class ChatChannelResponse extends BaseResponse {
               .findAny().orElse(null);
     }
 
+    ChatMessage latest = entity.getChatMessages().stream()
+            .max(Comparator.comparingLong(c -> c.getCreatedOn().getTime()))
+            .orElse(null);
+    latestMessage = ChatMessageResponse.fromEntity(latest);
+
     if (otherUser != null) {
       if (entity.getName() == null)
         name = otherUser.getUser().getProfile().getDisplayName();
@@ -62,10 +67,11 @@ public class ChatChannelResponse extends BaseResponse {
       if (entity.getTrip() != null) {
         Image image = entity.getTrip().getPost().getImages().stream().findFirst().orElse(null);
         avatarUrl = ImageMapper.entityToUrl(image);
+      } else if (latest != null){
+        avatarUrl = ImageMapper.entityToUrl(latest.getSender().getProfile().getProfileImage());
       } else {
         avatarUrl = null;
       }
-
     }
 
     ChatChannelUser currentUser = channelUserSet.stream()
@@ -75,11 +81,6 @@ public class ChatChannelResponse extends BaseResponse {
       hasUnreadMessages = !currentUser.getReadMessages();
     else
       hasUnreadMessages = false;
-
-    ChatMessage latest = entity.getChatMessages().stream()
-            .max(Comparator.comparingLong(c -> c.getCreatedOn().getTime()))
-            .orElse(null);
-    latestMessage = latest == null ? null : latest.toResponse();
   }
 
   public static ChatChannelResponse fromEntity(ChatChannel entity) {

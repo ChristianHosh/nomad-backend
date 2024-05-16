@@ -23,6 +23,14 @@ public class ChatController {
     return chatService.updateMessageReadStatus(channelId);
   }
 
+  @DeleteMapping("/channels/{id}/leave")
+  @ResponseStatus(HttpStatus.OK)
+  public ResponseEntity<?> leaveChannel(
+          @PathVariable(name = "id") String channelId
+  ) {
+    return chatService.leaveChannel(channelId);
+  }
+
   @PostMapping("/channels")
   @ResponseStatus(HttpStatus.OK)
   public ChatChannelResponse createNewChannel(
@@ -44,10 +52,11 @@ public class ChatController {
   @ResponseStatus(HttpStatus.OK)
   public Page<UserResponse> getChannelUsers(
           @PathVariable(name = "id") String channelId,
+          @RequestParam(name = "query", defaultValue = "") String query,
           @RequestParam(name = "page", defaultValue = "0") int page,
           @RequestParam(name = "size", defaultValue = "50") int size
   ) {
-    return chatService.getChannelUsers(channelId, page, size);
+    return chatService.getChannelUsers(channelId, page, size, query);
   }
 
   @PutMapping("/channels/{id}/users")

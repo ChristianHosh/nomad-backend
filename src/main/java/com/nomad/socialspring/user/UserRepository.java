@@ -31,9 +31,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   @Query("""
               select u from User u inner join u.userChatChannels userChatChannels
-              where userChatChannels.chatChannel = :chatChannel
+              where userChatChannels.chatChannel = :chatChannel and
+              (
+                (u.username ilike concat('%', :query, '%')) or
+                (u.profile.displayName ilike concat('%', :query, '%'))
+              )
           """)
-  Page<User> findByUserChatChannels_ChatChannel(@Param("chatChannel") ChatChannel chatChannel, Pageable pageable);
+  Page<User> findByUserChatChannels_ChatChannel(@Param("chatChannel") ChatChannel chatChannel, String query, Pageable pageable);
 
   @Query(value = """
               SELECT * FROM T_USER U INNER JOIN T_USER_FOLLOWERS UF ON U.id = UF.user_1_id

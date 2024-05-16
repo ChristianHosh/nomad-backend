@@ -32,10 +32,29 @@ public class ChatService {
     User sender = userFacade.findByUsername(jwtUtils.getUsernameFromJwtToken(request.jwtToken()));
     ChatChannel chatChannel = chatChannelFacade.findByUUID(request.chatChannelUUID());
 
-    ChatMessage chatMessage = chatMessageFacade.newChatMessageFrom(request, sender, chatChannel);
-    chatChannelUserFacade.setNewMessageOn(chatChannel);
+    if (chatChannel.containsUser(sender)) {
+      ChatMessage chatMessage = chatMessageFacade.newChatMessageFrom(request, sender, chatChannel);
+      chatChannelUserFacade.setNewMessageOn(chatChannel);
 
-    return chatMessage.toResponse();
+      return chatMessage.toResponse();
+    }
+
+    throw BxException.forbidden(BxException.X_CURRENT_USER_NOT_IN_CHAT);
+  }
+
+  @Transactional
+  public ResponseEntity<Object> leaveChannel(String channelId) {
+    User user = userFacade.getCurrentUser();
+    ChatChannel chatChannel = chatChannelFacade.findByUUID(channelId);
+
+    if (chatChannel.containsUser(user)) {
+      chatChannel.removeUser(user);
+      chatChannelFacade.save(chatChannel);
+
+      return ResponseEntity.ok().build();
+    }
+
+    throw BxException.forbidden(BxException.X_CURRENT_USER_NOT_IN_CHAT);
   }
 
   @Transactional
@@ -109,14 +128,14 @@ public class ChatService {
   }
 
   @Transactional
-  public Page<UserResponse> getChannelUsers(String channelId, int page, int size) {
+  public Page<UserResponse> getChannelUsers(String channelId, int page, int size, String query) {
     ChatChannel chatChannel = chatChannelFacade.findByUUID(channelId);
 
     // if current user is not in {chatChannel} throw unauthorized
     if (!chatChannel.containsUser(userFacade.getCurrentUser()))
       throw BxException.unauthorized(BxException.X_CURRENT_USER_NOT_IN_CHAT);
 
-    Page<User> userPage = userFacade.getUsersByChatChannel(chatChannel, page, size);
+    Page<User> userPage = userFacade.getUsersByChatChannel(chatChannel, page, size, query);
 
     return userPage.map(User::toResponse);
   }
