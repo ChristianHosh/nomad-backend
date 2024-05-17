@@ -78,4 +78,9 @@ public class ChatChannel extends BaseEntity {
     return ChatChannelResponse.fromEntity(this, user);
   }
 
+  public boolean canAddUsers(User user) {
+    if (user == null || trip != null)
+      return false;
+    return containsUser(user);
+  }
 }

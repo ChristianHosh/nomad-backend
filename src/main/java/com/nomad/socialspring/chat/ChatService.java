@@ -91,15 +91,15 @@ public class ChatService {
     ChatChannel chatChannel = chatChannelFacade.findByUUID(channelId);
     User currentUser = userFacade.getCurrentUser();
 
+    if (chatChannel.canAddUsers(currentUser)) {
+      List<User> userList = userFacade.findByIdList(request.userIds());
+
+      chatChannel = chatChannelFacade.addNewUsers(chatChannel, userList);
+
+      return chatChannel.toResponse();
+    }
     // if current user is not in {chatChannel} throw unauthorized
-    if (!chatChannel.containsUser(currentUser) && Objects.equals(chatChannel.getAdmin(), currentUser))
-      throw BxException.unauthorized(BxException.X_CURRENT_USER_NOT_IN_CHAT);
-
-    List<User> userList = userFacade.findByIdList(request.userIds());
-
-    chatChannel = chatChannelFacade.addNewUsers(chatChannel, userList);
-
-    return chatChannel.toResponse();
+    throw BxException.unauthorized(BxException.X_CURRENT_USER_NOT_IN_CHAT);
   }
 
   @Transactional

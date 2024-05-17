@@ -21,6 +21,7 @@ public class ChatChannelResponse extends BaseResponse {
   private final Integer groupSize;
   private final Boolean hasUnreadMessages;
   private final ChatMessageResponse latestMessage;
+  private final Boolean canAddUsers;
   private String name;
 
   private ChatChannelResponse(@NotNull ChatChannel entity, User user) {
@@ -32,6 +33,7 @@ public class ChatChannelResponse extends BaseResponse {
     Set<ChatChannelUser> channelUserSet = entity.getChatChannelUsers();
     groupSize = channelUserSet.size();
     isGroup = groupSize > 2;
+    canAddUsers = entity.canAddUsers(user);
 
     if (Boolean.FALSE.equals(isGroup) && user != null) {
       otherUser = channelUserSet.stream()
