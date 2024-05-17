@@ -2,6 +2,7 @@ package com.nomad.socialspring.chat;
 
 import com.nomad.socialspring.error.BxException;
 import com.nomad.socialspring.security.JwtUtils;
+import com.nomad.socialspring.trip.Trip;
 import com.nomad.socialspring.user.User;
 import com.nomad.socialspring.user.UserFacade;
 import com.nomad.socialspring.user.UserResponse;
@@ -48,6 +49,12 @@ public class ChatService {
     ChatChannel chatChannel = chatChannelFacade.findByUUID(channelId);
 
     if (chatChannel.containsUser(user)) {
+      Trip trip = chatChannel.getTrip();
+      if (trip != null) {
+        trip.removeParticipant(user);
+        chatChannelFacade.save(chatChannel);
+        return ResponseEntity.ok().build();
+      }
       chatChannel.removeUser(user);
       chatChannelFacade.save(chatChannel);
 
@@ -101,7 +108,7 @@ public class ChatService {
     User currentUser = userFacade.getCurrentUser();
 
     // if current user is not in {chatChannel} throw unauthorized
-    if (!chatChannel.containsUser(currentUser)  && Objects.equals(chatChannel.getAdmin(), currentUser))
+    if (!chatChannel.containsUser(currentUser) && Objects.equals(chatChannel.getAdmin(), currentUser))
       throw BxException.unauthorized(BxException.X_CURRENT_USER_NOT_IN_CHAT);
 
     List<User> userList = userFacade.findByIdList(request.userIds());
