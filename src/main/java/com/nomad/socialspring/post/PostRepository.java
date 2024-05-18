@@ -34,7 +34,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
   @Query("""
             select p from Post p
             where
-              (p.trip != null and (p.trip.location = :location or p.trip.location.belongsTo = :location)) and
+              (p.trip is not null and (p.trip.location = :location or p.trip.location.belongsTo = :location)) and
               (
                 (p.isPrivate = false) or
                 (:user is not null and (:user in elements(p.author.followers) or :user = p.author))
