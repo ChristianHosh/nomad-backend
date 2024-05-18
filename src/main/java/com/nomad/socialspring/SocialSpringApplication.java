@@ -24,7 +24,7 @@ public class SocialSpringApplication {
 
   @Bean
   public CacheManager cacheManager() {
-    return new ConcurrentMapCacheManager("images", "userByUsername");
+    return new ConcurrentMapCacheManager("images");
   }
 
   @Bean(name = "applicationEventMulticaster")
