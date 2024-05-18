@@ -205,8 +205,7 @@ public class User extends BaseEntity {
   public boolean isReviewedBy(User user) {
     if (user == null)
       return false;
-    return reviews.stream()
-            .anyMatch(review -> Objects.equals(review.getAuthor(), user));
+    return reviews.stream().anyMatch(review -> Objects.equals(review.getAuthor(), user));
   }
 
   public UserResponse.CanReview canBeReviewedBy(User user) {

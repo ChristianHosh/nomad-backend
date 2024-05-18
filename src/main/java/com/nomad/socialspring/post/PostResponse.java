@@ -4,6 +4,7 @@ import com.nomad.socialspring.comment.CommentResponse;
 import com.nomad.socialspring.common.BaseResponse;
 import com.nomad.socialspring.image.ImageMapper;
 import com.nomad.socialspring.image.ImageResponse;
+import com.nomad.socialspring.interest.InterestResponse;
 import com.nomad.socialspring.trip.TripResponse;
 import com.nomad.socialspring.user.User;
 import com.nomad.socialspring.user.UserResponse;
@@ -24,7 +25,8 @@ public class PostResponse extends BaseResponse {
   private final Integer numberOfComments;
   private final TripResponse trip;
   private final CommentResponse topComment;
-  
+  private final List<InterestResponse> interests;
+
   private PostResponse(@NotNull Post post, User user) {
     super(post);
     content = post.getContent();
@@ -37,12 +39,13 @@ public class PostResponse extends BaseResponse {
     canLike = user == null ? null : post.getLikes().contains(user);
     canFavorite = user == null ? null : post.getFavorites().contains(user);
     trip = post.getTrip() == null ? null : TripResponse.fromEntity(post.getTrip(), user);
+    interests = post.getInterests().stream().map(InterestResponse::fromEntity).toList();
   }
-  
+
   public static PostResponse fromEntity(Post post) {
-    return fromEntity(post, null); 
+    return fromEntity(post, null);
   }
-  
+
   public static PostResponse fromEntity(Post post, User user) {
     return post == null ? null : new PostResponse(post, user);
   }

@@ -1,11 +1,18 @@
 package com.nomad.socialspring.location;
 
+import com.nomad.socialspring.error.BxException;
 import com.nomad.socialspring.post.Post;
 import com.nomad.socialspring.post.PostFacade;
 import com.nomad.socialspring.post.PostResponse;
 import com.nomad.socialspring.recommender.PostRecommendationFacade;
+import com.nomad.socialspring.review.Review;
+import com.nomad.socialspring.review.ReviewFacade;
+import com.nomad.socialspring.review.ReviewRequest;
+import com.nomad.socialspring.review.ReviewResponse;
 import com.nomad.socialspring.user.User;
 import com.nomad.socialspring.user.UserFacade;
+import com.nomad.socialspring.user.UserResponse;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -19,6 +26,7 @@ public class LocationService {
   private final LocationFacade locationFacade;
   private final PostFacade postFacade;
   private final UserFacade userFacade;
+  private final ReviewFacade reviewFacade;
 
 
   public Page<LocationResponse> getLocations(int page, int size, String query) {
@@ -28,7 +36,7 @@ public class LocationService {
   }
 
   public LocationResponse getLocation(Long id) {
-    return locationFacade.findById(id).toResponse();
+    return locationFacade.findById(id).toResponse(userFacade.getCurrentUserOrNull());
   }
 
   public Page<PostResponse> getTrips(Long id, int page, int size) {
@@ -42,5 +50,28 @@ public class LocationService {
     return new PageImpl<>(PostRecommendationFacade.sortByInterests(postPage.getContent(), user),
             PageRequest.of(page, size), postPage.getTotalElements())
             .map(p -> p.toResponse(user));
+  }
+
+  @Transactional
+  public ReviewResponse createReview(Long locationId, ReviewRequest reviewRequest) {
+    User user = userFacade.getCurrentUser();
+    Location location = locationFacade.findById(locationId);
+
+    if (location.canBeReviewedBy(user) == UserResponse.CanReview.CAN_REVIEW) {
+      Review review = new Review();
+      review.setAuthor(user);
+      review.setRating(reviewRequest.rating());
+      review.setContent(reviewRequest.content());
+      review.setLocation(location);
+
+      return reviewFacade.save(review).toResponse();
+    } else {
+      throw BxException.forbidden(user);
+    }
+  }
+
+  public Page<ReviewResponse> getReviews(Long locationId, int page, int size) {
+    return reviewFacade.findByLocation(locationFacade.findById(locationId), page, size)
+            .map(Review::toResponse);
   }
 }

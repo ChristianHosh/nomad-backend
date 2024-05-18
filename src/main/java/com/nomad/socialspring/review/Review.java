@@ -1,6 +1,7 @@
 package com.nomad.socialspring.review;
 
 import com.nomad.socialspring.common.BaseEntity;
+import com.nomad.socialspring.location.Location;
 import com.nomad.socialspring.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -30,9 +31,13 @@ public class Review extends BaseEntity {
   @JoinColumn(name = "AUTHOR_ID")
   private User author;
 
-  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false)
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
   @JoinColumn(name = "RECIPIENT_ID")
   private User recipient;
+
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+  @JoinColumn(name = "LOCATION_ID")
+  private Location location;
 
   public ReviewResponse toResponse() {
     return new ReviewResponse(this);

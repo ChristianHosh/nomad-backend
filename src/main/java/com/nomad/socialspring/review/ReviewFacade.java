@@ -1,6 +1,7 @@
 package com.nomad.socialspring.review;
 
 import com.nomad.socialspring.error.BxException;
+import com.nomad.socialspring.location.Location;
 import com.nomad.socialspring.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -38,5 +39,9 @@ public class ReviewFacade {
   public Review delete(Review review) {
     repository.delete(review);
     return review;
+  }
+
+  public Page<Review> findByLocation(Location byId, int page, int size) {
+    return repository.findByLocation(byId, PageRequest.of(page, size));
   }
 }

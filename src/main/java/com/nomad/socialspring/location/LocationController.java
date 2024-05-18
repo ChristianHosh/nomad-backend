@@ -1,6 +1,8 @@
 package com.nomad.socialspring.location;
 
 import com.nomad.socialspring.post.PostResponse;
+import com.nomad.socialspring.review.ReviewRequest;
+import com.nomad.socialspring.review.ReviewResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -35,6 +37,23 @@ public class LocationController {
           @RequestParam(name = "size", defaultValue = "25") int size
   ) {
     return locationService.getTrips(id, page, size);
+  }
+
+  @GetMapping("/{id}/reviews")
+  public Page<ReviewResponse> getReviews(
+          @PathVariable(name = "id") Long locationId,
+          @RequestParam(name = "page", defaultValue = "0") int page,
+          @RequestParam(name = "size", defaultValue = "25") int size
+  ) {
+    return locationService.getReviews(locationId, page, size);
+  }
+
+  @PostMapping("/{id}/reviews")
+  public ReviewResponse createReview(
+          @PathVariable(name = "id") Long locationId,
+          @RequestBody ReviewRequest reviewRequest
+  ) {
+    return locationService.createReview(locationId, reviewRequest);
   }
 
 }
