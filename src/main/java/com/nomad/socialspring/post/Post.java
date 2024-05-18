@@ -5,6 +5,7 @@ import com.nomad.socialspring.common.BaseEntity;
 import com.nomad.socialspring.error.BxException;
 import com.nomad.socialspring.image.Image;
 import com.nomad.socialspring.interest.Interest;
+import com.nomad.socialspring.recommender.UserPostInteraction;
 import com.nomad.socialspring.trip.Trip;
 import com.nomad.socialspring.user.User;
 import jakarta.persistence.*;
@@ -68,6 +69,9 @@ public class Post extends BaseEntity {
           inverseJoinColumns = @JoinColumn(name = "USER_ID"))
   @Builder.Default
   private Set<User> favorites = new LinkedHashSet<>();
+
+  @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+  private Set<UserPostInteraction> userPostInteractions = new LinkedHashSet<>();
 
   public boolean canBeSeenBy(User user) {
     return (!isPrivate || user.follows(author)) && (author.canBeSeenBy(user));
