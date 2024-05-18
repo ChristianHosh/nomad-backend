@@ -1,6 +1,7 @@
 package com.nomad.socialspring.user;
 
 import com.nomad.socialspring.chat.ChatChannel;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,6 +18,7 @@ import java.util.concurrent.Future;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
+  @Cacheable("userByUsername")
   @Query("select u from User u where upper(u.username) = upper(:username)")
   Optional<User> findByUsername(@Param("username") String username);
 

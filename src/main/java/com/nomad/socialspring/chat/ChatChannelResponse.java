@@ -68,8 +68,8 @@ public class ChatChannelResponse extends BaseResponse {
       }
       if (entity.getTrip() != null) {
         Image image = entity.getTrip().getPost().getImages().stream().findFirst().orElse(null);
-        avatarUrl = ImageMapper.entityToUrl(image);
-      } else if (latest != null){
+        avatarUrl = image == null ? entity.getTrip().getLocation().getImageUrl() : ImageMapper.entityToUrl(image);
+      } else if (latest != null) {
         avatarUrl = ImageMapper.entityToUrl(latest.getSender().getProfile().getProfileImage());
       } else {
         avatarUrl = null;
