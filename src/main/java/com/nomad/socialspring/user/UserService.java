@@ -42,7 +42,7 @@ public class UserService {
     User currentUser = userFacade.getCurrentUserOrNull();
     User user = userFacade.findById(userId);
 
-    if (user.isNotBlockedBy(currentUser))
+    if (currentUser.isNotBlockedBy(user))
       return user.toResponse(currentUser, true);
     throw BxException.forbidden(currentUser);
   }
@@ -51,7 +51,7 @@ public class UserService {
     User currentUser = userFacade.getCurrentUserOrNull();
     User user = userFacade.findByUsername(username);
 
-    if (user.isNotBlockedBy(currentUser))
+    if (currentUser.isNotBlockedBy(user))
       return user.toResponse(currentUser, true);
     throw BxException.forbidden(currentUser);
   }
