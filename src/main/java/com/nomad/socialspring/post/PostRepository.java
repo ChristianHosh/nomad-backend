@@ -84,7 +84,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
           (
             (tu.user = :user)
           )
-          order by p.trip.startDate asc
+          order by p.trip.startDate desc
           """)
   Page<Post> findTripsByUser(User user, Pageable pageable);
 
