@@ -1,5 +1,6 @@
 package com.nomad.socialspring.trip;
 
+import com.nomad.socialspring.common.BDate;
 import com.nomad.socialspring.common.BaseResponse;
 import com.nomad.socialspring.location.LocationResponse;
 import com.nomad.socialspring.user.User;
@@ -25,6 +26,7 @@ public class TripResponse extends BaseResponse {
   private final LocationResponse location;
   private final Integer numberOfParticipants;
   private final CanJoin canJoin;
+  private final Boolean hasPassed;
 
   protected TripResponse(@NotNull Trip entity, User user) {
     super(entity);
@@ -32,6 +34,7 @@ public class TripResponse extends BaseResponse {
     this.endDate = entity.getEndDate();
     this.location = LocationResponse.fromEntity(entity.getLocation());
     this.numberOfParticipants = entity.getNumberOfParticipants();
+    this.hasPassed = BDate.currentDate().before(entity.getEndDate());
 
     if (user == null || startDate.before(new Date(System.currentTimeMillis())))
       this.canJoin = CanJoin.DISABLED;
