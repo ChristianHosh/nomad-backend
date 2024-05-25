@@ -27,8 +27,8 @@ public class TripService {
     User currentUser = userFacade.getCurrentUserOrNull();
 
     return userFacade
-            .getUsersInTrip(trip, page, size)
-            .map(u -> u.toResponse(currentUser));
+        .getUsersInTrip(trip, page, size)
+        .map(u -> u.toResponse(currentUser));
   }
 
   @Transactional
@@ -59,37 +59,32 @@ public class TripService {
 
   @Transactional
   public TripResponse updateTripStatusAsWent(Long tripId) {
+    return updateTripUserStatus(tripId, TripUser.TripUserStatus.WENT);
+  }
+
+  @Transactional
+  protected TripResponse updateTripUserStatus(Long tripId, TripUser.TripUserStatus status) {
     User currentUser = userFacade.getCurrentUser();
     Trip trip = tripFacade.findById(tripId);
 
     TripUser tripUser = trip.findTripUser(currentUser);
     if (tripUser == null)
       throw BxException.hardcoded(BxException.X_USER_NOT_IN_TRIP, currentUser);
-    if (tripUser.getStatus().equals(TripUser.TripUserStatus.JOINED))
+    if (!tripUser.getStatus().equals(TripUser.TripUserStatus.JOINED))
       throw BxException.hardcoded(BxException.X_CANT_UPDATE_TRIP_USER_STATUS, currentUser);
 
-    tripUser.setStatus(TripUser.TripUserStatus.WENT);
+    tripUser.setStatus(status);
     return tripFacade.save(trip).toResponse(currentUser);
   }
 
   @Transactional
   public TripResponse updateTripStatusAsNotWent(Long tripId) {
-    User currentUser = userFacade.getCurrentUser();
-    Trip trip = tripFacade.findById(tripId);
-
-    TripUser tripUser = trip.findTripUser(currentUser);
-    if (tripUser == null)
-      throw BxException.hardcoded(BxException.X_USER_NOT_IN_TRIP, currentUser);
-    if (tripUser.getStatus().equals(TripUser.TripUserStatus.JOINED))
-      throw BxException.hardcoded(BxException.X_CANT_UPDATE_TRIP_USER_STATUS, currentUser);
-
-    tripUser.setStatus(TripUser.TripUserStatus.DIDNT_GO);
-    return tripFacade.save(trip).toResponse(currentUser);
+    return updateTripUserStatus(tripId, TripUser.TripUserStatus.DIDNT_GO);
   }
 
   public Page<PostResponse> getUpcomingTrips(int page, int size) {
     User currentUser = userFacade.getCurrentUser();
     return postFacade.getUpcomingTrips(currentUser, page, size)
-            .map(p -> p.toResponse(currentUser));
+        .map(p -> p.toResponse(currentUser));
   }
 }
