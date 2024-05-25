@@ -9,6 +9,7 @@ import com.nomad.socialspring.post.Post;
 import com.nomad.socialspring.security.AuthenticationFacade;
 import com.nomad.socialspring.security.RegisterRequest;
 import com.nomad.socialspring.trip.Trip;
+import com.nomad.socialspring.trip.TripUser;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
@@ -259,6 +260,10 @@ public class UserFacade {
 
   public Future<Page<User>> searchUsersAsync(String query, Pageable pageable) {
     return repository.searchUsersAsync(query, getCurrentUserOrNull(), pageable);
+  }
+
+  public Page<User> getUsersInTripWent(Trip trip, int page, int size) {
+    return repository.findByTripsWent_Id(trip.getId(), TripUser.TripUserStatus.WENT, PageRequest.of(page, size));
   }
 
   public record UserSocialSorter(User currentUser) implements Comparator<User> {

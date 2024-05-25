@@ -88,4 +88,12 @@ public class TripService {
     return postFacade.getUpcomingTrips(currentUser, page, size)
         .map(p -> p.toResponse(currentUser));
   }
+
+  public Page<UserResponse> getTripParticipantsWent(Long tripId, int page, int size) {
+    Trip trip = tripFacade.findById(tripId);
+    User currentUser = userFacade.getCurrentUserOrNull();
+
+    return userFacade.getUsersInTripWent(trip, page, size)
+        .map(u -> u.toResponse(currentUser));
+  }
 }

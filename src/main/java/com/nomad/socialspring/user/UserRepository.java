@@ -1,6 +1,7 @@
 package com.nomad.socialspring.user;
 
 import com.nomad.socialspring.chat.ChatChannel;
+import com.nomad.socialspring.trip.TripUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -114,4 +115,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
   Future<Page<User>> searchUsersAsync(String query, User user, Pageable pageable);
 
 
+  @Query("select u from User u inner join TripUser tu on u.id = tu.user.id " +
+      "where tu.trip.id = :id and tu.status = :status")
+  Page<User> findByTripsWent_Id(Long id, TripUser.TripUserStatus status, Pageable pageable);
 }

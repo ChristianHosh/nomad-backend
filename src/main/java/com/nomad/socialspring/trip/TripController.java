@@ -23,6 +23,15 @@ public class TripController {
     return tripService.getMyTrips(page, size);
   }
 
+  @GetMapping("/{id}/participants-went")
+  public Page<UserResponse> getTripParticipantsWent(
+      @PathVariable(name = "id") Long tripId,
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "25") int size
+  ) {
+    return tripService.getTripParticipantsWent(tripId, page, size);
+  }
+
   @PutMapping("/{id}/went")
   public TripResponse updateTripStatusAsWent(
       @PathVariable(name = "id") Long tripId
