@@ -14,15 +14,15 @@ public class ReviewController {
 
   @DeleteMapping("/{id}")
   public ReviewResponse deleteReview(
-          @PathVariable(name = "id") Long reviewId
+      @PathVariable(name = "id") Long reviewId
   ) {
     return service.deleteReview(reviewId);
   }
 
   @PutMapping("/{id}")
   public ReviewResponse updateReview(
-          @PathVariable(name = "id") Long reviewId,
-          @RequestBody ReviewRequest reviewRequest
+      @PathVariable(name = "id") Long reviewId,
+      @RequestBody ReviewRequest reviewRequest
   ) {
     return service.updateReview(reviewId, reviewRequest);
   }

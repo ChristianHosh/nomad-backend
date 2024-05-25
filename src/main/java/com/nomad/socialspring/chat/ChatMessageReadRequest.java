@@ -5,8 +5,8 @@ import jakarta.validation.constraints.NotNull;
 
 public record ChatMessageReadRequest(
 
-        @NotNull(message = "chat channel id is null")
-        @NotBlank(message = "chat channel id is blank")
-        String chatChannelUUID
+    @NotNull(message = "chat channel id is null")
+    @NotBlank(message = "chat channel id is blank")
+    String chatChannelUUID
 ) {
 }

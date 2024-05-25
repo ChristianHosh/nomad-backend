@@ -3,7 +3,9 @@ package com.nomad.socialspring.security;
 import com.nomad.socialspring.common.BDate;
 import com.nomad.socialspring.error.BxException;
 import com.nomad.socialspring.error.BxNotFoundException;
-import com.nomad.socialspring.user.*;
+import com.nomad.socialspring.user.User;
+import com.nomad.socialspring.user.UserFacade;
+import com.nomad.socialspring.user.UserResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -14,7 +16,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -85,7 +86,7 @@ public class AuthService {
     }
 
     Authentication authentication = authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(request.username(), request.password()));
+        new UsernamePasswordAuthenticationToken(request.username(), request.password()));
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
     String jwt = jwtUtils.generateJwtToken(authentication);

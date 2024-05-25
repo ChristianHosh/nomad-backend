@@ -8,10 +8,10 @@ import jakarta.validation.constraints.Size;
  * Request DTO for {@link Comment}
  */
 public record CommentRequest(
-        @NotNull
-        @NotBlank
-        @Size(max = 255)
-        String content
+    @NotNull
+    @NotBlank
+    @Size(max = 255)
+    String content
 ) {
 
 }

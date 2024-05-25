@@ -13,7 +13,7 @@ import lombok.*;
 @Setter
 @Entity
 @Table(name = "T_USER_POST_INTERACTION", indexes = {
-        @Index(name = "idx_userpostinteraction_postid", columnList = "POST_ID")
+    @Index(name = "idx_userpostinteraction_postid", columnList = "POST_ID")
 })
 public class UserPostInteraction extends BaseEntity {
 
@@ -41,10 +41,10 @@ public class UserPostInteraction extends BaseEntity {
   @Override
   public String toString() {
     return "UserPostInteraction{" +
-            "user=" + user +
-            ", event=" + event +
-            ", post=" + post +
-            ", strength=" + strength +
-            '}';
+        "user=" + user +
+        ", event=" + event +
+        ", post=" + post +
+        ", strength=" + strength +
+        '}';
   }
 }

@@ -43,10 +43,10 @@ public class UserInterest implements Serializable {
 
   public static UserInterest of(@NotNull Interest interest, @NotNull User user) {
     return UserInterest.builder()
-            .id(new InterestUserId(interest.getId(), user.getId()))
-            .interest(interest)
-            .user(user)
-            .build();
+        .id(new InterestUserId(interest.getId(), user.getId()))
+        .interest(interest)
+        .user(user)
+        .build();
   }
 
   @Override

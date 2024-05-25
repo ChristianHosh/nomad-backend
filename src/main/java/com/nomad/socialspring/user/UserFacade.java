@@ -29,9 +29,28 @@ public class UserFacade {
   private final UserRepository repository;
   private final AuthenticationFacade authenticationFacade;
 
+  private static void fillFrontier(@NotNull User currentUser, User userFollowing, User user, Queue<User> frontier) {
+    if (userFollowing.canBeSeenBy(currentUser)) {
+      userFollowing.incrementDepth(user.getDepth());
+      if (userFollowing.getDepth() < 3)
+        frontier.add(userFollowing);
+    }
+  }
+
+  private static int countSharedInterests(@NotNull User user1, @NotNull User user2) {
+    Set<Interest> interests1 = user1.getInterests().stream()
+        .map(UserInterest::getInterest)
+        .collect(Collectors.toSet());
+    Set<Interest> interests2 = user2.getInterests().stream()
+        .map(UserInterest::getInterest)
+        .collect(Collectors.toSet());
+    interests1.retainAll(interests2);
+    return interests1.size();
+  }
+
   public User findById(Long id) {
     return repository.findById(id)
-            .orElseThrow(BxException.xNotFound(User.class, id));
+        .orElseThrow(BxException.xNotFound(User.class, id));
   }
 
   public User getCurrentUser() {
@@ -44,18 +63,18 @@ public class UserFacade {
 
   public User findByUsername(String username) {
     return repository.findByUsername(username)
-            .orElseThrow(BxException.xNotFound(User.class, username));
+        .orElseThrow(BxException.xNotFound(User.class, username));
   }
 
   @SuppressWarnings("unused")
   public User findByUsernameOrNull(String username) {
     return repository.findByUsername(username)
-            .orElse(null);
+        .orElse(null);
   }
 
   public User findByEmailIgnoreCase(String email) {
     return repository.findByEmail(email)
-            .orElseThrow(BxException.xNotFound(User.class, email));
+        .orElseThrow(BxException.xNotFound(User.class, email));
   }
 
   public User save(User user) {
@@ -91,7 +110,6 @@ public class UserFacade {
     return getUsersByChatChannel(chatChannel, query, PageRequest.of(page, size));
   }
 
-
   public Page<User> getUsersByChatChannel(ChatChannel chatChannel, String query, Pageable pageable) {
     return repository.findByUserChatChannels_ChatChannel(chatChannel, query, pageable);
   }
@@ -121,15 +139,15 @@ public class UserFacade {
    */
   public Page<User> getMutualFollowings(@NotNull User user1, @NotNull User user2, int page, int size) {
     List<User> mutualList = user1.getFollowers().stream()
-            .filter(user2.getFollowings()::contains)
-            .toList();
+        .filter(user2.getFollowings()::contains)
+        .toList();
     return new PageImpl<>(
-            mutualList.stream()
-                    .skip((long) page * size)
-                    .limit(size)
-                    .toList(),
-            PageRequest.of(page, size),
-            mutualList.size()
+        mutualList.stream()
+            .skip((long) page * size)
+            .limit(size)
+            .toList(),
+        PageRequest.of(page, size),
+        mutualList.size()
     );
   }
 
@@ -193,27 +211,8 @@ public class UserFacade {
 
     potentialUsers.removeIf(removalPredicate);
     return potentialUsers.stream()
-            .limit(25)
-            .toList();
-  }
-
-  private static void fillFrontier(@NotNull User currentUser, User userFollowing, User user, Queue<User> frontier) {
-    if (userFollowing.canBeSeenBy(currentUser)) {
-      userFollowing.incrementDepth(user.getDepth());
-      if (userFollowing.getDepth() < 3)
-        frontier.add(userFollowing);
-    }
-  }
-
-  private static int countSharedInterests(@NotNull User user1, @NotNull User user2) {
-    Set<Interest> interests1 = user1.getInterests().stream()
-            .map(UserInterest::getInterest)
-            .collect(Collectors.toSet());
-    Set<Interest> interests2 = user2.getInterests().stream()
-            .map(UserInterest::getInterest)
-            .collect(Collectors.toSet());
-    interests1.retainAll(interests2);
-    return interests1.size();
+        .limit(25)
+        .toList();
   }
 
   public Page<User> getUsersInTrip(Trip trip, int page, int size) {
@@ -231,9 +230,9 @@ public class UserFacade {
 
     if (user != null) {
       List<User> userList = userPage.stream()
-              .sorted(new UserSocialSorter(user))
-              .filter(u -> u.isNotBlockedBy(user))
-              .toList();
+          .sorted(new UserSocialSorter(user))
+          .filter(u -> u.isNotBlockedBy(user))
+          .toList();
 
       return new PageImpl<>(userList, pageable, userPage.getTotalElements());
     }
@@ -256,6 +255,10 @@ public class UserFacade {
     }
 
     return findByUsernameList(usernames);
+  }
+
+  public Future<Page<User>> searchUsersAsync(String query, Pageable pageable) {
+    return repository.searchUsersAsync(query, getCurrentUserOrNull(), pageable);
   }
 
   public record UserSocialSorter(User currentUser) implements Comparator<User> {
@@ -282,9 +285,5 @@ public class UserFacade {
       // Users with no following relationship come last
       return 0;
     }
-  }
-
-  public Future<Page<User>> searchUsersAsync(String query, Pageable pageable) {
-    return repository.searchUsersAsync(query, getCurrentUserOrNull(), pageable);
   }
 }

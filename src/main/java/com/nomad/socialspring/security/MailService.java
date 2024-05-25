@@ -52,21 +52,21 @@ public class MailService {
 
     String verificationLink = ImageMapper.HOSTNAME + "/api/auth/verify-email?token=" + verificationToken.getToken();
     Content content = new Content(
-            "text/html",
-            //language=HTML
-            String.format("""
-                    <body>
-                        <a href='%s' target='_blank'>
-                            Click here to verify your account
-                        </a>
-                        <p>
-                            or go to the following link if above doesn't work
-                        </p>
-                        <p>
-                            %s
-                        </p>
-                    </body>
-                    """, verificationLink, verificationLink)
+        "text/html",
+        //language=HTML
+        String.format("""
+            <body>
+                <a href='%s' target='_blank'>
+                    Click here to verify your account
+                </a>
+                <p>
+                    or go to the following link if above doesn't work
+                </p>
+                <p>
+                    %s
+                </p>
+            </body>
+            """, verificationLink, verificationLink)
     );
 
     return new Mail(from, "Confirm your email", to, content);

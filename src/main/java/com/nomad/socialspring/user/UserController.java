@@ -22,7 +22,7 @@ public class UserController {
   @GetMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
   public UserResponse getUser(
-          @PathVariable(name = "id") Long userId
+      @PathVariable(name = "id") Long userId
   ) {
     return userService.getUser(userId);
   }
@@ -30,7 +30,7 @@ public class UserController {
   @GetMapping("/@{username}")
   @ResponseStatus(HttpStatus.OK)
   public UserResponse getUserByUsername(
-          @PathVariable(name = "username") String username
+      @PathVariable(name = "username") String username
   ) {
     return userService.getUser(username);
   }
@@ -38,7 +38,7 @@ public class UserController {
   @PostMapping("/{id}/follow")
   @ResponseStatus(HttpStatus.OK)
   public UserResponse followUser(
-          @PathVariable(name = "id") Long userId
+      @PathVariable(name = "id") Long userId
   ) {
     return userService.followUser(userId);
   }
@@ -46,7 +46,7 @@ public class UserController {
   @DeleteMapping("/{id}/follow")
   @ResponseStatus(HttpStatus.OK)
   public UserResponse unfollowUser(
-          @PathVariable(name = "id") Long userId
+      @PathVariable(name = "id") Long userId
   ) {
     return userService.unfollowUser(userId);
   }
@@ -54,8 +54,8 @@ public class UserController {
   @GetMapping("/follow-requests")
   @ResponseStatus(HttpStatus.OK)
   public Page<FollowRequestResponse> getFollowRequests(
-          @RequestParam(name = "page", defaultValue = "0") int page,
-          @RequestParam(name = "size", defaultValue = "25") int size
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "25") int size
   ) {
     return userService.getUserFollowRequests(page, size);
   }
@@ -63,7 +63,7 @@ public class UserController {
   @PostMapping("/follow-requests/{id}")
   @ResponseStatus(HttpStatus.OK)
   public UserResponse acceptFollow(
-          @PathVariable(name = "id") Long followRequestId
+      @PathVariable(name = "id") Long followRequestId
   ) {
     return userService.acceptFollowRequest(followRequestId);
   }
@@ -71,7 +71,7 @@ public class UserController {
   @DeleteMapping("/follow-requests/{id}")
   @ResponseStatus(HttpStatus.OK)
   public UserResponse declineFollow(
-          @PathVariable(name = "id") Long followRequestId
+      @PathVariable(name = "id") Long followRequestId
   ) {
     return userService.declineFollowRequest(followRequestId);
   }
@@ -79,9 +79,9 @@ public class UserController {
   @GetMapping("/{id}/followers")
   @ResponseStatus(HttpStatus.OK)
   public Page<UserResponse> getUserFollowers(
-          @PathVariable(name = "id") Long userId,
-          @RequestParam(name = "page", defaultValue = "0") int page,
-          @RequestParam(name = "size", defaultValue = "25") int size
+      @PathVariable(name = "id") Long userId,
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "25") int size
   ) {
     return userService.getUserFollowers(userId, page, size);
   }
@@ -89,9 +89,9 @@ public class UserController {
   @GetMapping("/{id}/mutual")
   @ResponseStatus(HttpStatus.OK)
   public Page<UserResponse> getUserMutual(
-          @PathVariable(name = "id") Long userId,
-          @RequestParam(name = "page", defaultValue = "0") int page,
-          @RequestParam(name = "size", defaultValue = "25") int size
+      @PathVariable(name = "id") Long userId,
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "25") int size
   ) {
     return userService.getUserMutualFollowings(userId, page, size);
   }
@@ -99,9 +99,9 @@ public class UserController {
   @GetMapping("/{id}/followings")
   @ResponseStatus(HttpStatus.OK)
   public Page<UserResponse> getUserFollowings(
-          @PathVariable(name = "id") Long userId,
-          @RequestParam(name = "page", defaultValue = "0") int page,
-          @RequestParam(name = "size", defaultValue = "25") int size
+      @PathVariable(name = "id") Long userId,
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "25") int size
   ) {
     return userService.getUserFollowings(userId, page, size);
   }
@@ -109,9 +109,9 @@ public class UserController {
   @GetMapping("/{id}/posts")
   @ResponseStatus(HttpStatus.OK)
   public Page<PostResponse> getUserPosts(
-          @PathVariable(name = "id") Long userId,
-          @RequestParam(name = "page", defaultValue = "0") int page,
-          @RequestParam(name = "size", defaultValue = "25") int size
+      @PathVariable(name = "id") Long userId,
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "25") int size
   ) {
     return userService.getUserPosts(userId, page, size);
   }
@@ -119,7 +119,7 @@ public class UserController {
   @PutMapping("/profile")
   @ResponseStatus(HttpStatus.OK)
   public UserResponse updateProfileInfo(
-          @RequestBody @Valid ProfileRequest profileRequest
+      @RequestBody @Valid ProfileRequest profileRequest
   ) {
     return userService.updateProfileInfo(profileRequest);
   }
@@ -127,7 +127,7 @@ public class UserController {
   @PutMapping("/profile-image")
   @ResponseStatus(HttpStatus.OK)
   public UserResponse updateProfileImage(
-          @RequestParam MultipartFile imageFile
+      @RequestParam MultipartFile imageFile
   ) {
     return userService.updateProfileImage(imageFile);
   }
@@ -153,18 +153,18 @@ public class UserController {
   @GetMapping("/{id}/reviews")
   @ResponseStatus(HttpStatus.OK)
   public Page<ReviewResponse> getUserReviews(
-          @PathVariable(name = "id") Long userId,
-          @RequestParam(name = "page", defaultValue = "0") int page,
-          @RequestParam(name = "size", defaultValue = "25") int size
+      @PathVariable(name = "id") Long userId,
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "25") int size
   ) {
     return userService.getUserReviews(userId, page, size);
   }
 
   @PostMapping("/{id}/reviews")
   @ResponseStatus(HttpStatus.CREATED)
-  public UserResponse createUserReview(
-          @PathVariable(name = "id") Long userId,
-          @RequestBody @Valid ReviewRequest reviewRequest
+  public ReviewResponse createUserReview(
+      @PathVariable(name = "id") Long userId,
+      @RequestBody @Valid ReviewRequest reviewRequest
   ) {
     return userService.createUserReview(userId, reviewRequest);
   }
@@ -172,7 +172,7 @@ public class UserController {
   @PostMapping("/{id}/block")
   @ResponseStatus(HttpStatus.OK)
   public UserResponse blockUser(
-          @PathVariable(name = "id") Long userId
+      @PathVariable(name = "id") Long userId
   ) {
     return userService.blockUser(userId);
   }
@@ -181,7 +181,7 @@ public class UserController {
   @DeleteMapping("/{id}/block")
   @ResponseStatus(HttpStatus.OK)
   public UserResponse unblockUser(
-          @PathVariable(name = "id") Long userId
+      @PathVariable(name = "id") Long userId
   ) {
     return userService.unblockUser(userId);
   }
@@ -189,8 +189,8 @@ public class UserController {
   @GetMapping("/blocked")
   @ResponseStatus(HttpStatus.OK)
   public Page<UserResponse> getBlockedUsers(
-          @RequestParam(name = "page", defaultValue = "0") int page,
-          @RequestParam(name = "size", defaultValue = "25") int size
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "25") int size
   ) {
     return userService.getBlockedUsers(page, size);
   }
@@ -198,10 +198,10 @@ public class UserController {
   @GetMapping("")
   @ResponseStatus(HttpStatus.OK)
   public Page<UserResponse> getAllUsers(
-          @RequestParam(name = "query", defaultValue = "") String query,
-          @RequestParam(name = "excludeSelf", defaultValue = "false") boolean excludeSelf,
-          @RequestParam(name = "page", defaultValue = "0") int page,
-          @RequestParam(name = "size", defaultValue = "25") int size
+      @RequestParam(name = "query", defaultValue = "") String query,
+      @RequestParam(name = "excludeSelf", defaultValue = "false") boolean excludeSelf,
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "25") int size
   ) {
     return userService.getAllUsers(query, excludeSelf, page, size);
   }

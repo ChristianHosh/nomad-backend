@@ -72,34 +72,34 @@ public class WebSecurityConfig {
     userAuth.setRoleHierarchy(roleHierarchy());
 
     http
-            .cors(Customizer.withDefaults())
-            .csrf(AbstractHttpConfigurer::disable)
-            .authenticationProvider(authenticationProvider())
-            .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-            .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/api/auth/**").permitAll()
+        .cors(Customizer.withDefaults())
+        .csrf(AbstractHttpConfigurer::disable)
+        .authenticationProvider(authenticationProvider())
+        .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+        .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/api/auth/**").permitAll()
 
-                    // HttpMethod access
-                    .requestMatchers(HttpMethod.POST).access(userAuth)
-                    .requestMatchers(HttpMethod.PUT).access(userAuth)
-                    .requestMatchers(HttpMethod.DELETE).access(userAuth)
+            // HttpMethod access
+            .requestMatchers(HttpMethod.POST).access(userAuth)
+            .requestMatchers(HttpMethod.PUT).access(userAuth)
+            .requestMatchers(HttpMethod.DELETE).access(userAuth)
 
-                    // '/users' access
-                    .requestMatchers("/api/users/{id}/mutual").access(userAuth)
-                    .requestMatchers("/api/users/follow-requests").access(userAuth)
-                    .requestMatchers("/api/users/suggested").access(userAuth)
+            // '/users' access
+            .requestMatchers("/api/users/{id}/mutual").access(userAuth)
+            .requestMatchers("/api/users/follow-requests").access(userAuth)
+            .requestMatchers("/api/users/suggested").access(userAuth)
 
-                    // '/notifications' access
-                    .requestMatchers("/api/notifications").access(userAuth)
+            // '/notifications' access
+            .requestMatchers("/api/notifications").access(userAuth)
 
-                    //
+            //
 
 
-                    .requestMatchers("/error").permitAll()
-                    .anyRequest().permitAll()
-            );
+            .requestMatchers("/error").permitAll()
+            .anyRequest().permitAll()
+        );
 
     return http.build();
   }

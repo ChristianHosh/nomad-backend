@@ -23,46 +23,24 @@ public class PostRecommendationFacade {
 
   private final PostRepository postRepository;
 
-  public Page<PostResponse> findPosts(User currentUser, int page, int size) {
-    Page<Post> postPage = postRepository.findPosts(currentUser, PageRequest.of(page, size));
-
-    if (currentUser == null)
-      return postPage.map(Post::toResponse);
-    List<Post> postList = sortByInterests(postPage.getContent(), currentUser);
-
-    return new PageImpl<>(postList, PageRequest.of(page, size), postPage.getTotalElements())
-            .map(p -> p.toResponse(currentUser));
-  }
-
-
-  public Page<PostResponse> findFollowingsRecommendations(User currentUser, int page, int size) {
-    Page<Post> postPage = postRepository.findFollowingsPosts(currentUser, PageRequest.of(page, size));
-
-    List<Post> postList = sortByInterests(postPage.getContent(), currentUser);
-
-    return new PageImpl<>(postList, PageRequest.of(page, size), postPage.getTotalElements())
-            .map(p -> p.toResponse(currentUser));
-  }
-
-
   public static List<Post> sortByInterests(List<Post> content, User user) {
     List<UserInterest> userInterestList = new ArrayList<>(user.getInterests());
 
     List<Pair<Post, Double>> rScores = content.stream()
-            .map(post -> {
-              double score = 0.0;
-              for (UserInterest userInterest : userInterestList) {
-                if (post.getInterests().contains(userInterest.getInterest())) {
-                  score += userInterest.getScore();
-                }
-              }
-              return Pair.of(post, score);
-            })
-            .toList();
+        .map(post -> {
+          double score = 0.0;
+          for (UserInterest userInterest : userInterestList) {
+            if (post.getInterests().contains(userInterest.getInterest())) {
+              score += userInterest.getScore();
+            }
+          }
+          return Pair.of(post, score);
+        })
+        .toList();
 
     DoubleSummaryStatistics rScoreStats = rScores.stream()
-            .mapToDouble(Pair::getSecond)
-            .summaryStatistics();
+        .mapToDouble(Pair::getSecond)
+        .summaryStatistics();
 
     long count = rScoreStats.getCount();
     double mean = rScoreStats.getAverage();
@@ -75,24 +53,43 @@ public class PostRecommendationFacade {
     double finalStandardDeviation = standardDeviation;
 
     List<Pair<Post, Double>> zScores = rScores.stream()
-            .map(pair -> Pair.of(pair.getFirst(), (pair.getSecond() - mean) / finalStandardDeviation))
-            .toList();
+        .map(pair -> Pair.of(pair.getFirst(), (pair.getSecond() - mean) / finalStandardDeviation))
+        .toList();
 
     return zScores.stream()
-            .sorted(Comparator.comparingDouble(Pair::getSecond))
-            .map(Pair::getFirst)
-            .toList();
+        .sorted(Comparator.comparingDouble(Pair::getSecond))
+        .map(Pair::getFirst)
+        .toList();
   }
 
+  public Page<PostResponse> findPosts(User currentUser, int page, int size) {
+    Page<Post> postPage = postRepository.findPosts(currentUser, PageRequest.of(page, size));
 
-  public Page<PostResponse> findLocalTripsRecommendations(User currentUser, int page, int size) {
-    Page<Post> postPage = postRepository.findLocalTrips(currentUser,
-            currentUser.getProfile().getLocation(),
-            PageRequest.of(page, size));
+    if (currentUser == null)
+      return postPage.map(Post::toResponse);
+    List<Post> postList = sortByInterests(postPage.getContent(), currentUser);
+
+    return new PageImpl<>(postList, PageRequest.of(page, size), postPage.getTotalElements())
+        .map(p -> p.toResponse(currentUser));
+  }
+
+  public Page<PostResponse> findFollowingsRecommendations(User currentUser, int page, int size) {
+    Page<Post> postPage = postRepository.findFollowingsPosts(currentUser, PageRequest.of(page, size));
 
     List<Post> postList = sortByInterests(postPage.getContent(), currentUser);
 
     return new PageImpl<>(postList, PageRequest.of(page, size), postPage.getTotalElements())
-            .map(p -> p.toResponse(currentUser));
+        .map(p -> p.toResponse(currentUser));
+  }
+
+  public Page<PostResponse> findLocalTripsRecommendations(User currentUser, int page, int size) {
+    Page<Post> postPage = postRepository.findLocalTrips(currentUser,
+        currentUser.getProfile().getLocation(),
+        PageRequest.of(page, size));
+
+    List<Post> postList = sortByInterests(postPage.getContent(), currentUser);
+
+    return new PageImpl<>(postList, PageRequest.of(page, size), postPage.getTotalElements())
+        .map(p -> p.toResponse(currentUser));
   }
 }

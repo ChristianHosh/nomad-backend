@@ -37,13 +37,13 @@ public class ChatChannelResponse extends BaseResponse {
 
     if (Boolean.FALSE.equals(isGroup) && user != null) {
       otherUser = channelUserSet.stream()
-              .filter(ccu -> !Objects.equals(ccu.getUser(), user))
-              .findAny().orElse(null);
+          .filter(ccu -> !Objects.equals(ccu.getUser(), user))
+          .findAny().orElse(null);
     }
 
     ChatMessage latest = entity.getChatMessages().stream()
-            .max(Comparator.comparingLong(c -> c.getCreatedOn().getTime()))
-            .orElse(null);
+        .max(Comparator.comparingLong(c -> c.getCreatedOn().getTime()))
+        .orElse(null);
     latestMessage = ChatMessageResponse.fromEntity(latest);
 
     if (otherUser != null) {
@@ -55,11 +55,11 @@ public class ChatChannelResponse extends BaseResponse {
     } else {
       if (entity.getName() == null) {
         List<String> names = channelUserSet.stream()
-                .map(ChatChannelUser::getUser)
-                .filter(u -> !Objects.equals(u, user))
-                .map(u -> u.getProfile().getDisplayName())
-                .limit(3)
-                .toList();
+            .map(ChatChannelUser::getUser)
+            .filter(u -> !Objects.equals(u, user))
+            .map(u -> u.getProfile().getDisplayName())
+            .limit(3)
+            .toList();
         name = String.join(", ", names);
         if (groupSize > 3)
           name += ",...";
@@ -77,8 +77,8 @@ public class ChatChannelResponse extends BaseResponse {
     }
 
     ChatChannelUser currentUser = channelUserSet.stream()
-            .filter(ccu -> Objects.equals(ccu.getUser(), user))
-            .findAny().orElse(null);
+        .filter(ccu -> Objects.equals(ccu.getUser(), user))
+        .findAny().orElse(null);
     if (currentUser != null)
       hasUnreadMessages = !currentUser.getReadMessages();
     else

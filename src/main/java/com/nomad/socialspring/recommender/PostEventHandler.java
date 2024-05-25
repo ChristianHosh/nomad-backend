@@ -29,8 +29,8 @@ public class PostEventHandler {
   private List<UserInterest> getSharedInterests(@NotNull User user, @NotNull Post post) {
     Set<UserInterest> userInterests = new HashSet<>(interestUserRepository.findByUserAndInterestIn(user, post.getInterests()));
     userInterests.addAll(post.getInterests().stream()
-            .map(interest -> UserInterest.of(interest, user))
-            .toList());
+        .map(interest -> UserInterest.of(interest, user))
+        .toList());
     return saveAllInterests(userInterests);
   }
 

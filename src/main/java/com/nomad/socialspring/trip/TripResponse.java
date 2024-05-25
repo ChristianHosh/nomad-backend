@@ -15,12 +15,6 @@ import java.sql.Date;
 @Getter
 public class TripResponse extends BaseResponse {
 
-  public enum CanJoin {
-    CAN_JOIN,
-    JOINED,
-    DISABLED
-  }
-
   private final Date startDate;
   private final Date endDate;
   private final LocationResponse location;
@@ -28,7 +22,6 @@ public class TripResponse extends BaseResponse {
   private final CanJoin canJoin;
   private final Boolean hasPassed;
   private final TripUser.TripUserStatus status;
-
   protected TripResponse(@NotNull Trip entity, User user, boolean detailed) {
     super(entity);
     this.startDate = entity.getStartDate();
@@ -55,5 +48,11 @@ public class TripResponse extends BaseResponse {
   public static TripResponse fromEntity(Trip trip, User user, boolean detailed) {
     if (trip == null) return null;
     return new TripResponse(trip, user, detailed);
+  }
+
+  public enum CanJoin {
+    CAN_JOIN,
+    JOINED,
+    DISABLED
   }
 }

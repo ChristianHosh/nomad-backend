@@ -7,11 +7,11 @@ import java.util.List;
 
 public record ChatChannelRequest(
 
-        String name,
+    String name,
 
-        @NotNull(message = "id is null")
-        @NotEmpty(message = "id is empty")
-        List<@NotNull(message = "id is null")Long> userIds
+    @NotNull(message = "id is null")
+    @NotEmpty(message = "id is empty")
+    List<@NotNull(message = "id is null") Long> userIds
 
 
 ) {

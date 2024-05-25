@@ -4,14 +4,15 @@ import com.nomad.socialspring.user.User;
 
 public class ChatMessageMapper {
 
-  private ChatMessageMapper() {}
+  private ChatMessageMapper() {
+  }
 
   public static ChatMessage requestToEntity(String content, User sender, ChatChannel chatChannel) {
     return ChatMessage.builder()
-            .sender(sender)
-            .chatChannel(chatChannel)
-            .content(content)
-            .build();
+        .sender(sender)
+        .chatChannel(chatChannel)
+        .content(content)
+        .build();
   }
 
 }

@@ -31,11 +31,11 @@ public class GScoreScheduler {
         .map(objects -> Pair.of((Post) objects[0], (Long) objects[1]))
         .map(postLongPair -> Pair.of(postLongPair.getFirst(), postLongPair.getSecond() + postLongPair.getFirst().getRecencyScore()))
         .toList();
-    
+
     List<Double> gScores = postScoreList.stream()
         .mapToDouble(Pair::getSecond)
         .boxed().toList();
-    
+
     DoubleSummaryStatistics gScoreStats = gScores.stream()
         .mapToDouble(Double::doubleValue)
         .summaryStatistics();

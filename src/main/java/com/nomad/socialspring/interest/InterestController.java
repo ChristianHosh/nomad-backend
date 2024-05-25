@@ -16,9 +16,9 @@ public class InterestController {
 
   @GetMapping("")
   public Page<InterestResponse> getInterests(
-          @RequestParam(name = "page", defaultValue = "0") int page,
-          @RequestParam(name = "size", defaultValue = "50") int size,
-          @RequestParam(name = "name", defaultValue = "") String name
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "50") int size,
+      @RequestParam(name = "name", defaultValue = "") String name
   ) {
     return interestService.getInterests(page, size, name);
   }
@@ -30,9 +30,9 @@ public class InterestController {
 
   @GetMapping("/{id}/posts")
   public Page<PostResponse> getInterestPosts(
-          @PathVariable(name = "id") Long interestId,
-          @RequestParam(name = "page", defaultValue = "0") int page,
-          @RequestParam(name = "size", defaultValue = "25") int size
+      @PathVariable(name = "id") Long interestId,
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "25") int size
   ) {
     return interestService.getInterestPosts(interestId, page, size);
   }

@@ -39,13 +39,14 @@ public class AuthController {
     return authService.resetPassword(resetPasswordRequest);
   }
 
-  public record ResetPasswordRequest(@NotNull String oldPassword, @NotNull String newPassword, @NotNull String confirmPassword) {
-
-  }
-
   @GetMapping("/verify-email")
   @ResponseStatus(HttpStatus.TEMPORARY_REDIRECT)
   public ResponseEntity<Object> verifyEmail(@RequestParam(name = "token") String token) {
     return authService.verifyEmail(token);
+  }
+
+  public record ResetPasswordRequest(@NotNull String oldPassword, @NotNull String newPassword,
+                                     @NotNull String confirmPassword) {
+
   }
 }

@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 public class NotificationResponse extends BaseResponse {
-  
+
   private final String content;
   private final UserResponse author;
   private final NotificationType type;
@@ -15,14 +15,14 @@ public class NotificationResponse extends BaseResponse {
 
   private NotificationResponse(Notification notification) {
     super(notification);
-    
+
     content = notification.getContent();
     author = notification.getAuthor().toResponse();
     type = notification.getNotificationType();
     entityId = notification.getEntityId();
     isRead = notification.getIsRead();
   }
-  
+
   public static NotificationResponse fromEntity(Notification notification) {
     return notification == null ? null : new NotificationResponse(notification);
   }

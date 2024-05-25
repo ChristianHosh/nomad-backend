@@ -18,7 +18,7 @@ public class FollowRequestFacade {
 
   public FollowRequest findById(Long id) {
     return repository.findById(id)
-            .orElseThrow(BxException.xNotFound(FollowRequest.class, id));
+        .orElseThrow(BxException.xNotFound(FollowRequest.class, id));
   }
 
   public void delete(FollowRequest followRequest) {

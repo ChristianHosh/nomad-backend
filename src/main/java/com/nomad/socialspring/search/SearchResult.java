@@ -7,8 +7,8 @@ import org.springframework.data.domain.Page;
 
 public record SearchResult(
 
-        Page<UserResponse> users,
-        Page<LocationResponse> locations,
-        Page<InterestResponse> interests
+    Page<UserResponse> users,
+    Page<LocationResponse> locations,
+    Page<InterestResponse> interests
 ) {
 }

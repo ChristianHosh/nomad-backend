@@ -10,12 +10,6 @@ import java.util.Set;
 @Getter
 public class UserResponse extends BaseResponse {
 
-  public enum CanReview {
-    DISABLED,
-    REVIEWED,
-    CAN_REVIEW
-  }
-
   private final String username;
   private final String email;
   private final Role role;
@@ -26,8 +20,6 @@ public class UserResponse extends BaseResponse {
   private final List<InterestResponse> interests;
   private Integer rating;
   private String token;
-
-
   private UserResponse(User entity, User user, boolean detailed) {
     super(entity);
     this.followStatus = followStat(entity, user);
@@ -38,7 +30,7 @@ public class UserResponse extends BaseResponse {
 
     canReview = detailed ? CanReview.DISABLED : entity.canBeReviewedBy(user);
     canBlock = detailed && entity.isNotBlockedBy(user);
-    
+
     if (detailed)
       rating = entity.getRating();
     profile = ProfileResponse.fromEntity(entity.getProfile(), detailed);
@@ -46,24 +38,19 @@ public class UserResponse extends BaseResponse {
         .map(InterestResponse::fromEntity)
         .toList();
   }
-  
-  public UserResponse withToken(String token) {
-    this.token = token;
-    return this;
-  }
-  
+
   public static UserResponse fromEntity(User user) {
     return fromEntity(user, null);
   }
-  
+
   public static UserResponse fromEntity(User user, User currentUser) {
     return fromEntity(user, currentUser, false);
   }
-  
+
   public static UserResponse fromEntity(User user, User currentUser, boolean detailed) {
     return user == null ? null : new UserResponse(user, currentUser, detailed);
   }
-  
+
   private static FollowStatus followStat(User user, User currentUser) {
     FollowStatus followStatus = FollowStatus.UNKNOWN;
     if (currentUser != null) {
@@ -76,5 +63,16 @@ public class UserResponse extends BaseResponse {
         followStatus = FollowStatus.CAN_FOLLOW;
     }
     return followStatus;
+  }
+
+  public UserResponse withToken(String token) {
+    this.token = token;
+    return this;
+  }
+
+  public enum CanReview {
+    DISABLED,
+    REVIEWED,
+    CAN_REVIEW
   }
 }

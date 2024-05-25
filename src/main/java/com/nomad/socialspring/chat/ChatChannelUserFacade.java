@@ -27,7 +27,7 @@ public class ChatChannelUserFacade {
 
   public ChatChannelUser findById(ChatChannelUsersId chatChannelUsersId) {
     return repository.findById(chatChannelUsersId)
-            .orElseThrow(BxException.xNotFound(ChatChannelUser.class, chatChannelUsersId));
+        .orElseThrow(BxException.xNotFound(ChatChannelUser.class, chatChannelUsersId));
   }
 
   public void setReadMessage(@NotNull ChatChannelUser chatChannelUser) {

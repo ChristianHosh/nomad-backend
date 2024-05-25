@@ -29,6 +29,6 @@ public class InterestFacade {
 
   public Interest getInterest(Long id) {
     return repository.findById(id)
-            .orElseThrow(BxException.xNotFound(Interest.class, id));
+        .orElseThrow(BxException.xNotFound(Interest.class, id));
   }
 }

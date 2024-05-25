@@ -1,8 +1,8 @@
 package com.nomad.socialspring.user;
 
 import com.nomad.socialspring.common.BaseResponse;
-import com.nomad.socialspring.location.LocationResponse;
 import com.nomad.socialspring.image.ImageMapper;
+import com.nomad.socialspring.location.LocationResponse;
 import lombok.Getter;
 
 import java.sql.Date;
@@ -25,7 +25,7 @@ public class ProfileResponse extends BaseResponse {
     super(profile);
     displayName = profile.getDisplayName();
     profileImageUrl = ImageMapper.entityToUrl(profile.getProfileImage());
-    
+
     if (detailed) {
       bio = profile.getBio();
       gender = profile.getGender();
@@ -36,7 +36,7 @@ public class ProfileResponse extends BaseResponse {
       location = LocationResponse.fromEntity(profile.getLocation());
     }
   }
-  
+
   public static ProfileResponse fromEntity(Profile profile, boolean detailed) {
     return profile == null ? null : new ProfileResponse(profile, detailed);
   }

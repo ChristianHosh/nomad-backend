@@ -12,19 +12,19 @@ import java.util.concurrent.Future;
 public interface LocationRepository extends JpaRepository<Location, Long> {
 
   @Query("""
-          select l from Location l
-          where l.name ilike concat('%', :query, '%') or
-          l.belongsTo.name ilike concat('%', :query, '%')
-          order by coalesce(l.belongsTo.id, l.id)
-        """)
-  Page<Location> findByNameContains(@Param("query") String query, Pageable pageable);
-
-  @Async
-  @Query("""
         select l from Location l
         where l.name ilike concat('%', :query, '%') or
         l.belongsTo.name ilike concat('%', :query, '%')
         order by coalesce(l.belongsTo.id, l.id)
-        """)
+      """)
+  Page<Location> findByNameContains(@Param("query") String query, Pageable pageable);
+
+  @Async
+  @Query("""
+      select l from Location l
+      where l.name ilike concat('%', :query, '%') or
+      l.belongsTo.name ilike concat('%', :query, '%')
+      order by coalesce(l.belongsTo.id, l.id)
+      """)
   Future<Page<Location>> searchLocationsAsync(String query, Pageable pageable);
 }

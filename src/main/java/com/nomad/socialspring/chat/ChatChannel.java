@@ -42,13 +42,13 @@ public class ChatChannel extends BaseEntity {
 
   public boolean containsUser(User user) {
     return chatChannelUsers.stream()
-            .anyMatch(ccu -> Objects.equals(ccu.getChatChannel(), this) && Objects.equals(ccu.getUser(), user));
+        .anyMatch(ccu -> Objects.equals(ccu.getChatChannel(), this) && Objects.equals(ccu.getUser(), user));
   }
 
   public ChatChannelUser findUser(User user) {
     return chatChannelUsers.stream()
-            .filter(channelUser -> channelUser.getUser().equals(user))
-            .findAny().orElse(null);
+        .filter(channelUser -> channelUser.getUser().equals(user))
+        .findAny().orElse(null);
   }
 
   @SuppressWarnings("BooleanMethodIsAlwaysInverted")
@@ -58,10 +58,10 @@ public class ChatChannel extends BaseEntity {
 
   public ChatChannelUser newChatChannelUser(User user) {
     return new ChatChannelUser(
-            new ChatChannelUsersId(getId(), user.getId()),
-            this,
-            user,
-            false
+        new ChatChannelUsersId(getId(), user.getId()),
+        this,
+        user,
+        false
     );
   }
 

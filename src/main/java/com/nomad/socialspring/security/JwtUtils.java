@@ -28,11 +28,11 @@ public class JwtUtils {
     UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
     return Jwts.builder()
-            .setSubject((userPrincipal.getUsername()))
-            .setIssuedAt(BDate.currentDate())
-            .setExpiration(BDate.currentDate().addDay(jwtExpirationDays))
-            .signWith(key(), SignatureAlgorithm.HS256)
-            .compact();
+        .setSubject((userPrincipal.getUsername()))
+        .setIssuedAt(BDate.currentDate())
+        .setExpiration(BDate.currentDate().addDay(jwtExpirationDays))
+        .signWith(key(), SignatureAlgorithm.HS256)
+        .compact();
   }
 
   public boolean validateJwtToken(String token) {
@@ -60,9 +60,9 @@ public class JwtUtils {
 
   public String getUsernameFromJwtToken(String token) {
     return Jwts.parserBuilder()
-            .setSigningKey(key()).build()
-            .parseClaimsJws(token)
-            .getBody()
-            .getSubject();
+        .setSigningKey(key()).build()
+        .parseClaimsJws(token)
+        .getBody()
+        .getSubject();
   }
 }

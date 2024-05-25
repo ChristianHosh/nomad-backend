@@ -17,11 +17,11 @@ public class ReviewFacade {
 
   public Review save(ReviewRequest reviewRequest, User author, User recipient) {
     return save(Review.builder()
-            .content(reviewRequest.content())
-            .rating(reviewRequest.rating())
-            .author(author)
-            .recipient(recipient)
-            .build());
+        .content(reviewRequest.content())
+        .rating(reviewRequest.rating())
+        .author(author)
+        .recipient(recipient)
+        .build());
   }
 
   public Review save(Review review) {
@@ -43,5 +43,15 @@ public class ReviewFacade {
 
   public Page<Review> findByLocation(Location byId, int page, int size) {
     return repository.findByLocation(byId, PageRequest.of(page, size));
+  }
+
+  public Review findByLocationAndAuthor(Location location, User user) {
+    return repository.findByLocationAndAuthor(location, user)
+        .orElse(null);
+  }
+
+  public Review findByAuthorAndRecipient(User author, User recipient) {
+    return repository.findByAuthorAndRecipient(author, recipient)
+        .orElse(null);
   }
 }

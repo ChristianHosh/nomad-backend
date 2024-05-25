@@ -42,11 +42,11 @@ public class UserDetailsImpl implements UserDetails {
     List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRole().name()));
 
     return new UserDetailsImpl(
-            user,
-            user.getId(),
-            user.getUsername(),
-            user.getPassword(),
-            authorities);
+        user,
+        user.getId(),
+        user.getUsername(),
+        user.getPassword(),
+        authorities);
   }
 
   @Override

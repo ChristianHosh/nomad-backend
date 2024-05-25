@@ -18,7 +18,7 @@ public interface InterestRepository extends JpaRepository<Interest, Long> {
 
   @Async
   @Query("""
-         select i from Interest i where i.name ilike concat('%', :query, '%')
-        """)
+       select i from Interest i where i.name ilike concat('%', :query, '%')
+      """)
   Future<Page<Interest>> searchInterestsAsync(String query, Pageable pageable);
 }

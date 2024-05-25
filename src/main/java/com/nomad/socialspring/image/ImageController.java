@@ -18,9 +18,9 @@ public class ImageController {
   @ResponseStatus(HttpStatus.OK)
   public ResponseEntity<Object> getImageById(@PathVariable Long id) {
     return ResponseEntity
-            .status(HttpStatus.OK)
-            .contentType(MediaType.IMAGE_PNG)
-            .body(imageService.getImageById(id));
+        .status(HttpStatus.OK)
+        .contentType(MediaType.IMAGE_PNG)
+        .body(imageService.getImageById(id));
   }
 
 }

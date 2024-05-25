@@ -29,7 +29,7 @@ public class CommentFacade {
 
   public Comment findById(Long id) {
     return repository.findById(id)
-            .orElseThrow(BxException.xNotFound(Comment.class, id));
+        .orElseThrow(BxException.xNotFound(Comment.class, id));
   }
 
   public void delete(Comment comment) {

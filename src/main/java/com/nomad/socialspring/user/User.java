@@ -47,22 +47,22 @@ public class User extends BaseEntity {
 
   @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
   @JoinTable(name = "T_USER_FOLLOWERS",
-          joinColumns = @JoinColumn(name = "USER_1_ID"),
-          inverseJoinColumns = @JoinColumn(name = "USER_2_ID"))
+      joinColumns = @JoinColumn(name = "USER_1_ID"),
+      inverseJoinColumns = @JoinColumn(name = "USER_2_ID"))
   @Builder.Default
   private Set<User> followers = new HashSet<>();
 
   @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
   @JoinTable(name = "T_USER_FOLLOWERS",
-          joinColumns = @JoinColumn(name = "USER_2_ID"),
-          inverseJoinColumns = @JoinColumn(name = "USER_1_ID"))
+      joinColumns = @JoinColumn(name = "USER_2_ID"),
+      inverseJoinColumns = @JoinColumn(name = "USER_1_ID"))
   @Builder.Default
   private Set<User> followings = new HashSet<>();
 
   @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
   @JoinTable(name = "T_BLOCKED_USERS",
-          joinColumns = @JoinColumn(name = "USER_1_ID"),
-          inverseJoinColumns = @JoinColumn(name = "USER_2_ID"))
+      joinColumns = @JoinColumn(name = "USER_1_ID"),
+      inverseJoinColumns = @JoinColumn(name = "USER_2_ID"))
   @Builder.Default
   private Set<User> blockedUsers = new HashSet<>();
 
@@ -154,7 +154,7 @@ public class User extends BaseEntity {
     if (user == null)
       return false;
     return followRequests.stream().anyMatch(
-            followRequest -> followRequest.getFromUser().equals(user)
+        followRequest -> followRequest.getFromUser().equals(user)
     );
   }
 
@@ -164,8 +164,8 @@ public class User extends BaseEntity {
 
   public Integer getRating() {
     return (int) reviews.stream()
-            .mapToInt(Review::getRating)
-            .average().orElse(0.0);
+        .mapToInt(Review::getRating)
+        .average().orElse(0.0);
   }
 
   @SuppressWarnings("BooleanMethodIsAlwaysInverted")
@@ -220,8 +220,8 @@ public class User extends BaseEntity {
       for (TripUser tripUser : tripUsers) {
         for (TripUser otherTripUser : user.tripUsers) {
           if (Objects.equals(tripUser.getTrip(), otherTripUser.getTrip())
-                  && tripUser.getStatus() == TripUser.TripUserStatus.WENT
-                  && otherTripUser.getStatus() == TripUser.TripUserStatus.WENT
+              && tripUser.getStatus() == TripUser.TripUserStatus.WENT
+              && otherTripUser.getStatus() == TripUser.TripUserStatus.WENT
           ) {
             return UserResponse.CanReview.CAN_REVIEW;
           }

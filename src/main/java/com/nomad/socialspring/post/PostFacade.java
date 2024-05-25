@@ -43,7 +43,7 @@ public class PostFacade {
 
   public Post findById(Long id) {
     return repository.findById(id)
-            .orElseThrow(BxException.xNotFound(Post.class, id));
+        .orElseThrow(BxException.xNotFound(Post.class, id));
   }
 
   public Page<Post> findByUser(User user, User currentUser, int page, int size) {

@@ -10,8 +10,8 @@ public record FollowRequestResponse(Long id, UserResponse fromUser) {
 
   public static FollowRequestResponse fromEntity(FollowRequest followRequest) {
     return FollowRequestResponse.builder()
-       .id(followRequest.getId())
-       .fromUser(UserResponse.fromEntity(followRequest.getFromUser()))
-       .build();
+        .id(followRequest.getId())
+        .fromUser(UserResponse.fromEntity(followRequest.getFromUser()))
+        .build();
   }
 }

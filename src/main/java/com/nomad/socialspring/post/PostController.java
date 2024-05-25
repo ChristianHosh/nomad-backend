@@ -24,8 +24,8 @@ public class PostController {
   @PostMapping("")
   @ResponseStatus(HttpStatus.CREATED)
   public PostResponse createPost(
-          @ModelAttribute @Valid PostRequest request,
-          @RequestParam(name = "imageFiles", required = false) MultipartFile[] imageFiles
+      @ModelAttribute @Valid PostRequest request,
+      @RequestParam(name = "imageFiles", required = false) MultipartFile[] imageFiles
   ) {
     return postService.createPost(request, imageFiles != null ? Arrays.asList(imageFiles) : List.of());
   }
@@ -33,7 +33,7 @@ public class PostController {
   @GetMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
   public PostResponse getPost(
-          @PathVariable(name = "id") Long postId
+      @PathVariable(name = "id") Long postId
   ) {
     return postService.getPost(postId);
   }
@@ -41,8 +41,8 @@ public class PostController {
   @PutMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
   public PostResponse updatePost(
-          @PathVariable(name = "id") Long postId,
-          @ModelAttribute @Valid PostRequest request
+      @PathVariable(name = "id") Long postId,
+      @ModelAttribute @Valid PostRequest request
   ) {
     return postService.updatePost(postId, request);
   }
@@ -50,7 +50,7 @@ public class PostController {
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
   public PostResponse deletePost(
-          @PathVariable(name = "id") Long postId
+      @PathVariable(name = "id") Long postId
   ) {
     return postService.deletePost(postId);
   }
@@ -58,9 +58,9 @@ public class PostController {
   @GetMapping("/{id}/comments")
   @ResponseStatus(HttpStatus.OK)
   public Page<CommentResponse> getPostComments(
-          @PathVariable(name = "id") Long postId,
-          @RequestParam(name = "page", defaultValue = "0") int page,
-          @RequestParam(name = "size", defaultValue = "50") int size
+      @PathVariable(name = "id") Long postId,
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "50") int size
   ) {
     return postService.getPostComments(postId, page, size);
   }
@@ -68,8 +68,8 @@ public class PostController {
   @PostMapping("/{id}/comments")
   @ResponseStatus(HttpStatus.CREATED)
   public CommentResponse createComment(
-          @PathVariable(name = "id") Long postId,
-          @RequestBody @Valid CommentRequest commentRequest
+      @PathVariable(name = "id") Long postId,
+      @RequestBody @Valid CommentRequest commentRequest
   ) {
     return postService.createComment(postId, commentRequest);
   }
@@ -77,9 +77,9 @@ public class PostController {
   @GetMapping("/{id}/likes")
   @ResponseStatus(HttpStatus.OK)
   public Page<UserResponse> getPostLikes(
-          @PathVariable(name = "id") Long postId,
-          @RequestParam(name = "page", defaultValue = "0") int page,
-          @RequestParam(name = "size", defaultValue = "50") int size
+      @PathVariable(name = "id") Long postId,
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "50") int size
   ) {
     return postService.getPostLikes(postId, page, size);
   }
@@ -87,7 +87,7 @@ public class PostController {
   @PostMapping("/{id}/likes")
   @ResponseStatus(HttpStatus.CREATED)
   public PostResponse likePost(
-          @PathVariable(name = "id") Long postId
+      @PathVariable(name = "id") Long postId
   ) {
     return postService.likePost(postId);
   }
@@ -95,7 +95,7 @@ public class PostController {
   @DeleteMapping("/{id}/likes")
   @ResponseStatus(HttpStatus.CREATED)
   public PostResponse unlikePost(
-          @PathVariable(name = "id") Long postId
+      @PathVariable(name = "id") Long postId
   ) {
     return postService.unlikePost(postId);
   }
@@ -103,7 +103,7 @@ public class PostController {
   @PostMapping("/{id}/favorite")
   @ResponseStatus(HttpStatus.CREATED)
   public PostResponse favoritePost(
-          @PathVariable(name = "id") Long postId
+      @PathVariable(name = "id") Long postId
   ) {
     return postService.favoritePost(postId);
   }
@@ -111,7 +111,7 @@ public class PostController {
   @DeleteMapping("/{id}/favorite")
   @ResponseStatus(HttpStatus.OK)
   public PostResponse unfavoritePost(
-          @PathVariable(name = "id") Long postId
+      @PathVariable(name = "id") Long postId
   ) {
     return postService.unfavoritePost(postId);
   }
@@ -119,8 +119,8 @@ public class PostController {
   @GetMapping("/favorites")
   @ResponseStatus(HttpStatus.OK)
   public Page<PostResponse> getFavoritePosts(
-          @RequestParam(name = "page", defaultValue = "0") int page,
-          @RequestParam(name = "size", defaultValue = "50") int size
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "50") int size
   ) {
     return postService.getFavoritePosts(page, size);
   }
@@ -128,7 +128,7 @@ public class PostController {
   @GetMapping("/{id}/interests")
   @ResponseStatus(HttpStatus.OK)
   public Page<InterestResponse> getPostInterests(
-          @PathVariable(name = "id") Long postId
+      @PathVariable(name = "id") Long postId
   ) {
     return postService.getPostInterests(postId);
   }

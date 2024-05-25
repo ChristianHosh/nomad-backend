@@ -38,8 +38,8 @@ public class InterestService {
       return postPage.map(PostResponse::fromEntity);
 
     return new PageImpl<>(PostRecommendationFacade.sortByInterests(postPage.getContent(), user),
-            PageRequest.of(page, size),
-            postPage.getTotalElements())
-            .map(p -> p.toResponse(user));
+        PageRequest.of(page, size),
+        postPage.getTotalElements())
+        .map(p -> p.toResponse(user));
   }
 }

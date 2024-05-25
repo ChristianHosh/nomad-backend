@@ -11,15 +11,15 @@ public interface ChatChannelUserRepository extends JpaRepository<ChatChannelUser
   @Transactional
   @Modifying
   @Query("UPDATE ChatChannelUser c " +
-          "SET c.readMessages = FALSE " +
-          "WHERE c.chatChannel = :chatChannel")
+      "SET c.readMessages = FALSE " +
+      "WHERE c.chatChannel = :chatChannel")
   void updateReadMessagesFalseByChatChannel(@Param("chatChannel") ChatChannel chatChannel);
 
   @Transactional
   @Modifying
   @Query("UPDATE ChatChannelUser c " +
-          "SET c.readMessages = TRUE " +
-          "WHERE c.id = :id")
+      "SET c.readMessages = TRUE " +
+      "WHERE c.id = :id")
   void updateReadMessagesTrueById(@Param("id") ChatChannelUsersId id);
 
   @Query("select count(c) from ChatChannelUser c where c.user = :user and c.readMessages = false")

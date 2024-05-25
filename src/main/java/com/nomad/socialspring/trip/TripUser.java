@@ -18,6 +18,26 @@ import java.util.Objects;
 @Table(name = "T_TRIP_USER")
 public class TripUser implements Serializable {
 
+  @EmbeddedId
+  private TripUserId id;
+  @MapsId("tripId")
+  @ManyToOne(fetch = FetchType.EAGER, optional = false)
+  @JoinColumn(name = "TRIP_ID", nullable = false)
+  private Trip trip;
+  @MapsId("userId")
+  @ManyToOne(fetch = FetchType.EAGER, optional = false)
+  @JoinColumn(name = "USER_ID", nullable = false)
+  private User user;
+  @NotNull
+  @Column(name = "STATUS", nullable = false)
+  private TripUserStatus status = TripUserStatus.JOINED;
+
+  public enum TripUserStatus {
+    JOINED,
+    WENT,
+    DIDNT_GO
+  }
+
   @Builder
   @AllArgsConstructor
   @NoArgsConstructor
@@ -40,7 +60,7 @@ public class TripUser implements Serializable {
       if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
       TripUserId entity = (TripUserId) o;
       return Objects.equals(this.userId, entity.userId) &&
-              Objects.equals(this.tripId, entity.tripId);
+          Objects.equals(this.tripId, entity.tripId);
     }
 
     @Override
@@ -53,28 +73,5 @@ public class TripUser implements Serializable {
       return tripId + " | " + userId;
     }
   }
-
-  public enum TripUserStatus {
-    JOINED,
-    WENT,
-    DIDNT_GO
-  }
-
-  @EmbeddedId
-  private TripUserId id;
-
-  @MapsId("tripId")
-  @ManyToOne(fetch = FetchType.EAGER, optional = false)
-  @JoinColumn(name = "TRIP_ID", nullable = false)
-  private Trip trip;
-
-  @MapsId("userId")
-  @ManyToOne(fetch = FetchType.EAGER, optional = false)
-  @JoinColumn(name = "USER_ID", nullable = false)
-  private User user;
-
-  @NotNull
-  @Column(name = "STATUS", nullable = false)
-  private TripUserStatus status = TripUserStatus.JOINED;
 
 }

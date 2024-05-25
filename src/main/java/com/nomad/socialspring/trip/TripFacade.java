@@ -1,8 +1,8 @@
 package com.nomad.socialspring.trip;
 
 import com.nomad.socialspring.common.BDate;
-import com.nomad.socialspring.location.Location;
 import com.nomad.socialspring.error.BxException;
+import com.nomad.socialspring.location.Location;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -29,6 +29,6 @@ public class TripFacade {
 
   public Trip findById(Long id) {
     return repository.findById(id)
-            .orElseThrow(BxException.xNotFound(Trip.class, id));
+        .orElseThrow(BxException.xNotFound(Trip.class, id));
   }
 }

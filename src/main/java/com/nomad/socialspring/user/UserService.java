@@ -1,12 +1,12 @@
 package com.nomad.socialspring.user;
 
 import com.nomad.socialspring.chat.ChatChannelUserFacade;
-import com.nomad.socialspring.location.Location;
-import com.nomad.socialspring.location.LocationFacade;
 import com.nomad.socialspring.error.BxException;
 import com.nomad.socialspring.image.ImageFacade;
 import com.nomad.socialspring.interest.Interest;
 import com.nomad.socialspring.interest.InterestFacade;
+import com.nomad.socialspring.location.Location;
+import com.nomad.socialspring.location.LocationFacade;
 import com.nomad.socialspring.notification.NotificationFacade;
 import com.nomad.socialspring.post.PostFacade;
 import com.nomad.socialspring.post.PostResponse;
@@ -132,8 +132,8 @@ public class UserService {
     User currentUser = userFacade.getCurrentUserOrNull();
 
     return userFacade
-            .getFollowersByUser(user.getId(), page, size)
-            .map(u -> u.toResponse(currentUser));
+        .getFollowersByUser(user.getId(), page, size)
+        .map(u -> u.toResponse(currentUser));
   }
 
   public Page<UserResponse> getUserFollowings(Long userId, int page, int size) {
@@ -141,8 +141,8 @@ public class UserService {
     User currentUser = userFacade.getCurrentUserOrNull();
 
     return userFacade
-            .getFollowingsByUser(user.getId(), page, size)
-            .map(u -> u.toResponse(currentUser));
+        .getFollowingsByUser(user.getId(), page, size)
+        .map(u -> u.toResponse(currentUser));
   }
 
   public UserResponse updateProfileInfo(@NotNull ProfileRequest request) {
@@ -180,31 +180,36 @@ public class UserService {
     User currentUser = userFacade.getCurrentUser();
 
     return userFacade
-            .getMutualFollowings(user, currentUser, page, size)
-            .map(u -> u.toResponse(currentUser));
+        .getMutualFollowings(user, currentUser, page, size)
+        .map(u -> u.toResponse(currentUser));
   }
 
   public List<UserResponse> getSuggestedUsers() {
     User currentUser = userFacade.getCurrentUser();
 
     return userFacade
-            .getSuggestedUsers(currentUser)
-            .stream()
-            .map(u -> u.toResponse(currentUser))
-            .toList();
+        .getSuggestedUsers(currentUser)
+        .stream()
+        .map(u -> u.toResponse(currentUser))
+        .toList();
   }
 
-  public UserResponse createUserReview(Long userId, ReviewRequest reviewRequest) {
+  public ReviewResponse createUserReview(Long userId, ReviewRequest reviewRequest) {
     User currentUser = userFacade.getCurrentUser();
     User user = userFacade.findById(userId);
 
-    if (user.isReviewedBy(currentUser))
-      throw BxException.badRequest(User.class, BxException.X_USER_ALREADY_REVIEWED);
+    Review review = reviewFacade.findByAuthorAndRecipient(currentUser, user);
+    if (review == null) {
+      review = new Review();
+      review.setAuthor(currentUser);
+      review.setRecipient(user);
+    }
+    review.setRating(reviewRequest.rating());
+    review.setContent(reviewRequest.content());
 
-    Review review = reviewFacade.save(reviewRequest, currentUser, user);
     notificationFacade.notifyUserReview(review);
 
-    return user.toResponse(currentUser, true);
+    return reviewFacade.save(review).toResponse();
   }
 
   public UserResponse blockUser(Long userId) {
@@ -212,13 +217,13 @@ public class UserService {
     User user = userFacade.findById(userId);
 
     if (user.follows(currentUser) && (!user.removeFollowing(currentUser)))
-        throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOWER, currentUser);
+      throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOWER, currentUser);
     if (currentUser.follows(user) && (!currentUser.removeFollowing(user)))
-        throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOWER, user);
+      throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOWER, user);
     if (user.hasPendingRequestFrom(currentUser) && (!user.removeFollowRequestFrom(currentUser)))
-        throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOW_REQUEST, currentUser);
+      throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOW_REQUEST, currentUser);
     if (currentUser.hasPendingRequestFrom(user) && (!currentUser.removeFollowRequestFrom(user)))
-        throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOW_REQUEST, user);
+      throw BxException.hardcoded(BxException.X_COULD_NOT_REMOVE_FOLLOW_REQUEST, user);
     if (currentUser.getBlockedUsers().add(user)) {
       userFacade.save(currentUser);
       return user.toResponse(currentUser);
@@ -241,16 +246,16 @@ public class UserService {
     User currentUser = userFacade.getCurrentUser();
 
     return userFacade
-            .getBlockedUsers(currentUser, page, size)
-            .map(User::toResponse);
+        .getBlockedUsers(currentUser, page, size)
+        .map(User::toResponse);
   }
 
   public Page<UserResponse> getAllUsers(String query, boolean excludeSelf, int page, int size) {
     User currentUser = userFacade.getCurrentUserOrNull();
 
     return userFacade
-            .findBySearchParamExcludeBlocked(currentUser, query, excludeSelf, page, size)
-            .map(u -> u.toResponse(currentUser));
+        .findBySearchParamExcludeBlocked(currentUser, query, excludeSelf, page, size)
+        .map(u -> u.toResponse(currentUser));
   }
 
   public UserInfoResponse getUserInfo() {
@@ -268,11 +273,11 @@ public class UserService {
     User user = userFacade.findById(userId);
 
     return postFacade.findByUser(user, currentUser, page, size)
-            .map(p -> p.toResponse(currentUser));
+        .map(p -> p.toResponse(currentUser));
   }
 
   public Page<ReviewResponse> getUserReviews(Long userId, int page, int size) {
     return reviewFacade.findByUser(userFacade.findById(userId), page, size)
-            .map(Review::toResponse);
+        .map(Review::toResponse);
   }
 }

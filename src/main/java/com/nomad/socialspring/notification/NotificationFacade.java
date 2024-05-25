@@ -21,10 +21,10 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class NotificationFacade {
 
-  private static final String FOLLOW_CONTENT = "has requested to follow you";
   public static final String COMMENT_CONTENT = "has left a comment on your post";
   public static final String POST_LIKE_CONTENT = "has liked your post";
   public static final String COMMENT_LIKE_CONTENT = "has liked your comment";
+  private static final String FOLLOW_CONTENT = "has requested to follow you";
   private static final String JOIN_TRIP_CONTENT = "has joined your trip";
   private static final String REVIEW_CONTENT = "has left a review on your profile";
   private static final String MENTION_CONTENT = "has mentioned you in their comment";
@@ -34,41 +34,41 @@ public class NotificationFacade {
 
   public void notifyPostComment(@NotNull Post post, @NotNull Comment comment) {
     notify(
-            comment.getAuthor(),
-            post.getAuthor(),
-            COMMENT_CONTENT,
-            post.getId(),
-            NotificationType.POST
+        comment.getAuthor(),
+        post.getAuthor(),
+        COMMENT_CONTENT,
+        post.getId(),
+        NotificationType.POST
     );
   }
 
   public void notifyPostLike(@NotNull Post post, User user) {
     notify(
-            user,
-            post.getAuthor(),
-            POST_LIKE_CONTENT,
-            post.getId(),
-            NotificationType.POST
+        user,
+        post.getAuthor(),
+        POST_LIKE_CONTENT,
+        post.getId(),
+        NotificationType.POST
     );
   }
 
   public void notifyCommentLike(@NotNull Post post, User user) {
     notify(
-            user,
-            post.getAuthor(),
-            COMMENT_LIKE_CONTENT,
-            post.getId(),
-            NotificationType.POST
+        user,
+        post.getAuthor(),
+        COMMENT_LIKE_CONTENT,
+        post.getId(),
+        NotificationType.POST
     );
   }
 
   public void notifyFollowRequest(@NotNull FollowRequest followRequest) {
     notify(
-            followRequest.getFromUser(),
-            followRequest.getToUser(),
-            FOLLOW_CONTENT,
-            followRequest.getId(),
-            NotificationType.FOLLOW
+        followRequest.getFromUser(),
+        followRequest.getToUser(),
+        FOLLOW_CONTENT,
+        followRequest.getId(),
+        NotificationType.FOLLOW
     );
   }
 
@@ -77,12 +77,12 @@ public class NotificationFacade {
       return;
 
     save(Notification.builder()
-            .author(author)
-            .recipient(recipient)
-            .content(content)
-            .entityId(entityId)
-            .notificationType(type)
-            .build());
+        .author(author)
+        .recipient(recipient)
+        .content(content)
+        .entityId(entityId)
+        .notificationType(type)
+        .build());
   }
 
   public Notification save(Notification notification) {
@@ -97,8 +97,8 @@ public class NotificationFacade {
 
   private void readAndSave(@NotNull List<Notification> notificationList) {
     repository.updateIsReadByIdInAndIsReadFalse(notificationList.stream()
-            .map(BaseEntity::getId)
-            .toList());
+        .map(BaseEntity::getId)
+        .toList());
   }
 
   public void deleteFollowNotification(@NotNull FollowRequest followRequest) {
@@ -107,32 +107,32 @@ public class NotificationFacade {
 
   public void notifyTripJoin(@NotNull Trip trip, User user) {
     notify(
-            user,
-            trip.getPost().getAuthor(),
-            JOIN_TRIP_CONTENT,
-            trip.getPost().getId(),
-            NotificationType.POST
+        user,
+        trip.getPost().getAuthor(),
+        JOIN_TRIP_CONTENT,
+        trip.getPost().getId(),
+        NotificationType.POST
     );
   }
 
   public void notifyUserReview(@NotNull Review review) {
     notify(
-            review.getAuthor(),
-            review.getRecipient(),
-            REVIEW_CONTENT,
-            review.getAuthor().getId(),
-            NotificationType.REVIEW
+        review.getAuthor(),
+        review.getRecipient(),
+        REVIEW_CONTENT,
+        review.getAuthor().getId(),
+        NotificationType.REVIEW
     );
   }
 
   public void notifyMentions(List<User> mentionedUsers, Comment comment) {
     for (User mentionedUser : mentionedUsers) {
       notify(
-              mentionedUser,
-              comment.getAuthor(),
-              MENTION_CONTENT,
-              comment.getPost().getId(),
-              NotificationType.POST
+          mentionedUser,
+          comment.getAuthor(),
+          MENTION_CONTENT,
+          comment.getPost().getId(),
+          NotificationType.POST
       );
     }
   }

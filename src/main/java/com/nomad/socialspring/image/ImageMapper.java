@@ -13,10 +13,10 @@ import java.util.zip.Inflater;
 @Slf4j
 public class ImageMapper {
 
+  public static final String HOSTNAME = "https://nomad-backend-production-62f9.up.railway.app";
+
   private ImageMapper() {
   }
-
-  public static final String HOSTNAME = "https://nomad-backend-production-62f9.up.railway.app";
 
   @NotNull
   private static byte[] compressImage(byte[] data) {
@@ -67,9 +67,9 @@ public class ImageMapper {
 
   public static ImageResponse entityToResponse(Image image) {
     return ImageResponse.builder()
-            .id(image.getId())
-            .src(entityToUrl(image))
-            .build();
+        .id(image.getId())
+        .src(entityToUrl(image))
+        .build();
   }
 
   @NotNull
@@ -79,7 +79,7 @@ public class ImageMapper {
 
   public static Image requestToEntity(@NotNull MultipartFile imageFile) throws IOException {
     return Image.builder()
-            .imageData(compressImage(imageFile.getBytes()))
-            .build();
+        .imageData(compressImage(imageFile.getBytes()))
+        .build();
   }
 }

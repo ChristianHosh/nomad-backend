@@ -35,7 +35,7 @@ public class ChatChannelUsersId implements Serializable {
     if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
     ChatChannelUsersId entity = (ChatChannelUsersId) o;
     return Objects.equals(this.userId, entity.userId) &&
-            Objects.equals(this.chatChannelId, entity.chatChannelId);
+        Objects.equals(this.chatChannelId, entity.chatChannelId);
   }
 
   @Override

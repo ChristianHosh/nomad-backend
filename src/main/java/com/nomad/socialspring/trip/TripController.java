@@ -17,30 +17,30 @@ public class TripController {
 
   @GetMapping("/mine")
   public Page<PostResponse> getMyTrips(
-          @RequestParam(name = "page", defaultValue = "0") int page,
-          @RequestParam(name = "size", defaultValue = "25") int size
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "25") int size
   ) {
     return tripService.getMyTrips(page, size);
   }
 
   @PutMapping("/{id}/went")
   public TripResponse updateTripStatusAsWent(
-          @PathVariable(name = "id") Long tripId
+      @PathVariable(name = "id") Long tripId
   ) {
     return tripService.updateTripStatusAsWent(tripId);
   }
 
   @PutMapping("/{id}/not-went")
   public TripResponse updateTripStatusAsNotWent(
-          @PathVariable(name = "id") Long tripId
+      @PathVariable(name = "id") Long tripId
   ) {
     return tripService.updateTripStatusAsNotWent(tripId);
   }
 
   @GetMapping("/upcoming")
   public Page<PostResponse> getUpcomingTrips(
-          @RequestParam(name = "page", defaultValue = "0") int page,
-          @RequestParam(name = "size", defaultValue = "25") int size
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "25") int size
   ) {
     return tripService.getUpcomingTrips(page, size);
   }
@@ -48,23 +48,23 @@ public class TripController {
 
   @GetMapping("/{id}/participants")
   public Page<UserResponse> getTripParticipants(
-          @PathVariable(name = "id") Long tripId,
-          @RequestParam(name = "page", defaultValue = "0") int page,
-          @RequestParam(name = "size", defaultValue = "50") int size
+      @PathVariable(name = "id") Long tripId,
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "50") int size
   ) {
     return tripService.getUsersInTrip(tripId, page, size);
   }
 
   @PostMapping("/{id}/participants")
   public TripResponse addTripParticipant(
-          @PathVariable(name = "id") Long tripId
+      @PathVariable(name = "id") Long tripId
   ) {
     return tripService.joinTrip(tripId);
   }
 
   @DeleteMapping("/{id}/participants")
   public TripResponse removeTripParticipant(
-          @PathVariable(name = "id") Long tripId
+      @PathVariable(name = "id") Long tripId
   ) {
     return tripService.leaveTrip(tripId);
   }

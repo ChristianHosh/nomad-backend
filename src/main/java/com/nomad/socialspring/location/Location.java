@@ -22,32 +22,27 @@ import java.util.Set;
 @Table(name = "T_LOCATION")
 public class Location extends BaseEntity {
 
+  @Column(name = "NAME", nullable = false, unique = true)
+  private String name;
+  @Column(name = "IMAGE_URL", length = 512)
+  private String imageUrl;
+  @Column(name = "ABOUT", length = 512)
+  private String about;
+  @ManyToOne
+  @JoinColumn(name = "BELONGS_TO_ID")
+  private Location belongsTo;
+  @OneToMany(mappedBy = "belongsTo")
+  @Builder.Default
+  private Set<Location> locations = new LinkedHashSet<>();
+  @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, orphanRemoval = true)
+  @Builder.Default
+  private Set<Review> reviews = new LinkedHashSet<>();
+
   public Location(String name, Location belongsTo) {
     this.name = name;
     this.belongsTo = belongsTo;
     this.locations = new LinkedHashSet<>();
   }
-
-  @Column(name = "NAME", nullable = false, unique = true)
-  private String name;
-
-  @Column(name = "IMAGE_URL", length = 512)
-  private String imageUrl;
-
-  @Column(name = "ABOUT", length = 512)
-  private String about;
-
-  @ManyToOne
-  @JoinColumn(name = "BELONGS_TO_ID")
-  private Location belongsTo;
-
-  @OneToMany(mappedBy = "belongsTo")
-  @Builder.Default
-  private Set<Location> locations = new LinkedHashSet<>();
-
-  @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, orphanRemoval = true)
-  @Builder.Default
-  private Set<Review> reviews = new LinkedHashSet<>();
 
   public Location(String name, String imageUrl, String about, Location belongsTo, Set<Location> locations) {
     this(name, imageUrl, about, belongsTo, locations, new LinkedHashSet<>());

@@ -14,9 +14,9 @@ public class SearchController {
 
   @GetMapping
   public SearchResult search(
-          @RequestParam(name = "query", defaultValue = "") String query,
-          @RequestParam(name = "page", defaultValue = "0") int page,
-          @RequestParam(name = "size", defaultValue = "25") int size
+      @RequestParam(name = "query", defaultValue = "") String query,
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "25") int size
   ) {
     return searchService.search(query, page, size);
   }

@@ -26,7 +26,7 @@ public class ChatChannelFacade {
 
   public ChatChannel findByUUID(UUID id) {
     return repository.findByUuid(id)
-            .orElseThrow(BxException.xNotFound(ChatChannel.class, id));
+        .orElseThrow(BxException.xNotFound(ChatChannel.class, id));
   }
 
   public ChatChannel save(ChatChannel chatChannel) {
@@ -41,10 +41,10 @@ public class ChatChannelFacade {
     }
 
     ChatChannel chatChannel = ChatChannel.builder()
-            .uuid(UUID.randomUUID())
-            .name(name)
-            .admin(admin)
-            .build();
+        .uuid(UUID.randomUUID())
+        .name(name)
+        .admin(admin)
+        .build();
 
     userList.forEach(u -> {
       if (!chatChannel.addUser(u))
@@ -78,7 +78,7 @@ public class ChatChannelFacade {
 
   public ChatChannel findByTrip(Trip trip) {
     return repository.findByTrip(trip)
-            .orElseThrow(BxException.xNotFound(ChatChannel.class, trip));
+        .orElseThrow(BxException.xNotFound(ChatChannel.class, trip));
   }
 
   public Page<ChatChannel> getChannelThatContainUser(User user, int page, int size) {

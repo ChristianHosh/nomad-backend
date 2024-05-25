@@ -38,9 +38,9 @@ public class SearchService {
       Future<Page<Location>> locationPageFuture = locationRepository.searchLocationsAsync(query, pageable);
 
       result = new SearchResult(
-              userPageFuture.get().map(User::toResponse),
-              locationPageFuture.get().map(Location::toResponse),
-              interestPageFuture.get().map(Interest::toResponse)
+          userPageFuture.get().map(User::toResponse),
+          locationPageFuture.get().map(Location::toResponse),
+          interestPageFuture.get().map(Interest::toResponse)
       );
     } catch (InterruptedException | ExecutionException e) {
       log.error("search error", e);

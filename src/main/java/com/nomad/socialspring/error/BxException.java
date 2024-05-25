@@ -62,18 +62,6 @@ public class BxException extends RuntimeException {
     constructException(cause);
   }
 
-  private void constructException(Throwable cause) {
-    if (cause instanceof Exception e)
-      this.exception = e;
-    else
-      this.exception = null;
-  }
-
-  public Exception getException() {
-    return Objects.requireNonNullElse(exception, this);
-  }
-
-
   private static String getBaseEntityValue(BaseEntity value) {
     return value.getClass().getSimpleName() + ": " + value.getExceptionString();
   }
@@ -182,6 +170,17 @@ public class BxException extends RuntimeException {
   @Contract("_ -> new")
   public static BxSevereException unexpected(@NotNull Exception e) {
     return new BxSevereException(e.getMessage(), e);
+  }
+
+  private void constructException(Throwable cause) {
+    if (cause instanceof Exception e)
+      this.exception = e;
+    else
+      this.exception = null;
+  }
+
+  public Exception getException() {
+    return Objects.requireNonNullElse(exception, this);
   }
 
   public HttpStatus getStatus() {

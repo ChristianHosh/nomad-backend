@@ -8,11 +8,11 @@ import jakarta.validation.constraints.Size;
  * Request DTO for {@link Review}
  */
 public record ReviewRequest(
-        @Size(max = 500)
-        String content,
+    @Size(max = 500)
+    String content,
 
-        @Min(0)
-        @Max(5)
-        Integer rating
+    @Min(0)
+    @Max(5)
+    Integer rating
 ) {
 }

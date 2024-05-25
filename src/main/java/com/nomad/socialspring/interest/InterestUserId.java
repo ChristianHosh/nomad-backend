@@ -34,7 +34,7 @@ public class InterestUserId implements Serializable {
     if (thisEffectiveClass != oEffectiveClass) return false;
     InterestUserId that = (InterestUserId) object;
     return getInterestId() != null && Objects.equals(getInterestId(), that.getInterestId())
-            && getUserId() != null && Objects.equals(getUserId(), that.getUserId());
+        && getUserId() != null && Objects.equals(getUserId(), that.getUserId());
   }
 
   @Override

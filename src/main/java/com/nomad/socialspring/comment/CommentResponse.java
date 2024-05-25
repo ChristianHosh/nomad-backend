@@ -21,11 +21,11 @@ public class CommentResponse extends BaseResponse {
     canLike = user == null ? null : comment.getLikes().contains(user);
     numberOfLikes = comment.getNumberOfLikes();
   }
-  
+
   public static CommentResponse fromEntity(Comment comment) {
     return fromEntity(comment, null);
   }
-  
+
   public static CommentResponse fromEntity(Comment comment, User other) {
     return comment == null ? null : new CommentResponse(comment, other);
   }

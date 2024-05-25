@@ -14,7 +14,7 @@ public class LocationFacade {
 
   public Location findById(Long id) {
     return repository.findById(id)
-            .orElseThrow(BxException.xNotFound(Location.class, id));
+        .orElseThrow(BxException.xNotFound(Location.class, id));
   }
 
   public Page<Location> getLocations(int page, int size, String query) {

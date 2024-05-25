@@ -22,13 +22,13 @@ public class ImageFacade {
     if (imageFiles == null || imageFiles.isEmpty())
       return new HashSet<>();
     return imageFiles.stream()
-            .map(file -> {
-              try {
-                return save(ImageMapper.requestToEntity(file));
-              } catch (IOException e) {
-                throw BxException.unexpected(e);
-              }
-            }).collect(Collectors.toSet());
+        .map(file -> {
+          try {
+            return save(ImageMapper.requestToEntity(file));
+          } catch (IOException e) {
+            throw BxException.unexpected(e);
+          }
+        }).collect(Collectors.toSet());
   }
 
   public Image save(@NotNull MultipartFile file) {
@@ -45,6 +45,6 @@ public class ImageFacade {
 
   public Image findById(Long id) {
     return repository.findById(id)
-            .orElseThrow(BxException.xNotFound(Image.class, id));
+        .orElseThrow(BxException.xNotFound(Image.class, id));
   }
 }

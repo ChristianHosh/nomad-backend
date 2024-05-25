@@ -34,8 +34,8 @@ public class Comment extends BaseEntity {
 
   @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
   @JoinTable(name = "T_COMMENT_LIKES",
-          joinColumns = @JoinColumn(name = "COMMENT_ID"),
-          inverseJoinColumns = @JoinColumn(name = "USER_ID"))
+      joinColumns = @JoinColumn(name = "COMMENT_ID"),
+      inverseJoinColumns = @JoinColumn(name = "USER_ID"))
   @Builder.Default
   private Set<User> likes = new HashSet<>();
 
@@ -50,11 +50,11 @@ public class Comment extends BaseEntity {
   public boolean canBeDeletedBy(User user) {
     return Objects.equals(getAuthor(), user) || Objects.equals(getPost().getAuthor(), user);
   }
-  
+
   public CommentResponse toResponse() {
     return CommentResponse.fromEntity(this);
   }
-  
+
   public CommentResponse toResponse(User other) {
     return CommentResponse.fromEntity(this, other);
   }

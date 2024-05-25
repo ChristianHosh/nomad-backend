@@ -9,16 +9,17 @@ import java.util.UUID;
 
 public class VerificationTokenMapper {
 
-  private VerificationTokenMapper() {}
+  private VerificationTokenMapper() {
+  }
 
   @NotNull
   @Contract("_ -> new")
   public static VerificationToken accountToken(@NotNull User user) {
     return VerificationToken.builder()
-            .token(UUID.randomUUID().toString())
-            .expirationDate(BDate.currentDate().addDay(1))
-            .verificationType(VerificationType.ACCOUNT)
-            .user(user)
-            .build();
+        .token(UUID.randomUUID().toString())
+        .expirationDate(BDate.currentDate().addDay(1))
+        .verificationType(VerificationType.ACCOUNT)
+        .user(user)
+        .build();
   }
 }

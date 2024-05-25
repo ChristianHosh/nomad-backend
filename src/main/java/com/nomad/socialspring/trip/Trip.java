@@ -44,10 +44,10 @@ public class Trip extends BaseEntity {
 
   private TripUser newTripUser(User user) {
     return new TripUser(
-            new TripUser.TripUserId(this.getId(), user.getId()),
-            this,
-            user,
-            TripUser.TripUserStatus.JOINED
+        new TripUser.TripUserId(this.getId(), user.getId()),
+        this,
+        user,
+        TripUser.TripUserStatus.JOINED
     );
   }
 
@@ -68,7 +68,7 @@ public class Trip extends BaseEntity {
     if (user == null)
       return false;
     return tripUsers.removeIf(tripUser -> Objects.equals(tripUser.getUser(), user)) &&
-            chatChannel.removeUser(user);
+        chatChannel.removeUser(user);
   }
 
   public int getNumberOfParticipants() {
@@ -81,8 +81,8 @@ public class Trip extends BaseEntity {
 
   public TripUser findTripUser(User user) {
     return tripUsers.stream()
-            .filter(tu -> Objects.equals(tu.getUser(), user))
-            .findFirst()
-            .orElse(null);
+        .filter(tu -> Objects.equals(tu.getUser(), user))
+        .findFirst()
+        .orElse(null);
   }
 }

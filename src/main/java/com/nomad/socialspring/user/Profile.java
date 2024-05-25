@@ -1,8 +1,8 @@
 package com.nomad.socialspring.user;
 
 import com.nomad.socialspring.common.BaseEntity;
-import com.nomad.socialspring.location.Location;
 import com.nomad.socialspring.image.Image;
+import com.nomad.socialspring.location.Location;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;

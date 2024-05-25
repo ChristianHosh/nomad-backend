@@ -15,8 +15,8 @@ public class NotificationController {
   @GetMapping("")
   @ResponseStatus(HttpStatus.OK)
   public Page<NotificationResponse> getNotifications(
-          @RequestParam(name = "page", defaultValue = "0") int page,
-          @RequestParam(name = "size", defaultValue = "25") int size
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "25") int size
   ) {
     return notificationService.getNotifications(page, size);
   }

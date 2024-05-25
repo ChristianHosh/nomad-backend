@@ -10,15 +10,15 @@ import java.sql.Date;
  */
 public record TripRequest(
 
-        @FutureOrPresent(message = "startDate can't be in the past")
-        @NotNull(message = "startDate can't be null")
-        Date startDate,
+    @FutureOrPresent(message = "startDate can't be in the past")
+    @NotNull(message = "startDate can't be null")
+    Date startDate,
 
-        @FutureOrPresent(message = "endDate can't be in the past")
-        @NotNull(message = "endDate can't be null")
-        Date endDate,
+    @FutureOrPresent(message = "endDate can't be in the past")
+    @NotNull(message = "endDate can't be null")
+    Date endDate,
 
-        @NotNull(message = "locationId can't be null")
-        Long locationId
+    @NotNull(message = "locationId can't be null")
+    Long locationId
 ) {
 }

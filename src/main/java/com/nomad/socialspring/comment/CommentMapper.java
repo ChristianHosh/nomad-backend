@@ -6,13 +6,14 @@ import org.jetbrains.annotations.NotNull;
 
 public class CommentMapper {
 
-  private CommentMapper() {}
+  private CommentMapper() {
+  }
 
   public static Comment requestToEntity(@NotNull CommentRequest commentRequest, User user, Post post) {
     return Comment.builder()
-            .author(user)
-            .content(commentRequest.content())
-            .post(post)
-            .build();
+        .author(user)
+        .content(commentRequest.content())
+        .post(post)
+        .build();
   }
 }

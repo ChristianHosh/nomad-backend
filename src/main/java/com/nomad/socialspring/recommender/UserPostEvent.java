@@ -12,10 +12,10 @@ public record UserPostEvent(User user, Post post, Event event, boolean increment
   @Override
   public String toString() {
     return "UserPostEvent{" +
-            "user=" + user +
-            ", post=" + post +
-            ", event=" + event +
-            ", increment=" + increment +
-            '}';
+        "user=" + user +
+        ", post=" + post +
+        ", event=" + event +
+        ", increment=" + increment +
+        '}';
   }
 }

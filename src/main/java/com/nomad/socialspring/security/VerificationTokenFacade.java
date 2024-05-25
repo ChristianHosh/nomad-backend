@@ -13,17 +13,17 @@ public class VerificationTokenFacade {
 
   public VerificationToken findByToken(String token) {
     return repository.findByToken(token)
-            .orElseThrow(BxException.xNotFound(VerificationToken.class, token));
+        .orElseThrow(BxException.xNotFound(VerificationToken.class, token));
   }
 
   public VerificationToken findById(Long id) {
     return repository.findById(id)
-            .orElseThrow(BxException.xNotFound(VerificationToken.class, id));
+        .orElseThrow(BxException.xNotFound(VerificationToken.class, id));
   }
 
   public VerificationToken findByUser(User user) {
     return repository.findByUser(user)
-            .orElseThrow(BxException.xNotFound(VerificationToken.class, user));
+        .orElseThrow(BxException.xNotFound(VerificationToken.class, user));
   }
 
   public VerificationToken save(VerificationToken verificationToken) {

@@ -6,7 +6,8 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 @Slf4j
 @Component
@@ -16,27 +17,27 @@ public class InterestCreator {
   private final InterestRepository interestRepository;
 
   private final List<String> interestNames = List.of(
-          "Hiking",   // 1
-          "Camping",              // 2
-          "Volunteering",         // 3
-          "Partying",             // 4
-          "Nature Retreat",       // 5
-          "History",              // 6
-          "Cultural",             // 7
-          "Religious",            // 8
-          "Kid-Friendly",         // 9
-          "Backpacking",          // 10
-          "Fine-Dining",          // 11
-          "Meditation",           // 12
-          "Photography",          // 13
-          "Culinary",             // 14
-          "Kayaking",             // 15
-          "Safari",               // 16
-          "Scuba-Diving",         // 17
-          "Water Activities",     // 18
-          "Theme Parks",          // 19
-          "Stargazing",           // 20
-          "General"               // 21
+      "Hiking",   // 1
+      "Camping",              // 2
+      "Volunteering",         // 3
+      "Partying",             // 4
+      "Nature Retreat",       // 5
+      "History",              // 6
+      "Cultural",             // 7
+      "Religious",            // 8
+      "Kid-Friendly",         // 9
+      "Backpacking",          // 10
+      "Fine-Dining",          // 11
+      "Meditation",           // 12
+      "Photography",          // 13
+      "Culinary",             // 14
+      "Kayaking",             // 15
+      "Safari",               // 16
+      "Scuba-Diving",         // 17
+      "Water Activities",     // 18
+      "Theme Parks",          // 19
+      "Stargazing",           // 20
+      "General"               // 21
   );
 
   @EventListener(ApplicationReadyEvent.class)

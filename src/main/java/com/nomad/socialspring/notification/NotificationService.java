@@ -19,7 +19,7 @@ public class NotificationService {
     User currentUser = userFacade.getCurrentUser();
 
     return notificationFacade
-            .getNotifications(currentUser, page, size)
-            .map(Notification::toResponse);
+        .getNotifications(currentUser, page, size)
+        .map(Notification::toResponse);
   }
 }

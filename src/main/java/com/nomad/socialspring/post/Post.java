@@ -65,8 +65,8 @@ public class Post extends BaseEntity {
 
   @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
   @JoinTable(name = "T_POST_FAVORITES",
-          joinColumns = @JoinColumn(name = "POST_ID"),
-          inverseJoinColumns = @JoinColumn(name = "USER_ID"))
+      joinColumns = @JoinColumn(name = "POST_ID"),
+      inverseJoinColumns = @JoinColumn(name = "USER_ID"))
   @Builder.Default
   private Set<User> favorites = new LinkedHashSet<>();
 
@@ -93,15 +93,15 @@ public class Post extends BaseEntity {
     if (comments == null || comments.isEmpty()) return null;
     return comments.stream().max(Comparator.comparingInt(Comment::getNumberOfLikes)).orElseThrow(BxException.xHardcoded("should not happen"));
   }
-  
+
   public PostResponse toResponse() {
     return PostResponse.fromEntity(this);
   }
-  
+
   public PostResponse toResponse(User other) {
     return PostResponse.fromEntity(this, other);
   }
-  
+
   public Double getRecencyScore() {
     long creationTime = getCreatedOn().getTime();
     long now = System.currentTimeMillis();

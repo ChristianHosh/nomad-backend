@@ -5,13 +5,14 @@ import org.jetbrains.annotations.NotNull;
 
 public class TripMapper {
 
-  private TripMapper() {}
+  private TripMapper() {
+  }
 
   public static Trip requestToEntity(@NotNull TripRequest request, Location location) {
     return Trip.builder()
-            .location(location)
-            .startDate(request.startDate())
-            .endDate(request.endDate())
-            .build();
+        .location(location)
+        .startDate(request.startDate())
+        .endDate(request.endDate())
+        .build();
   }
 }

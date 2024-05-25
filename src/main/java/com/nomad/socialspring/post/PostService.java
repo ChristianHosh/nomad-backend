@@ -60,9 +60,9 @@ public class PostService {
     Trip trip = null;
     if (request.locationId() != null) {
       TripRequest tripRequest = new TripRequest(
-              Date.valueOf(request.startDate()),
-              Date.valueOf(request.endDate()),
-              request.locationId()
+          Date.valueOf(request.startDate()),
+          Date.valueOf(request.endDate()),
+          request.locationId()
       );
 
       trip = tripFacade.save(tripRequest, locationFacade.findById(tripRequest.locationId()));
@@ -130,8 +130,8 @@ public class PostService {
 
     if (post.canBeSeenBy(currentUser))
       return commentFacade
-              .findAllByPost(post, page, size)
-              .map(c -> c.toResponse(currentUser));
+          .findAllByPost(post, page, size)
+          .map(c -> c.toResponse(currentUser));
     throw BxException.forbidden(currentUser);
   }
 
@@ -160,8 +160,8 @@ public class PostService {
 
     if (post.canBeSeenBy(currentUser))
       return userFacade
-              .findAllByPostLiked(post, page, size)
-              .map(u -> u.toResponse(currentUser));
+          .findAllByPostLiked(post, page, size)
+          .map(u -> u.toResponse(currentUser));
     throw BxException.forbidden(currentUser);
   }
 
@@ -241,9 +241,9 @@ public class PostService {
 
     var interests = post.getInterests();
     return new PageImpl<>(
-            interests.stream().map(InterestResponse::fromEntity).toList(),
-            PageRequest.of(0, interests.size()),
-            interests.size()
+        interests.stream().map(InterestResponse::fromEntity).toList(),
+        PageRequest.of(0, interests.size()),
+        interests.size()
     );
   }
 }

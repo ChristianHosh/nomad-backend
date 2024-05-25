@@ -17,8 +17,8 @@ public class CommentController {
   @PutMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
   public CommentResponse updateComment(
-          @PathVariable(name = "id") Long commentId,
-          @RequestBody @Valid CommentRequest commentRequest
+      @PathVariable(name = "id") Long commentId,
+      @RequestBody @Valid CommentRequest commentRequest
   ) {
     return commentService.updateComment(commentId, commentRequest);
   }
@@ -26,7 +26,7 @@ public class CommentController {
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
   public CommentResponse deleteComment(
-          @PathVariable(name = "id") Long commentId
+      @PathVariable(name = "id") Long commentId
   ) {
     return commentService.deleteComment(commentId);
   }
@@ -34,9 +34,9 @@ public class CommentController {
   @GetMapping("/{id}/likes")
   @ResponseStatus(HttpStatus.OK)
   public Page<UserResponse> getCommentLikes(
-          @PathVariable(name = "id") Long commentId,
-          @RequestParam(name = "page", defaultValue = "0") int page,
-          @RequestParam(name = "size", defaultValue = "50") int size
+      @PathVariable(name = "id") Long commentId,
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "50") int size
   ) {
     return commentService.getCommentLikes(commentId, page, size);
   }
@@ -44,7 +44,7 @@ public class CommentController {
   @PostMapping("/{id}/likes")
   @ResponseStatus(HttpStatus.OK)
   public CommentResponse likeComment(
-          @PathVariable(name = "id") Long commentId
+      @PathVariable(name = "id") Long commentId
   ) {
     return commentService.likeComment(commentId);
   }
@@ -52,7 +52,7 @@ public class CommentController {
   @DeleteMapping("/{id}/likes")
   @ResponseStatus(HttpStatus.OK)
   public CommentResponse unlikeComment(
-          @PathVariable(name = "id") Long commentId
+      @PathVariable(name = "id") Long commentId
   ) {
     return commentService.unlikeComment(commentId);
   }
