@@ -108,4 +108,8 @@ public class Post extends BaseEntity {
 
     return (now - creationTime) / (1000.0 * 60 * 60);
   }
+
+  public PostResponse toResponse(User user, boolean detailed) {
+    return PostResponse.fromEntity(this, user, detailed);
+  }
 }

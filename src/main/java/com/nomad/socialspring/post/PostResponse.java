@@ -27,7 +27,7 @@ public class PostResponse extends BaseResponse {
   private final CommentResponse topComment;
   private final List<InterestResponse> interests;
 
-  private PostResponse(@NotNull Post post, User user) {
+  private PostResponse(@NotNull Post post, User user, boolean detailed) {
     super(post);
     content = post.getContent();
     isPrivate = post.getIsPrivate();
@@ -38,7 +38,7 @@ public class PostResponse extends BaseResponse {
     topComment = post.getTopComment() == null ? null : post.getTopComment().toResponse(user);
     canLike = user == null ? null : post.getLikes().contains(user);
     canFavorite = user == null ? null : post.getFavorites().contains(user);
-    trip = post.getTrip() == null ? null : TripResponse.fromEntity(post.getTrip(), user);
+    trip = post.getTrip() == null ? null : TripResponse.fromEntity(post.getTrip(), user, detailed);
     interests = post.getInterests().stream().map(InterestResponse::fromEntity).toList();
   }
 
@@ -47,6 +47,10 @@ public class PostResponse extends BaseResponse {
   }
 
   public static PostResponse fromEntity(Post post, User user) {
-    return post == null ? null : new PostResponse(post, user);
+    return fromEntity(post, user, false);
+  }
+
+  public static PostResponse fromEntity(Post post, User user, boolean detailed) {
+    return post == null ? null : new PostResponse(post, user, detailed);
   }
 }

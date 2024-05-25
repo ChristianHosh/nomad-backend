@@ -21,7 +21,7 @@ public class LocationResponse extends BaseResponse {
   }
 
   public static LocationResponse fromEntity(Location location) {
-    return location == null? null : new LocationResponse(location, null);
+    return location == null ? null : new LocationResponse(location, null);
   }
 
   public static LocationResponse fromEntity(Location location, User user) {

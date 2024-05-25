@@ -29,11 +29,11 @@ public class TripResponse extends BaseResponse {
   private final Boolean hasPassed;
   private final TripUser.TripUserStatus status;
 
-  protected TripResponse(@NotNull Trip entity, User user) {
+  protected TripResponse(@NotNull Trip entity, User user, boolean detailed) {
     super(entity);
     this.startDate = entity.getStartDate();
     this.endDate = entity.getEndDate();
-    this.location = LocationResponse.fromEntity(entity.getLocation(), user);
+    this.location = LocationResponse.fromEntity(entity.getLocation(), detailed ? user : null);
     this.numberOfParticipants = entity.getNumberOfParticipants();
     this.hasPassed = BDate.currentDate().after(entity.getEndDate());
 
@@ -49,7 +49,11 @@ public class TripResponse extends BaseResponse {
   }
 
   public static TripResponse fromEntity(Trip trip, User user) {
+    return fromEntity(trip, user, false);
+  }
+
+  public static TripResponse fromEntity(Trip trip, User user, boolean detailed) {
     if (trip == null) return null;
-    return new TripResponse(trip, user);
+    return new TripResponse(trip, user, detailed);
   }
 }

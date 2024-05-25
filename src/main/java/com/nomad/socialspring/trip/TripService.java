@@ -54,7 +54,8 @@ public class TripService {
 
   public Page<PostResponse> getMyTrips(int page, int size) {
     User currentUser = userFacade.getCurrentUser();
-    return postFacade.getMyTrips(currentUser, page, size).map(p -> p.toResponse(currentUser));
+    return postFacade.getMyTrips(currentUser, page, size)
+        .map(p -> p.toResponse(currentUser, true));
   }
 
   @Transactional
