@@ -17,9 +17,10 @@ public class UserResponse extends BaseResponse {
   private final ProfileResponse profile;
   private final CanReview canReview;
   private final Boolean canBlock;
-  private final List<InterestResponse> interests;
+  private List<InterestResponse> interests;
   private Integer rating;
   private String token;
+
   private UserResponse(User entity, User user, boolean detailed) {
     super(entity);
     this.followStatus = followStat(entity, user);
@@ -31,12 +32,14 @@ public class UserResponse extends BaseResponse {
     canReview = detailed ? CanReview.DISABLED : entity.canBeReviewedBy(user);
     canBlock = detailed && entity.isNotBlockedBy(user);
 
-    if (detailed)
+    if (detailed) {
       rating = entity.getRating();
+      interests = entity.getInterestsSorted().stream()
+          .map(InterestResponse::fromEntity)
+          .toList();
+    }
+
     profile = ProfileResponse.fromEntity(entity.getProfile(), detailed);
-    interests = entity.getInterestsSorted().stream()
-        .map(InterestResponse::fromEntity)
-        .toList();
   }
 
   public static UserResponse fromEntity(User user) {
