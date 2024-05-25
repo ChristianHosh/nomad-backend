@@ -240,9 +240,9 @@ public class UserFacade {
     return userPage;
   }
 
-  public List<User> getMentionedUsersFromContent(String content) {
+  public Set<User> getMentionedUsersFromContent(String content) {
     if (!content.contains("@"))
-      return List.of();
+      return Set.of();
 
     List<String> usernames = new ArrayList<>();
     int index = 0;
@@ -254,7 +254,7 @@ public class UserFacade {
       index += 1;
     }
 
-    return findByUsernameList(usernames);
+    return new HashSet<>(findByUsernameList(usernames));
   }
 
   public Future<Page<User>> searchUsersAsync(String query, Pageable pageable) {

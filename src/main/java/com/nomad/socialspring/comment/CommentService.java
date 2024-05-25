@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -42,7 +42,8 @@ public class CommentService {
     if (comment.canBeModifiedBy(currentUser)) {
       String content = commentRequest.content();
       comment.setContent(commentRequest.content());
-      List<User> mentionedUsers = userFacade.getMentionedUsersFromContent(content);
+      Set<User> mentionedUsers = userFacade.getMentionedUsersFromContent(content);
+      commentFacade.formatComment(comment, mentionedUsers);
       comment = commentFacade.save(comment);
 
       notificationFacade.notifyMentions(mentionedUsers, comment);
@@ -51,6 +52,7 @@ public class CommentService {
 
     throw BxException.unauthorized(currentUser);
   }
+
 
   public Page<UserResponse> getCommentLikes(Long commentId, int page, int size) {
     Comment comment = commentFacade.findById(commentId);

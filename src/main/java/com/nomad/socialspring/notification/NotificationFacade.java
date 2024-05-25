@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -125,7 +126,7 @@ public class NotificationFacade {
     );
   }
 
-  public void notifyMentions(List<User> mentionedUsers, Comment comment) {
+  public void notifyMentions(Collection<User> mentionedUsers, Comment comment) {
     for (User mentionedUser : mentionedUsers) {
       notify(
           mentionedUser,

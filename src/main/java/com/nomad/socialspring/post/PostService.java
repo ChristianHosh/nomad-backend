@@ -142,12 +142,16 @@ public class PostService {
 
     if (post.canBeSeenBy(currentUser)) {
       Comment comment = commentFacade.save(commentRequest, currentUser, post);
-      post.getComments().add(comment);
-      post = postFacade.save(post);
       if (!Objects.equals(currentUser, post.getAuthor()))
         notificationFacade.notifyPostComment(post, comment);
 
-      notificationFacade.notifyMentions(userFacade.getMentionedUsersFromContent(comment.getContent()), comment);
+      Set<User> mentionedUsers = userFacade.getMentionedUsersFromContent(comment.getContent());
+      commentFacade.formatComment(comment, mentionedUsers);
+
+      post.getComments().add(comment);
+      post = postFacade.save(post);
+
+      notificationFacade.notifyMentions(mentionedUsers, comment);
       postEventHandler.commentOnPost(currentUser, post);
       return comment.toResponse(currentUser);
     }
