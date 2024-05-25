@@ -14,10 +14,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Builder
 @AllArgsConstructor
@@ -114,6 +111,13 @@ public class User extends BaseEntity {
 
   public boolean canBeSeenBy(User user) {
     return user == null || (isNotBlockedBy(user) && user.isNotBlockedBy(this));
+  }
+
+  public List<Interest> getInterestsSorted() {
+    return interests.stream()
+        .sorted(Comparator.comparing(UserInterest::getScore).reversed())
+        .map(UserInterest::getInterest)
+        .toList();
   }
 
   public boolean isNotBlockedBy(User user) {

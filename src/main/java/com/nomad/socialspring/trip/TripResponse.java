@@ -27,6 +27,7 @@ public class TripResponse extends BaseResponse {
   private final Integer numberOfParticipants;
   private final CanJoin canJoin;
   private final Boolean hasPassed;
+  private final TripUser.TripUserStatus status;
 
   protected TripResponse(@NotNull Trip entity, User user) {
     super(entity);
@@ -42,6 +43,9 @@ public class TripResponse extends BaseResponse {
       this.canJoin = CanJoin.JOINED;
     else
       this.canJoin = CanJoin.CAN_JOIN;
+
+    var tripUser = entity.findTripUser(user);
+    this.status = tripUser == null ? null : tripUser.getStatus();
   }
 
   public static TripResponse fromEntity(Trip trip, User user) {

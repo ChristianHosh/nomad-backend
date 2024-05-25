@@ -82,7 +82,7 @@ public class Trip extends BaseEntity {
   public TripUser findTripUser(User user) {
     return tripUsers.stream()
             .filter(tu -> Objects.equals(tu.getUser(), user))
-            .findAny()
+            .findFirst()
             .orElse(null);
   }
 }

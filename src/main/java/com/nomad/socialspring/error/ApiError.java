@@ -21,4 +21,8 @@ public record ApiError(
   public ApiError(HttpStatus status, String message, Boolean isSevere) {
     this(Timestamp.from(Instant.now()), status.getReasonPhrase(), message, status.value(), isSevere);
   }
+
+  public static ApiError of(BxException e) {
+    return new ApiError(e.getStatus(), e.getMessage(), e instanceof BxSevereException);
+  }
 }
