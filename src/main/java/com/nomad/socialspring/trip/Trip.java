@@ -76,7 +76,7 @@ public class Trip extends BaseEntity {
   }
 
   public TripResponse toResponse(User currentUser) {
-    return new TripResponse(this, currentUser);
+    return TripResponse.fromEntity(this, currentUser);
   }
 
   public TripUser findTripUser(User user) {
