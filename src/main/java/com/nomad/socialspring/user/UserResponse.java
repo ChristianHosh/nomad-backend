@@ -1,8 +1,10 @@
 package com.nomad.socialspring.user;
 
 import com.nomad.socialspring.common.BaseResponse;
+import com.nomad.socialspring.interest.InterestResponse;
 import lombok.Getter;
 
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -21,24 +23,28 @@ public class UserResponse extends BaseResponse {
   private final ProfileResponse profile;
   private final CanReview canReview;
   private final Boolean canBlock;
+  private final List<InterestResponse> interests;
   private Integer rating;
   private String token;
 
 
-  private UserResponse(User user, User currentUser, boolean detailed) {
-    super(user);
-    this.followStatus = followStat(user, currentUser);
+  private UserResponse(User entity, User user, boolean detailed) {
+    super(entity);
+    this.followStatus = followStat(entity, user);
 
-    username = user.getUsername();
-    email = user.getEmail();
-    role = user.getRole();
+    username = entity.getUsername();
+    email = entity.getEmail();
+    role = entity.getRole();
 
-    canReview = detailed ? CanReview.DISABLED : user.canBeReviewedBy(currentUser);
-    canBlock = detailed && user.isNotBlockedBy(currentUser);
+    canReview = detailed ? CanReview.DISABLED : entity.canBeReviewedBy(user);
+    canBlock = detailed && entity.isNotBlockedBy(user);
     
     if (detailed)
-      rating = user.getRating();
-    profile = ProfileResponse.fromEntity(user.getProfile(), detailed);
+      rating = entity.getRating();
+    profile = ProfileResponse.fromEntity(entity.getProfile(), detailed);
+    interests = entity.getInterestsSorted().stream()
+        .map(InterestResponse::fromEntity)
+        .toList();
   }
   
   public UserResponse withToken(String token) {

@@ -33,7 +33,7 @@ public class TripResponse extends BaseResponse {
     super(entity);
     this.startDate = entity.getStartDate();
     this.endDate = entity.getEndDate();
-    this.location = LocationResponse.fromEntity(entity.getLocation());
+    this.location = LocationResponse.fromEntity(entity.getLocation(), user);
     this.numberOfParticipants = entity.getNumberOfParticipants();
     this.hasPassed = BDate.currentDate().after(entity.getEndDate());
 
