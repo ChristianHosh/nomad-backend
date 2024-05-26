@@ -29,6 +29,7 @@ public class AuthService {
   private final VerificationTokenFacade verificationTokenFacade;
   private final MailService mailService;
   private final AuthenticationManager authenticationManager;
+  private final PasswordEncoder passwordEncoder;
   private final JwtUtils jwtUtils;
 
 
@@ -97,16 +98,14 @@ public class AuthService {
   public UserResponse resetPassword(AuthController.ResetPasswordRequest resetPasswordRequest) {
     User user = userFacade.getCurrentUser();
 
-    PasswordEncoder passwordEncoder = AuthenticationFacade.getEncoder();
-    String encodedOldPassword = passwordEncoder.encode(resetPasswordRequest.oldPassword());
-    if (user.getPassword().equals(encodedOldPassword)) {
+    if (passwordEncoder.matches(resetPasswordRequest.oldPassword(), user.getPassword())) {
       if (!resetPasswordRequest.newPassword().equals(resetPasswordRequest.confirmPassword())) {
         throw BxException.badRequest("passwords do not match");
       }
 
       String encodedNewPassword = passwordEncoder.encode(resetPasswordRequest.newPassword());
 
-      if (encodedOldPassword.equals(encodedNewPassword))
+      if (passwordEncoder.matches(resetPasswordRequest.newPassword(), user.getPassword()))
         throw BxException.badRequest("new password cannot be the same as the old password");
 
       user.setPassword(encodedNewPassword);
