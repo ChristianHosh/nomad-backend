@@ -99,14 +99,19 @@ public class AuthService {
 
     PasswordEncoder passwordEncoder = AuthenticationFacade.getEncoder();
     String encodedOldPassword = passwordEncoder.encode(resetPasswordRequest.oldPassword());
-    if (user.getPassword().equalsIgnoreCase(encodedOldPassword)) {
+    if (user.getPassword().equals(encodedOldPassword)) {
       if (!resetPasswordRequest.newPassword().equals(resetPasswordRequest.confirmPassword())) {
         throw BxException.badRequest("passwords do not match");
       }
 
-      user.setPassword(passwordEncoder.encode(resetPasswordRequest.newPassword()));
+      String encodedNewPassword = passwordEncoder.encode(resetPasswordRequest.newPassword());
 
-      return user.toResponse();
+      if (encodedOldPassword.equals(encodedNewPassword))
+        throw BxException.badRequest("new password cannot be the same as the old password");
+
+      user.setPassword(encodedNewPassword);
+
+      return userFacade.save(user).toResponse();
     } else {
       throw BxException.badRequest("old password is incorrect");
     }
