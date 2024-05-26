@@ -2,6 +2,7 @@ package com.nomad.socialspring.security;
 
 import com.nomad.socialspring.user.UserResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
@@ -45,8 +46,16 @@ public class AuthController {
     return authService.verifyEmail(token);
   }
 
-  public record ResetPasswordRequest(@NotNull String oldPassword, @NotNull String newPassword,
-                                     @NotNull String confirmPassword) {
+  public record ResetPasswordRequest(
+      @Size(min = 8, max = 20, message = "Password must be between 8 and 20 characters")
+      @NotNull String oldPassword,
+
+      @Size(min = 8, max = 20, message = "Password must be between 8 and 20 characters")
+      @NotNull String newPassword,
+
+      @Size(min = 8, max = 20, message = "Password must be between 8 and 20 characters")
+      @NotNull String confirmPassword
+  ) {
 
   }
 }

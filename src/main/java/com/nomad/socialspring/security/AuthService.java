@@ -101,14 +101,14 @@ public class AuthService {
     String encodedOldPassword = passwordEncoder.encode(resetPasswordRequest.oldPassword());
     if (user.getPassword().equalsIgnoreCase(encodedOldPassword)) {
       if (!resetPasswordRequest.newPassword().equals(resetPasswordRequest.confirmPassword())) {
-        throw BxException.badRequest(User.class, "confirmPassword", BxException.X_PASSWORDS_DO_NOT_MATCH);
+        throw BxException.badRequest("passwords do not match");
       }
 
       user.setPassword(passwordEncoder.encode(resetPasswordRequest.newPassword()));
 
       return user.toResponse();
     } else {
-      throw BxException.badRequest(User.class, "password", BxException.X_BAD_CREDENTIALS);
+      throw BxException.badRequest("old password is incorrect");
     }
   }
 }

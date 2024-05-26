@@ -106,6 +106,10 @@ public class BxException extends RuntimeException {
     return new BxBadRequestException(clazz.getSimpleName() + ": " + field + " [" + value + "]");
   }
 
+  public static BxException badRequest(String message) {
+    return new BxBadRequestException(message);
+  }
+
   @NotNull
   @Contract("_, _ -> new")
   public static BxException badRequest(@NotNull Class<?> clazz, @NotNull Object value) {
