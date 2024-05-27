@@ -51,6 +51,14 @@ public class UserController {
     return userService.unfollowUser(userId);
   }
 
+  @DeleteMapping("/{id}/follow-request")
+  @ResponseStatus(HttpStatus.OK)
+  public UserResponse cancelFollowRequest(
+      @PathVariable(name = "id") Long userId
+  ) {
+    return userService.cancelFollowRequest(userId);
+  }
+
   @GetMapping("/follow-requests")
   @ResponseStatus(HttpStatus.OK)
   public Page<FollowRequestResponse> getFollowRequests(

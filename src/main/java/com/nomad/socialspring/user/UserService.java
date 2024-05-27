@@ -280,4 +280,19 @@ public class UserService {
     return reviewFacade.findByUser(userFacade.findById(userId), page, size)
         .map(Review::toResponse);
   }
+
+  @Transactional
+  public UserResponse cancelFollowRequest(Long userId) {
+    User currentUser = userFacade.getCurrentUser();
+    User user = userFacade.findById(userId);
+
+    FollowRequest followRequest = followRequestFacade.findByAuthorAndRecipient(currentUser, user);
+    if (followRequest == null)
+      throw BxException.badRequest("no follow request by [" + currentUser.getUsername() + "] to [" + user.getUsername() + "]");
+
+    notificationFacade.deleteFollowNotification(followRequest);
+    followRequestFacade.delete(followRequest);
+
+    return user.toResponse(currentUser);
+  }
 }

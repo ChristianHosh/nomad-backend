@@ -28,4 +28,8 @@ public class FollowRequestFacade {
   public Page<FollowRequest> findByUser(User user, int page, int size) {
     return repository.findByToUser(user, PageRequest.of(page, size));
   }
+
+  public FollowRequest findByAuthorAndRecipient(User currentUser, User user) {
+    return repository.findByAuthorAndRecipient(currentUser, user).orElse(null);
+  }
 }
