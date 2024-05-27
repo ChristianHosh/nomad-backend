@@ -13,10 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Slf4j
 @Component
@@ -48,13 +45,20 @@ public class LocationCreator {
       List<Location> locationsToSave = new LinkedList<>();
       for (ParentJson parentJson : gson.fromJson(locationsJson, new TypeToken<List<ParentJson>>() {
       })) {
-        Location country = new Location(parentJson.name(), parentJson.imageUrl(), parentJson.about(), null, new LinkedHashSet<>());
-        country.setId(parentJson.id());
+        Location country = locationRepository.findById(parentJson.id()).orElseGet(Location::new);
+        country.setName(parentJson.name());
+        country.setImageUrl(parentJson.imageUrl());
+        country.setAbout(parentJson.about());
+        country.setBelongsTo(null);
+        country.setLocations(new HashSet<>());
 
         locationsToSave.add(country);
         for (ChildJson childJson : parentJson.locations()) {
-          Location location = new Location(childJson.name(), childJson.imageUrl(), childJson.about(), country, null);
-          location.setId(childJson.id());
+          Location location = locationRepository.findById(childJson.id()).orElseGet(Location::new);
+          location.setName(childJson.name());
+          location.setImageUrl(childJson.imageUrl());
+          location.setAbout(childJson.about());
+          location.setBelongsTo(country);
           country.getLocations().add(location);
           locationsToSave.add(location);
         }
