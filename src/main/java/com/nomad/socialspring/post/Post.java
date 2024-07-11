@@ -12,6 +12,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -103,10 +105,20 @@ public class Post extends BaseEntity {
   }
 
   public Double getRecencyScore() {
-    long creationTime = getCreatedOn().getTime();
-    long now = System.currentTimeMillis();
+    Duration between = Duration.between(getCreatedOn().toInstant(), Instant.now());
+    long ageInHours = between.toHours();
+    long ageInDays = between.toDays();
 
-    return (now - creationTime) / (1000.0 * 60 * 60);
+    double score;
+    if (ageInHours < 24) {
+      score = ageInHours;
+    } else if (ageInDays < 7) {
+      score = ageInDays;
+    } else {
+      score = ageInDays / 7.0;
+    }
+
+    return score;
   }
 
   public PostResponse toResponse(User user, boolean detailed) {
