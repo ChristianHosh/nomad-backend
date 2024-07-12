@@ -25,7 +25,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
   @Query("""
       select p from Post p
-      where (:user is not null and (:user in elements(p.author.followers) or :user = p.author)) and
+      where
+        (:user is not null and (:user in elements(p.author.followers))) and
         (:user not member of p.author.blockedUsers)
       order by p.zScore desc nulls last, p.createdOn desc
       """)
