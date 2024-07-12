@@ -118,7 +118,7 @@ public class Post extends BaseEntity {
       score = ageInDays / 7.0;
     }
 
-    return score;
+    return -score;
   }
 
   public PostResponse toResponse(User user, boolean detailed) {
