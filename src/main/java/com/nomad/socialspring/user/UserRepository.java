@@ -110,7 +110,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
       select u from User u
       where (u.username ilike concat('%',:query ,'%') or u.profile.displayName ilike concat('%',:query ,'%')) and
             (:user is null or :user != u) and
-            (:user not member of u.blockedUsers)
+            (:user is null or :user not member of u.blockedUsers)
       """)
   Future<Page<User>> searchUsersAsync(String query, User user, Pageable pageable);
 
