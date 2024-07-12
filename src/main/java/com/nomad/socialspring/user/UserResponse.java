@@ -29,7 +29,7 @@ public class UserResponse extends BaseResponse {
     email = entity.getEmail();
     role = entity.getRole();
 
-    canReview = detailed ? CanReview.DISABLED : entity.canBeReviewedBy(user);
+    canReview = detailed ? entity.canBeReviewedBy(user) : CanReview.DISABLED;
     canBlock = detailed && entity.isNotBlockedBy(user);
 
     if (detailed) {
